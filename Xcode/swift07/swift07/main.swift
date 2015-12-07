@@ -9,6 +9,59 @@
 import Foundation
 
 /******嵌套函数******/
-
-func tt() {
+func getMathFunc1(type type : String) -> (Int) -> Int {
+    func squre (num : Int) -> Int {
+        return num * num
+    }
+    func cube (num : Int) -> Int {
+        return num * num * num
+    }
+    switch (type) {
+    case "squre" :
+        return squre
+    default :
+        return cube
+    }
 }
+var mathFunc = getMathFunc1(type: "squre")
+//print(mathFunc(5))
+
+/******闭包******/
+func getMathFunc2(type type : String) -> (Int) -> Int {
+    switch (type) {
+    case "squre" :
+        return { (num : Int) -> Int in
+            return num * num
+        }
+    default :
+        return { (num : Int) -> Int in
+            return num * num * num
+        }
+    }
+}
+mathFunc = getMathFunc2(type: "cube")
+//print(mathFunc(6))
+
+//利用上下文，可简写闭包表达式
+var squre1 : (Int) -> Int = {(num) in return num * num }
+print(squre1(7))
+var squre2 : (Int) -> Int = {num in return num * num}
+print(squre2(8))
+var squre3 : (Int) -> Int = {$0 * $0}
+print(squre3(9))
+
+var result : Int = {
+    var result = 1
+    for i in 1...$1 {
+        result *= $0
+    }
+    return result
+}(4,5)
+print(result)
+
+//
+//func getFunc (num : Int , fn : (Int) -> Int) {
+//    if ($0 > num) {
+//        print("good job")
+//    }
+//}

@@ -22,7 +22,4 @@
    <FileRef
       location = "group:swift01/swift01.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:welcom/welcom.xcodeproj">
-   </FileRef>
 </Workspace>
