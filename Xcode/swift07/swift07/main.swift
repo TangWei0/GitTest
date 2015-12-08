@@ -59,9 +59,10 @@ var result : Int = {
 }(4,5)
 print(result)
 
-//
-//func getFunc (num : Int , fn : (Int) -> Int) {
-//    if ($0 > num) {
-//        print("good job")
-//    }
-//}
+//尾随闭包
+func getFunc (num : Int , fn : (Int) -> Int) {
+    if (num == fn(5)) {
+        print("good job")
+    }
+}
+getFunc(25){$0 * $0}
