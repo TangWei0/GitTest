@@ -10,8 +10,9 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using setting = Minesweeper.Properties.Settings;
 using resources = Minesweeper.Properties.Resources;
+using System.IO;
 
-namespace Minesweeper
+namespace Minesweeper.UI
 {
     public partial class Form_Main : Form
     {
@@ -35,8 +36,23 @@ namespace Minesweeper
         bool bMouseLeft;
         bool bMouseRight;
 
+        public RecordInfo[] detail = new RecordInfo[10]
+        {
+            new RecordInfo{width = 10, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 11, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 12, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 13, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 14, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 15, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 16, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 17, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 18, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+            new RecordInfo{width = 19, height = 15, mine = 10, time = 100 , efficiencyValue = 19.2},
+        };
+
         int[,] customRecord = new int[11, 4];
         double[] customRate = new double[11];
+
         public Form_Main()
         {
             InitializeComponent();
@@ -259,7 +275,7 @@ namespace Minesweeper
 
         private void settingSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form_Setting setting = new Form_Setting(this);
+            UI.Form_Setting setting = new UI.Form_Setting(this);
             setting.ShowDialog();
             UpdateSize();
         }
@@ -594,7 +610,7 @@ namespace Minesweeper
 
         private void StandardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form_Rank_Standard rankStandard = new Form_Rank_Standard();
+            UI.Form_Rank_Standard rankStandard = new UI.Form_Rank_Standard();
             rankStandard.ShowDialog();
         }
 
@@ -610,8 +626,9 @@ namespace Minesweeper
 
         private void CustomToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UI.Form_Rank_Custom rankCustom = new UI.Form_Rank_Custom();
+            UI.Form_Rank_Custom rankCustom = new UI.Form_Rank_Custom(this);
             rankCustom.ShowDialog();
         }
+
     }
 }

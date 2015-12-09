@@ -32,7 +32,13 @@
             this.Label_Rank = new System.Windows.Forms.Label();
             this.Button_OK = new System.Windows.Forms.Button();
             this.Button_Reset = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
+            this.efficiencyValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.height = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // Label_Rank
@@ -46,7 +52,7 @@
             // 
             // Button_OK
             // 
-            this.Button_OK.Location = new System.Drawing.Point(165, 200);
+            this.Button_OK.Location = new System.Drawing.Point(364, 377);
             this.Button_OK.Name = "Button_OK";
             this.Button_OK.Size = new System.Drawing.Size(75, 23);
             this.Button_OK.TabIndex = 1;
@@ -56,7 +62,7 @@
             // 
             // Button_Reset
             // 
-            this.Button_Reset.Location = new System.Drawing.Point(28, 200);
+            this.Button_Reset.Location = new System.Drawing.Point(133, 377);
             this.Button_Reset.Name = "Button_Reset";
             this.Button_Reset.Size = new System.Drawing.Size(75, 23);
             this.Button_Reset.TabIndex = 2;
@@ -64,20 +70,53 @@
             this.Button_Reset.UseVisualStyleBackColor = true;
             this.Button_Reset.Click += new System.EventHandler(this.Button_Reset_Click);
             // 
-            // textBox1
+            // dataGridView
             // 
-            this.textBox1.Location = new System.Drawing.Point(28, 52);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(156, 19);
-            this.textBox1.TabIndex = 3;
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.efficiencyValue,
+            this.mine,
+            this.width,
+            this.height,
+            this.time});
+            this.dataGridView.Location = new System.Drawing.Point(28, 37);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.RowTemplate.Height = 21;
+            this.dataGridView.Size = new System.Drawing.Size(543, 334);
+            this.dataGridView.TabIndex = 4;
+            // 
+            // efficiencyValue
+            // 
+            this.efficiencyValue.HeaderText = "效率";
+            this.efficiencyValue.Name = "efficiencyValue";
+            // 
+            // mine
+            // 
+            this.mine.HeaderText = "地雷数";
+            this.mine.Name = "mine";
+            // 
+            // width
+            // 
+            this.width.HeaderText = "长";
+            this.width.Name = "width";
+            // 
+            // height
+            // 
+            this.height.HeaderText = "宽";
+            this.height.Name = "height";
+            // 
+            // time
+            // 
+            this.time.HeaderText = "时间";
+            this.time.Name = "time";
             // 
             // Form_Rank_Custom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(606, 435);
+            this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.Button_Reset);
             this.Controls.Add(this.Button_OK);
             this.Controls.Add(this.Label_Rank);
@@ -87,6 +126,7 @@
             this.Name = "Form_Rank_Custom";
             this.Text = "Form_Rank_Custom";
             this.Load += new System.EventHandler(this.Form_Rank_Custom_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -97,6 +137,11 @@
         private System.Windows.Forms.Label Label_Rank;
         private System.Windows.Forms.Button Button_OK;
         private System.Windows.Forms.Button Button_Reset;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridView dataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn efficiencyValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn width;
+        private System.Windows.Forms.DataGridViewTextBoxColumn height;
+        private System.Windows.Forms.DataGridViewTextBoxColumn time;
     }
 }

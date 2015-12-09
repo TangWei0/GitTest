@@ -1,4 +1,4 @@
-﻿namespace Minesweeper
+﻿namespace Minesweeper.UI
 {
     partial class Form_Main
     {
@@ -154,14 +154,14 @@
             // StandardToolStripMenuItem
             // 
             this.StandardToolStripMenuItem.Name = "StandardToolStripMenuItem";
-            this.StandardToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.StandardToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.StandardToolStripMenuItem.Text = "Standard(&S)";
             this.StandardToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
             // 
             // CustomToolStripMenuItem
             // 
             this.CustomToolStripMenuItem.Name = "CustomToolStripMenuItem";
-            this.CustomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CustomToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.CustomToolStripMenuItem.Text = "Custom(&C)";
             this.CustomToolStripMenuItem.Click += new System.EventHandler(this.CustomToolStripMenuItem_Click);
             // 
@@ -172,7 +172,7 @@
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "ClearHistorytoolStripMenuItem1";
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(171, 22);
             this.toolStripMenuItem1.Text = "Clear History(&H)";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.ClearHistorytoolStripMenuItem1_Click);

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using setting = Minesweeper.Properties.Settings;
-namespace Minesweeper
+namespace Minesweeper.UI
 {
     public partial class Form_Rank_Standard : Form
     {

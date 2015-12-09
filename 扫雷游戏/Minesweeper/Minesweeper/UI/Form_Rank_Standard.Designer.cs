@@ -1,4 +1,4 @@
-﻿namespace Minesweeper
+﻿namespace Minesweeper.UI
 {
     partial class Form_Rank_Standard
     {

@@ -8,18 +8,6 @@ C:\Users\itou1\Documents\Visual Studio 2012\Projects\Minesweeper\Minesweeper\obj
 C:\Users\itou1\Documents\Visual Studio 2012\Projects\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csproj.GenerateResource.Cache
 C:\Users\itou1\Documents\Visual Studio 2012\Projects\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
 C:\Users\itou1\Documents\Visual Studio 2012\Projects\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\bin\Debug\Minesweeper.pdb
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csprojResolveAssemblyReference.cache
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Form_Main.resources
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Rank_Custom.resources
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Form_Rank_Standard.resources
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Form_Setting.resources
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Properties.Resources.resources
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csproj.GenerateResource.Cache
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
 C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
 C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
 C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
@@ -32,3 +20,15 @@ C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper
 C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Form_Setting.resources
 C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Properties.Resources.resources
 C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csproj.GenerateResource.Cache
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\bin\Debug\Minesweeper.pdb
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Main.resources
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Rank_Custom.resources
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Rank_Standard.resources
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Setting.resources
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Properties.Resources.resources
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csproj.GenerateResource.Cache
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb
+C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csprojResolveAssemblyReference.cache
