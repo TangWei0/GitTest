@@ -35,7 +35,7 @@ case .summer :
     print("夏天")
 case .fall :
     print("秋天")
-case . winter :
+case .winter :
     print("冬天")
 default :
     print("混合")
