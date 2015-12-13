@@ -82,7 +82,7 @@
             this.dataGridView.Location = new System.Drawing.Point(28, 37);
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowTemplate.Height = 21;
-            this.dataGridView.Size = new System.Drawing.Size(543, 334);
+            this.dataGridView.Size = new System.Drawing.Size(543, 255);
             this.dataGridView.TabIndex = 4;
             // 
             // efficiencyValue

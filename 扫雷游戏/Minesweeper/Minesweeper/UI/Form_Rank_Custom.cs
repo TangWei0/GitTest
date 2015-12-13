@@ -13,23 +13,15 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Minesweeper.UI
 {
-    
     public partial class Form_Rank_Custom : Form
     {
         Form_Main Main;
+        private static string fp = "C:\\Users\\itou1\\Desktop\\OneDrive\\扫雷游戏\\Minesweeper\\Minesweeper\\data.csv";
         public Form_Rank_Custom(Form_Main _Main)
         {
             InitializeComponent();
             Main = _Main;
-            for (int i = 0; i < 10; i++)
-            {
-                dataGridView.Rows.Add(Convert.ToString(Main.detail[i].efficiencyValue),
-                                      Convert.ToString(Main.detail[i].mine),
-                                      Convert.ToString(Main.detail[i].width),
-                                      Convert.ToString(Main.detail[i].height),
-                                      Convert.ToString(Main.detail[i].time));
-            }
-
+            ReadCsv(fp);
         }
 
         public void Form_Rank_Custom_Load(object sender, EventArgs e)
@@ -45,76 +37,77 @@ namespace Minesweeper.UI
 
         private void Button_Reset_Click(object sender, EventArgs e)
         {
-            print(dataGridView);
             if (MessageBox.Show("清空数据吗？", "清空数据", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Main.detail[i].width = 0;
-                    Main.detail[i].height = 0;
-                    Main.detail[i].mine = 0;
-                    Main.detail[i].time = 0;
-                    Main.detail[i].efficiencyValue = 0.0;
+                    dataGridView.Rows.RemoveAt(0);
                 }
+                SaveCsv(fp);
                 this.Close();
             }
         }
-        public void print(DataGridView dataGridView1)
+
+        public void SaveCsv(String fp)
         {
-            //导出到execl  
-            try
+            // CSVファイルオープン
+            StreamWriter sw =
+                new StreamWriter(fp, false,
+                System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            for (int r = 0; r < dataGridView.Rows.Count - 1; r++)
             {
-                //没有数据的话就不往下执行  
-                if (dataGridView1.Rows.Count == 0)
-                    return;
-                //实例化一个Excel.Application对象
-                Excel.Application excel = new Excel.Application();
-
-                //让后台执行设置为不可见，为true的话会看到打开一个Excel，然后数据在往里写  
-                excel.Visible = false;
-
-                //新增加一个工作簿，Workbook是直接保存，不会弹出保存对话框，加上Application会弹出保存对话框，值为false会报错  
-                excel.Application.Workbooks.Add(true);
-                //生成Excel中列头名称  
-                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                for (int c = 0; c <= dataGridView.Columns.Count - 1; c++)
                 {
-                    excel.Cells[1, i + 1] = dataGridView1.Columns[i].HeaderText;
-                }
-                //把DataGridView当前页的数据保存在Excel中  
-                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    // DataGridViewのセルのデータ取得
+                    String dt = "";
+                    if (dataGridView.Rows[r].Cells[c].Value != null)
                     {
-                        if (dataGridView1[j, i].ValueType == typeof(string))
+                        dt = dataGridView.Rows[r].Cells[c].Value.ToString();
+                    }
+                    if (c < dataGridView.Columns.Count - 1)
+                    {
+                        dt = dt + ",";
+                    }
+                    // CSVファイル書込
+                    sw.Write(dt);
+                }
+                sw.Write("\r\n");
+            }
+            // CSVファイルクローズ
+            sw.Close();
+        }
+
+        public void ReadCsv(String fp)
+        {
+            // CSVファイルオープン
+            StreamReader sr =
+                new StreamReader(fp,
+                System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            // CSVファイルの各セルをDataGridViewに表示
+            dataGridView.Rows.Clear();
+            int r = 0;
+            String lin = "";
+            do
+            {
+                lin = sr.ReadLine();
+                if (lin != null)
+                {
+                    dataGridView.Rows.Add();
+                    String[] csv = lin.Split(',');
+                    for (int c = 0; c <= csv.GetLength(0) - 1; c++)
+                    {
+                        if (c < dataGridView.Columns.Count)
                         {
-                            excel.Cells[i + 2, j + 1] = "'" + dataGridView1[j, i].Value.ToString();
-                        }
-                        else
-                        {
-                            excel.Cells[i + 2, j + 1] = dataGridView1[j, i].Value.ToString();
+                            dataGridView.Rows[r].Cells[c].Value = csv[c];
                         }
                     }
+                    r += 1;
                 }
-
-                //设置禁止弹出保存和覆盖的询问提示框  
-                excel.DisplayAlerts = false;
-                excel.AlertBeforeOverwriting = false;
-
-                //保存工作簿  
-                excel.Application.Workbooks.Add(true).Save();
-                //保存excel文件  
-                excel.Save("..\\data.xls");
-
-                //确保Excel进程关闭  
-                excel.Quit();
-                excel = null;
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "错误提示");
-            }
+            } while (lin != null);
+            // CSVファイルクローズ
+            sr.Close();
         }
+
     }  
 
 }
