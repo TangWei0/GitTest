@@ -56,7 +56,7 @@
             // 
             this.NumericUpDown_Width.Location = new System.Drawing.Point(92, 20);
             this.NumericUpDown_Width.Maximum = new decimal(new int[] {
-            30,
+            50,
             0,
             0,
             0});
@@ -99,7 +99,7 @@
             // 
             this.NumericUpDown_Height.Location = new System.Drawing.Point(92, 56);
             this.NumericUpDown_Height.Maximum = new decimal(new int[] {
-            16,
+            50,
             0,
             0,
             0});
@@ -122,7 +122,7 @@
             // 
             this.NumericUpDown_Mine.Location = new System.Drawing.Point(92, 94);
             this.NumericUpDown_Mine.Maximum = new decimal(new int[] {
-            99,
+            999,
             0,
             0,
             0});

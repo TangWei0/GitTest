@@ -48,7 +48,6 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.exitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TableLayoutPanel_Main = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox_Mine = new System.Windows.Forms.PictureBox();
             this.pictureBox_Time = new System.Windows.Forms.PictureBox();
@@ -154,14 +153,14 @@
             // StandardToolStripMenuItem
             // 
             this.StandardToolStripMenuItem.Name = "StandardToolStripMenuItem";
-            this.StandardToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.StandardToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.StandardToolStripMenuItem.Text = "Standard(&S)";
             this.StandardToolStripMenuItem.Click += new System.EventHandler(this.StandardToolStripMenuItem_Click);
             // 
             // CustomToolStripMenuItem
             // 
             this.CustomToolStripMenuItem.Name = "CustomToolStripMenuItem";
-            this.CustomToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.CustomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.CustomToolStripMenuItem.Text = "Custom(&C)";
             this.CustomToolStripMenuItem.Click += new System.EventHandler(this.CustomToolStripMenuItem_Click);
             // 
@@ -191,18 +190,9 @@
             // 
             // helpHToolStripMenuItem
             // 
-            this.helpHToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutAToolStripMenuItem});
             this.helpHToolStripMenuItem.Name = "helpHToolStripMenuItem";
             this.helpHToolStripMenuItem.Size = new System.Drawing.Size(65, 22);
             this.helpHToolStripMenuItem.Text = "Help(&H)";
-            // 
-            // aboutAToolStripMenuItem
-            // 
-            this.aboutAToolStripMenuItem.Name = "aboutAToolStripMenuItem";
-            this.aboutAToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
-            this.aboutAToolStripMenuItem.Text = "About(&A)";
-            this.aboutAToolStripMenuItem.Click += new System.EventHandler(this.aboutAToolStripMenuItem_Click);
             // 
             // TableLayoutPanel_Main
             // 
@@ -313,7 +303,6 @@
 
         private System.Windows.Forms.MenuStrip MenuStrip_Main;
         private System.Windows.Forms.ToolStripMenuItem helpHToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem aboutAToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel TableLayoutPanel_Main;
         private System.Windows.Forms.PictureBox pictureBox_Mine;
         private System.Windows.Forms.PictureBox pictureBox_Time;

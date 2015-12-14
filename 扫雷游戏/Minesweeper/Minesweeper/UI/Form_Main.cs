@@ -12,17 +12,19 @@ using setting = Minesweeper.Properties.Settings;
 using resources = Minesweeper.Properties.Resources;
 using System.IO;
 
+
 namespace Minesweeper.UI
 {
     public partial class Form_Main : Form
     {
+        Csv csv = new Csv();
         public int nWidth;
         public int nHeight;
         public int nMineCnt;
 
         //雷区最大长和宽
-        const int MAX_WIDTH = 32;
-        const int MAX_HEIGHT = 18;
+        const int MAX_WIDTH = 52;
+        const int MAX_HEIGHT = 52;
 
         int[,] mineInfo = new int[MAX_WIDTH, MAX_HEIGHT];
         int[,] mineState = new int[MAX_WIDTH, MAX_HEIGHT];
@@ -36,12 +38,7 @@ namespace Minesweeper.UI
         bool bMouseLeft;
         bool bMouseRight;
 
-        private static string fp = "C:\\Users\\itou1\\Desktop\\OneDrive\\扫雷游戏\\Minesweeper\\Minesweeper\\data.csv";
-        private static int recordMaxNum = 10;
-        RecordInfo[] detail = new RecordInfo[recordMaxNum];        
-
-        int[,] customRecord = new int[11, 4];
-        double[] customRate = new double[11];
+        public RecordInfo[] detail = new RecordInfo[Csv.recordMaxNum];        
 
         public Form_Main()
         {
@@ -56,7 +53,7 @@ namespace Minesweeper.UI
             UpdateSize();
             SelectLevel();
 
-            ReadCsv(fp);
+            csv.ReadCsv(detail);
 
             //textBox1.Text = "";
             //for (int i = 0; i < recordMaxNum; i++)
@@ -588,15 +585,15 @@ namespace Minesweeper.UI
                 }
                 else
                 {
-                    double val =  (double)(nWidth * nHeight * time)/(double)nMineCnt;
-                    if (order(detail, val) == recordMaxNum)
+                    double val =  (double)nMineCnt/(double)(nWidth * nHeight * time);
+                    if (order(detail, val) == Csv.recordMaxNum)
                     {
                         MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
                         int j = order(detail, val);
-                        for (int i = recordMaxNum - 1; i > j; i--)
+                        for (int i = Csv.recordMaxNum - 1; i > j; i--)
                         {
                             detail[i] = detail[i - 1]; 
                         }
@@ -605,7 +602,7 @@ namespace Minesweeper.UI
                         detail[j].width = nWidth;
                         detail[j].height = nHeight;
                         detail[j].time = time;
-                        SaveCsv(fp);
+                        csv.SaveCsv(detail);
                     }
                    
                     
@@ -642,90 +639,19 @@ namespace Minesweeper.UI
         {
             UI.Form_Rank_Custom rankCustom = new UI.Form_Rank_Custom(this);
             rankCustom.ShowDialog();
+            csv.SaveCsv(detail);
         }
-
-        public void ReadCsv(String fp)
-        {
-            // CSVファイルオープン
-            StreamReader sr = new StreamReader(fp, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
-            // CSVファイルの各セルをDataGridViewに表示
-            int r = 0;
-            String lin = "";
-            do
-            {
-                lin = sr.ReadLine();
-                if (lin != null)
-                {
-                    String[] csv = lin.Split(',');
-                    for (int c = 0; c <= csv.GetLength(0) - 1; c++)
-                    {
-                        switch (c)
-                        {
-                            case 0:
-                                detail[r].efficiencyValue = Convert.ToDouble(csv[c]);
-                                break;
-                            case 1:
-                                detail[r].mine = Convert.ToInt32(csv[c]);
-                                break;
-                            case 2:
-                                detail[r].width = Convert.ToInt32(csv[c]);
-                                break;
-                            case 3:
-                                detail[r].height = Convert.ToInt32(csv[c]);
-                                break;
-                            case 4:
-                                detail[r].time = Convert.ToInt32(csv[c]);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    r += 1;
-                }
-                else
-                {
-                    detail[r].efficiencyValue = 0.0;
-                    detail[r].mine = 0;
-                    detail[r].width = 0;
-                    detail[r].height = 0;
-                    detail[r].time = 0;
-                    r += 1;
-                }
-            } while (r < recordMaxNum);
-            sr.Close();
-        }
-
-        public void SaveCsv(String fp)
-        {
-            // CSVファイルオープン
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
-                    // DataGridViewのセルのデータ取得
-            for (int r = 0; r < recordMaxNum; r++)
-            {
-                String dt = "";
-                dt = detail[r].efficiencyValue.ToString();
-                dt += detail[r].mine.ToString();
-                dt += detail[r].width.ToString();
-                dt += detail[r].height.ToString();
-                dt += detail[r].time.ToString();
-                sw.Write(dt);
-                sw.Write("\r\n");
-            }
-            // CSVファイルクローズ
-            sw.Close();
-        }
-
 
         private int order(RecordInfo[] detail, double val)
         {
-            for (int i = 0; i < recordMaxNum; i++)
+            for (int i = 0; i < Csv.recordMaxNum; i++)
             {
                 if (val > detail[i].efficiencyValue)
                 {
                     return i;
                 }
             }
-            return recordMaxNum;
+            return Csv.recordMaxNum;
         }
     }
 }
