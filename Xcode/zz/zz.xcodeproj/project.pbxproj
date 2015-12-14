@@ -13,6 +13,7 @@
 		868283B91C1DA40F008BFF7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 868283B81C1DA40F008BFF7A /* Assets.xcassets */; };
 		868283BC1C1DA40F008BFF7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 868283BA1C1DA40F008BFF7A /* LaunchScreen.storyboard */; };
 		868283C61C1DA7AD008BFF7A /* mouse.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 868283C51C1DA7AD008BFF7A /* mouse.jpg */; };
+		86A4D0231C1EFB43006C6559 /* NextPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A4D0221C1EFB43006C6559 /* NextPageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		868283BB1C1DA40F008BFF7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		868283BD1C1DA40F008BFF7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		868283C51C1DA7AD008BFF7A /* mouse.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = mouse.jpg; path = ../../../../../../Users/toui/Desktop/mouse.jpg; sourceTree = "<group>"; };
+		86A4D0221C1EFB43006C6559 /* NextPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextPageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				868283B11C1DA40F008BFF7A /* AppDelegate.swift */,
 				868283B31C1DA40F008BFF7A /* ViewController.swift */,
 				868283B51C1DA40F008BFF7A /* Main.storyboard */,
+				86A4D0221C1EFB43006C6559 /* NextPageViewController.swift */,
 				868283B81C1DA40F008BFF7A /* Assets.xcassets */,
 				868283BA1C1DA40F008BFF7A /* LaunchScreen.storyboard */,
 				868283BD1C1DA40F008BFF7A /* Info.plist */,
@@ -142,6 +145,7 @@
 			files = (
 				868283B41C1DA40F008BFF7A /* ViewController.swift in Sources */,
 				868283B21C1DA40F008BFF7A /* AppDelegate.swift in Sources */,
+				86A4D0231C1EFB43006C6559 /* NextPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +293,7 @@
 				868283C21C1DA40F008BFF7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -14,17 +14,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="KmM-kC-C7r">
-                                <rect key="frame" x="40" y="184" width="240" height="200"/>
+                                <rect key="frame" x="0.0" y="28" width="320" height="419"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o7w-ia-wzN">
-                                <rect key="frame" x="137" y="444" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HL4-2N-6zF">
+                                <rect key="frame" x="0.0" y="528" width="108" height="39"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="显示图片"/>
                                 <connections>
-                                    <segue destination="VKs-eK-bp3" kind="modal" id="e0c-P8-ie2"/>
+                                    <action selector="pictureViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d2B-zq-wBI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o7w-ia-wzN">
+                                <rect key="frame" x="200" y="527" width="120" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <state key="normal" title="下个画面"/>
+                                <connections>
+                                    <segue destination="VKs-eK-bp3" kind="modal" id="0Wz-8h-8cF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -32,7 +41,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="bu" destination="o7w-ia-wzN" id="OF7-gq-yoU"/>
                         <outlet property="iv" destination="KmM-kC-C7r" id="uHd-YV-D9S"/>
                     </connections>
                 </viewController>
@@ -40,17 +48,27 @@
             </objects>
             <point key="canvasLocation" x="219" y="129"/>
         </scene>
-        <!--View Controller-->
+        <!--Next Page View Controller-->
         <scene sceneID="ulJ-pr-Efy">
             <objects>
-                <viewController id="VKs-eK-bp3" sceneMemberID="viewController">
+                <viewController id="VKs-eK-bp3" customClass="NextPageViewController" customModule="zz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Eaw-Jk-wt8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="RuF-8H-yeY">
+                                <rect key="frame" x="3" y="149" width="314" height="270"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                            </imageView>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="T0M-mp-3UK"/>
+                    <connections>
+                        <outlet property="imageView" destination="RuF-8H-yeY" id="020-Nv-9Qs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="blg-a1-dDJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

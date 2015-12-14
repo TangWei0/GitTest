@@ -5,9 +5,6 @@
       location = "group:zz/zz.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ddz/ddz.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:swift09/swift09.xcodeproj">
    </FileRef>
    <FileRef

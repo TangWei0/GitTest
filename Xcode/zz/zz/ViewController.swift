@@ -10,15 +10,16 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var bu: UIButton!
+    
     @IBOutlet var iv: UIImageView!
+    @IBAction func pictureViewButton(sender: AnyObject) {
+        iv.image = UIImage(named : "mouse.jpg")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        iv.image = UIImage(named: "mouse.jpg")
-        
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
