@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Setting = Minesweeper.Properties.Settings; 
 
 
 namespace Minesweeper.UI
@@ -15,6 +16,7 @@ namespace Minesweeper.UI
     public partial class Form_Rank_Custom : Form
     {
         Form_Main Main;
+
         public Form_Rank_Custom(Form_Main _Main)
         {
             InitializeComponent();

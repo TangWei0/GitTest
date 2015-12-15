@@ -15,7 +15,7 @@ namespace Minesweeper.UI
         int beginner = setting.Default.Beginner;
         int intermediate = setting.Default.Intermediate;
         int expert = setting.Default.Expert;
-        double total = setting.Default.TotalOrder;
+        int total = setting.Default.TotalOrder;
         int success = setting.Default.SuccessOrder;
         
 
@@ -37,7 +37,6 @@ namespace Minesweeper.UI
             else
             {
                 double dir = (double)success / (double)total;
-                //double dir = Convert.ToDouble(success) / Convert.ToDouble(total);
                 rate = String.Format("{0:N2}%", dir*100);
             }
             Label_Success.Text = ("Total Order: " + Convert.ToString(total) +"\nSuccess Order: " + Convert.ToString(success) +"\nSuccess Rate: " + rate);

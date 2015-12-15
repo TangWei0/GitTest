@@ -55,12 +55,6 @@ namespace Minesweeper.UI
 
             csv.ReadCsv(detail);
 
-            //textBox1.Text = "";
-            //for (int i = 0; i < recordMaxNum; i++)
-            //{
-            //    textBox1.Text += String.Format(Convert.ToString(detail[i].efficiencyValue) + "\r\n");
-            //}
-
         }
 
         private void SetGame(int width, int height, int minecnt)
@@ -503,9 +497,15 @@ namespace Minesweeper.UI
                     }
                 }
             }
-            if (MessageBox.Show("您踩着地雷了", "结束", MessageBoxButtons.RetryCancel,MessageBoxIcon.Stop) == DialogResult.Retry)
+            if (MessageBox.Show("您踩着地雷了", "结束", MessageBoxButtons.OK,MessageBoxIcon.Stop) == DialogResult.OK)
             {
-                newGameNToolStripMenuItem_Click(new object(), new EventArgs());
+                Form_User user = new Form_User();
+                user.ShowDialog();
+                for (int i = 0; i < Csv.recordMaxNum; i++)
+                {
+
+                }
+                    newGameNToolStripMenuItem_Click(new object(), new EventArgs());
             }
             else
             {
@@ -653,5 +653,6 @@ namespace Minesweeper.UI
             }
             return Csv.recordMaxNum;
         }
+
     }
 }
