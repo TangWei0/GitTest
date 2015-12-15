@@ -18,15 +18,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <animations/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HL4-2N-6zF">
-                                <rect key="frame" x="0.0" y="528" width="108" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                                <state key="normal" title="显示图片"/>
-                                <connections>
-                                    <action selector="pictureViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d2B-zq-wBI"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="o7w-ia-wzN">
                                 <rect key="frame" x="200" y="527" width="120" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -36,11 +27,21 @@
                                     <segue destination="VKs-eK-bp3" kind="modal" id="0Wz-8h-8cF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HL4-2N-6zF">
+                                <rect key="frame" x="0.0" y="529" width="108" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <animations/>
+                                <state key="normal" title="显示图片"/>
+                                <connections>
+                                    <action selector="pictureViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d2B-zq-wBI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="ImageButton" destination="HL4-2N-6zF" id="hJU-g6-XHy"/>
                         <outlet property="iv" destination="KmM-kC-C7r" id="uHd-YV-D9S"/>
                     </connections>
                 </viewController>
