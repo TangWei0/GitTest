@@ -18,6 +18,8 @@ namespace Minesweeper.UI
     public partial class Form_Main : Form
     {
         Csv csv = new Csv();
+        Form_User user = new Form_User();
+        
         public int nWidth;
         public int nHeight;
         public int nMineCnt;
@@ -367,6 +369,8 @@ namespace Minesweeper.UI
                 {            
                     if (mineInfo[MouseFocus.X, MouseFocus.Y] == -1)
                     {
+                        MineView();
+                        this.Refresh();
                         GameLost();
                     }
                     if (mineInfo[MouseFocus.X, MouseFocus.Y] > 0)
@@ -389,6 +393,8 @@ namespace Minesweeper.UI
                     }
                     else
                     {
+                        MineView();
+                        this.Refresh();
                         GameLost();
                     }
                 }
@@ -484,7 +490,7 @@ namespace Minesweeper.UI
             }
         }
 
-        private void GameLost()
+        private void MineView()
         {
             Timer_Main.Enabled = false;
             for (int i = 1; i <= nWidth; i++)
@@ -497,124 +503,184 @@ namespace Minesweeper.UI
                     }
                 }
             }
-            if (MessageBox.Show("您踩着地雷了", "结束", MessageBoxButtons.OK,MessageBoxIcon.Stop) == DialogResult.OK)
-            {
-                Form_User user = new Form_User();
-                user.ShowDialog();
-                for (int i = 0; i < Csv.recordMaxNum; i++)
-                {
+        }
 
-                }
-                    newGameNToolStripMenuItem_Click(new object(), new EventArgs());
-            }
-            else
+        private void GameLost()
+        {
+            if (MessageBox.Show("您踩着地雷了\r\n不要气馁，请留下你的大名，再战江湖", "结束", MessageBoxButtons.OK,MessageBoxIcon.Stop) == DialogResult.OK)
             {
-                Application.Exit();
+                user.ShowDialog();
+                int row = SearchName(detail,user.usename);
+                if (row == Csv.recordMaxNum)
+                {
+                    if (MessageBox.Show("很遗憾，江湖风云榜中还没有您的大名。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }
+                else
+                {
+                    detail[row].total++;
+                    csv.SaveOneRowCsv(detail, row);
+                    detail[row].successRate = Math.Round(((double)detail[row].success / (double)detail[row].total), 2, MidpointRounding.AwayFromZero);
+                    if (MessageBox.Show("很遗憾，江湖风云榜没有发生变化。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }            
             }
         }
 
         private void GameWin()
         {
-            bool check = true;
-            int nCnt = 0;
             for (int i = 1; i <= nWidth; i++)
             {
                 for (int j = 1; j <= nHeight; j++)
                 {
-                    if (mineInfo[i, j] == -1 && mineState[i, j] == 2)
+                    if (mineInfo[i, j] == -1 && mineState[i, j] != 2)
                     {
-                        nCnt++;
+                        return;
                     }
-                    if (mineInfo[i, j] != -1 && mineState[i, j] != 1)
-                    {
-                        check = false;
-                        break;
-                    }
-                }
-                if (!check)
-                {
-                    return;
                 }
             }
-            if (nCnt == nMineCnt && check)
-            {
-                Timer_Main.Enabled = false;
-                MessageBox.Show(String.Format("游戏胜利！　时间：　{0}秒", Label_Time.Text), "恭喜", MessageBoxButtons.OK,MessageBoxIcon.Information);
-                setting.Default.SuccessOrder++;
-                setting.Default.Save();
 
-                int time = Convert.ToInt32(Label_Time.Text);
-                if (nWidth == 10 && nHeight == 10 && nMineCnt == 10)
+            Timer_Main.Enabled = false;
+            MessageBox.Show(String.Format("游戏胜利！　时间：　{0}秒", Label_Time.Text), "恭喜", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            setting.Default.SuccessOrder++;
+            setting.Default.Save();
+
+            int time = Convert.ToInt32(Label_Time.Text);
+            if (nWidth == 10 && nHeight == 10 && nMineCnt == 10)
+            {
+                if (time < setting.Default.Beginner)
                 {
-                    if (time < setting.Default.Beginner)
-                    {
-                        setting.Default.Beginner = time;
-                        setting.Default.Save();
-                        StandardToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                else if (nWidth == 16 && nHeight == 16 && nMineCnt == 40)
-                {
-                    if (time < setting.Default.Intermediate)
-                    {
-                        setting.Default.Intermediate = time;
-                        setting.Default.Save();
-                        StandardToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-                else if (nWidth == 30 && nHeight == 16 && nMineCnt == 99)
-                {
-                    if (time < setting.Default.Expert)
-                    {
-                        setting.Default.Expert = time;
-                        setting.Default.Save();
-                        StandardToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    setting.Default.Beginner = time;
+                    setting.Default.Save();
+                    StandardToolStripMenuItem_Click(new object(), new EventArgs());
                 }
                 else
                 {
-                    double val =  (double)nMineCnt/(double)(nWidth * nHeight * time);
-                    if (order(detail, val) == Csv.recordMaxNum)
+                    MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (nWidth == 16 && nHeight == 16 && nMineCnt == 40)
+            {
+                if (time < setting.Default.Intermediate)
+                {
+                    setting.Default.Intermediate = time;
+                    setting.Default.Save();
+                    StandardToolStripMenuItem_Click(new object(), new EventArgs());
+                }
+                else
+                {
+                    MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else if (nWidth == 30 && nHeight == 16 && nMineCnt == 99)
+            {
+                if (time < setting.Default.Expert)
+                {
+                    setting.Default.Expert = time;
+                    setting.Default.Save();
+                    StandardToolStripMenuItem_Click(new object(), new EventArgs());
+                }
+                else
+                {
+                    MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+
+            if (MessageBox.Show("您挑战成功，留下您的大名吧", "成功", MessageBoxButtons.OK, MessageBoxIcon.Stop) == DialogResult.OK)
+            {
+                user.ShowDialog();
+                double efficiency = Math.Round(((double) nMineCnt/(double)(nWidth * nHeight * time)), 2, MidpointRounding.AwayFromZero);
+                
+                int nameRow = SearchName(detail,user.usename);
+                int efficiencyRow = SearchEfficiency(detail,efficiency);
+                if (nameRow == Csv.recordMaxNum && efficiencyRow == Csv.recordMaxNum)
+                {
+                    if (MessageBox.Show("很遗憾，江湖风云榜中还没有您的大名。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                     {
-                        MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
                     }
                     else
                     {
-                        int j = order(detail, val);
-                        for (int i = Csv.recordMaxNum - 1; i > j; i--)
-                        {
-                            detail[i] = detail[i - 1]; 
-                        }
-                        detail[j].efficiencyValue = val;
-                        detail[j].mine = nMineCnt;
-                        detail[j].width = nWidth;
-                        detail[j].height = nHeight;
-                        detail[j].time = time;
-                        csv.SaveCsv(detail);
+                        Application.Exit();
                     }
-                   
+                }
+
+                else if (nameRow == Csv.recordMaxNum && efficiencyRow < Csv.recordMaxNum)
+                {
+                    for (int i= Csv.recordMaxNum-1 ; i>efficiencyRow ;i--)
+                    {
+                        detail[i] = detail[i-1];
+                        csv.SaveOneRowCsv(detail,i);
+                    }
+                    detail[efficiencyRow].user = user.usename;
+                    detail[efficiencyRow].efficiencyValue = efficiency;
+                    detail[efficiencyRow].mine = nMineCnt;
+                    detail[efficiencyRow].width = nWidth;
+                    detail[efficiencyRow].height = nHeight;
+                    detail[efficiencyRow].time = time;
+                    detail[efficiencyRow].success = 1;
+                    detail[efficiencyRow].total = 1;
+                    detail[efficiencyRow].successRate = 1.0;
+                    csv.SaveOneRowCsv(detail,efficiencyRow);
+
+                    if (MessageBox.Show("恭喜您已进入扫雷风云榜。\r\n点击[OK]再来一盘，让您的成绩百尺竿头更进一步！\r\n点击[Cancel]养精蓄锐重振雄风", "恭喜", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }
+
+                else if (nameRow < Csv.recordMaxNum && efficiencyRow == Csv.recordMaxNum)
+                {
+                    detail[nameRow].success++;
+                    detail[nameRow].total++;
+                    csv.SaveOneRowCsv(detail,nameRow);
+                    detail[nameRow].successRate = Math.Round(((double)detail[nameRow].success / (double)detail[nameRow].total), 4, MidpointRounding.AwayFromZero);
+
+                    if (MessageBox.Show("很遗憾您未能突破自己。\r\n点击[OK]再来一盘，让您的成绩百尺竿头更进一步！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                    {
+                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
                     
                 }
 
-                if (MessageBox.Show("再来一盘？", "驰骋沙场", MessageBoxButtons.RetryCancel, MessageBoxIcon.Question) == DialogResult.Retry)
-                {
-                    newGameNToolStripMenuItem_Click(new object(), new EventArgs());
-                }
                 else
                 {
-                    Application.Exit();
+                    detail[nameRow].efficiencyValue = efficiency;
+                    detail[nameRow].width = nWidth;
+                    detail[nameRow].height = nHeight;
+                    detail[nameRow].time = time;
+                    detail[nameRow].success++;
+                    detail[nameRow].total++;
+                    detail[nameRow].successRate =  Math.Round(((double)detail[nameRow].success / (double)detail[nameRow].total), 4, MidpointRounding.AwayFromZero);
+                    if (detail[nameRow].efficiencyValue == detail[efficiencyRow].efficiencyValue)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+
                 }
             }
         }
@@ -639,20 +705,38 @@ namespace Minesweeper.UI
         {
             UI.Form_Rank_Custom rankCustom = new UI.Form_Rank_Custom(this);
             rankCustom.ShowDialog();
-            csv.SaveCsv(detail);
+            csv.SaveRowsCsv(detail);
         }
 
-        private int order(RecordInfo[] detail, double val)
+        private int SearchEfficiency(RecordInfo[] detail, double val)
         {
             for (int i = 0; i < Csv.recordMaxNum; i++)
             {
-                if (val > detail[i].efficiencyValue)
+                if (val >= detail[i].efficiencyValue)
                 {
                     return i;
                 }
             }
             return Csv.recordMaxNum;
         }
+
+        private int SearchName(RecordInfo[] detail, string name)
+        {
+            for (int i = 0; i < Csv.recordMaxNum; i++)
+            {
+                if (name == detail[i].user)
+                {
+                    return i;
+                }
+            }
+            return Csv.recordMaxNum;
+        }
+
+        private int SearchSuccessRate(RecordInfo[] detail, double val)
+        {
+            return 1;
+        }
+
 
     }
 }

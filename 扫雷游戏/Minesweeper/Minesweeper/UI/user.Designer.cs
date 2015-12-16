@@ -73,7 +73,7 @@
             this.Name = "Form_User";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Form_User";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_User_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_User_FormClosing_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 

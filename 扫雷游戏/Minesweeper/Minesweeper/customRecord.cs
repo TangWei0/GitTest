@@ -47,32 +47,35 @@ namespace Minesweeper
                                 detail[row].user = csv[column];
                                 break;
                             case 1:
-                                detail[row].efficiencyValue = Convert.ToDouble(csv[column]);
-                                break;
-                            case 2:
                                 detail[row].mine = Convert.ToInt32(csv[column]);
                                 break;
-                            case 3:
+                            case 2:
                                 detail[row].width = Convert.ToInt32(csv[column]);
                                 break;
-                            case 4:
+                            case 3:
                                 detail[row].height = Convert.ToInt32(csv[column]);
                                 break;
-                            case 5:
+                            case 4:
                                 detail[row].time = Convert.ToInt32(csv[column]);
                                 break;
-                            case 6:
+                            case 5:
                                 detail[row].success = Convert.ToInt32(csv[column]);
                                 break;
-                            case 7:
+                            case 6:
                                 detail[row].total = Convert.ToInt32(csv[column]);
-                                break;
-                            case 8:
-                                detail[row].successRate = Convert.ToDouble(csv[column]);
                                 break;
                             default:
                                 break;
                         }
+                    }
+                    detail[row].efficiencyValue = Math.Round(((double)detail[row].mine / (double)(detail[row].width * detail[row].height * detail[row].time)), 2, MidpointRounding.AwayFromZero);
+                    if (detail[row].total == 0)
+                    {
+                        detail[row].successRate = 0.0;
+                    }
+                    else
+                    {
+                        detail[row].successRate = Math.Round(((double)detail[row].success / (double)detail[row].total), 4, MidpointRounding.AwayFromZero);
                     }
                     row += 1;
                 }
@@ -93,33 +96,38 @@ namespace Minesweeper
             sr.Close();
         }
 
-        public void SaveCsv(RecordInfo[] detail)
+        public void SaveOneRowCsv(RecordInfo[] detail, int row)
         {
             // CSVファイルオープン
             StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
-            // DataGridViewのセルのデータ取得
-            for (int row = 0; row < recordMaxNum; row++)
-            {
-                string rowCsvInfo = rowCsvCreat(detail, row);
-                sw.Write(rowCsvInfo);
-                sw.Write("\r\n");
-            }
+            string rowCsvInfo = RowCsvCreat(detail, row);
+            sw.Write(rowCsvInfo); 
             // CSVファイルクローズ
             sw.Close();
         }
 
-        private string rowCsvCreat(RecordInfo[] detail,int row)
+        public void SaveRowsCsv(RecordInfo[] detail)
+        {
+            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            for (int row = 0; row < recordMaxNum; row++)
+            {
+                string rowCsvInfo = "";
+                rowCsvInfo = RowCsvCreat(detail, row);
+                sw.Write(rowCsvInfo);
+            }
+            sw.Close();
+        }
+
+        private string RowCsvCreat(RecordInfo[] detail,int row)
         {
             string rowCsvInfo = "";
             rowCsvInfo += detail[row].user + ",";
-            rowCsvInfo += detail[row].efficiencyValue.ToString() + ",";
             rowCsvInfo += detail[row].mine.ToString() + ",";
             rowCsvInfo += detail[row].width.ToString() + ",";
             rowCsvInfo += detail[row].height.ToString() + ",";
             rowCsvInfo += detail[row].time.ToString() + ",";
             rowCsvInfo += detail[row].success.ToString() + ",";
-            rowCsvInfo += detail[row].total.ToString() + ",";
-            rowCsvInfo += detail[row].successRate.ToString();
+            rowCsvInfo += detail[row].total.ToString();
             return rowCsvInfo;
         }
 

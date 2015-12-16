@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Minesweeper.UI
 {
-    public partial class Form_Setting : Form
+    partial class Form_Setting : Form
     {
         Form_Main Main;
 
