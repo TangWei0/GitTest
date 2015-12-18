@@ -19,6 +19,7 @@ namespace Minesweeper
         public int success;
         public int total;
         public double successRate;
+        public string date;
     }
 
     public class Csv
@@ -64,46 +65,31 @@ namespace Minesweeper
                             case 6:
                                 detail[row].total = Convert.ToInt32(csv[column]);
                                 break;
+                            case 7:
+                                detail[row].date = csv[column];
+                                break;
                             default:
                                 break;
                         }
                     }
-                    detail[row].efficiencyValue = Math.Round(((double)detail[row].mine / (double)(detail[row].width * detail[row].height * detail[row].time)), 2, MidpointRounding.AwayFromZero);
+                    detail[row].efficiencyValue = (double)(detail[row].width * detail[row].height) /(double)(detail[row].mine * detail[row].time);
                     if (detail[row].total == 0)
                     {
                         detail[row].successRate = 0.0;
                     }
                     else
                     {
-                        detail[row].successRate = Math.Round(((double)detail[row].success / (double)detail[row].total), 4, MidpointRounding.AwayFromZero);
+                        detail[row].successRate = (double)detail[row].success / (double)detail[row].total;
                     }
                     row += 1;
                 }
                 else
                 {
-                    detail[row].user = "N/A";
-                    detail[row].efficiencyValue = 0.0;
-                    detail[row].mine = 0;
-                    detail[row].width = 0;
-                    detail[row].height = 0;
-                    detail[row].time = 0;
-                    detail[row].success = 0;
-                    detail[row].total = 0;
-                    detail[row].successRate = 0.0;
+                    detail[row] = new RecordInfo();
                     row += 1;
                 }
             } while (row < recordMaxNum);
             sr.Close();
-        }
-
-        public void SaveOneRowCsv(RecordInfo[] detail, int row)
-        {
-            // CSVファイルオープン
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
-            string rowCsvInfo = RowCsvCreat(detail, row);
-            sw.Write(rowCsvInfo); 
-            // CSVファイルクローズ
-            sw.Close();
         }
 
         public void SaveRowsCsv(RecordInfo[] detail)
@@ -111,9 +97,15 @@ namespace Minesweeper
             StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
             for (int row = 0; row < recordMaxNum; row++)
             {
+                if (detail[row].user == null)
+                {
+                    sw.Close();
+                    return;
+                }
                 string rowCsvInfo = "";
                 rowCsvInfo = RowCsvCreat(detail, row);
                 sw.Write(rowCsvInfo);
+                sw.Write("\n");
             }
             sw.Close();
         }
@@ -127,7 +119,8 @@ namespace Minesweeper
             rowCsvInfo += detail[row].height.ToString() + ",";
             rowCsvInfo += detail[row].time.ToString() + ",";
             rowCsvInfo += detail[row].success.ToString() + ",";
-            rowCsvInfo += detail[row].total.ToString();
+            rowCsvInfo += detail[row].total.ToString() + ",";
+            rowCsvInfo += detail[row].date;
             return rowCsvInfo;
         }
 

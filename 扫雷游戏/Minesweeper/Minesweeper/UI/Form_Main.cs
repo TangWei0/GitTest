@@ -19,7 +19,8 @@ namespace Minesweeper.UI
     {
         Csv csv = new Csv();
         Form_User user = new Form_User();
-        
+
+        public int message;
         public int nWidth;
         public int nHeight;
         public int nMineCnt;
@@ -40,7 +41,9 @@ namespace Minesweeper.UI
         bool bMouseLeft;
         bool bMouseRight;
 
-        public RecordInfo[] detail = new RecordInfo[Csv.recordMaxNum];        
+
+        string Date = System.DateTime.Now.ToString("D");
+        public RecordInfo[] detail = new RecordInfo[Csv.recordMaxNum + 1];        
 
         public Form_Main()
         {
@@ -55,7 +58,9 @@ namespace Minesweeper.UI
             UpdateSize();
             SelectLevel();
 
+            
             csv.ReadCsv(detail);
+            
 
         }
 
@@ -260,11 +265,6 @@ namespace Minesweeper.UI
             }
         }
 
-        private void aboutAToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //ShellAbout(this.Handle, "Minesweeper", "A minesweeper game using CSharp language.", this.Icon.Handle);
-        }
-
         private void settingSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UI.Form_Setting setting = new UI.Form_Setting(this);
@@ -361,8 +361,6 @@ namespace Minesweeper.UI
                 if (Timer_Main.Enabled == false)
                 {
                     Timer_Main.Enabled = true;
-                    setting.Default.TotalOrder++;
-                    setting.Default.Save();
                 }
  
                 if (bMouseLeft && bMouseRight)
@@ -513,28 +511,17 @@ namespace Minesweeper.UI
                 int row = SearchName(detail,user.usename);
                 if (row == Csv.recordMaxNum)
                 {
-                    if (MessageBox.Show("很遗憾，江湖风云榜中还没有您的大名。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                    {
-                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        Application.Exit();
-                    }
+                    message = 3;
+                    GameDialog(message);
                 }
                 else
                 {
                     detail[row].total++;
-                    csv.SaveOneRowCsv(detail, row);
-                    detail[row].successRate = Math.Round(((double)detail[row].success / (double)detail[row].total), 2, MidpointRounding.AwayFromZero);
-                    if (MessageBox.Show("很遗憾，江湖风云榜没有发生变化。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                    {
-                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        Application.Exit();
-                    }
+                    detail[row].date = Date;
+                    csv.SaveRowsCsv(detail);
+                    detail[row].successRate = (double)detail[row].success / (double)detail[row].total;
+                    message = 4;
+                    GameDialog(message);
                 }            
             }
         }
@@ -553,50 +540,8 @@ namespace Minesweeper.UI
             }
 
             Timer_Main.Enabled = false;
-            MessageBox.Show(String.Format("游戏胜利！　时间：　{0}秒", Label_Time.Text), "恭喜", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            setting.Default.SuccessOrder++;
-            setting.Default.Save();
-
             int time = Convert.ToInt32(Label_Time.Text);
-            if (nWidth == 10 && nHeight == 10 && nMineCnt == 10)
-            {
-                if (time < setting.Default.Beginner)
-                {
-                    setting.Default.Beginner = time;
-                    setting.Default.Save();
-                    StandardToolStripMenuItem_Click(new object(), new EventArgs());
-                }
-                else
-                {
-                    MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else if (nWidth == 16 && nHeight == 16 && nMineCnt == 40)
-            {
-                if (time < setting.Default.Intermediate)
-                {
-                    setting.Default.Intermediate = time;
-                    setting.Default.Save();
-                    StandardToolStripMenuItem_Click(new object(), new EventArgs());
-                }
-                else
-                {
-                    MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else if (nWidth == 30 && nHeight == 16 && nMineCnt == 99)
-            {
-                if (time < setting.Default.Expert)
-                {
-                    setting.Default.Expert = time;
-                    setting.Default.Save();
-                    StandardToolStripMenuItem_Click(new object(), new EventArgs());
-                }
-                else
-                {
-                    MessageBox.Show("很遗憾，没能破记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            MessageBox.Show(String.Format("游戏胜利！　时间：　{0}秒", Label_Time.Text), "恭喜", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             if (MessageBox.Show("您挑战成功，留下您的大名吧", "成功", MessageBoxButtons.OK, MessageBoxIcon.Stop) == DialogResult.OK)
             {
@@ -607,14 +552,8 @@ namespace Minesweeper.UI
                 int efficiencyRow = SearchEfficiency(detail,efficiency);
                 if (nameRow == Csv.recordMaxNum && efficiencyRow == Csv.recordMaxNum)
                 {
-                    if (MessageBox.Show("很遗憾，江湖风云榜中还没有您的大名。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                    {
-                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        Application.Exit();
-                    }
+                    message = 3;
+                    GameDialog(message);
                 }
 
                 else if (nameRow == Csv.recordMaxNum && efficiencyRow < Csv.recordMaxNum)
@@ -622,7 +561,6 @@ namespace Minesweeper.UI
                     for (int i= Csv.recordMaxNum-1 ; i>efficiencyRow ;i--)
                     {
                         detail[i] = detail[i-1];
-                        csv.SaveOneRowCsv(detail,i);
                     }
                     detail[efficiencyRow].user = user.usename;
                     detail[efficiencyRow].efficiencyValue = efficiency;
@@ -633,34 +571,23 @@ namespace Minesweeper.UI
                     detail[efficiencyRow].success = 1;
                     detail[efficiencyRow].total = 1;
                     detail[efficiencyRow].successRate = 1.0;
-                    csv.SaveOneRowCsv(detail,efficiencyRow);
+                    detail[efficiencyRow].date = Date;
+                    csv.SaveRowsCsv(detail);
 
-                    if (MessageBox.Show("恭喜您已进入扫雷风云榜。\r\n点击[OK]再来一盘，让您的成绩百尺竿头更进一步！\r\n点击[Cancel]养精蓄锐重振雄风", "恭喜", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                    {
-                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        Application.Exit();
-                    }
+                    message = 2;
+                    GameDialog(message);
                 }
 
                 else if (nameRow < Csv.recordMaxNum && efficiencyRow == Csv.recordMaxNum)
                 {
                     detail[nameRow].success++;
                     detail[nameRow].total++;
-                    csv.SaveOneRowCsv(detail,nameRow);
-                    detail[nameRow].successRate = Math.Round(((double)detail[nameRow].success / (double)detail[nameRow].total), 4, MidpointRounding.AwayFromZero);
+                    detail[nameRow].date = Date;
+                    csv.SaveRowsCsv(detail);
+                    detail[nameRow].successRate = (double)detail[nameRow].success / (double)detail[nameRow].total;
 
-                    if (MessageBox.Show("很遗憾您未能突破自己。\r\n点击[OK]再来一盘，让您的成绩百尺竿头更进一步！\r\n点击[Cancel]养精蓄锐重振雄风", "很遗憾", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-                    {
-                        newGameNToolStripMenuItem_Click(new object(), new EventArgs());
-                    }
-                    else
-                    {
-                        Application.Exit();
-                    }
-                    
+                    message = 1;
+                    GameDialog(message);
                 }
 
                 else
@@ -671,41 +598,48 @@ namespace Minesweeper.UI
                     detail[nameRow].time = time;
                     detail[nameRow].success++;
                     detail[nameRow].total++;
-                    detail[nameRow].successRate =  Math.Round(((double)detail[nameRow].success / (double)detail[nameRow].total), 4, MidpointRounding.AwayFromZero);
+                    detail[nameRow].successRate =  (double)detail[nameRow].success / (double)detail[nameRow].total;
+                    detail[nameRow].date = Date;
                     if (detail[nameRow].efficiencyValue == detail[efficiencyRow].efficiencyValue)
                     {
-
+                        int successRateRow = SearchSuccessRate(detail, nameRow, efficiencyRow);
+                        if (successRateRow < efficiencyRow)
+                        {
+                            detail[Csv.recordMaxNum] = detail[nameRow];
+                            for (int i = nameRow; i > efficiencyRow; i--)
+                            {
+                                detail[i] = detail[i - 1];
+                            }
+                            detail[efficiencyRow] = detail[Csv.recordMaxNum];
+                        }
                     }
                     else
                     {
-
+                        detail[Csv.recordMaxNum] = detail[nameRow];
+                        for (int i = nameRow; i > efficiencyRow; i++)
+                        {
+                            detail[i] = detail[i - 1];
+                        }
+                        detail[efficiencyRow] = detail[Csv.recordMaxNum];
                     }
+                    csv.SaveRowsCsv(detail);
+                    
+                    message = 0;
+                    GameDialog(message);
 
+                    
                 }
             }
         }
 
-        private void StandardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UI.Form_Rank_Standard rankStandard = new UI.Form_Rank_Standard();
-            rankStandard.ShowDialog();
-        }
-
-        private void ClearHistorytoolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("确定清除历史记录吗？", "清除历史记录", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK)
-            {
-                setting.Default.TotalOrder = 0;
-                setting.Default.SuccessOrder = 0;
-                setting.Default.Save();
-            }
-        }
-
-        private void CustomToolStripMenuItem_Click(object sender, EventArgs e)
+        private void rankRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UI.Form_Rank_Custom rankCustom = new UI.Form_Rank_Custom(this);
             rankCustom.ShowDialog();
-            csv.SaveRowsCsv(detail);
+            if (rankCustom.update)
+            {
+                csv.SaveRowsCsv(detail);
+            }
         }
 
         private int SearchEfficiency(RecordInfo[] detail, double val)
@@ -724,7 +658,7 @@ namespace Minesweeper.UI
         {
             for (int i = 0; i < Csv.recordMaxNum; i++)
             {
-                if (name == detail[i].user)
+                if (name == detail[i].user || detail[i].user == null)
                 {
                     return i;
                 }
@@ -732,11 +666,62 @@ namespace Minesweeper.UI
             return Csv.recordMaxNum;
         }
 
-        private int SearchSuccessRate(RecordInfo[] detail, double val)
+        private int SearchSuccessRate(RecordInfo[] detail, int nameRow, int efficiencyRow)
         {
-            return 1;
+            do
+            {
+                if (detail[nameRow].successRate > detail[efficiencyRow].successRate)
+                {
+                    return efficiencyRow;
+                }
+                else
+                {
+                    efficiencyRow++;
+                }
+            } while (efficiencyRow >= nameRow);
+
+            return nameRow;
         }
 
+        private void GameDialog(int message)
+        {
+            string dialogMessage = "";
+            string dialogTitle ="";
+            switch (message)
+            {
+                case 0:
+                    dialogMessage = "恭喜您已突破自己。\r\n点击[OK]乘热打铁再来一盘，让您的成绩百尺竿头更进一步！\r\n点击[Cancel]养精蓄锐重振雄风";
+                    dialogTitle = "恭喜";
+                    break;
+                case 1:
+                    dialogMessage = "很遗憾您未能突破自己。\r\n点击[OK]再来一盘，让您的成绩百尺竿头更进一步！\r\n点击[Cancel]养精蓄锐重振雄风";
+                    dialogTitle = "";
+                    break;
+                case 2:
+                    dialogMessage = "恭喜您已进入扫雷风云榜。\r\n点击[OK]再来一盘，让您的成绩百尺竿头更进一步！\r\n点击[Cancel]养精蓄锐重振雄风";
+                    dialogTitle = "恭喜";
+                    break;
+                case 3:
+                    dialogMessage = "很遗憾，江湖风云榜中还没有您的大名。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风";
+                    dialogTitle = "很遗憾";
+                    break;
+                case 4:
+                    dialogMessage = "很遗憾，江湖风云榜没有发生变化。\r\n点击[OK]再来一盘，让您的大名留名千史吧！\r\n点击[Cancel]养精蓄锐重振雄风";
+                    dialogTitle = "很遗憾";
+                    break;
+                default:
+                    break;
+            }
+            if (MessageBox.Show(dialogMessage, dialogTitle, MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                newGameNToolStripMenuItem_Click(new object(), new EventArgs());
+            }
+            else
+            {
+                Application.Exit();
+            }
 
+        }
+    
     }
 }

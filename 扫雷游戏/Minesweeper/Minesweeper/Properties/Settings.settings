@@ -11,20 +11,5 @@
     <Setting Name="minecnt" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
-    <Setting Name="Beginner" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">999</Value>
-    </Setting>
-    <Setting Name="Intermediate" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">999</Value>
-    </Setting>
-    <Setting Name="Expert" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">999</Value>
-    </Setting>
-    <Setting Name="SuccessOrder" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="TotalOrder" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

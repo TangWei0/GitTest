@@ -22,7 +22,6 @@ C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper
 C:\Users\偉\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csproj.GenerateResource.Cache
 C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Main.resources
 C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Rank_Custom.resources
-C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Rank_Standard.resources
 C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_Setting.resources
 C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.Properties.Resources.resources
 C:\Users\itou1\Desktop\OneDrive\扫雷游戏\Minesweeper\Minesweeper\obj\Debug\Minesweeper.UI.Form_User.resources

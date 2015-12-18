@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_User));
             this.TextBoxName = new System.Windows.Forms.TextBox();
             this.LabelName = new System.Windows.Forms.Label();
             this.ButtonConfirm = new System.Windows.Forms.Button();
@@ -69,6 +70,7 @@
             this.Controls.Add(this.LabelName);
             this.Controls.Add(this.TextBoxName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form_User";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
