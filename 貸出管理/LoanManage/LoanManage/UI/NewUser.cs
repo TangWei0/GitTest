@@ -13,12 +13,12 @@ namespace LoanManage.UI
     public partial class NewUser : Form
     {
         DBConnect DBConnect = new DBConnect();
+        Information Information = new Information();
 
         DateTime now = DateTime.Now;
         DateTime date;
-        public int year, month, day;
+        public int year;
         public string name,sex,phone,address;
-        bool todayCheck = true;
 
         public NewUser()
         {   
@@ -27,6 +27,10 @@ namespace LoanManage.UI
 
         private void NewUser_Load(object sender, EventArgs e)
         {
+            foreach (string departname in Information.DepartmentName)
+            {
+                DepartmentNameComboBox.Items.Add(departname);
+            }
             NameTextBox.Text = "";
             MaleRadioButton.Checked = true;
             TodayResume();
@@ -48,73 +52,18 @@ namespace LoanManage.UI
 
         private void YearNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (YearNumericUpDown.Value > now.Year || YearNumericUpDown.Value < 1900)
+            if (YearNumericUpDown.Value > now.Year + 4 || YearNumericUpDown.Value < 1900)
             {
                 MessageBox.Show("正しい年数を入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 TodayResume();
             }
-            if (YearNumericUpDown.Value != now.Year)
-            {
-                todayCheck = false;
-            }
             year = Convert.ToInt32(YearNumericUpDown.Value);
-        }
-
-        private void MonthNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            if (todayCheck && MonthNumericUpDown.Value > now.Month || MonthNumericUpDown.Value > 12 || MonthNumericUpDown.Value < 1)
-            {
-                MessageBox.Show("正しい月を入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                TodayResume();
-            }
-            if (!todayCheck || MonthNumericUpDown.Value != now.Month)
-            {
-                todayCheck = false;
-            }
-            month = Convert.ToInt32(MonthNumericUpDown.Value);
-        }
-
-        private void DayNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            if (todayCheck && DayNumericUpDown.Value > now.Day || DayNumericUpDown.Value > DayMaxCheck(year,month) || DayNumericUpDown.Value < 1)
-            {
-                MessageBox.Show("正しい日を入力してください", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                TodayResume();
-            }
-            day = Convert.ToInt32(DayNumericUpDown.Value);
-        }
-
-        private int DayMaxCheck(int year,int month)
-        {
-            if (month == 4 || month == 6 || month == 9 || month == 11)
-            {
-                return 30;
-            }
-            else if (month == 2)
-            {
-                if (year % 4 == 0)
-                {
-                    return 29;
-                }
-                else
-                {
-                    return 28;
-                }
-            }
-            else
-            {
-                return 31;
-            }
         }
 
         private void TodayResume()
         {
             YearNumericUpDown.Value = now.Year;
-            MonthNumericUpDown.Value = now.Month;
-            DayNumericUpDown.Value = now.Day;
             year = now.Year;
-            month = now.Month;
-            day = now.Day;
         }
 
         private void NameTextBox_TextChanged(object sender, EventArgs e)
@@ -153,10 +102,9 @@ namespace LoanManage.UI
         {
             if (name == String.Empty || phone == String.Empty || address == String.Empty)
             {
-                MessageBox.Show("未入力項目があります！","入力情報エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("未入力項目があります！", "入力情報エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            date = new DateTime(year,month,day);
 
             DataSet UserDataSet = DBConnect.DataSet(DBConnect.UserAdapter());
             DataTable UserDataTable = UserDataSet.Tables["ID"];
@@ -203,5 +151,17 @@ namespace LoanManage.UI
             return true;
         }
 
+        private void DepartmentNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string s = DepartmentNameComboBox.Text;
+            SubjectNameComboBox.Items.Clear();
+            foreach (string subjectname in Information.SelectSubject(s))
+            {
+                SubjectNameComboBox.Items.Add(subjectname);
+            }
+        }
+
+
+      
     }
 }

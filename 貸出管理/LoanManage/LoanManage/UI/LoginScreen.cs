@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 
 namespace LoanManage.UI
 {
@@ -16,8 +9,7 @@ namespace LoanManage.UI
         DBConnect DBConnect = new DBConnect();
         public string user;
         public string userpass;
-
-        
+        public bool manage = true;
 
         public LoginScreen()
         {
@@ -54,8 +46,15 @@ namespace LoanManage.UI
 
             foreach (DataRow data in LoginDataTable.Rows)
 			{
-                if (data["UserID"].ToString() == IDTextBox.Text && data["Password"].ToString() == PasswordTextBox.Text)
+                if (Convert.ToString(data["UserID"]) == IDTextBox.Text && Convert.ToString(data["Password"]) == PasswordTextBox.Text)
                 {
+                    if (manage == true)
+                    {
+                        if (Convert.ToBoolean(data["Manage"]) != true)
+                        {
+                            break;
+                        }
+                    }
                     ErrorCheck = false;
                     this.Hide();
                     UI.Main main = new UI.Main(this);
@@ -77,6 +76,17 @@ namespace LoanManage.UI
             Application.Exit();
         }
 
+        private void ManageRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ManageRadioButton.Checked)
+            {
+                manage = true;
+            }
+            else
+            {
+                manage = false;
+            }
+        }
         
     }
 }

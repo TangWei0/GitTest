@@ -33,7 +33,7 @@
             this.PasswordChangeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ユーザ管理UToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UserManageUToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UserChangeCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewUserNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UserEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +46,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainMenuMToolStripMenuItem,
-            this.ユーザ管理UToolStripMenuItem,
+            this.UserManageUToolStripMenuItem,
             this.ヘルプHToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -83,13 +83,13 @@
             this.ExitEToolStripMenuItem.Text = "終了(&E)";
             this.ExitEToolStripMenuItem.Click += new System.EventHandler(this.ExitEToolStripMenuItem_Click);
             // 
-            // ユーザ管理UToolStripMenuItem
+            // UserManageUToolStripMenuItem
             // 
-            this.ユーザ管理UToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.UserManageUToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.UserChangeCToolStripMenuItem});
-            this.ユーザ管理UToolStripMenuItem.Name = "ユーザ管理UToolStripMenuItem";
-            this.ユーザ管理UToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
-            this.ユーザ管理UToolStripMenuItem.Text = "ユーザ管理(&U)";
+            this.UserManageUToolStripMenuItem.Name = "UserManageUToolStripMenuItem";
+            this.UserManageUToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
+            this.UserManageUToolStripMenuItem.Text = "ユーザ管理(&U)";
             // 
             // UserChangeCToolStripMenuItem
             // 
@@ -138,6 +138,7 @@
             this.MaximizeBox = false;
             this.Name = "Main";
             this.Text = "Main";
+            this.Load += new System.EventHandler(this.Main_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -149,7 +150,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem MainMenuMToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ユーザ管理UToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem UserManageUToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PasswordChangeCToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;

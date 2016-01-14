@@ -19,7 +19,7 @@ namespace LoanManage
 
         public SqlDataAdapter LoginAdapter()
         {      
-            SqlDataAdapter loginAdapter = new SqlDataAdapter("Select UserID,Password From customer",  DBConnectPath());
+            SqlDataAdapter loginAdapter = new SqlDataAdapter("Select UserID,Password,Manage From customer",  DBConnectPath());
             return loginAdapter;
         }
 

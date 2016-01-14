@@ -17,6 +17,10 @@ namespace LoanManage.UI
         {
             InitializeComponent();
             Login = _Login;
+            if (Login.manage == false)
+            {
+                UserManageUToolStripMenuItem.Visible = false;
+            }
         }
 
         private void ExitEToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,6 +57,11 @@ namespace LoanManage.UI
             UI.UserEdit editUser = new UI.UserEdit();
             editUser.StartPosition = FormStartPosition.CenterScreen;
             editUser.Show();
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
         }
 
     }
