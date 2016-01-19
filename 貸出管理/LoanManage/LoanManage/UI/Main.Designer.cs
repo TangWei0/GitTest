@@ -39,7 +39,19 @@
             this.UserEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UserDeleteDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UserDataGridView = new System.Windows.Forms.DataGridView();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GraduationYear = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GraduationSubject = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GraduationMajor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Phone1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Phone2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Address = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UserDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -50,7 +62,7 @@
             this.ヘルプHToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(973, 26);
+            this.menuStrip1.Size = new System.Drawing.Size(1300, 26);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -128,11 +140,103 @@
             this.ヘルプHToolStripMenuItem.Size = new System.Drawing.Size(75, 22);
             this.ヘルプHToolStripMenuItem.Text = "ヘルプ(&H)";
             // 
+            // UserDataGridView
+            // 
+            this.UserDataGridView.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.UserDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.UserDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Name,
+            this.Sex,
+            this.GraduationYear,
+            this.GraduationSubject,
+            this.GraduationMajor,
+            this.Phone1,
+            this.Phone2,
+            this.Email1,
+            this.Email2,
+            this.Address});
+            this.UserDataGridView.Location = new System.Drawing.Point(0, 29);
+            this.UserDataGridView.Name = "UserDataGridView";
+            this.UserDataGridView.RowTemplate.Height = 21;
+            this.UserDataGridView.Size = new System.Drawing.Size(1300, 150);
+            this.UserDataGridView.TabIndex = 1;
+            // 
+            // Name
+            // 
+            this.Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.Name.HeaderText = "姓名";
+            this.Name.Name = "Name";
+            this.Name.Width = 21;
+            // 
+            // Sex
+            // 
+            this.Sex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.Sex.HeaderText = "性別";
+            this.Sex.Name = "Sex";
+            this.Sex.Width = 21;
+            // 
+            // GraduationYear
+            // 
+            this.GraduationYear.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.GraduationYear.HeaderText = "卒業年度";
+            this.GraduationYear.Name = "GraduationYear";
+            this.GraduationYear.Width = 21;
+            // 
+            // GraduationSubject
+            // 
+            this.GraduationSubject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.GraduationSubject.HeaderText = "大学学科";
+            this.GraduationSubject.Name = "GraduationSubject";
+            this.GraduationSubject.Width = 21;
+            // 
+            // GraduationMajor
+            // 
+            this.GraduationMajor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.GraduationMajor.HeaderText = "大学院専攻";
+            this.GraduationMajor.Name = "GraduationMajor";
+            this.GraduationMajor.Width = 21;
+            // 
+            // Phone1
+            // 
+            this.Phone1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.Phone1.HeaderText = "電話番号1";
+            this.Phone1.Name = "Phone1";
+            this.Phone1.Width = 21;
+            // 
+            // Phone2
+            // 
+            this.Phone2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.Phone2.HeaderText = "電話番号2";
+            this.Phone2.Name = "Phone2";
+            this.Phone2.Width = 21;
+            // 
+            // Email1
+            // 
+            this.Email1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.Email1.HeaderText = "Eメール1";
+            this.Email1.Name = "Email1";
+            this.Email1.Width = 21;
+            // 
+            // Email2
+            // 
+            this.Email2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.Email2.HeaderText = "Eメール2";
+            this.Email2.Name = "Email2";
+            this.Email2.Width = 21;
+            // 
+            // Address
+            // 
+            this.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.Address.HeaderText = "住所";
+            this.Address.Name = "Address";
+            this.Address.Width = 21;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(973, 600);
+            this.ClientSize = new System.Drawing.Size(1300, 600);
+            this.Controls.Add(this.UserDataGridView);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -141,6 +245,7 @@
             this.Load += new System.EventHandler(this.Main_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UserDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,5 +264,16 @@
         private System.Windows.Forms.ToolStripMenuItem NewUserNToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem UserEditToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem UserDeleteDToolStripMenuItem;
+        private System.Windows.Forms.DataGridView UserDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Sex;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GraduationYear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GraduationSubject;
+        private System.Windows.Forms.DataGridViewTextBoxColumn GraduationMajor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Phone1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Phone2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Address;
     }
 }

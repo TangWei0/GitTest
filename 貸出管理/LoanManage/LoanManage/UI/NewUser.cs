@@ -14,6 +14,7 @@ namespace LoanManage.UI
     {
         DBConnect DBConnect = new DBConnect();
         Information Information = new Information();
+        
 
         DateTime now = DateTime.Now;
         public int year;
@@ -218,6 +219,11 @@ namespace LoanManage.UI
             DataSet UserDataSet = DBConnect.DataSet(DBConnect.UserAdapter());
             DataTable UserDataTable = UserDataSet.Tables["ID"];
             DataRow addrow = UserDataTable.NewRow();
+            
+            //Properties.Settings.Default.count = 1;
+            //Properties.Settings.Default.Save();
+            long count = Properties.Settings.Default.count;
+
             addrow["Name"] = name;
             addrow["Sex"] = sex;
             addrow["GraduationYear"] = year;
@@ -228,7 +234,7 @@ namespace LoanManage.UI
             addrow["Email1"] = email1;
             addrow["Email2"] = email2;
             addrow["Address"] = address;
-            addrow["UserID"] = CreatUserID(UserDataTable.Rows.Count);
+            addrow["UserID"] = CreatUserID(count);
             addrow["Password"] = "12345678";
             foreach (DataRow data in UserDataTable.Rows)
             {
@@ -239,15 +245,25 @@ namespace LoanManage.UI
                     return;
                 }
             }
+
+            if (MessageBox.Show("管理員になりますか？", "添加管理員", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                addrow["Manage"] = true;
+            }
+            else
+            {
+                addrow["Manage"] = false;
+            }
             UserDataTable.Rows.Add(addrow);
             DBConnect.dbUpdate(DBConnect.UserAdapter(), UserDataSet);
+            Properties.Settings.Default.count = count + 1;
+            Properties.Settings.Default.Save();
             this.Close();
         }
 
-        private string CreatUserID(int ID)
+        private string CreatUserID(long ID)
         {
             string s;
-            ID = ID + 1;
             s = "S" + ID.ToString("D7");
             return s; 
         }
