@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoanManage", "LoanManage\LoanManage.csproj", "{A9E2391A-361E-4D4A-A2E1-59E98AC6B140}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9E2391A-361E-4D4A-A2E1-59E98AC6B140}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E2391A-361E-4D4A-A2E1-59E98AC6B140}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E2391A-361E-4D4A-A2E1-59E98AC6B140}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E2391A-361E-4D4A-A2E1-59E98AC6B140}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
