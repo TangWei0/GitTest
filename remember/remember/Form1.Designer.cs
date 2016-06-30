@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.getOpeningExcelButton = new System.Windows.Forms.Button();
             this.setTextButton = new System.Windows.Forms.Button();
             this.yearBox = new System.Windows.Forms.TextBox();
             this.CloseExcelButton = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // getOpeningExcelButton
@@ -73,6 +75,12 @@
             this.CloseExcelButton.UseVisualStyleBackColor = true;
             this.CloseExcelButton.Click += new System.EventHandler(this.CloseExcelButton_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -95,6 +103,7 @@
         private System.Windows.Forms.Button setTextButton;
         private System.Windows.Forms.TextBox yearBox;
         private System.Windows.Forms.Button CloseExcelButton;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
