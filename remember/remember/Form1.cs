@@ -16,10 +16,10 @@ namespace remember
     {
         FileCheck fileCheck = new FileCheck();
         SetTable setTable = new SetTable();
- 
+
         Boolean status = false;
-        string sheetName,year;
-        
+        string sheetName, year;
+
         Timer timer = new Timer();
 
         Excel.Application xlApp = null;
@@ -27,7 +27,7 @@ namespace remember
         Excel.Workbook xlBook = null;
         Excel.Sheets xlSheets = null;
         Excel.Worksheet xlSheet = null;
-        
+
 
         public Form1()
         {
@@ -42,8 +42,8 @@ namespace remember
         private void getOpeningExcelButton_Click(object sender, EventArgs e)
         {
             FileCheck fileCheck = new FileCheck();
-           
-            
+
+
             if (!status)
             {
                 xlApp = new Excel.Application();
@@ -65,38 +65,27 @@ namespace remember
             {
                 MessageBox.Show("xmlを開いている");
             }
-            
+
         }
 
         private void setTextButton_Click(object sender, EventArgs e)
         {
-            if (status)
+            if (int.Parse(year) >= 1900 && int.Parse(year) < 2100)
             {
-                for (int i = 1; i <= xlSheets.Count; i++)
+                int[] Index = fileCheck.sheetCheck(xlSheets, xlSheet, status, year);
+
+                if (Index[0] == 1)
                 {
-                    xlSheet = xlSheets[i] as Excel.Worksheet;
-                    if (xlSheet.Name == year)
-                    {
-                        this.Text = "ある";
-                        xlSheet = xlSheets[1] as Excel.Worksheet;
-                        return;
-                    }
+                    this.Text = year + "ある";
                 }
+                else
+                {
+                    xlSheets[xlSheets.Count].Copy(xlSheets[Index[1] + 1]);
+                    xlSheet = xlSheets[Index[1] + 1] as Excel.Worksheet;
 
-                xlSheets[xlSheets.Count].Copy(xlSheets[xlSheets.Count]);
-                xlSheet = xlSheets[xlSheets.Count - 1] as Excel.Worksheet;
-                xlSheet.Name = year;
-                xlSheet.Cells[1, 1] = "[" + year + "年] カレンダー";
-
-                setTable.setTableRange(year, xlSheet);
-                this.Text = xlSheet.Name.ToString();
+                    setTable.setting(year, xlSheet);
+                }
             }
-
-            //if (!status || xlSheet == null)
-            //{
-            //    return;
-            //}
-            //xlSheet.Cells[34, 13] = "10";
 
         }
 
@@ -104,7 +93,6 @@ namespace remember
         {
             if (e.KeyChar < '0' || '9' < e.KeyChar)
             {
-                //押されたキーが 0～9でない場合は、イベントをキャンセルする
                 e.Handled = true;
             }
 
@@ -137,7 +125,7 @@ namespace remember
         private void yearBox_TextChanged(object sender, EventArgs e)
         {
             year = yearBox.Text;
-            
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -151,12 +139,6 @@ namespace remember
                 status = false;
             }
 
-            //if (status)
-            //{
-            //    //xlSheet = xlSheets[2] as Excel.Worksheet;
-            //    this.Text = xlSheet.Name.ToString();
-            //    //xlSheet = xlSheets[1] as Excel.Worksheet;
-            //}
         }
 
     }
