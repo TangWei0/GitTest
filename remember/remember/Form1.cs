@@ -18,7 +18,7 @@ namespace remember
         SetTable setTable = new SetTable();
 
         Boolean status = false;
-        string sheetName, year;
+        string sheetName;
 
         Timer timer = new Timer();
 
@@ -28,6 +28,7 @@ namespace remember
         Excel.Sheets xlSheets = null;
         Excel.Worksheet xlSheet = null;
 
+        //public string year;
 
         public Form1()
         {
@@ -41,9 +42,6 @@ namespace remember
 
         private void getOpeningExcelButton_Click(object sender, EventArgs e)
         {
-            FileCheck fileCheck = new FileCheck();
-
-
             if (!status)
             {
                 xlApp = new Excel.Application();
@@ -70,20 +68,21 @@ namespace remember
 
         private void setTextButton_Click(object sender, EventArgs e)
         {
-            if (int.Parse(year) >= 1900 && int.Parse(year) < 2100)
+            
+            if (int.Parse(setTable.year) >= 1900 && int.Parse(setTable.year) < 2100)
             {
-                int[] Index = fileCheck.sheetCheck(xlSheets, xlSheet, status, year);
+                int[] Index = fileCheck.sheetCheck(xlSheets, xlSheet, status, setTable.year);
 
                 if (Index[0] == 1)
                 {
-                    this.Text = year + "ある";
+                    this.Text = setTable.year + "ある";
                 }
                 else
                 {
                     xlSheets[xlSheets.Count].Copy(xlSheets[Index[1] + 1]);
                     xlSheet = xlSheets[Index[1] + 1] as Excel.Worksheet;
 
-                    setTable.setting(year, xlSheet);
+                    setTable.setting(setTable.year, xlSheet);
                 }
             }
 
@@ -124,7 +123,7 @@ namespace remember
 
         private void yearBox_TextChanged(object sender, EventArgs e)
         {
-            year = yearBox.Text;
+            setTable.year = yearBox.Text;
 
         }
 

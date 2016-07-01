@@ -11,57 +11,74 @@ namespace remember
     class SetTable
     {
         Excel.Range xlRange = null;
+        Excel.Worksheet xlSheet = null;
 
         string fileNameBasePath = "../../../";
+        string cellRange = "";
+        string cellFont = "";
+        public string year;
+
         string[] dayWeek = new string[7] { "(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)" };
         string[] MonthCell = new string[12] { "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
+        string[] HolidayName = new string[18] { "元日", 
+                                                "成人の日", 
+                                                "建国記念の日", 
+                                                "春分の日", 
+                                                "昭和の日", 
+                                                "憲法記念日", 
+                                                "みどりの日", 
+                                                "こどもの日", 
+                                                "海の日", 
+                                                "山の日", 
+                                                "敬老の日", 
+                                                "秋分の日", 
+                                                "体育の日", 
+                                                "文化の日", 
+                                                "勤労感謝の日", 
+                                                "天皇の誕生日", 
+                                                "振替休日", 
+                                                "年末年始"};
 
-        public void setTableRange(int year, Excel.Worksheet xlSheet)
+        bool fontColor;
+        bool Transfer = false;
+
+        int Year;
+        int count;
+        int springDay;
+        int autumnalDay;
+        int MondayCount;
+        
+        public void setting(string year, Excel.Worksheet xlsheet)
         {
-            if (year % 4 != 0)
-            {
-                xlRange = xlSheet.Range["C32"];
-                delectCells(xlRange);
-            }
+            xlSheet = xlsheet;
 
-        }
-
-        private void delectCells(Excel.Range xlRange)
-        {
-            xlRange.Interior.Color = Color.White;
-            xlRange.Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Excel.XlLineStyle.xlContinuous;
-            xlRange.Borders[Excel.XlBordersIndex.xlEdgeBottom].Color = Color.White;
-
-        }
-
-        public void setting(string year, Excel.Worksheet xlSheet)
-        {
-            int Year = int.Parse(year);
-
-
+            Year = int.Parse(year);
 
             xlSheet.Name = year;
             xlSheet.Cells[1, 1] = "[" + year + "年] カレンダー";
 
-            setTableRange(Year, xlSheet);
+            setTableRange();
+            count = DayWeekCalculation();
 
-            int count = DayWeekCalculation(year);
+            springDay = SpringEquinoxDay();
+            autumnalDay = AutumnalEquinoxDay();
+            
 
             for (int i = 1; i <= 12; i++)
             {
-                int MondayCount = 0;
-                string cellRange = "";
-                string fileName = "";
-                bool Transfer = false;
-
-                //string fileNamePath1 = CreateDirectory(year, i);
-                for (int j = 1; j <= DayMonth(i, Year); j++)
+                MondayCount = 0;
+                cellRange = "";
+                
+                for (int j = 1; j <= DayMonth(i); j++)
                 {
-                    string cellFont = "";
-                    cellRange = MonthCell[i - 1] + (j + 3).ToString();
+                    fontColor = false;
 
-                    fileName = CreatFile(year, i, j);
+                    cellRange = MonthCell[i - 1] + (j + 3).ToString();
                     cellFont = i.ToString() + "/" + j.ToString() + " " + dayWeek[count % 7];
+
+                    string fileName = CreatFile(i, j);
+
+                    xlSheet.Hyperlinks.Add(xlSheet.Cells[j + 3, i + 1], fileName);
 
                     if ((i == 1) || (i == 7) || (i == 9) || (i == 10))
                     {
@@ -73,305 +90,213 @@ namespace remember
 
                     if (count % 7 == 0 || count % 7 == 6)
                     {
-                        xlSheet.Range[cellRange].Interior.Color = Color.Red;
+                        setHoliday();
                     }
 
-                    if (Transfer)
-                    {
-                        if (i == 5)
-                        {
-                            xlSheet.Range[MonthCell[i - 1] + 9.ToString()].Interior.Color = Color.Red;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-
-                        cellFont += "\r\n振替休日";
-                        Transfer = false;
-                    }
-
-                    if (i == 1 && j == 1)
-                    {
-                        cellFont += "\r\n元日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-                    if (i == 2 && j == 11)
-                    {
-                        cellFont += "\r\n建国記念の日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-                    if (i == 3 && j == SpringEquinoxDay(Year))
-                    {
-                        cellFont += "\r\n春分の日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-                    if (i == 4 && j == 29)
-                    {
-                        if (Year <= 2006)
-                        {
-                            cellFont += "\r\nみどりの日";
-
-                            if (count % 7 == 0)
-                            {
-                                Transfer = true;
-                            }
-                            else
-                            {
-                                xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                            }
-                        }
-
-                    }
-
-                    if (i == 5 && j == 3)
-                    {
-                        cellFont += "\r\n憲法記念日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-
-                        }
-                    }
-
-                    if (i == 5 && j == 4)
-                    {
-                        if (Year >= 2007)
-                        {
-                            cellFont += "\r\nみどりの日";
-                        }
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            if (Year >= 2007)
-                            {
-                                xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                            }
-                        }
-                    }
-
-                    if (i == 5 && j == 5)
-                    {
-                        cellFont += "\r\nこどもの日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-                    if (i == 7 && j == 20)
-                    {
-                        if (Year <= 2002)
-                        {
-                            cellFont += "\r\n海の日";
-
-                            if (count % 7 == 0)
-                            {
-                                Transfer = true;
-                            }
-                            else
-                            {
-                                xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                            }
-                        }
-
-                    }
-
-                    if (i == 8 && j == 11)
-                    {
-                        if (Year >= 2016)
-                        {
-                            cellFont += "\r\n山の日";
-
-                            if (count % 7 == 0)
-                            {
-                                Transfer = true;
-                            }
-                            else
-                            {
-                                xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                            }
-                        }
-
-                    }
-
-                    if (i == 9 && j == 15)
-                    {
-                        if (Year <= 2002)
-                        {
-                            cellFont += "\r\n敬老の日";
-
-                            if (count % 7 == 0)
-                            {
-                                Transfer = true;
-                            }
-                            else
-                            {
-                                xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                            }
-                        }
-
-                    }
-
-                    if (i == 9 && j == AutumnalEquinoxDay(Year))
-                    {
-                        cellFont += "\r\n秋分の日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-                    if (i == 11 && j == 3)
-                    {
-                        cellFont += "\r\n文化の日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-                    if (i == 11 && j == 23)
-                    {
-                        cellFont += "\r\n勤労感謝の日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-                    if (i == 12 && j == 23)
-                    {
-                        cellFont += "\r\n天皇の誕生日";
-
-                        if (count % 7 == 0)
-                        {
-                            Transfer = true;
-                        }
-                        else
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        }
-                    }
-
-
-
-                    if (MondayCount == 2 && i == 1)
-                    {
-                        xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        cellFont += "\r\n成人の日";
-                        MondayCount = 0;
-                    }
-                    if (MondayCount == 3 && i == 7)
-                    {
-                        if (Year >= 2003)
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                            cellFont += "\r\n海の日";
-                            MondayCount = 0;
-                        }
-                    }
-                    if (MondayCount == 3 && i == 9)
-                    {
-                        if (Year >= 2003)
-                        {
-                            xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                            cellFont += "\r\n敬老の日";
-                            MondayCount = 0;
-                        }
-                    }
-                    if (MondayCount == 2 && i == 10)
-                    {
-                        xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                        cellFont += "\r\n体育の日";
-                        MondayCount = 0;
-                    }
-
-                    //会社の年末年始
-                    if ((i == 1 && j == 2) || (i == 1 && j == 3))
-                    {
-                        xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                    }
-
-                    if ((i == 12 && j == 29) || (i == 12 && j == 30) || (i == 12 && j == 31))
-                    {
-                        xlSheet.Range[cellRange].Interior.Color = Color.Red;
-                    }
+                    selectHoliday(i, j);
 
                     xlSheet.Cells[j + 3, i + 1] = cellFont;
-                    xlSheet.Range[cellRange].Font.Color = Color.Black;
 
-                    Console.WriteLine("####################" + CreatFile(year, i, j));
-                    xlSheet.Hyperlinks.Add(xlSheet.Cells[j + 3, i + 1], CreatFile(year, i, j));
+                    if (fontColor)
+                    {
+                        xlSheet.Range[cellRange].Font.Color = Color.Red;
+                    }
+                    else
+                    {
+                        xlSheet.Range[cellRange].Font.Color = Color.Black;
+                    }
+
                     count++;
                 }
             }
 
         }
 
-        private int DayWeekCalculation(string year)
+        public void setTableRange()
+        {
+            if (Year % 4 != 0)
+            {
+                xlRange = xlSheet.Range["C32"];
+                delectCells();
+            }
+
+        }
+
+        private void delectCells()
+        {
+            xlRange.Interior.Color = Color.White;
+            xlRange.Borders[Excel.XlBordersIndex.xlEdgeBottom].LineStyle = Excel.XlLineStyle.xlContinuous;
+            xlRange.Borders[Excel.XlBordersIndex.xlEdgeBottom].Color = Color.White;
+
+        }
+
+        private void selectHoliday(int i,int j)
+        {
+            string date = i.ToString("00") + j.ToString("00");
+
+            if (Transfer)
+            {
+                if (i == 5)
+                {
+                    fontColor = true;
+                    xlSheet.Range[MonthCell[i - 1] + 9.ToString()].Interior.Color = Color.Aqua;
+                }
+                else
+                {
+                    setHoliday();
+                }
+
+                cellFont += "\r\n" + HolidayName[16];
+                Transfer = false;
+                return;
+            }
+
+            if (i == 3 && j == springDay)
+            {
+                HolidayCheck(3);
+                return;
+            }
+            else if (i == 9 && j == autumnalDay)
+            {
+                HolidayCheck(11);
+                return;
+            }
+            else if (MondayCount == 2 && i == 1)
+            {
+                setHoliday();
+                cellFont += "\r\n" + HolidayName[1];
+                MondayCount = 6;
+                return;
+            }
+            else if (MondayCount == 3 && i == 7)
+            {
+                if (Year >= 2003)
+                {
+                    setHoliday();
+                    cellFont += "\r\n" + HolidayName[8];
+                    MondayCount = 6;
+                    return;
+                }
+            }
+            else if (MondayCount == 3 && i == 9)
+            {
+                if (Year >= 2003)
+                {
+                    setHoliday();
+                    cellFont += "\r\n" + HolidayName[10];
+                    MondayCount = 6;
+                    return;
+                }
+            }
+            else if (MondayCount == 2 && i == 10)
+            {
+                setHoliday();
+                cellFont += "\r\n" + HolidayName[12];
+                MondayCount = 6;
+                return;
+            }
+
+            switch (date)
+            {
+                case "0101":
+                    HolidayCheck(0);
+                    break;
+                case "0211":
+                    HolidayCheck(2);
+                    break;
+                case "0429":
+                    if (Year <= 2006)
+                    {
+                        HolidayCheck(6);
+                    }
+                    else
+                    {
+                        HolidayCheck(4);
+                    }
+                    break;
+                case "0503":
+                    HolidayCheck(5);
+                    break;
+                case "0504":
+                    if (Year >= 2007)
+                    {
+                        HolidayCheck(6);
+                    }
+                    break;
+                case "0505":
+                    HolidayCheck(7);
+                    break;
+                case "0720":
+                    if (Year <= 2002)
+                    {
+                        HolidayCheck(8);
+                    }
+                    break;
+                case "0811":
+                    if (Year >= 2016)
+                    {
+                        HolidayCheck(9);
+                    }
+                    break;
+                case "0915":
+                    if (Year <= 2002)
+                    {
+                        HolidayCheck(10);
+                    }
+                    break;
+                case "1103":
+                    HolidayCheck(13);
+                    break;
+                case "1123":
+                    HolidayCheck(14);
+                    break;
+                case "1223":
+                    HolidayCheck(15);
+                    break;
+                case "1229":
+                case "1230":
+                case "1231":
+                case "0102":
+                case "0103":
+                    cellFont += "\r\n" + HolidayName[17];
+                    setHoliday();
+                    break;
+                default:
+                    break;
+            }
+            
+
+        }
+
+        private void HolidayCheck(int holidayIndex)
+        {
+            cellFont += "\r\n" + HolidayName[holidayIndex];
+
+            if (count % 7 == 0)
+            {
+                Transfer = true;
+            }
+            else
+            {
+                setHoliday();
+            }
+
+        }
+
+        private void setHoliday()
+        {
+            xlSheet.Range[cellRange].Interior.Color = Color.Aqua;
+            fontColor = true;
+
+        }
+
+        private int DayWeekCalculation()
         {
             int dayIndex = 1;
 
-            year += "/01/01";
+            string date = year + "/01/01";
 
-            DateTime dt = DateTime.Parse(year);
+            DateTime dt = DateTime.Parse(date);
             DayOfWeek dow = dt.DayOfWeek;
 
             switch (dow)
@@ -402,7 +327,7 @@ namespace remember
             return dayIndex;
         }
 
-        private int DayMonth(int month, int year)
+        private int DayMonth(int month)
         {
             int days = 31;
 
@@ -415,7 +340,7 @@ namespace remember
                     days = 30;
                     break;
                 case 2:
-                    if (year % 4 == 0)
+                    if (Year % 4 == 0)
                     {
                         days = 29;
                     }
@@ -430,7 +355,7 @@ namespace remember
 
         }
 
-        private int SpringEquinoxDay(int Year)
+        private int SpringEquinoxDay()
         {
             int springEquinoxDay = 0;
 
@@ -486,10 +411,11 @@ namespace remember
                     break;
             }
 
-            return springEquinoxDay;
+            return springEquinoxDay; 
+
         }
 
-        private int AutumnalEquinoxDay(int Year)
+        private int AutumnalEquinoxDay()
         {
             int autumnalEquinoxDay = 0;
 
@@ -548,18 +474,7 @@ namespace remember
             return autumnalEquinoxDay;
         }
 
-        private string CreateDirectory(string year, int month)
-        {
-            string fileNamePath = "";
-
-            fileNamePath += fileNameBasePath + year + "/" + month.ToString("00") + "/";
-            System.IO.Directory.CreateDirectory(@fileNamePath);
-
-            return fileNamePath;
-
-        }
-
-        private string CreatFile(string year, int month, int day)
+        private string CreatFile(int month, int day)
         {
             string fileNamePath = "";
 
@@ -584,7 +499,7 @@ namespace remember
                 return null;
             }
             return System.IO.Directory.CreateDirectory(path);
-                
+
         }
 
     }
