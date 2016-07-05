@@ -34,7 +34,6 @@
             this.yearBox = new System.Windows.Forms.TextBox();
             this.CloseExcelButton = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // getOpeningExcelButton
@@ -82,20 +81,11 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(24, 293);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(248, 214);
-            this.textBox1.TabIndex = 4;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 563);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(323, 240);
             this.Controls.Add(this.CloseExcelButton);
             this.Controls.Add(this.yearBox);
             this.Controls.Add(this.setTextButton);
@@ -114,7 +104,6 @@
         private System.Windows.Forms.TextBox yearBox;
         private System.Windows.Forms.Button CloseExcelButton;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
