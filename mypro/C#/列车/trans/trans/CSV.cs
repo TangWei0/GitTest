@@ -12,8 +12,11 @@ namespace trans
     {
         static string fp_custom = ".\\Record\\custom.csv";
         static string fp_city = ".\\Record\\city\\city_";
-        static string fp_city = ".\\Record\\cityDefalut\\city_";
+        static string fp_city_defalut = ".\\Record\\cityDefalut\\city_defalut_";
         static string fp_garage = ".\\Record\\garage\\garage_";
+        static string fp_distance = ".\\Record\\DistanceTable\\distance_";
+        static string fp_fare = ".\\Record\\FareTable\\fare_";
+
         //static string fp_garage = ".\\Record\\garage\\garage_";
 
         public void ReadCustomCsv(Parameter.Custom[] custom)
@@ -89,22 +92,22 @@ namespace trans
                         switch (column)
                         {
                             case 0:
-                                city[i-1].cityIndex = Convert.ToUInt16(csv[column]);
+                                city[i - 1].cityIndex = Convert.ToUInt16(csv[column]);
                                 break;
                             case 1:
-                                city[i-1].cityName = csv[column];
+                                city[i - 1].cityName = csv[column];
                                 break;
                             case 2:
-                                city[i-1].cityPeopleNumber = Convert.ToUInt32(csv[column]);
+                                city[i - 1].cityPeopleNumber = Convert.ToUInt32(csv[column]);
                                 break;
                             case 3:
-                                city[i-1].cityStars = Convert.ToByte(csv[column]);
+                                city[i - 1].cityStars = Convert.ToByte(csv[column]);
                                 break;
                             case 4:
-                                city[i-1].cityLever = Convert.ToByte(csv[column]);
+                                city[i - 1].cityLever = Convert.ToByte(csv[column]);
                                 break;
                             case 5:
-                                city[i-1].cityValue = Convert.ToUInt64(csv[column]);
+                                city[i - 1].cityValue = Convert.ToUInt64(csv[column]);
                                 break;
                             default:
                                 break;
@@ -127,6 +130,7 @@ namespace trans
                        + city[cityRowIndex - 1].cityStars.ToString() + ","
                        + city[cityRowIndex - 1].cityLever.ToString() + ","
                        + city[cityRowIndex - 1].cityValue.ToString();
+            //+ city[cityRowIndex-1].cityOpenStatus.ToString()
 
             sw.Write(lin);
             sw.Close();
@@ -162,7 +166,7 @@ namespace trans
                         switch (column)
                         {
                             case 0:
-                                garage[i-1].carIndex = Convert.ToUInt16(csv[column]);
+                                garage[i - 1].carIndex = Convert.ToUInt16(csv[column]);
                                 break;
                             case 1:
                                 garage[i - 1].carName = csv[column];
@@ -186,19 +190,31 @@ namespace trans
                                 garage[i - 1].carWeight = Convert.ToUInt16(csv[column]);
                                 break;
                             case 8:
-                                garage[1 - 1].carLever = Convert.ToByte(csv[column]);
+                                garage[i - 1].carLever = Convert.ToByte(csv[column]);
                                 break;
                             case 9:
-                                garage[1 - 1].carDepartureCity = csv[column];
+                                garage[i - 1].carDepartureCityIndex = Convert.ToUInt16(csv[column]);
                                 break;
                             case 10:
-                                garage[1 - 1].carArrivalCity = csv[column];
+                                garage[i - 1].carDepartureCityName = csv[column];
                                 break;
                             case 11:
-                                garage[1 - 1].carDepartureTime = DateTime.Parse(csv[column]);
+                                garage[i - 1].carDepartureTime = DateTime.Parse(csv[column]);
                                 break;
                             case 12:
-                                garage[1 - 1].carArrivalTime = DateTime.Parse(csv[column]);
+                                garage[i - 1].carArrivalCityIndex = Convert.ToUInt16(csv[column]);
+                                break;
+                            case 13:
+                                garage[i - 1].carArrivalCityName = csv[column];
+                                break;
+                            case 14:
+                                garage[i - 1].carArrivalTime = DateTime.Parse(csv[column]);
+                                break;
+                            case 15:
+                                garage[i - 1].carstatus = Convert.ToBoolean(csv[column]);
+                                break;
+                            case 16:
+                                garage[i - 1].carTotalFare = Convert.ToUInt32(csv[column]);
                                 break;
                             default:
                                 break;
@@ -225,10 +241,14 @@ namespace trans
                        + garage[garageRowIndex - 1].carDistance.ToString() + ","
                        + garage[garageRowIndex - 1].carWeight.ToString() + ","
                        + garage[garageRowIndex - 1].carLever.ToString() + ","
-                       + garage[garageRowIndex - 1].carDepartureCity + ","
-                       + garage[garageRowIndex - 1].carArrivalCity + ","
+                       + garage[garageRowIndex - 1].carDepartureCityIndex.ToString() + ","
+                       + garage[garageRowIndex - 1].carDepartureCityName + ","
                        + garage[garageRowIndex - 1].carDepartureTime.ToString() + ","
-                       + garage[garageRowIndex - 1].carArrivalTime.ToString();
+                       + garage[garageRowIndex - 1].carArrivalCityIndex.ToString() + ","
+                       + garage[garageRowIndex - 1].carArrivalCityName + ","
+                       + garage[garageRowIndex - 1].carArrivalTime.ToString() + ","
+                       + garage[garageRowIndex - 1].carstatus.ToString() + ","
+                       + garage[garageRowIndex - 1].carTotalFare.ToString();
 
             sw.Write(lin);
             sw.Close();
@@ -246,6 +266,44 @@ namespace trans
 
             string fp = fp_city + garageVolume.ToString("00000000") + ".csv";
             System.IO.File.Delete(fp);
+        }
+
+        public UInt16 ReadDistanceCsv(UInt16 departure, UInt16 arrvial)
+        {
+            if (departure > arrvial)
+            {
+                UInt16 tmp = departure;
+                departure = arrvial;
+                arrvial = tmp;
+            }
+
+            string fp = fp_distance + departure.ToString("00000") + arrvial.ToString("00000") + ".csv";
+
+            StreamReader sr = new StreamReader(fp, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            String lin = sr.ReadLine();
+            sr.Close();
+
+            return Convert.ToUInt16(lin);
+
+        }
+
+        public UInt16 ReadFareCsv(UInt16 departure, UInt16 arrvial)
+        {
+            if (departure > arrvial)
+            {
+                UInt16 tmp = departure;
+                departure = arrvial;
+                arrvial = tmp;
+            }
+
+            string fp = fp_fare + departure.ToString("00000") + arrvial.ToString("00000") + ".csv";
+
+            StreamReader sr = new StreamReader(fp, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            String lin = sr.ReadLine();
+            sr.Close();
+
+            return Convert.ToUInt16(lin);
+
         }
     }
 
