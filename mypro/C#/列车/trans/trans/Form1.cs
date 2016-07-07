@@ -12,16 +12,19 @@ namespace trans
 {
     public partial class Form1 : Form
     {
+        DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
+
         Parameter.Custom[] custom = new Parameter.Custom[1];
         Parameter.City[] city = new Parameter.City[1];
         Parameter.Garage[] garage = new Parameter.Garage[1];
+        Parameter.CityToCity[] city_to_city = new Parameter.CityToCity[1];
 
         CSV Csv = new CSV();
 
         System.Random r = new System.Random(1000);
+        int count = 0;
+        int calCount;
 
-
-        DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
         public Form1()
         {
             InitializeComponent();
@@ -53,61 +56,103 @@ namespace trans
                     custom[0].cash += (UInt64)garage[i].carTotalFare;
                     Csv.UpdateCustomCsv(custom);
                     garage[i].carTotalFare = 0;
-                    Csv.UpdateGarageCsv(garage, 1);
+                    garage[i].carCost = 0;
+                    Csv.UpdateGarageCsv(garage, i);
                 }
             }
+
+            carDisplay();
 
 
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
-            
+
             UInt16 next;
             for (int i = 0; i < custom[0].garageVolume; i++)
             {
-                if (!garage[i].carstatus)
+                if (!garage[i].carstatus && garage[i].carPower != 0)
                 {
-                    UInt16 now;
-                    now = serchCityIndex(i);
-
+                    bool check;
                     do
                     {
-                        next = (UInt16)r.Next(custom[0].cityVolume);
-                    } while (next == now);
+                        next = (UInt16)(r.Next(custom[0].cityVolume));
+                        check = ((next == garage[i].carDepartureCityIndex - 1) || (city[next].cityOpenStatus == false));
+                    } while (check);
 
-                    UInt16 distance = Csv.ReadDistanceCsv(garage[i].carDepartureCityIndex, city[next].cityIndex);
-                    UInt16 fare = Csv.ReadFareCsv(garage[i].carDepartureCityIndex, city[next].cityIndex);
+                    Csv.ReadCityToCityCsv(city_to_city, garage[i].carDepartureCityIndex, (UInt16)(next + 1));
 
-                    garage[i].carArrivalCityIndex = city[next].cityIndex;
-                    garage[i].carArrivalCityName = city[next].cityName;
-                    garage[i].carDepartureTime = System.DateTime.Now;
+                    int s1 = (city_to_city[0].distance * 3600) / garage[i].carSpeed;
+                    if (garage[i].carPower > (s1 / 3600))
+                    {
+                        garage[i].carArrivalCityIndex = city[next].cityIndex;
+                        garage[i].carArrivalCityName = city[next].cityName;
+                        garage[i].carDepartureTime = System.DateTime.Now;
 
-                    int s1 = (distance * 3600) / garage[i].carSpeed;
-                    TimeSpan s = new TimeSpan(0, 0, 0, s1);
+                        TimeSpan s = new TimeSpan(0, 0, 0, s1);
 
-                    garage[i].carArrivalTime = garage[i].carDepartureTime + s;
-                    garage[i].carstatus = true;
-                    garage[i].carTotalFare = (UInt32)(garage[i].carPeopleVolume + garage[i].carCargoVolume) * fare * 11 /10;
+                        garage[i].carArrivalTime = garage[i].carDepartureTime + s;
+                        garage[i].carstatus = true;
+                        garage[i].carTotalFare = cal(i)[0];
+                        garage[i].carCost = cal(i)[1];
+                        garage[i].carPower -= (UInt16)(s1 / 3600);
+                        Csv.UpdateGarageCsv(garage, i);
 
-                    Csv.UpdateGarageCsv(garage, (UInt16)(i+1));
+                        custom[0].cash -= garage[i].carCost;
+                        Csv.UpdateCustomCsv(custom);
+                    }
+                    else
+                    {
+                        this.Text = "遣り直す";
+                    }
                 }
             }
 
         }
 
-        private UInt16 serchCityIndex(int i)
+        private UInt32[] cal(int i)
         {
-            for (int j = 0; j < custom[0].cityVolume; j++)
-            {
-                if (city[j].cityIndex == garage[i].carDepartureCityIndex)
-                {
-                    return (UInt16)j;
-                }
+            UInt32[] total = new UInt32[2] { 0, 0 };
 
+            total[0] = (UInt32)(10 * garage[i].carPeopleVolume * city_to_city[0].fare + garage[i].carPeopleVolume * garage[i].carPeopleVolume * city_to_city[0].fare) / 10;
+            total[1] = (UInt32)(garage[i].carPeopleVolume * garage[i].carWeight * city_to_city[0].distance / 5000);
+
+            return total;
+        }
+
+        private void Next_Click(object sender, EventArgs e)
+        {
+            count++;
+            carDisplay();
+        }
+
+        private void Previous_Click(object sender, EventArgs e)
+        {
+            count--;
+            carDisplay();
+        }
+
+        private void carDisplay()
+        {
+            calCount = count % custom[0].garageVolume;
+
+            if (calCount < 0)
+            {
+                calCount = custom[0].garageVolume + calCount;
             }
-            return 0;
+
+            carNameText.Text = garage[calCount].carName;
+            if (!garage[calCount].carstatus)
+            {
+                cityNameLabel.Text = garage[calCount].carDepartureCityName;
+            }
+            else
+            {
+                cityNameLabel.Text = "运行中";
+            }
+
         }
 
     }

@@ -28,7 +28,7 @@ namespace trans
             public byte cityStars;
             public byte cityLever;
             public UInt64 cityValue;
-            //public bool cityOpenStatus;
+            public bool cityOpenStatus;
 
         }
 
@@ -37,12 +37,9 @@ namespace trans
             public UInt16 carIndex;
             public string carName;
             public byte carPeopleVolume;
-            public byte carCargoVolume;
             public UInt16 carSpeed;
             public UInt16 carPower;
-            public UInt16 carDistance;
             public UInt16 carWeight;
-            public byte carLever;
             public UInt16 carDepartureCityIndex;
             public string carDepartureCityName;
             public DateTime carDepartureTime;
@@ -51,6 +48,14 @@ namespace trans
             public DateTime carArrivalTime;
             public bool carstatus;
             public UInt32 carTotalFare;
+            public UInt32 carCost;
+
+        }
+
+        public struct CityToCity
+        {
+            public int distance;
+            public int fare;
 
         }
 
