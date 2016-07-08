@@ -42,6 +42,10 @@ namespace trans
 
             Csv.ReadCityCsv(city, custom[0].cityVolume);
             Csv.ReadGarageCsv(garage, custom[0].garageVolume);
+            TimeSpan span = new TimeSpan(0,0,0);
+            span = DateTime.Now - custom[0].closeTime;
+            this.Text = (span.Days*24 +span.Hours).ToString();
+
             for (int i = 0; i < custom[0].garageVolume; i++)
             {
                 if (DateTime.Compare(garage[i].carArrivalTime, System.DateTime.Now) < 0 && DateTime.Compare(garage[i].carArrivalTime, DefalutTime) != 0)
@@ -62,8 +66,6 @@ namespace trans
             }
 
             carDisplay();
-
-
 
         }
 
@@ -89,7 +91,7 @@ namespace trans
                     {
                         garage[i].carArrivalCityIndex = city[next].cityIndex;
                         garage[i].carArrivalCityName = city[next].cityName;
-                        garage[i].carDepartureTime = System.DateTime.Now;
+                        garage[i].carDepartureTime = DateTime.Now;
 
                         TimeSpan s = new TimeSpan(0, 0, 0, s1);
 
@@ -154,6 +156,13 @@ namespace trans
             }
 
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            custom[0].closeTime = DateTime.Now;
+            Csv.UpdateCustomCsv(custom);
+        }
+
 
     }
 }

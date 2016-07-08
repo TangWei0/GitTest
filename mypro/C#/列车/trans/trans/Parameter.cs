@@ -17,6 +17,7 @@ namespace trans
             public UInt64 coin;
             public UInt16 garageVolume;
             public UInt16 cityVolume;
+            public DateTime closeTime;
          
         }
 
@@ -56,6 +57,8 @@ namespace trans
         {
             public int distance;
             public int fare;
+            public int generationRate;
+            public int residenceNum;
 
         }
 

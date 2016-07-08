@@ -49,6 +49,9 @@ namespace trans
                         case 5:
                             custom[0].cityVolume = Convert.ToUInt16(csv[column]);
                             break;
+                        case 6:
+                            custom[0].closeTime = DateTime.Parse(csv[column]);
+                            break;
                         default:
                             break;
                     }
@@ -68,7 +71,8 @@ namespace trans
             rowCsvInfo += custom[0].cash.ToString() + ",";
             rowCsvInfo += custom[0].coin.ToString() + ",";
             rowCsvInfo += custom[0].garageVolume.ToString() + ",";
-            rowCsvInfo += custom[0].cityVolume.ToString();
+            rowCsvInfo += custom[0].cityVolume.ToString() +",";
+            rowCsvInfo += custom[0].closeTime.ToString();
 
             sw.Write(rowCsvInfo);
             sw.Write("\n");
@@ -278,6 +282,12 @@ namespace trans
                         case 1:
                             cityToCity[0].fare = Convert.ToInt32(csv[column]);
                             break;
+                        case 2:
+                            cityToCity[0].generationRate = Convert.ToInt32(csv[column]);
+                            break;
+                        case 3:
+                            cityToCity[0].residenceNum = Convert.ToInt32(csv[column]);
+                            break;
                         default:
                             break;
                     }
@@ -285,6 +295,29 @@ namespace trans
             }
 
             sr.Close();
+        }
+
+        public void UpdateCityToCityCsv(Parameter.CityToCity[] cityToCity, UInt16 departure, UInt16 arrvial)
+        {
+            if (departure > arrvial)
+            {
+                UInt16 tmp = departure;
+                departure = arrvial;
+                arrvial = tmp;
+            }
+
+            string fp = fp_city_to_city + departure.ToString("00000") + arrvial.ToString("00000") + ".csv";
+
+            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+
+            string lin = cityToCity[0].distance.ToString() + ","
+                       + cityToCity[0].fare.ToString() + ","
+                       + cityToCity[0].generationRate.ToString() + ","
+                       + cityToCity[0].residenceNum.ToString();
+
+            sw.Write(lin);
+            sw.Close();
+
         }
 
     }
