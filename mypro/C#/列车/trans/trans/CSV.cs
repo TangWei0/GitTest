@@ -22,7 +22,7 @@ namespace trans
 
         public void ReadCustomCsv(Parameter.Custom[] custom)
         {
-            StreamReader sr = new StreamReader(fp_custom, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            StreamReader sr = new StreamReader(fp_custom, System.Text.Encoding.Unicode);
             String lin = sr.ReadLine();
             if (lin != null)
             {
@@ -63,7 +63,7 @@ namespace trans
 
         public void UpdateCustomCsv(Parameter.Custom[] custom)
         {
-            StreamWriter sw = new StreamWriter(fp_custom, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            StreamWriter sw = new StreamWriter(fp_custom, false, System.Text.Encoding.Unicode);
 
             string rowCsvInfo = "";
             rowCsvInfo += custom[0].level.ToString() + ",";
@@ -86,7 +86,7 @@ namespace trans
             for (int i = 0; i < cityVolume; i++)
             {
                 string fp = fp_city + (i + 1).ToString("00000") + ".csv";
-                StreamReader sr = new StreamReader(fp, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+                StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
 
                 String lin = sr.ReadLine();
                 if (lin != null)
@@ -130,7 +130,7 @@ namespace trans
         {
             string fp = fp_city + cityRowIndex.ToString("00000") + ".csv";
 
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
 
             string lin = city[cityRowIndex].cityIndex.ToString() + ","
                        + city[cityRowIndex].cityName + ","
@@ -150,7 +150,7 @@ namespace trans
             for (int i = 0; i < garageVolume; i++)
             {
                 string fp = fp_garage + (i + 1).ToString("00000000") + ".csv";
-                StreamReader sr = new StreamReader(fp, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+                StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
 
                 String lin = sr.ReadLine();
                 if (lin != null)
@@ -219,7 +219,7 @@ namespace trans
         {
             string fp = fp_garage + (garageRowIndex + 1).ToString("00000000") + ".csv";
 
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
 
             string lin = garage[garageRowIndex].carIndex.ToString() + ","
                        + garage[garageRowIndex].carName + ","
@@ -266,7 +266,7 @@ namespace trans
 
             string fp = fp_city_to_city + departure.ToString("00000") + arrvial.ToString("00000") + ".csv";
 
-            StreamReader sr = new StreamReader(fp, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
             String lin = sr.ReadLine();
 
             if (lin != null)
@@ -308,7 +308,7 @@ namespace trans
 
             string fp = fp_city_to_city + departure.ToString("00000") + arrvial.ToString("00000") + ".csv";
 
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.GetEncoding("SHIFT-JIS"));
+            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
 
             string lin = cityToCity[0].distance.ToString() + ","
                        + cityToCity[0].fare.ToString() + ","
