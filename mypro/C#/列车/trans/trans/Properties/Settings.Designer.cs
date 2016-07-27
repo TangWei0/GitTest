@@ -22,17 +22,5 @@ namespace trans.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public ulong coin {
-            get {
-                return ((ulong)(this["coin"]));
-            }
-            set {
-                this["coin"] = value;
-            }
-        }
     }
 }

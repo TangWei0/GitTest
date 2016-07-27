@@ -15,9 +15,12 @@ namespace trans
         DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
 
         Parameter.Custom[] custom = new Parameter.Custom[1];
-        Parameter.City[] city = new Parameter.City[1];
+        Parameter.City c = new Parameter.City();
+        List<Parameter.City> city = new List<Parameter.City>();
         Parameter.Garage[] garage = new Parameter.Garage[1];
         Parameter.CityToCity[] city_to_city = new Parameter.CityToCity[1];
+
+        public List<UInt16> CityList = new List<UInt16>();
 
         CSV Csv = new CSV();
 
@@ -30,42 +33,39 @@ namespace trans
             InitializeComponent();
 
             Csv.ReadCustomCsv(custom);
+            Csv.ReadCityList(CityList);
 
-            if (city.Length != custom[0].cityVolume)
-            {
-                Array.Resize(ref city, custom[0].cityVolume);
-            }
             if (garage.Length != custom[0].garageVolume)
             {
                 Array.Resize(ref garage, custom[0].garageVolume);
             }
 
-            Csv.ReadCityCsv(city, custom[0].cityVolume);
+            Csv.ReadCityCsv(city,CityList);
             Csv.ReadGarageCsv(garage, custom[0].garageVolume);
-            TimeSpan span = new TimeSpan(0,0,0);
-            span = DateTime.Now - custom[0].closeTime;
-            this.Text = (span.Days*24 +span.Hours).ToString();
+            //TimeSpan span = new TimeSpan(0,0,0);
+            //span = DateTime.Now - custom[0].closeTime;
+            ////this.Text = (span.Days*24 +span.Hours).ToString();
 
-            for (int i = 0; i < custom[0].garageVolume; i++)
-            {
-                if (DateTime.Compare(garage[i].carArrivalTime, System.DateTime.Now) < 0 && DateTime.Compare(garage[i].carArrivalTime, DefalutTime) != 0)
-                {
-                    garage[i].carstatus = false;
-                    garage[i].carDepartureCityIndex = garage[i].carArrivalCityIndex;
-                    garage[i].carDepartureCityName = garage[i].carArrivalCityName;
-                    garage[i].carDepartureTime = DefalutTime;
-                    garage[i].carArrivalCityIndex = 0;
-                    garage[i].carArrivalCityName = null;
-                    garage[i].carArrivalTime = DefalutTime;
-                    custom[0].cash += (UInt64)garage[i].carTotalFare;
-                    Csv.UpdateCustomCsv(custom);
-                    garage[i].carTotalFare = 0;
-                    garage[i].carCost = 0;
-                    Csv.UpdateGarageCsv(garage, i);
-                }
-            }
+            //for (int i = 0; i < custom[0].garageVolume; i++)
+            //{
+            //    if (DateTime.Compare(garage[i].carArrivalTime, System.DateTime.Now) < 0 && DateTime.Compare(garage[i].carArrivalTime, DefalutTime) != 0)
+            //    {
+            //        garage[i].carstatus = false;
+            //        garage[i].carDepartureCityIndex = garage[i].carArrivalCityIndex;
+            //        garage[i].carDepartureCityName = garage[i].carArrivalCityName;
+            //        garage[i].carDepartureTime = DefalutTime;
+            //        garage[i].carArrivalCityIndex = 0;
+            //        garage[i].carArrivalCityName = null;
+            //        garage[i].carArrivalTime = DefalutTime;
+            //        custom[0].cash += (UInt64)garage[i].carTotalFare;
+            //        Csv.UpdateCustomCsv(custom);
+            //        garage[i].carTotalFare = 0;
+            //        garage[i].carCost = 0;
+            //        Csv.UpdateGarageCsv(garage, i);
+            //    }
+            //}
 
-            carDisplay();
+            //carDisplay();
 
         }
 
@@ -77,12 +77,10 @@ namespace trans
             {
                 if (!garage[i].carstatus && garage[i].carPower != 0)
                 {
-                    bool check;
                     do
                     {
-                        next = (UInt16)(r.Next(custom[0].cityVolume));
-                        check = ((next == garage[i].carDepartureCityIndex - 1) || (city[next].cityOpenStatus == false));
-                    } while (check);
+                        next = (UInt16)(r.Next(CityList.Count));
+                    } while (next==i);
 
                     Csv.ReadCityToCityCsv(city_to_city, garage[i].carDepartureCityIndex, (UInt16)(next + 1));
 
@@ -161,6 +159,18 @@ namespace trans
         {
             custom[0].closeTime = DateTime.Now;
             Csv.UpdateCustomCsv(custom);
+        }
+
+        public void button2_Click(object sender, EventArgs e)
+        {
+            string cityName1 = "天津";
+            string cityName2 = "上海";
+
+            Csv.SearchAddCity(CityList, city, cityName1);
+
+            Csv.SearchDelCity(CityList, city, cityName2);
+            
+            cityName1 = cityName2;
         }
 
 

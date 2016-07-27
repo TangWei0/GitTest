@@ -4,21 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-//System.Text.Encoding.GetEncoding("SHIFT-JIS")
 
 namespace trans
-{
-    
-
+{    
     public class CSV
     {
         static string fp_custom = ".\\Record\\custom.csv";
+        static string fp_city_list = ".\\Record\\city_list\\citylist.csv";
         static string fp_city = ".\\Record\\city\\city_";
-        //static string fp_city_defalut = ".\\Record\\cityDefalut\\city_defalut_";
+        static string fp_city_default = ".\\Record\\cityDefault\\";
         static string fp_garage = ".\\Record\\garage\\garage_";
         static string fp_city_to_city = ".\\Record\\CityToCityTable\\city_to_city_";
 
-        //static string fp_garage = ".\\Record\\garage\\garage_";
+        Parameter.City ReadCity = new Parameter.City();
 
         public void ReadCustomCsv(Parameter.Custom[] custom)
         {
@@ -47,9 +45,6 @@ namespace trans
                             custom[0].garageVolume = Convert.ToUInt16(csv[column]);
                             break;
                         case 5:
-                            custom[0].cityVolume = Convert.ToUInt16(csv[column]);
-                            break;
-                        case 6:
                             custom[0].closeTime = DateTime.Parse(csv[column]);
                             break;
                         default:
@@ -71,7 +66,6 @@ namespace trans
             rowCsvInfo += custom[0].cash.ToString() + ",";
             rowCsvInfo += custom[0].coin.ToString() + ",";
             rowCsvInfo += custom[0].garageVolume.ToString() + ",";
-            rowCsvInfo += custom[0].cityVolume.ToString() +",";
             rowCsvInfo += custom[0].closeTime.ToString();
 
             sw.Write(rowCsvInfo);
@@ -81,11 +75,48 @@ namespace trans
 
         }
 
-        public void ReadCityCsv(Parameter.City[] city, UInt16 cityVolume)
+        public void ReadCityList(List<UInt16> CityList)
         {
-            for (int i = 0; i < cityVolume; i++)
+            StreamReader sr = new StreamReader(fp_city_list, System.Text.Encoding.Unicode);
+            String lin = sr.ReadLine();
+            if (lin != null)
             {
-                string fp = fp_city + (i + 1).ToString("00000") + ".csv";
+                String[] csv = lin.Split(',');
+                for (int column = 0; column < csv.GetLength(0); column++)
+                {
+                    CityList.Add(Convert.ToUInt16(csv[column]));
+                }
+            }
+
+            sr.Close();
+        }
+
+        public void UpdateCityList(List<UInt16> CityList)
+        {
+            StreamWriter sw = new StreamWriter(fp_city_list, false, System.Text.Encoding.Unicode);
+
+            string rowCsvInfo = "";
+            for (int i = 0; i < CityList.Count; i++)
+            {
+                if (i == CityList.Count - 1)
+                {
+                    rowCsvInfo += CityList[i].ToString();
+                }
+                else
+                {
+                    rowCsvInfo += CityList[i].ToString() + ",";
+                }
+            }
+
+            sw.Write(rowCsvInfo);
+            sw.Close();
+        }
+
+        public void ReadCityCsv(List<Parameter.City> city, List<UInt16> CityList)
+        {
+            for (int i = 0; i < CityList.Count; i++)
+            {
+                string fp = fp_city + (CityList[i]).ToString("00000") + ".csv";
                 StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
 
                 String lin = sr.ReadLine();
@@ -97,25 +128,22 @@ namespace trans
                         switch (column)
                         {
                             case 0:
-                                city[i].cityIndex = Convert.ToUInt16(csv[column]);
+                                ReadCity.cityIndex = Convert.ToUInt16(csv[column]);
                                 break;
                             case 1:
-                                city[i].cityName = csv[column];
+                                ReadCity.cityName = csv[column];
                                 break;
                             case 2:
-                                city[i].cityPeopleNumber = Convert.ToUInt32(csv[column]);
+                                ReadCity.cityPeopleNumber = Convert.ToUInt32(csv[column]);
                                 break;
                             case 3:
-                                city[i].cityStars = Convert.ToByte(csv[column]);
+                                ReadCity.cityStars = Convert.ToByte(csv[column]);
                                 break;
                             case 4:
-                                city[i].cityLever = Convert.ToByte(csv[column]);
+                                ReadCity.cityLever = Convert.ToByte(csv[column]);
                                 break;
                             case 5:
-                                city[i].cityValue = Convert.ToUInt64(csv[column]);
-                                break;
-                            case 6:
-                                city[i].cityOpenStatus = Convert.ToBoolean(csv[column]);
+                                ReadCity.cityValue = Convert.ToUInt64(csv[column]);
                                 break;
                             default:
                                 break;
@@ -123,7 +151,70 @@ namespace trans
                     }
                 }
                 sr.Close();
+                city.Add(ReadCity); 
             }
+        }
+
+        public void SearchAddCity(List<UInt16> CityList, List<Parameter.City> city, string cityName)
+        {
+            string fp_search = fp_city_default + cityName + ".csv";
+            StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
+
+            String lin = sr.ReadLine();
+            if (lin != null)
+            {
+                String[] csv = lin.Split(',');
+                for (int column = 0; column < csv.GetLength(0); column++)
+                {
+                    switch (column)
+                    {
+                        case 0:
+                            CityList.Add(Convert.ToUInt16(csv[column]));
+                            ReadCity.cityIndex = Convert.ToUInt16(csv[column]);
+                            string fp_copy = fp_city + Convert.ToUInt16(csv[column]).ToString("00000") + ".csv";
+                            System.IO.File.Copy(fp_search, fp_copy, true);
+                            UpdateCityList(CityList);
+                            break;
+                        case 1:
+                            ReadCity.cityName = csv[column];
+                            break;
+                        case 2:
+                            ReadCity.cityPeopleNumber = Convert.ToUInt32(csv[column]);
+                            break;
+                        case 3:
+                            ReadCity.cityStars = Convert.ToByte(csv[column]);
+                            break;
+                        case 4:
+                            ReadCity.cityLever = Convert.ToByte(csv[column]);
+                            break;
+                        case 5:
+                            ReadCity.cityValue = Convert.ToUInt64(csv[column]);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                
+            }
+            sr.Close();
+            city.Add(ReadCity);
+        }
+
+        public void SearchDelCity(List<UInt16> CityList, List<Parameter.City> city, string cityName)
+        {
+            for (int i = 0; i < CityList.Count; i++)
+            {
+                if (city[i].cityName == cityName)
+                {
+                    ReadCity = city[i];
+                    string fp_search = fp_city + city[i].cityIndex.ToString("00000") + ".csv";
+                    CityList.Remove(city[i].cityIndex);
+                    UpdateCityList(CityList);
+                    city.Remove(ReadCity);
+                    System.IO.File.Delete(fp_search);
+                    return;
+                }
+            }            
         }
 
         public void UpdateCityCsv(Parameter.City[] city, int cityRowIndex)
@@ -137,8 +228,7 @@ namespace trans
                        + city[cityRowIndex].cityPeopleNumber.ToString() + ","
                        + city[cityRowIndex].cityStars.ToString() + ","
                        + city[cityRowIndex].cityLever.ToString() + ","
-                       + city[cityRowIndex].cityValue.ToString() + ","
-                       + city[cityRowIndex].cityOpenStatus.ToString();
+                       + city[cityRowIndex].cityValue.ToString();
 
             sw.Write(lin);
             sw.Close();

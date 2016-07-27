@@ -16,7 +16,6 @@ namespace trans
             public UInt64 cash;
             public UInt64 coin;
             public UInt16 garageVolume;
-            public UInt16 cityVolume;
             public DateTime closeTime;
          
         }
@@ -29,9 +28,9 @@ namespace trans
             public byte cityStars;
             public byte cityLever;
             public UInt64 cityValue;
-            public bool cityOpenStatus;
-
         }
+
+        
 
         public struct Garage
         {
