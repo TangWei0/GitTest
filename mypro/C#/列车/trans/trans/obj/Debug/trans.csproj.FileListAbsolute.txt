@@ -1,9 +1,0 @@
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\obj\Debug\trans.Form1.resources
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\obj\Debug\trans.Properties.Resources.resources
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\obj\Debug\trans.csproj.GenerateResource.Cache
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\bin\Debug\trans.exe.config
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\bin\Debug\trans.exe
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\bin\Debug\trans.pdb
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\obj\Debug\trans.exe
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\obj\Debug\trans.pdb
-C:\Users\itou1\Desktop\Sim\GitTest\mypro\C#\列车\trans\trans\obj\Debug\trans.csprojResolveAssemblyReference.cache

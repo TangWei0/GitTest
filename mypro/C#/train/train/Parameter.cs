@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Setting = trans.Properties.Settings;
+using Setting = train.Properties.Settings;
 
-namespace trans
+namespace train
 {
     public class Parameter
     {

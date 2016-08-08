@@ -1,4 +1,4 @@
-﻿namespace trans
+namespace train
 {
     partial class Form1
     {
