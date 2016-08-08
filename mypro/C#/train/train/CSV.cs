@@ -11,12 +11,15 @@ namespace train
     {
         static string fp_custom = ".\\Record\\custom.csv";
         static string fp_city_list = ".\\Record\\city_list\\citylist.csv";
+        static string fp_car_list = ".\\Record\\car_list\\";
         static string fp_city = ".\\Record\\city\\city_";
         static string fp_city_default = ".\\Record\\cityDefault\\";
-        static string fp_garage = ".\\Record\\garage\\garage_";
+        static string fp_using_car = ".\\Record\\garage\\using_car_";
+        static string fp_unused_car = ".\\Record\\garage\\unused_car_";
         static string fp_city_to_city = ".\\Record\\CityToCityTable\\city_to_city_";
 
         Parameter.City ReadCity = new Parameter.City();
+        Parameter.Garage ReadCar = new Parameter.Garage();
 
         public void ReadCustomCsv(Parameter.Custom[] custom)
         {
@@ -207,8 +210,8 @@ namespace train
                 if (city[i].cityName == cityName)
                 {
                     ReadCity = city[i];
-                    string fp_search = fp_city + city[i].cityIndex.ToString("00000") + ".csv";
-                    CityList.Remove(city[i].cityIndex);
+                    string fp_search = fp_city + ReadCity.cityIndex.ToString("00000") + ".csv";
+                    CityList.Remove(ReadCity.cityIndex);
                     UpdateCityList(CityList);
                     city.Remove(ReadCity);
                     System.IO.File.Delete(fp_search);
@@ -217,29 +220,69 @@ namespace train
             }            
         }
 
-        public void UpdateCityCsv(Parameter.City[] city, int cityRowIndex)
+        public void UpdateCityCsv(List<UInt16> CityList, List<Parameter.City> city, string cityName)
         {
-            string fp = fp_city + cityRowIndex.ToString("00000") + ".csv";
+            for (int i = 0; i < CityList.Count; i++)
+            {
+                if (city[i].cityName == cityName)
+                {
+                    string fp_update = fp_city + city[i].cityIndex.ToString("00000") + ".csv";
 
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
+                    StreamWriter sw = new StreamWriter(fp_update, false, System.Text.Encoding.Unicode);
 
-            string lin = city[cityRowIndex].cityIndex.ToString() + ","
-                       + city[cityRowIndex].cityName + ","
-                       + city[cityRowIndex].cityPeopleNumber.ToString() + ","
-                       + city[cityRowIndex].cityStars.ToString() + ","
-                       + city[cityRowIndex].cityLever.ToString() + ","
-                       + city[cityRowIndex].cityValue.ToString();
+                    string lin = city[i].cityIndex.ToString() + ","
+                               + city[i].cityName + ","
+                               + city[i].cityPeopleNumber.ToString() + ","
+                               + city[i].cityStars.ToString() + ","
+                               + city[i].cityLever.ToString() + ","
+                               + city[i].cityValue.ToString();
 
-            sw.Write(lin);
-            sw.Close();
+                    sw.Write(lin);
+                    sw.Close();
+                }
+            } 
 
         }
 
-        public void ReadGarageCsv(Parameter.Garage[] garage, UInt16 garageVolume)
+        public void ReadCarList(List<UInt32> CarList,bool car_check)
         {
-            for (int i = 0; i < garageVolume; i++)
+            string fp = "";
+            if (car_check)
             {
-                string fp = fp_garage + (i + 1).ToString("00000000") + ".csv";
+                fp = fp_car_list + "usingcarlist.csv";
+            }
+            else
+            {
+                fp = fp_car_list + "unusedcarlist.csv";
+            }
+            StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
+            String lin = sr.ReadLine();
+            if (lin != null)
+            {
+                String[] csv = lin.Split(',');
+                for (int column = 0; column < csv.GetLength(0); column++)
+                {
+                    CarList.Add(Convert.ToUInt32(csv[column]));
+                }
+            }
+
+            sr.Close();
+        }
+
+        public void ReadGarageCsv(List<Parameter.Garage> garage, List<UInt32> carList, bool car_check)
+        {
+            for (int i = 0; i < carList.Count; i++)
+            {
+                string fp = "";
+                if (car_check)
+                {
+                    fp = fp_using_car + carList[i].ToString("00000000") + ".csv";
+                }
+                else
+                {
+                    fp = fp_unused_car + carList[i].ToString("00000000") + ".csv";
+                }
+
                 StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
 
                 String lin = sr.ReadLine();
@@ -251,49 +294,49 @@ namespace train
                         switch (column)
                         {
                             case 0:
-                                garage[i].carIndex = Convert.ToUInt16(csv[column]);
+                                ReadCar.carIndex = Convert.ToUInt16(csv[column]);
                                 break;
                             case 1:
-                                garage[i].carName = csv[column];
+                                ReadCar.carName = csv[column];
                                 break;
                             case 2:
-                                garage[i].carPeopleVolume = Convert.ToByte(csv[column]);
+                                ReadCar.carPeopleVolume = Convert.ToByte(csv[column]);
                                 break;
                             case 3:
-                                garage[i].carSpeed = Convert.ToUInt16(csv[column]);
+                                ReadCar.carSpeed = Convert.ToUInt16(csv[column]);
                                 break;
                             case 4:
-                                garage[i].carPower = Convert.ToUInt16(csv[column]);
+                                ReadCar.carPower = Convert.ToUInt16(csv[column]);
                                 break;
                             case 5:
-                                garage[i].carWeight = Convert.ToUInt16(csv[column]);
+                                ReadCar.carWeight = Convert.ToUInt16(csv[column]);
                                 break;
                             case 6:
-                                garage[i].carDepartureCityIndex = Convert.ToUInt16(csv[column]);
+                                ReadCar.carDepartureCityIndex = Convert.ToUInt16(csv[column]);
                                 break;
                             case 7:
-                                garage[i].carDepartureCityName = csv[column];
+                                ReadCar.carDepartureCityName = csv[column];
                                 break;
                             case 8:
-                                garage[i].carDepartureTime = DateTime.Parse(csv[column]);
+                                ReadCar.carDepartureTime = DateTime.Parse(csv[column]);
                                 break;
                             case 9:
-                                garage[i].carArrivalCityIndex = Convert.ToUInt16(csv[column]);
+                                ReadCar.carArrivalCityIndex = Convert.ToUInt16(csv[column]);
                                 break;
                             case 10:
-                                garage[i].carArrivalCityName = csv[column];
+                                ReadCar.carArrivalCityName = csv[column];
                                 break;
                             case 11:
-                                garage[i].carArrivalTime = DateTime.Parse(csv[column]);
+                                ReadCar.carArrivalTime = DateTime.Parse(csv[column]);
                                 break;
                             case 12:
-                                garage[i].carstatus = Convert.ToBoolean(csv[column]);
+                                ReadCar.carstatus = Convert.ToBoolean(csv[column]);
                                 break;
                             case 13:
-                                garage[i].carTotalFare = Convert.ToUInt32(csv[column]);
+                                ReadCar.carTotalFare = Convert.ToUInt32(csv[column]);
                                 break;
                             case 14:
-                                garage[i].carCost = Convert.ToUInt32(csv[column]);
+                                ReadCar.carCost = Convert.ToUInt32(csv[column]);
                                 break;
                             default:
                                 break;
@@ -302,48 +345,49 @@ namespace train
 
                 }
                 sr.Close();
+                garage.Add(ReadCar);
             }
         }
 
-        public void UpdateGarageCsv(Parameter.Garage[] garage, int garageRowIndex)
-        {
-            string fp = fp_garage + (garageRowIndex + 1).ToString("00000000") + ".csv";
+        //public void UpdateGarageCsv(Parameter.Garage[] garage, int garageRowIndex)
+        //{
+        //    string fp = fp_garage + (garageRowIndex + 1).ToString("00000000") + ".csv";
 
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
+        //    StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
 
-            string lin = garage[garageRowIndex].carIndex.ToString() + ","
-                       + garage[garageRowIndex].carName + ","
-                       + garage[garageRowIndex].carPeopleVolume.ToString() + ","
-                       + garage[garageRowIndex].carSpeed.ToString() + ","
-                       + garage[garageRowIndex].carPower.ToString() + ","
-                       + garage[garageRowIndex].carWeight.ToString() + ","
-                       + garage[garageRowIndex].carDepartureCityIndex.ToString() + ","
-                       + garage[garageRowIndex].carDepartureCityName + ","
-                       + garage[garageRowIndex].carDepartureTime.ToString() + ","
-                       + garage[garageRowIndex].carArrivalCityIndex.ToString() + ","
-                       + garage[garageRowIndex].carArrivalCityName + ","
-                       + garage[garageRowIndex].carArrivalTime.ToString() + ","
-                       + garage[garageRowIndex].carstatus.ToString() + ","
-                       + garage[garageRowIndex].carTotalFare.ToString() + ","
-                       + garage[garageRowIndex].carCost.ToString();
+        //    string lin = garage[garageRowIndex].carIndex.ToString() + ","
+        //               + garage[garageRowIndex].carName + ","
+        //               + garage[garageRowIndex].carPeopleVolume.ToString() + ","
+        //               + garage[garageRowIndex].carSpeed.ToString() + ","
+        //               + garage[garageRowIndex].carPower.ToString() + ","
+        //               + garage[garageRowIndex].carWeight.ToString() + ","
+        //               + garage[garageRowIndex].carDepartureCityIndex.ToString() + ","
+        //               + garage[garageRowIndex].carDepartureCityName + ","
+        //               + garage[garageRowIndex].carDepartureTime.ToString() + ","
+        //               + garage[garageRowIndex].carArrivalCityIndex.ToString() + ","
+        //               + garage[garageRowIndex].carArrivalCityName + ","
+        //               + garage[garageRowIndex].carArrivalTime.ToString() + ","
+        //               + garage[garageRowIndex].carstatus.ToString() + ","
+        //               + garage[garageRowIndex].carTotalFare.ToString() + ","
+        //               + garage[garageRowIndex].carCost.ToString();
 
-            sw.Write(lin);
-            sw.Close();
+        //    sw.Write(lin);
+        //    sw.Close();
 
-        }
+        //}
 
-        public void DeleteGarageCsv(UInt16 garageVolume, UInt16 garageRowIndex)
-        {
-            for (int i = garageRowIndex + 1; i <= garageVolume; i++)
-            {
-                string fp_old = fp_city + (i - 1).ToString("00000000") + ".csv";
-                string fp_new = fp_city + i.ToString("00000000") + ".csv";
-                System.IO.File.Copy(fp_new, fp_old, true);
-            }
+        //public void DeleteGarageCsv(UInt16 garageVolume, UInt16 garageRowIndex)
+        //{
+        //    for (int i = garageRowIndex + 1; i <= garageVolume; i++)
+        //    {
+        //        string fp_old = fp_city + (i - 1).ToString("00000000") + ".csv";
+        //        string fp_new = fp_city + i.ToString("00000000") + ".csv";
+        //        System.IO.File.Copy(fp_new, fp_old, true);
+        //    }
 
-            string fp = fp_city + garageVolume.ToString("00000000") + ".csv";
-            System.IO.File.Delete(fp);
-        }
+        //    string fp = fp_city + garageVolume.ToString("00000000") + ".csv";
+        //    System.IO.File.Delete(fp);
+        //}
 
         public void ReadCityToCityCsv(Parameter.CityToCity[] cityToCity, UInt16 departure, UInt16 arrvial)
         {
