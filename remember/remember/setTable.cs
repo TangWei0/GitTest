@@ -20,7 +20,7 @@ namespace remember
 
         string[] dayWeek = new string[7] { "(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)" };
         string[] MonthCell = new string[12] { "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M" };
-        string[] HolidayName = new string[18] { "元日", 
+        string[] HolidayName = new string[19] { "元日", 
                                                 "成人の日", 
                                                 "建国記念の日", 
                                                 "春分の日", 
@@ -37,7 +37,8 @@ namespace remember
                                                 "勤労感謝の日", 
                                                 "天皇の誕生日", 
                                                 "振替休日", 
-                                                "年末年始"};
+                                                "年末年始",
+                                                "NSW創始日"};
 
         bool fontColor;
         bool Transfer = false;
@@ -47,6 +48,7 @@ namespace remember
         int springDay;
         int autumnalDay;
         int MondayCount;
+        string NSW = "";
         
         public void setting(string year, Excel.Worksheet xlsheet)
         {
@@ -62,13 +64,12 @@ namespace remember
 
             springDay = SpringEquinoxDay();
             autumnalDay = AutumnalEquinoxDay();
-            
 
             for (int i = 1; i <= 12; i++)
             {
                 MondayCount = 0;
                 cellRange = "";
-                
+
                 for (int j = 1; j <= DayMonth(i); j++)
                 {
                     fontColor = false;
@@ -108,6 +109,24 @@ namespace remember
 
                     count++;
                 }
+
+                if (NSW == "Sunday")
+                {
+                    cellFont = 8.ToString() + "/" + 1.ToString() + " " + dayWeek[5] + "\r\n" + HolidayName[16];
+                    xlSheet.Cells[1 + 3, 8 + 1] = cellFont;
+                    xlSheet.Range[MonthCell[8 - 1] + 4.ToString()].Font.Color = Color.Red;
+                    xlSheet.Range[MonthCell[8 - 1] + 4.ToString()].Interior.Color = Color.Aqua;
+                    NSW = "";
+                }
+                if (NSW == "Saturday")
+                {
+                    cellFont = 8.ToString() + "/" + 2.ToString() + " " + dayWeek[5] + "\r\n" + HolidayName[16];
+                    xlSheet.Cells[2 + 3, 8 + 1] = cellFont;
+                    xlSheet.Range[MonthCell[8 - 1] + 5.ToString()].Font.Color = Color.Red;
+                    xlSheet.Range[MonthCell[8 - 1] + 5.ToString()].Interior.Color = Color.Aqua;
+                    NSW = "";
+                }
+
             }
 
         }
@@ -232,6 +251,9 @@ namespace remember
                         HolidayCheck(8);
                     }
                     break;
+                case "0803":
+                    HolidayCheck(18);
+                    break;
                 case "0811":
                     if (Year >= 2016)
                     {
@@ -264,7 +286,6 @@ namespace remember
                 default:
                     break;
             }
-            
 
         }
 
@@ -272,13 +293,25 @@ namespace remember
         {
             cellFont += "\r\n" + HolidayName[holidayIndex];
 
-            if (count % 7 == 0)
+            if (holidayIndex != 18)
             {
-                Transfer = true;
+                if (count % 7 == 0)
+                {
+                    Transfer = true;
+                }
+                else
+                {
+                    setHoliday();
+                }
             }
             else
             {
                 setHoliday();
+                if (count % 7 == 0)
+                    NSW = "Sunday";
+                if (count % 7 == 6)
+                    NSW = "Saturday";
+                    
             }
 
         }
@@ -485,7 +518,7 @@ namespace remember
             SafeCreateDirectory(fileNamePath);
 
             fileNamePath += year + month.ToString("00") + day.ToString("00") + ".txt";
-            writer = new System.IO.StreamWriter(@fileNamePath, false, System.Text.Encoding.Default);
+            writer = new System.IO.StreamWriter(@fileNamePath, false, System.Text.Encoding.Unicode);
 
             writer.Close();
 

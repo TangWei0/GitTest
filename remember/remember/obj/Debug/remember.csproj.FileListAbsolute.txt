@@ -7,3 +7,13 @@ C:\Users\itou1\Desktop\Sim\GitTest\remember\remember\obj\Debug\remember.Properti
 C:\Users\itou1\Desktop\Sim\GitTest\remember\remember\obj\Debug\remember.csproj.GenerateResource.Cache
 C:\Users\itou1\Desktop\Sim\GitTest\remember\remember\obj\Debug\remember.exe
 C:\Users\itou1\Desktop\Sim\GitTest\remember\remember\obj\Debug\remember.pdb
+C:\GitTest\remember\remember\bin\Debug\remember.exe.config
+C:\GitTest\remember\remember\obj\Debug\remember.csproj.ResolveComReference.cache
+C:\GitTest\remember\remember\obj\Debug\remember.exe
+C:\GitTest\remember\remember\obj\Debug\remember.pdb
+C:\GitTest\remember\remember\bin\Debug\remember.exe
+C:\GitTest\remember\remember\bin\Debug\remember.pdb
+C:\GitTest\remember\remember\obj\Debug\remember.csprojResolveAssemblyReference.cache
+C:\GitTest\remember\remember\obj\Debug\remember.Form1.resources
+C:\GitTest\remember\remember\obj\Debug\remember.Properties.Resources.resources
+C:\GitTest\remember\remember\obj\Debug\remember.csproj.GenerateResource.Cache
