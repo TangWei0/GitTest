@@ -34,15 +34,21 @@ namespace train
         public Form1()
         {
             InitializeComponent();
-
+            //读取账户信息
             Csv.ReadCustomCsv(custom);
+            //读取开通城市列表
             Csv.ReadCityList(CityList);
+            //读取使用中火车列表
             Csv.ReadCarList(UsingCarList,true);
+            //读取仓库中火车列表
             Csv.ReadCarList(UnusedCarList,false);
-
+            //读取开通城市详细信息
             Csv.ReadCityCsv(city,CityList);
+            //读取使用中火车详细信息
             Csv.ReadGarageCsv(UsingGarage, UsingCarList,true);
+            //读取仓库中火车详细信息
             Csv.ReadGarageCsv(UnusedGarage, UnusedCarList,false);
+
             //TimeSpan span = new TimeSpan(0,0,0);
             //span = DateTime.Now - custom[0].closeTime;
             ////this.Text = (span.Days*24 +span.Hours).ToString();
