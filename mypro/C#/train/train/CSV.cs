@@ -10,9 +10,9 @@ namespace train
     public class CSV
     {
         static string fp_custom = ".\\Record\\custom.csv";
-        static string fp_city_list = ".\\Record\\city_list\\citylist.csv";
-        static string fp_car_list = ".\\Record\\car_list\\";
-        static string fp_city = ".\\Record\\city\\city_";
+        //static string fp_city_list = ".\\Record\\city_list\\citylist.csv";
+        //static string fp_car_list = ".\\Record\\car_list\\";
+        static string fp_city = ".\\Record\\city\\city.csv";
         static string fp_city_default = ".\\Record\\cityDefault\\";
         static string fp_car_default = ".\\Record\\carDefault\\";
         static string fp_using_car = ".\\Record\\garage\\using_car_";
@@ -50,9 +50,15 @@ namespace train
                             custom[0].coin = Convert.ToUInt64(csv[column]);
                             break;
                         case 4:
-                            custom[0].garageVolume = Convert.ToUInt16(csv[column]);
+                            custom[0].cityVolume = Convert.ToUInt16(csv[column]);
                             break;
                         case 5:
+                            custom[0].usingCarVolume = Convert.ToUInt16(csv[column]);
+                            break;
+                        case 6:
+                            custom[0].unusedCarVolume = Convert.ToUInt16(csv[column]);
+                            break;
+                        case 7:
                             custom[0].closeTime = DateTime.Parse(csv[column]);
                             break;
                         default:
@@ -77,7 +83,9 @@ namespace train
             rowCsvInfo += custom[0].levelValue.ToString() + ",";
             rowCsvInfo += custom[0].cash.ToString() + ",";
             rowCsvInfo += custom[0].coin.ToString() + ",";
-            rowCsvInfo += custom[0].garageVolume.ToString() + ",";
+            rowCsvInfo += custom[0].cityVolume.ToString() + ",";
+            rowCsvInfo += custom[0].usingCarVolume.ToString() + ",";
+            rowCsvInfo += custom[0].unusedCarVolume.ToString() + ",";
             rowCsvInfo += custom[0].closeTime.ToString();
 
             sw.Write(rowCsvInfo);
@@ -91,46 +99,46 @@ namespace train
         /// 读取开通城市列表
         /// </summary>
         /// <param name="CityList"></param>
-        public void ReadCityList(List<UInt16> CityList)
-        {
-            StreamReader sr = new StreamReader(fp_city_list, System.Text.Encoding.Unicode);
-            String lin = sr.ReadLine();
-            if (lin != null)
-            {
-                String[] csv = lin.Split(',');
-                for (int column = 0; column < csv.GetLength(0); column++)
-                {
-                    CityList.Add(Convert.ToUInt16(csv[column]));
-                }
-            }
+        //public void readcitylist(list<uint16> citylist)
+        //{
+        //    streamreader sr = new streamreader(fp_city_list, system.text.encoding.unicode);
+        //    string lin = sr.readline();
+        //    if (lin != null)
+        //    {
+        //        string[] csv = lin.split(',');
+        //        for (int column = 0; column < csv.getlength(0); column++)
+        //        {
+        //            citylist.add(convert.touint16(csv[column]));
+        //        }
+        //    }
 
-            sr.Close();
-        }
+        //    sr.close();
+        //}
 
         /// <summary>
         /// 保存开通城市列表
         /// </summary>
         /// <param name="CityList"></param>
-        public void UpdateCityList(List<UInt16> CityList)
-        {
-            StreamWriter sw = new StreamWriter(fp_city_list, false, System.Text.Encoding.Unicode);
+        //public void UpdateCityList(List<UInt16> CityList)
+        //{
+        //    StreamWriter sw = new StreamWriter(fp_city_list, false, System.Text.Encoding.Unicode);
 
-            string rowCsvInfo = "";
-            for (int i = 0; i < CityList.Count; i++)
-            {
-                if (i == CityList.Count - 1)
-                {
-                    rowCsvInfo += CityList[i].ToString();
-                }
-                else
-                {
-                    rowCsvInfo += CityList[i].ToString() + ",";
-                }
-            }
+        //    string rowCsvInfo = "";
+        //    for (int i = 0; i < CityList.Count; i++)
+        //    {
+        //        if (i == CityList.Count - 1)
+        //        {
+        //            rowCsvInfo += CityList[i].ToString();
+        //        }
+        //        else
+        //        {
+        //            rowCsvInfo += CityList[i].ToString() + ",";
+        //        }
+        //    }
 
-            sw.Write(rowCsvInfo);
-            sw.Close();
-        }
+        //    sw.Write(rowCsvInfo);
+        //    sw.Close();
+        //}
 
         /// <summary>
         /// 读取火车列表
@@ -203,17 +211,15 @@ namespace train
         }
 
         /// <summary>
-        /// 开通城市详细信息
+        /// 读取开通城市信息
         /// </summary>
         /// <param name="city"></param>
         /// <param name="CityList"></param>
-        public void ReadCityCsv(List<Parameter.City> city, List<UInt16> CityList)
+        public void ReadCityCsv(List<Parameter.City> city, UInt16 cityVolume)
         {
-            for (int i = 0; i < CityList.Count; i++)
+            StreamReader sr = new StreamReader(fp_city, System.Text.Encoding.Unicode);
+            for (int i = 0; i < cityVolume; i++)
             {
-                string fp = fp_city + (CityList[i]).ToString("00000") + ".csv";
-                StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
-
                 String lin = sr.ReadLine();
                 if (lin != null)
                 {
@@ -245,21 +251,19 @@ namespace train
                         }
                     }
                 }
-                sr.Close();
                 city.Add(ReadCity);
             }
+            sr.Close();
         }
 
         /// <summary>
         /// 增加开通城市
         /// </summary>
-        /// <param name="CityList"></param>
         /// <param name="city"></param>
         /// <param name="cityName"></param>
-        public void SearchAddCity(List<UInt16> CityList, List<Parameter.City> city, string cityName)
+        public void SearchAddCity(List<Parameter.City> city, string cityName)
         {
             string fp_search = fp_city_default + cityName + ".csv";
-            string fp_copy = "";
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
 
             String lin = sr.ReadLine();
@@ -271,9 +275,7 @@ namespace train
                     switch (column)
                     {
                         case 0:
-                            CityList.Add(Convert.ToUInt16(csv[column]));
                             ReadCity.cityIndex = Convert.ToUInt16(csv[column]);
-                            fp_copy = fp_city + Convert.ToUInt16(csv[column]).ToString("00000") + ".csv";
                             break;
                         case 1:
                             ReadCity.cityName = csv[column];
@@ -294,7 +296,6 @@ namespace train
                             break;
                     }
                 }
-                System.IO.File.Copy(fp_search, fp_copy, true);
             }
             sr.Close();
             city.Add(ReadCity);
@@ -487,7 +488,7 @@ namespace train
             //city.Add(ReadCity);
         }
 
-        
+
         /// <summary>
         /// 
         /// </summary>

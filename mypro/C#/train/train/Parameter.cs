@@ -15,7 +15,9 @@ namespace train
             public UInt64 levelValue;
             public UInt64 cash;
             public UInt64 coin;
-            public UInt16 garageVolume;
+            public UInt16 cityVolume;
+            public UInt16 usingCarVolume;
+            public UInt16 unusedCarVolume;
             public DateTime closeTime;
          
         }

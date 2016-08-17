@@ -14,7 +14,7 @@ namespace train
     {
         DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
 
-        Parameter.Custom[] custom = new Parameter.Custom[1];
+        public Parameter.Custom[] custom = new Parameter.Custom[1];
         //Parameter.City c = new Parameter.City();
         List<Parameter.City> city = new List<Parameter.City>();
         List<Parameter.Garage> UsingGarage = new List<Parameter.Garage>();
@@ -37,13 +37,13 @@ namespace train
             //读取账户信息
             Csv.ReadCustomCsv(custom);
             //读取开通城市列表
-            Csv.ReadCityList(CityList);
+            //Csv.ReadCityList(CityList);
             //读取使用中火车列表
             Csv.ReadCarList(UsingCarList,true);
             //读取仓库中火车列表
             Csv.ReadCarList(UnusedCarList,false);
             //读取开通城市详细信息
-            Csv.ReadCityCsv(city,CityList);
+            Csv.ReadCityCsv(city,custom[0].cityVolume);
             //读取使用中火车详细信息
             Csv.ReadGarageCsv(UsingGarage, UsingCarList,true);
             //读取仓库中火车详细信息
