@@ -10,13 +10,11 @@ namespace train
     public class CSV
     {
         static string fp_custom = ".\\Record\\custom.csv";
-        //static string fp_city_list = ".\\Record\\city_list\\citylist.csv";
-        //static string fp_car_list = ".\\Record\\car_list\\";
         static string fp_city = ".\\Record\\city\\city.csv";
         static string fp_city_default = ".\\Record\\cityDefault\\";
         static string fp_car_default = ".\\Record\\carDefault\\";
-        static string fp_using_car = ".\\Record\\garage\\using_car_";
-        static string fp_unused_car = ".\\Record\\garage\\unused_car_";
+        static string fp_using_car = ".\\Record\\garage\\usingCar.csv";
+        static string fp_unused_car = ".\\Record\\garage\\unusedCar.csv";
         static string fp_city_to_city = ".\\Record\\CityToCityTable\\city_to_city_";
 
         Parameter.City ReadCity = new Parameter.City();
@@ -92,129 +90,13 @@ namespace train
             sw.Write("\n");
 
             sw.Close();
-
         }
 
         /// <summary>
         /// 读取开通城市列表
         /// </summary>
-        /// <param name="CityList"></param>
-        //public void readcitylist(list<uint16> citylist)
-        //{
-        //    streamreader sr = new streamreader(fp_city_list, system.text.encoding.unicode);
-        //    string lin = sr.readline();
-        //    if (lin != null)
-        //    {
-        //        string[] csv = lin.split(',');
-        //        for (int column = 0; column < csv.getlength(0); column++)
-        //        {
-        //            citylist.add(convert.touint16(csv[column]));
-        //        }
-        //    }
-
-        //    sr.close();
-        //}
-
-        /// <summary>
-        /// 保存开通城市列表
-        /// </summary>
-        /// <param name="CityList"></param>
-        //public void UpdateCityList(List<UInt16> CityList)
-        //{
-        //    StreamWriter sw = new StreamWriter(fp_city_list, false, System.Text.Encoding.Unicode);
-
-        //    string rowCsvInfo = "";
-        //    for (int i = 0; i < CityList.Count; i++)
-        //    {
-        //        if (i == CityList.Count - 1)
-        //        {
-        //            rowCsvInfo += CityList[i].ToString();
-        //        }
-        //        else
-        //        {
-        //            rowCsvInfo += CityList[i].ToString() + ",";
-        //        }
-        //    }
-
-        //    sw.Write(rowCsvInfo);
-        //    sw.Close();
-        //}
-
-        /// <summary>
-        /// 读取火车列表
-        /// </summary>
-        /// <param name="CarList"></param>
-        /// <param name="car_check"></param>
-        /// car_check==true  使用中火车列表
-        /// car_check==false  仓库中火车列表
-        public void ReadCarList(List<UInt32> CarList, bool car_check)
-        {
-            string fp = "";
-            if (car_check)
-            {
-                fp = fp_car_list + "usingcarlist.csv";
-            }
-            else
-            {
-                fp = fp_car_list + "unusedcarlist.csv";
-            }
-            StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
-            String lin = sr.ReadLine();
-            if (lin != null)
-            {
-                String[] csv = lin.Split(',');
-                for (int column = 0; column < csv.GetLength(0); column++)
-                {
-                    CarList.Add(Convert.ToUInt32(csv[column]));
-                }
-            }
-
-            sr.Close();
-        }
-
-        /// <summary>
-        /// 保存火车列表
-        /// </summary>
-        /// <param name="CarList"></param>
-        /// <param name="car_check"></param>
-        /// car_check==true  使用中火车列表
-        /// car_check==false  仓库中火车列表
-        public void UpdateCarList(List<UInt32> CarList, bool car_check)
-        {
-            string fp = "";
-            if (car_check)
-            {
-                fp = fp_car_list + "usingcarlist.csv";
-            }
-            else
-            {
-                fp = fp_car_list + "unusedcarlist.csv";
-            }
-
-            StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
-
-            string rowCsvInfo = "";
-            for (int i = 0; i < CarList.Count; i++)
-            {
-                if (i == CarList.Count - 1)
-                {
-                    rowCsvInfo += CarList[i].ToString();
-                }
-                else
-                {
-                    rowCsvInfo += CarList[i].ToString() + ",";
-                }
-            }
-
-            sw.Write(rowCsvInfo);
-            sw.Close();
-        }
-
-        /// <summary>
-        /// 读取开通城市信息
-        /// </summary>
         /// <param name="city"></param>
-        /// <param name="CityList"></param>
+        /// <param name="cityVolume"></param>
         public void ReadCityCsv(List<Parameter.City> city, UInt16 cityVolume)
         {
             StreamReader sr = new StreamReader(fp_city, System.Text.Encoding.Unicode);
@@ -307,17 +189,14 @@ namespace train
         /// <param name="CityList"></param>
         /// <param name="city"></param>
         /// <param name="cityName"></param>
-        public void SearchDelCity(List<UInt16> CityList, List<Parameter.City> city, string cityName)
+        public void SearchDelCity(List<Parameter.City> city, string cityName)
         {
-            for (int i = 0; i < CityList.Count; i++)
+            for (int i = 0; i < city.Count; i++)
             {
                 if (city[i].cityName == cityName)
                 {
                     ReadCity = city[i];
-                    string fp_search = fp_city + ReadCity.cityIndex.ToString("00000") + ".csv";
-                    CityList.Remove(ReadCity.cityIndex);
                     city.Remove(ReadCity);
-                    System.IO.File.Delete(fp_search);
                 }
             }
         }
@@ -328,51 +207,45 @@ namespace train
         /// <param name="CityList"></param>
         /// <param name="city"></param>
         /// <param name="cityName"></param>
-        public void UpdateCityCsv(List<UInt16> CityList, List<Parameter.City> city, string cityName)
+        public void UpdateCityCsv(List<Parameter.City> city)
         {
-            for (int i = 0; i < CityList.Count; i++)
+            StreamWriter sw = new StreamWriter(fp_city, false, System.Text.Encoding.Unicode);
+            for (int i = 0; i < city.Count; i++)
             {
-                string fp_update = fp_city + city[i].cityIndex.ToString("00000") + ".csv";
-                StreamWriter sw = new StreamWriter(fp_update, false, System.Text.Encoding.Unicode);
-
                 string lin = city[i].cityIndex.ToString() + ","
                            + city[i].cityName + ","
                            + city[i].cityPeopleNumber.ToString() + ","
                            + city[i].cityStars.ToString() + ","
                            + city[i].cityLever.ToString() + ","
-                           + city[i].cityValue.ToString();
+                           + city[i].cityValue.ToString() + "\r\n";
 
                 sw.Write(lin);
-                sw.Close();
-
             }
-
+            sw.Close();
         }
-
+       
         /// <summary>
         /// 读取火车详细信息
         /// </summary>
         /// <param name="garage"></param>
-        /// <param name="carList"></param>
+        /// <param name="CarVolume"></param>
         /// <param name="car_check"></param>
         /// car_check==true 使用中火车列表
         /// car_check==false 仓库中火车列表
-        public void ReadGarageCsv(List<Parameter.Garage> garage, List<UInt32> carList, bool car_check)
+        public void ReadGarageCsv(List<Parameter.Garage> garage, UInt16 CarVolume, bool car_check)
         {
-            for (int i = 0; i < carList.Count; i++)
+            StreamReader sr = new StreamReader();
+            if (car_check)
             {
-                string fp = "";
-                if (car_check)
-                {
-                    fp = fp_using_car + carList[i].ToString("00000000") + ".csv";
-                }
-                else
-                {
-                    fp = fp_unused_car + carList[i].ToString("00000000") + ".csv";
-                }
+                sr = new StreamReader(fp_using_car, System.Text.Encoding.Unicode);
+            }
+            else
+            {
+                sr = new StreamReader(fp_unused_car, System.Text.Encoding.Unicode);
+            }
 
-                StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
-
+            for (int i = 0; i < CarVolume; i++)
+            {
                 String lin = sr.ReadLine();
                 if (lin != null)
                 {
@@ -430,11 +303,10 @@ namespace train
                                 break;
                         }
                     }
-
-                }
-                sr.Close();
+                }              
                 garage.Add(ReadCar);
             }
+            sr.Close();
         }
 
         /// <summary>
@@ -443,10 +315,10 @@ namespace train
         /// <param name="garage"></param>
         /// <param name="carList"></param>
         /// <param name="carName"></param>
-        public void BuyCarGarageCsv(List<Parameter.Garage> garage, List<UInt32> carList, string carName)
+        public void BuyCarGarageCsv(List<Parameter.Garage> ususedGarage, string carName)
         {
             string fp_search = fp_car_default + carName + ".csv";
-            string fp_copy = "";
+            //string fp_copy = "";
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
 
             String lin = sr.ReadLine();
@@ -458,10 +330,7 @@ namespace train
                     switch (column)
                     {
                         case 0:
-                            carList.Add(Convert.ToUInt16(csv[column]));
                             ReadCar.carArrivalCityIndex = Convert.ToUInt16(csv[column]);
-                            //临时关闭
-                            fp_copy = fp_city + Convert.ToUInt16(csv[column]).ToString("00000") + ".csv";
                             break;
                         case 1:
                             ReadCity.cityName = csv[column];

@@ -6,12 +6,12 @@ C:\GitTest\mypro\C#\列车\trans\train\obj\Debug\train.Properties.Resources.reso
 C:\GitTest\mypro\C#\列车\trans\train\obj\Debug\train.csproj.GenerateResource.Cache
 C:\GitTest\mypro\C#\列车\trans\train\obj\Debug\train.exe
 C:\GitTest\mypro\C#\列车\trans\train\obj\Debug\train.pdb
+C:\GitTest\mypro\C#\train\train\bin\Debug\train.exe.config
+C:\GitTest\mypro\C#\train\train\bin\Debug\train.exe
+C:\GitTest\mypro\C#\train\train\bin\Debug\train.pdb
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.csprojResolveAssemblyReference.cache
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.Form1.resources
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.Properties.Resources.resources
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.csproj.GenerateResource.Cache
-C:\GitTest\mypro\C#\train\train\bin\Debug\train.exe.config
-C:\GitTest\mypro\C#\train\train\bin\Debug\train.exe
-C:\GitTest\mypro\C#\train\train\bin\Debug\train.pdb
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.exe
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.pdb

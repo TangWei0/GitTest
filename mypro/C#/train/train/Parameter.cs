@@ -18,8 +18,7 @@ namespace train
             public UInt16 cityVolume;
             public UInt16 usingCarVolume;
             public UInt16 unusedCarVolume;
-            public DateTime closeTime;
-         
+            public DateTime closeTime;        
         }
 
         public struct City
@@ -32,13 +31,11 @@ namespace train
             public UInt64 cityValue;
         }
 
-        
-
         public struct Garage
         {
-            public UInt16 carIndex;
             public string carName;
             public byte carPeopleVolume;
+            public byte carCargoVolume;
             public UInt16 carSpeed;
             public UInt16 carPower;
             public UInt16 carWeight;

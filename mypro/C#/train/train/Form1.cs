@@ -12,42 +12,35 @@ namespace train
 {
     public partial class Form1 : Form
     {
+        CSV Csv = new CSV();
         DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
-
+        
         public Parameter.Custom[] custom = new Parameter.Custom[1];
-        //Parameter.City c = new Parameter.City();
         List<Parameter.City> city = new List<Parameter.City>();
-        List<Parameter.Garage> UsingGarage = new List<Parameter.Garage>();
-        List<Parameter.Garage> UnusedGarage = new List<Parameter.Garage>();
-
+        List<Parameter.Garage> usingGarage = new List<Parameter.Garage>();
+        List<Parameter.Garage> unusedGarage = new List<Parameter.Garage>();
         Parameter.CityToCity[] city_to_city = new Parameter.CityToCity[1];
 
-        public List<UInt16> CityList = new List<UInt16>();
-        public List<UInt32> UsingCarList = new List<UInt32>();
-        public List<UInt32> UnusedCarList = new List<UInt32>();
-        CSV Csv = new CSV();
+        ulong carCount;
+        
 
-        System.Random r = new System.Random(1000);
+        //System.Random r = new System.Random(1000);
         //int count = 0;
         //int calCount;
 
         public Form1()
         {
             InitializeComponent();
+
+            carCount = Properties.Settings.Default.carCount;
             //读取账户信息
             Csv.ReadCustomCsv(custom);
-            //读取开通城市列表
-            //Csv.ReadCityList(CityList);
-            //读取使用中火车列表
-            Csv.ReadCarList(UsingCarList,true);
-            //读取仓库中火车列表
-            Csv.ReadCarList(UnusedCarList,false);
             //读取开通城市详细信息
-            Csv.ReadCityCsv(city,custom[0].cityVolume);
+            Csv.ReadCityCsv(city, custom[0].cityVolume);
             //读取使用中火车详细信息
-            Csv.ReadGarageCsv(UsingGarage, UsingCarList,true);
+            Csv.ReadGarageCsv(usingGarage, custom[0].usingCarVolume,true);
             //读取仓库中火车详细信息
-            Csv.ReadGarageCsv(UnusedGarage, UnusedCarList,false);
+            Csv.ReadGarageCsv(unusedGarage, custom[0].unusedCarVolume,false);
 
             //TimeSpan span = new TimeSpan(0,0,0);
             //span = DateTime.Now - custom[0].closeTime;
@@ -170,16 +163,29 @@ namespace train
 
         public void button2_Click(object sender, EventArgs e)
         {
-            string cityName2 = "天津";
-            string cityName1 = "上海";
+            //string cityName1 = "上海";
 
-            Csv.SearchAddCity(CityList, city, cityName1);
-
-            Csv.SearchDelCity(CityList, city, cityName2);
-            
-            cityName1 = cityName2;
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string cityName = "上海";
+            Csv.SearchAddCity(city, cityName);
+            custom[0].cityVolume = Convert.ToUInt16(city.Count);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            string cityName = "广州";
+            Csv.SearchDelCity(city, cityName);
+            custom[0].cityVolume = Convert.ToUInt16(city.Count);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            Csv.UpdateCustomCsv(custom);
+            Csv.UpdateCityCsv(city);
+        }
 
     }
 }
