@@ -18,6 +18,7 @@ namespace train
             public UInt16 cityVolume;
             public UInt16 usingCarVolume;
             public UInt16 unusedCarVolume;
+            public UInt32 carCount;
             public DateTime closeTime;        
         }
 
@@ -46,9 +47,9 @@ namespace train
             public string carArrivalCityName;
             public DateTime carArrivalTime;
             public bool carstatus;
-            public UInt32 carTotalFare;
+            public UInt32 carTotalCash;
+            public UInt32 carTotalCoin;
             public UInt32 carCost;
-
         }
 
         public struct CityToCity
@@ -57,9 +58,6 @@ namespace train
             public int fare;
             public int generationRate;
             public int residenceNum;
-
         }
-
-      
     }
 }

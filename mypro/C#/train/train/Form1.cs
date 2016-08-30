@@ -22,7 +22,6 @@ namespace train
         Parameter.CityToCity[] city_to_city = new Parameter.CityToCity[1];
 
         ulong carCount;
-        
 
         //System.Random r = new System.Random(1000);
         //int count = 0;
@@ -32,7 +31,6 @@ namespace train
         {
             InitializeComponent();
 
-            carCount = Properties.Settings.Default.carCount;
             //读取账户信息
             Csv.ReadCustomCsv(custom);
             //读取开通城市详细信息
@@ -164,7 +162,6 @@ namespace train
         public void button2_Click(object sender, EventArgs e)
         {
             //string cityName1 = "上海";
-
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -186,6 +183,5 @@ namespace train
             Csv.UpdateCustomCsv(custom);
             Csv.UpdateCityCsv(city);
         }
-
     }
 }

@@ -22,14 +22,5 @@ namespace train.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public ulong carCount {
-            get {
-                return ((ulong)(this["carCount"]));
-            }
-        }
     }
 }
