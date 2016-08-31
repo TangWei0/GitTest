@@ -16,8 +16,8 @@ namespace train
             public UInt64 cash;
             public UInt64 coin;
             public UInt16 cityVolume;
-            public UInt16 usingCarVolume;
-            public UInt16 unusedCarVolume;
+            public UInt16 carVolume;
+            public UInt16 garageVolume;
             public UInt32 carCount;
             public DateTime closeTime;        
         }
@@ -40,6 +40,18 @@ namespace train
             public UInt16 carSpeed;
             public UInt16 carPower;
             public UInt16 carWeight;
+            public UInt32 carValue;
+        }
+
+        public struct Car
+        {
+            public string carName;
+            public byte carPeopleVolume;
+            public byte carCargoVolume;
+            public UInt16 carSpeed;
+            public UInt16 carPower;
+            public UInt16 carWeight;
+            public UInt32 carValue;
             public UInt16 carDepartureCityIndex;
             public string carDepartureCityName;
             public DateTime carDepartureTime;
@@ -56,8 +68,6 @@ namespace train
         {
             public int distance;
             public int fare;
-            public int generationRate;
-            public int residenceNum;
         }
     }
 }

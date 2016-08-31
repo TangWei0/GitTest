@@ -66,6 +66,7 @@ namespace train
             this.Previous.TabIndex = 2;
             this.Previous.Text = "＜";
             this.Previous.UseVisualStyleBackColor = true;
+            this.Previous.Click += new System.EventHandler(this.Previous_Click_1);
             // 
             // Next
             // 
@@ -75,6 +76,7 @@ namespace train
             this.Next.TabIndex = 3;
             this.Next.Text = "＞";
             this.Next.UseVisualStyleBackColor = true;
+            this.Next.Click += new System.EventHandler(this.Next_Click_1);
             // 
             // carNameLabel
             // 
@@ -139,7 +141,6 @@ namespace train
             this.button5.TabIndex = 10;
             this.button5.Text = "button5";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
