@@ -116,6 +116,11 @@ namespace train
         /// <param name="cityVolume"></param>
         public void ReadCityCsv(List<Parameter.City> city, UInt16 cityVolume)
         {
+            if (cityVolume == 0)
+            {
+                return;
+            }
+
             StreamReader sr = new StreamReader(fp_city, System.Text.Encoding.Unicode);
             for (int i = 0; i < cityVolume; i++)
             {
@@ -209,9 +214,16 @@ namespace train
         public void UpdateCityCsv(List<Parameter.City> city)
         {
             StreamWriter sw = new StreamWriter(fp_city, false, System.Text.Encoding.Unicode);
+            string lin = "";
+            if (city.Count == 0)
+            {
+                sw.Write(lin);
+                sw.Close();
+                return;
+            }
             for (int i = 0; i < city.Count; i++)
             {
-                string lin = "";
+                lin = "";
                 lin = city[i].cityIndex.ToString() + ","
                     + city[i].cityName + ","
                     + city[i].cityPeopleNumber.ToString() + ","
@@ -230,6 +242,10 @@ namespace train
         /// <param name="garageVolume"></param>
         public void ReadGarageCsv(List<Parameter.Garage> garage, UInt16 garageVolume)
         {
+            if (garageVolume == 0)
+            {
+                return;
+            }
             StreamReader sr = new StreamReader(fp_unused_car, System.Text.Encoding.Unicode);
             for (int i = 0; i < garageVolume; i++)
             {
@@ -279,6 +295,10 @@ namespace train
         /// <param name="carVolume"></param>
         public void ReadCarCsv(List<Parameter.Car> car, UInt16 carVolume)
         {
+            if (carVolume == 0)
+            {
+                return;
+            }
             StreamReader sr = new StreamReader(fp_using_car, System.Text.Encoding.Unicode);
             for (int i = 0; i < carVolume; i++)
             {
@@ -411,9 +431,16 @@ namespace train
         public void UpdateGarageCsv(List<Parameter.Garage> garage)
         {
             StreamWriter sw = new StreamWriter(fp_unused_car, false, System.Text.Encoding.Unicode);
+            string lin = "";
+            if (garage.Count == 0)
+            {
+                sw.Write(lin);
+                sw.Close();
+                return;
+            }
             for (int i = 0; i < garage.Count; i++)
             {
-                string lin = "";
+                lin = "";
                 lin = garage[i].carName + ","
                     + garage[i].carPeopleVolume.ToString() + ","
                     + garage[i].carCargoVolume.ToString() + ","
@@ -433,9 +460,16 @@ namespace train
         public void UpdateCarCsv(List<Parameter.Car> car)
         {
             StreamWriter sw = new StreamWriter(fp_using_car, false, System.Text.Encoding.Unicode);
+            string lin = "";
+            if (car.Count == 0)
+            {
+                sw.Write(lin);
+                sw.Close();
+                return;
+            }
             for (int i = 0; i < car.Count; i++)
             {
-                string lin = "";
+                lin = "";
                 lin = car[i].carName + ","
                     + car[i].carPeopleVolume.ToString() + ","
                     + car[i].carCargoVolume.ToString() + ","
@@ -458,8 +492,17 @@ namespace train
             sw.Close();
         }
 
+        /// <summary>
+        /// 读取城市之间信息表
+        /// </summary>
+        /// <param name="citytocity"></param>
+        /// <param name="num"></param>
         public void ReadCityToCityCsv(List<List<Parameter.CityToCity>> citytocity, int num)
         {
+            if (num == 0)
+            {
+                return;
+            }
             StreamReader sr = new StreamReader(fp_city_to_city, System.Text.Encoding.Unicode);
             for (int i = 0; i < num*num; i++)
             {
@@ -509,6 +552,10 @@ namespace train
         
         }
 
+        /// <summary>
+        /// 添加城市之间信息
+        /// </summary>
+        /// <param name="citytocity"></param>
         public void CreatCityToCityCsv(List<List<Parameter.CityToCity>> citytocity)
         {
             ele = new Parameter.CityToCity();
@@ -562,14 +609,26 @@ namespace train
             citytocity.Add(item);
         }
 
-        public void UpdateCityToCityCsv(List<List<Parameter.CityToCity>> citytocity,int num)
+        /// <summary>
+        /// 更新城市之间信息
+        /// </summary>
+        /// <param name="citytocity"></param>
+        /// <param name="num"></param>
+        public void UpdateCityToCityCsv(List<List<Parameter.CityToCity>> citytocity)
         {
             StreamWriter sw = new StreamWriter(fp1, false, System.Text.Encoding.Unicode);
-            for (int i = 0; i < num; i++)
+            string lin = "";
+            if (citytocity.Count == 0)
             {
-                for (int j = 0; j < num; j++)
+                sw.Write(lin);
+                sw.Close();
+                return;
+            }
+            for (int i = 0; i < citytocity.Count; i++)
+            {
+                for (int j = 0; j < citytocity.Count; j++)
                 {
-                    string lin = "";
+                    lin = "";
                     if (i == j)
                     {
                         lin = (-1).ToString() + "\r\n";
@@ -587,112 +646,5 @@ namespace train
             }
             sw.Close();
         }
-        //public void ReadCityToCityCsv(List<List<int>> cityToCity, List<Parameter.City> city)
-        //{
-        //    for (int i = 0; i < city.Count; i++)
-        //    {
-        //        for (int j = i + 1; j < city.Count; j++)
-        //        {
-        //            string fp = "";
-        //            if (city[i].cityIndex < city[j].cityIndex)
-        //            {
-        //                fp = fp_city_to_city + city[i].cityIndex.ToString("00000") + city[j].cityIndex.ToString("00000") + ".csv";
-        //            }
-        //            else
-        //            {
-        //                fp = fp_city_to_city + city[j].cityIndex.ToString("00000") + city[i].cityIndex.ToString("00000") + ".csv";
-        //            }
-
-        //            StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
-        //            String lin = sr.ReadLine();
-
-        //            if (lin != null)
-        //            {
-        //                String[] csv = lin.Split(',');
-        //                for (int column = 0; column < csv.GetLength(0); column++)
-        //                {
-        //                    switch (column)
-        //                    {
-        //                        case 0:
-        //                            cityToCity[i][j] = Convert.ToInt32(csv[column]);
-                                    
-        //                            break;
-        //                        case 1:
-        //                            cityToCity[j][i] = Convert.ToInt32(csv[column]);
-        //                            break;
-        //                        default:
-        //                            break;
-        //                    }
-        //                }
-        //            }
-
-        //            sr.Close();
-        //        }
-        //    }
-        //}
-        //public void ReadCityToCityCsv(Parameter.CityToCity[] cityToCity, UInt16 departure, UInt16 arrvial)
-        //{
-        //    if (departure > arrvial)
-        //    {
-        //        UInt16 tmp = departure;
-        //        departure = arrvial;
-        //        arrvial = tmp;
-        //    }
-
-        //    string fp = fp_city_to_city + departure.ToString("00000") + arrvial.ToString("00000") + ".csv";
-
-        //    StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
-        //    String lin = sr.ReadLine();
-
-        //    if (lin != null)
-        //    {
-        //        String[] csv = lin.Split(',');
-        //        for (int column = 0; column < csv.GetLength(0); column++)
-        //        {
-        //            switch (column)
-        //            {
-        //                case 0:
-        //                    cityToCity[0].distance = Convert.ToInt32(csv[column]);
-        //                    break;
-        //                case 1:
-        //                    cityToCity[0].fare = Convert.ToInt32(csv[column]);
-        //                    break;
-        //                case 2:
-        //                    cityToCity[0].generationRate = Convert.ToInt32(csv[column]);
-        //                    break;
-        //                case 3:
-        //                    cityToCity[0].residenceNum = Convert.ToInt32(csv[column]);
-        //                    break;
-        //                default:
-        //                    break;
-        //            }
-        //        }
-        //    }
-
-        //    sr.Close();
-        //}
-
-        //public void UpdateCityToCityCsv(Parameter.CityToCity[] cityToCity, UInt16 departure, UInt16 arrvial)
-        //{
-        //    if (departure > arrvial)
-        //    {
-        //        UInt16 tmp = departure;
-        //        departure = arrvial;
-        //        arrvial = tmp;
-        //    }
-
-        //    string fp = fp_city_to_city + departure.ToString("00000") + arrvial.ToString("00000") + ".csv";
-        //    StreamWriter sw = new StreamWriter(fp, false, System.Text.Encoding.Unicode);
-
-        //    string lin = cityToCity[0].distance.ToString() + ","
-        //               + cityToCity[0].fare.ToString() + ","
-        //               + cityToCity[0].generationRate.ToString() + ","
-        //               + cityToCity[0].residenceNum.ToString();
-
-        //    sw.Write(lin);
-        //    sw.Close();
-
-        //}
-
     }
 }

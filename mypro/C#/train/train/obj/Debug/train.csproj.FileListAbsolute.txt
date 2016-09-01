@@ -15,3 +15,12 @@ C:\GitTest\mypro\C#\train\train\obj\Debug\train.csproj.GenerateResource.Cache
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.exe
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.pdb
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.csprojResolveAssemblyReference.cache
+D:\GitTest\mypro\C#\train\train\bin\Debug\train.exe.config
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.exe
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.pdb
+D:\GitTest\mypro\C#\train\train\bin\Debug\train.exe
+D:\GitTest\mypro\C#\train\train\bin\Debug\train.pdb
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.csprojResolveAssemblyReference.cache
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.Form1.resources
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.Properties.Resources.resources
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.csproj.GenerateResource.Cache

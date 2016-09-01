@@ -34,17 +34,17 @@ namespace train
         {
             InitializeComponent();
 
-            Csv.ReadCityToCityCsv(citytocity,4);
+            Csv.ReadCityToCityCsv(citytocity,0);
 
             //Csv.CreatCityToCityCsv(citytocity);
 
-            citytocity.Remove(citytocity[2]);
-            for (int i = 0; i < 3; i++)
-            {
-                citytocity[i].Remove(citytocity[i][2]);
-            }
+            //citytocity.Remove(citytocity[2]);
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    citytocity[i].Remove(citytocity[i][2]);
+            //}
 
-            Csv.UpdateCityToCityCsv(citytocity, 3);
+            Csv.UpdateCityToCityCsv(citytocity);
 
             //读取账户信息
             //Csv.ReadCustomCsv(custom);
