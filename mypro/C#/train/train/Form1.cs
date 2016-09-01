@@ -16,17 +16,16 @@ namespace train
         CSV Csv = new CSV();
         DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
 
-        Parameter.City ReadCity = new Parameter.City();
-        Parameter.Garage ReadGarage = new Parameter.Garage();
-        Parameter.Car ReadCar = new Parameter.Car();
+        //Parameter.City ReadCity = new Parameter.City();
+        //Parameter.Garage ReadGarage = new Parameter.Garage();
+        //Parameter.Car ReadCar = new Parameter.Car();
         
         public Parameter.Custom[] custom = new Parameter.Custom[1];
         List<Parameter.City> city = new List<Parameter.City>();
         List<Parameter.Garage> garage = new List<Parameter.Garage>();
         List<Parameter.Car> car = new List<Parameter.Car>();
-        //List<List<int>> cityToCity = new List<List<int>>();
-        //Parameter.CityToCity[] city_to_city = new Parameter.CityToCity[1];
-
+        List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
+        Parameter.CityToCity ele = new Parameter.CityToCity();
 
         System.Random r = new System.Random(1000);
         int count = 0;
@@ -35,44 +34,76 @@ namespace train
         {
             InitializeComponent();
 
-            //读取账户信息
-            Csv.ReadCustomCsv(custom);
-            //读取开通城市详细信息
-            Csv.ReadCityCsv(city, custom[0].cityVolume);
-            //读取使用中火车详细信息
-            Csv.ReadCarCsv(car, custom[0].carVolume);
-            //读取仓库中火车详细信息
-            Csv.ReadGarageCsv(garage, custom[0].garageVolume);
-            //
-            //Csv.ReadCityToCityCsv(cityToCity, city);
+            Csv.ReadCityToCityCsv(citytocity,4);
 
-            TimeSpan span = new TimeSpan(0,0,0);
-            span = DateTime.Now - custom[0].closeTime;
-            this.Text = (span.Days*24 +span.Hours).ToString();
+            //Csv.CreatCityToCityCsv(citytocity);
 
-            for (int i = 0; i < car.Count; i++)
+            citytocity.Remove(citytocity[2]);
+            for (int i = 0; i < 3; i++)
             {
-                if (DateTime.Compare(car[i].carArrivalTime, System.DateTime.Now) < 0 && DateTime.Compare(car[i].carArrivalTime, DefalutTime) != 0)
-                {
-                    ReadCar = car[i];
-                    ReadCar.carstatus = false;
-                    ReadCar.carDepartureCityIndex = car[i].carArrivalCityIndex;
-                    ReadCar.carDepartureCityName = car[i].carArrivalCityName;
-                    ReadCar.carDepartureTime = DefalutTime;
-                    ReadCar.carArrivalCityIndex = 0;
-                    ReadCar.carArrivalCityName = null;
-                    ReadCar.carArrivalTime = DefalutTime;
-                    custom[0].cash += (UInt64)ReadCar.carTotalCash;
-                    custom[0].coin += (UInt64)ReadCar.carTotalCoin;
-                    ReadCar.carTotalCash = 0;
-                    ReadCar.carTotalCoin = 0;
-                    ReadCar.carCost = 0;
-                    car[i] = ReadCar;
-                }
+                citytocity[i].Remove(citytocity[i][2]);
             }
 
+            Csv.UpdateCityToCityCsv(citytocity, 3);
 
-            carDisplay();
+            //读取账户信息
+            //Csv.ReadCustomCsv(custom);
+            //读取开通城市详细信息
+            //Csv.ReadCityCsv(city, custom[0].cityVolume);
+            //读取使用中火车详细信息
+            //Csv.ReadCarCsv(car, custom[0].carVolume);
+            //读取仓库中火车详细信息
+            //Csv.ReadGarageCsv(garage, custom[0].garageVolume);
+            //Csv.ReadCityToCityCsv(cityToCity, city);
+
+            //TimeSpan span = new TimeSpan(0,0,0);
+            //span = DateTime.Now - custom[0].closeTime;
+            //this.Text = (span.Days*24 +span.Hours).ToString();
+
+            //for (int i = 0; i < car.Count; i++)
+            //{
+            //    if (DateTime.Compare(car[i].carArrivalTime, System.DateTime.Now) < 0 && DateTime.Compare(car[i].carArrivalTime, DefalutTime) != 0)
+            //    {
+            //        ReadCar = car[i];
+            //        ReadCar.carstatus = false;
+            //        ReadCar.carDepartureCityIndex = car[i].carArrivalCityIndex;
+            //        ReadCar.carDepartureCityName = car[i].carArrivalCityName;
+            //        ReadCar.carDepartureTime = DefalutTime;
+            //        ReadCar.carArrivalCityIndex = 0;
+            //        ReadCar.carArrivalCityName = null;
+            //        ReadCar.carArrivalTime = DefalutTime;
+            //        custom[0].cash += (UInt64)ReadCar.carTotalCash;
+            //        custom[0].coin += (UInt64)ReadCar.carTotalCoin;
+            //        ReadCar.carTotalCash = 0;
+            //        ReadCar.carTotalCoin = 0;
+            //        ReadCar.carCost = 0;
+            //        car[i] = ReadCar;
+            //    }
+            //}
+
+
+            //carDisplay();
+
+            
+
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    List<Parameter.CityToCity> item = new List<Parameter.CityToCity>();
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        Parameter.CityToCity ele = new Parameter.CityToCity();
+            //        ele.distance = (i + 1) * (j + 1);
+            //        ele.cashfare = (i + 1) * (j + 1);
+            //        ele.coinfare = (i + 1) * (j + 1);
+            //        ele.people = (i + 1) * (j + 1);
+            //        ele.cargo = (i + 1) * (j + 1);
+            //        item.Add(ele);
+            //    }
+
+            //    city.Add(item);
+            //}
+
+            //Console.WriteLine("{0}",city[2][2].distance);
 
         }
 

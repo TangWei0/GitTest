@@ -67,7 +67,10 @@ namespace train
         public struct CityToCity
         {
             public int distance;
-            public int fare;
+            public int cashfare;
+            public int coinfare;
+            public int people;
+            public int cargo;
         }
     }
 }
