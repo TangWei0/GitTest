@@ -18,7 +18,7 @@ namespace train
 
         //Parameter.City ReadCity = new Parameter.City();
         //Parameter.Garage ReadGarage = new Parameter.Garage();
-        //Parameter.Car ReadCar = new Parameter.Car();
+        Parameter.Car ReadCar = new Parameter.Car();
         
         public Parameter.Custom[] custom = new Parameter.Custom[1];
         List<Parameter.City> city = new List<Parameter.City>();
@@ -29,81 +29,55 @@ namespace train
 
         System.Random r = new System.Random(1000);
         int count = 0;
+        string s = "";
+        bool text = false;
 
         public Form1()
         {
             InitializeComponent();
 
-            Csv.ReadCityToCityCsv(citytocity,0);
-
-            //Csv.CreatCityToCityCsv(citytocity);
-
-            //citytocity.Remove(citytocity[2]);
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    citytocity[i].Remove(citytocity[i][2]);
-            //}
-
-            Csv.UpdateCityToCityCsv(citytocity);
-
             //读取账户信息
-            //Csv.ReadCustomCsv(custom);
+            Csv.ReadCustomCsv(custom);
             //读取开通城市详细信息
-            //Csv.ReadCityCsv(city, custom[0].cityVolume);
+            Csv.ReadCityCsv(city, custom[0].cityVolume);
             //读取使用中火车详细信息
-            //Csv.ReadCarCsv(car, custom[0].carVolume);
+            Csv.ReadCarCsv(car, custom[0].carVolume);
             //读取仓库中火车详细信息
-            //Csv.ReadGarageCsv(garage, custom[0].garageVolume);
-            //Csv.ReadCityToCityCsv(cityToCity, city);
+            Csv.ReadGarageCsv(garage, custom[0].garageVolume);
+            //读取城市与城市之间信息
+            Csv.ReadCityToCityCsv(citytocity, city.Count);
 
-            //TimeSpan span = new TimeSpan(0,0,0);
-            //span = DateTime.Now - custom[0].closeTime;
+            TimeSpan span = new TimeSpan(0,0,0);
+            span = DateTime.Now - custom[0].closeTime;
             //this.Text = (span.Days*24 +span.Hours).ToString();
 
-            //for (int i = 0; i < car.Count; i++)
+            //if (car.Count > 0)
             //{
-            //    if (DateTime.Compare(car[i].carArrivalTime, System.DateTime.Now) < 0 && DateTime.Compare(car[i].carArrivalTime, DefalutTime) != 0)
+            //    for (int i = 0; i < car.Count; i++)
             //    {
-            //        ReadCar = car[i];
-            //        ReadCar.carstatus = false;
-            //        ReadCar.carDepartureCityIndex = car[i].carArrivalCityIndex;
-            //        ReadCar.carDepartureCityName = car[i].carArrivalCityName;
-            //        ReadCar.carDepartureTime = DefalutTime;
-            //        ReadCar.carArrivalCityIndex = 0;
-            //        ReadCar.carArrivalCityName = null;
-            //        ReadCar.carArrivalTime = DefalutTime;
-            //        custom[0].cash += (UInt64)ReadCar.carTotalCash;
-            //        custom[0].coin += (UInt64)ReadCar.carTotalCoin;
-            //        ReadCar.carTotalCash = 0;
-            //        ReadCar.carTotalCoin = 0;
-            //        ReadCar.carCost = 0;
-            //        car[i] = ReadCar;
+            //        if (DateTime.Compare(car[i].carArrivalTime, System.DateTime.Now) < 0 && DateTime.Compare(car[i].carArrivalTime, DefalutTime) != 0)
+            //        {
+            //            ReadCar = car[i];
+            //            ReadCar.carstatus = false;
+            //            ReadCar.carDepartureCityIndex = car[i].carArrivalCityIndex;
+            //            ReadCar.carDepartureCityName = car[i].carArrivalCityName;
+            //            ReadCar.carDepartureTime = DefalutTime;
+            //            ReadCar.carArrivalCityIndex = 0;
+            //            ReadCar.carArrivalCityName = null;
+            //            ReadCar.carArrivalTime = DefalutTime;
+            //            custom[0].cash += (UInt64)ReadCar.carTotalCash;
+            //            custom[0].coin += (UInt64)ReadCar.carTotalCoin;
+            //            ReadCar.carTotalCash = 0;
+            //            ReadCar.carTotalCoin = 0;
+            //            ReadCar.carCost = 0;
+            //            car[i] = ReadCar;
+            //        }
             //    }
+            //    carDisplay();
             //}
-
-
-            //carDisplay();
-
             
 
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    List<Parameter.CityToCity> item = new List<Parameter.CityToCity>();
-            //    for (int j = 0; j < 3; j++)
-            //    {
-            //        Parameter.CityToCity ele = new Parameter.CityToCity();
-            //        ele.distance = (i + 1) * (j + 1);
-            //        ele.cashfare = (i + 1) * (j + 1);
-            //        ele.coinfare = (i + 1) * (j + 1);
-            //        ele.people = (i + 1) * (j + 1);
-            //        ele.cargo = (i + 1) * (j + 1);
-            //        item.Add(ele);
-            //    }
-
-            //    city.Add(item);
-            //}
-
-            //Console.WriteLine("{0}",city[2][2].distance);
+            
 
         }
 
@@ -114,11 +88,12 @@ namespace train
         /// <param name="e"></param>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            custom[0].closeTime = DateTime.Now;
-            Csv.UpdateCustomCsv(custom);
-            Csv.UpdateCityCsv(city);
-            Csv.UpdateGarageCsv(garage);
-            Csv.UpdateCarCsv(car);
+            //custom[0].closeTime = DateTime.Now;
+            //Csv.UpdateCustomCsv(custom);
+            //Csv.UpdateCityCsv(city);
+            //Csv.UpdateGarageCsv(garage);
+            //Csv.UpdateCarCsv(car);
+            //Csv.UpdateCityToCityCsv(citytocity);
         }
 
         private void carDisplay()
@@ -140,6 +115,7 @@ namespace train
             }
 
         }
+
 
         //public void button1_Click(object sender, EventArgs e)
         //{
@@ -194,31 +170,6 @@ namespace train
         //    return total;
         //}
 
-        
-
-        
-
-        
-
-        public void button2_Click(object sender, EventArgs e)
-        {
-            //string cityName1 = "上海";
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            //string cityName = "上海";
-            //Csv.SearchAddCity(city, cityName);
-            //custom[0].cityVolume = Convert.ToUInt16(city.Count);
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            //string cityName = "广州";
-            //Csv.SearchDelCity(city, cityName);
-            //custom[0].cityVolume = Convert.ToUInt16(city.Count);
-        }
-
         private void Next_Click_1(object sender, EventArgs e)
         {
             count++;
@@ -230,5 +181,60 @@ namespace train
             count--;
             carDisplay();
         }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar != 13)
+            {
+                text = false;
+                return;
+            }
+            else
+            {
+                s = textBox2.Text;
+                text = true;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!text)
+            {
+                return;
+            }
+            else
+            {
+                Csv.AddCity(city, s);
+                custom[0].cityVolume++;
+                Csv.CreatCityToCityCsv(citytocity, city);
+                text = false;
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (!text)
+            {
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < city.Count; i++)
+                {
+                    if (city[i].cityName == s)
+                    {
+                        
+                    }
+                }
+                    Csv.AddCity(city, s);
+                custom[0].cityVolume++;
+                Csv.CreatCityToCityCsv(citytocity, city);
+                text = false;
+            }
+        }
+
+
+
     }
 }

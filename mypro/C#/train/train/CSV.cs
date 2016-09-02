@@ -165,7 +165,7 @@ namespace train
         /// </summary>
         /// <param name="city"></param>
         /// <param name="cityName"></param>
-        public void SearchAddCity(List<Parameter.City> city, string cityName)
+        public void AddCity(List<Parameter.City> city, string cityName)
         {
             string fp_search = fp_city_default + cityName + ".csv";
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
@@ -497,14 +497,14 @@ namespace train
         /// </summary>
         /// <param name="citytocity"></param>
         /// <param name="num"></param>
-        public void ReadCityToCityCsv(List<List<Parameter.CityToCity>> citytocity, int num)
+        public void ReadCityToCityCsv(List<List<Parameter.CityToCity>> citytocity, int cityCount)
         {
-            if (num == 0)
+            if (cityCount == 0)
             {
                 return;
             }
             StreamReader sr = new StreamReader(fp_city_to_city, System.Text.Encoding.Unicode);
-            for (int i = 0; i < num*num; i++)
+            for (int i = 0; i < cityCount * cityCount; i++)
             {
                 String lin = sr.ReadLine();
                 if (lin != null)
@@ -542,7 +542,7 @@ namespace train
                     }
                 }
                 item.Add(ele);
-                if (item.Count == num)
+                if (item.Count == cityCount)
                 {
                     citytocity.Add(item);
                     item = new List<Parameter.CityToCity>();
@@ -556,22 +556,21 @@ namespace train
         /// 添加城市之间信息
         /// </summary>
         /// <param name="citytocity"></param>
-        public void CreatCityToCityCsv(List<List<Parameter.CityToCity>> citytocity)
+        public void CreatCityToCityCsv(List<List<Parameter.CityToCity>> citytocity, List<Parameter.City> city)
         {
             ele = new Parameter.CityToCity();
             item = new List<Parameter.CityToCity>();
 
             string fp = "";
-            int[] a = new int[3]{1,5,3};
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < city.Count-1; i++)
             {
-                if (a[i] < 4)
+                if (city[i].cityIndex < city[city.Count-1].cityIndex)
                 {
-                    fp = fp_city_to_city_default + a[i].ToString("00000") + (4).ToString("00000") + ".csv";
+                    fp = fp_city_to_city_default + city[i].cityIndex.ToString("00000") + city[city.Count - 1].cityIndex.ToString("00000") + ".csv";
                 }
                 else
                 {
-                    fp = fp_city_to_city_default + (4).ToString("00000") + a[i].ToString("00000") + ".csv";
+                    fp = fp_city_to_city_default + city[city.Count - 1].cityIndex.ToString("00000") + city[i].cityIndex.ToString("00000") + ".csv";
                 }
                 StreamReader sr = new StreamReader(fp, System.Text.Encoding.Unicode);
                 
@@ -616,7 +615,7 @@ namespace train
         /// <param name="num"></param>
         public void UpdateCityToCityCsv(List<List<Parameter.CityToCity>> citytocity)
         {
-            StreamWriter sw = new StreamWriter(fp1, false, System.Text.Encoding.Unicode);
+            StreamWriter sw = new StreamWriter(fp_city_to_city, false, System.Text.Encoding.Unicode);
             string lin = "";
             if (citytocity.Count == 0)
             {
