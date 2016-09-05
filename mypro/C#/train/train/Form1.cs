@@ -16,16 +16,18 @@ namespace train
         CSV Csv = new CSV();
         DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
 
-        //Parameter.City ReadCity = new Parameter.City();
+        Parameter.City ReadCity = new Parameter.City();
         //Parameter.Garage ReadGarage = new Parameter.Garage();
-        Parameter.Car ReadCar = new Parameter.Car();
-        
-        public Parameter.Custom[] custom = new Parameter.Custom[1];
+        //Parameter.Car ReadCar = new Parameter.Car();
+        List<Parameter.CityToCity> item = new List<Parameter.CityToCity>();
+        Parameter.CityToCity ele = new Parameter.CityToCity();
+
+        Parameter.Custom[] custom = new Parameter.Custom[1];
         List<Parameter.City> city = new List<Parameter.City>();
         List<Parameter.Garage> garage = new List<Parameter.Garage>();
         List<Parameter.Car> car = new List<Parameter.Car>();
         List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
-        Parameter.CityToCity ele = new Parameter.CityToCity();
+
 
         System.Random r = new System.Random(1000);
         int count = 0;
@@ -47,7 +49,7 @@ namespace train
             //读取城市与城市之间信息
             Csv.ReadCityToCityCsv(citytocity, city.Count);
 
-            TimeSpan span = new TimeSpan(0,0,0);
+            TimeSpan span = new TimeSpan(0, 0, 0);
             span = DateTime.Now - custom[0].closeTime;
             //this.Text = (span.Days*24 +span.Hours).ToString();
 
@@ -75,9 +77,9 @@ namespace train
             //    }
             //    carDisplay();
             //}
-            
 
-            
+
+
 
         }
 
@@ -204,10 +206,13 @@ namespace train
             }
             else
             {
-                Csv.AddCity(city, s);
+                text = false;
+                if (!Csv.AddCity(city, s))
+                {
+                    return;
+                }
                 custom[0].cityVolume++;
                 Csv.CreatCityToCityCsv(citytocity, city);
-                text = false;
             }
 
         }
@@ -220,17 +225,44 @@ namespace train
             }
             else
             {
+                text = false;
+                if (city.Count == 0)
+                {
+                    MessageBox.Show("你当前没有开通城市",
+                                    "エラー",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                    return;
+                }
                 for (int i = 0; i < city.Count; i++)
                 {
                     if (city[i].cityName == s)
                     {
-                        
+                        ReadCity = city[i];
+                        city.Remove(ReadCity);
+                        custom[0].cityVolume--;
+                        item = citytocity[i];
+                        citytocity.Remove(item);
+                        if (city.Count == 0)
+                        {
+                            MessageBox.Show("你当前没有开通城市之间信息列表",
+                                            "エラー",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Error);
+                            return;
+                        }
+                        for (int j = 0; j < city.Count; j++)
+                        {
+                            ele = citytocity[j][i];
+                            citytocity[j].Remove(ele);
+                        }                        
+                        return;
                     }
                 }
-                    Csv.AddCity(city, s);
-                custom[0].cityVolume++;
-                Csv.CreatCityToCityCsv(citytocity, city);
-                text = false;
+                MessageBox.Show("开通城市中没有你想删除的城市",
+                                "エラー",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
             }
         }
 

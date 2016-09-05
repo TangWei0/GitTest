@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
 
 namespace train
 {
@@ -17,7 +18,7 @@ namespace train
         static string fp_unused_car = ".\\Record\\garage\\unusedCar.csv";
         static string fp_city_to_city_default = ".\\Record\\CityToCityDefault\\city_to_city_";
         static string fp_city_to_city = ".\\Record\\CityToCity\\city_to_city.csv";
-        static string fp1 = ".\\Record\\CityToCity\\test.csv";
+        //static string fp1 = ".\\Record\\CityToCity\\test.csv";
 
         Parameter.City ReadCity = new Parameter.City();
         Parameter.Garage ReadGarage = new Parameter.Garage();
@@ -165,11 +166,18 @@ namespace train
         /// </summary>
         /// <param name="city"></param>
         /// <param name="cityName"></param>
-        public void AddCity(List<Parameter.City> city, string cityName)
+        public bool AddCity(List<Parameter.City> city, string cityName)
         {
             string fp_search = fp_city_default + cityName + ".csv";
+            if (!File.Exists(fp_search))
+            {
+                MessageBox.Show("没有该城市",
+                                "エラー",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return false;
+            }
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
-
             String lin = sr.ReadLine();
             if (lin != null)
             {
@@ -203,6 +211,7 @@ namespace train
             }
             sr.Close();
             city.Add(ReadCity);
+            return true;
         }
 
         /// <summary>
@@ -560,7 +569,12 @@ namespace train
         {
             ele = new Parameter.CityToCity();
             item = new List<Parameter.CityToCity>();
-
+            if (city.Count == 1)
+            {
+                item.Add(eleDefalut);
+                citytocity.Add(item);
+                return;
+            }
             string fp = "";
             for (int i = 0; i < city.Count-1; i++)
             {
