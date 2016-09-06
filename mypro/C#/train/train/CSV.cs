@@ -285,7 +285,7 @@ namespace train
                                 ReadGarage.carWeight = Convert.ToUInt16(csv[column]);
                                 break;
                             case 6:
-                                ReadGarage.carValue = Convert.ToUInt32(csv[column]);
+                                ReadGarage.carValue = Convert.ToUInt64(csv[column]);
                                 break;
                             default:
                                 break;
@@ -338,7 +338,7 @@ namespace train
                                 ReadCar.carWeight = Convert.ToUInt16(csv[column]);
                                 break;
                             case 6:
-                                ReadCar.carCost = Convert.ToUInt32(csv[column]);
+                                ReadCar.carValue = Convert.ToUInt64(csv[column]);
                                 break;
                             case 7:
                                 ReadCar.carDepartureCityIndex = Convert.ToUInt16(csv[column]);
@@ -393,6 +393,14 @@ namespace train
         public void BuyCarGarageCsv(List<Parameter.Garage> garage, string carName, UInt32 carCount)
         {
             string fp_search = fp_car_default + carName + ".csv";
+            if (!File.Exists(fp_search))
+            {
+                MessageBox.Show("没有该列车",
+                                "エラー",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                //return false;
+            }
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
 
             String lin = sr.ReadLine();
@@ -404,7 +412,7 @@ namespace train
                     switch (column)
                     {
                         case 0:
-                            ReadGarage.carName = csv[column] + carCount.ToString("00000000");
+                            ReadGarage.carName = csv[column] + "_" + carCount.ToString("00000000");
                             break;
                         case 1:
                             ReadGarage.carPeopleVolume = Convert.ToByte(csv[column]);
@@ -422,7 +430,7 @@ namespace train
                             ReadGarage.carWeight = Convert.ToUInt16(csv[column]);
                             break;
                         case 6:
-                            ReadGarage.carValue = Convert.ToUInt32(csv[column]) * 1000000;
+                            ReadGarage.carValue = Convert.ToUInt64(csv[column]) * 1000000;
                             break;
                         default:
                             break;

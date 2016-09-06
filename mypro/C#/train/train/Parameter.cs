@@ -40,7 +40,7 @@ namespace train
             public UInt16 carSpeed;
             public UInt16 carPower;
             public UInt16 carWeight;
-            public UInt32 carValue;
+            public UInt64 carValue;
         }
 
         public struct Car
@@ -51,7 +51,7 @@ namespace train
             public UInt16 carSpeed;
             public UInt16 carPower;
             public UInt16 carWeight;
-            public UInt32 carValue;
+            public UInt64 carValue;
             public UInt16 carDepartureCityIndex;
             public string carDepartureCityName;
             public DateTime carDepartureTime;

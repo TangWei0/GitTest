@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
+using System.IO;
 
 namespace train
 {
@@ -28,8 +29,8 @@ namespace train
         List<Parameter.Car> car = new List<Parameter.Car>();
         List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
 
+        DirectoryInfo[] t = new DirectoryInfo[3];
 
-        System.Random r = new System.Random(1000);
         int count = 0;
         string s = "";
         bool text = false;
@@ -77,11 +78,31 @@ namespace train
             //    }
             //    carDisplay();
             //}
-
-
-
-
+            string fp_car_default = ".\\Record\\carDefault\\";
+            DirectoryInfo di = new DirectoryInfo(fp_car_default);
+            var t = di.GetFiles();
+            int a = 0;
+            int b = 0;
+            Random r = new System.Random();
+            for (int i = 0; i < 5; i++)
+            {
+                do
+                {
+                    a = r.Next(t.Length);
+                } while (b == a);
+                b = a;
+                string p = t[b].Name;
+                string[] c = p.Split('.');
+                comboBox1.Items.Add(c[0]);
+            }
         }
+
+        //public FileInfo[] GetFiles()
+        //{
+        //    string fp_car_default = ".\\Record\\carDefault\\";
+        //    DirectoryInfo di = new DirectoryInfo(fp_car_default);
+        //}
+
 
         /// <summary>
         /// 关闭窗口
@@ -255,7 +276,7 @@ namespace train
                         {
                             ele = citytocity[j][i];
                             citytocity[j].Remove(ele);
-                        }                        
+                        }
                         return;
                     }
                 }
@@ -265,6 +286,13 @@ namespace train
                                 MessageBoxIcon.Error);
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(comboBox1.SelectedItem.ToString());
+        }
+
+
 
 
 
