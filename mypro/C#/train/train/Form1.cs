@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
+using System.Timers; 
 
 namespace train
 {
@@ -23,9 +24,9 @@ namespace train
         List<Parameter.CityToCity> item = new List<Parameter.CityToCity>();
         Parameter.CityToCity ele = new Parameter.CityToCity();
 
-        Parameter.Custom[] custom = new Parameter.Custom[1];
+        public Parameter.Custom[] custom = new Parameter.Custom[1];
         List<Parameter.City> city = new List<Parameter.City>();
-        List<Parameter.Garage> garage = new List<Parameter.Garage>();
+        public List<Parameter.Garage> garage = new List<Parameter.Garage>();
         List<Parameter.Car> car = new List<Parameter.Car>();
         List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
 
@@ -34,11 +35,23 @@ namespace train
         int count = 0;
         string s = "";
         bool text = false;
-
+        
         public Form1()
         {
             InitializeComponent();
+            InitializeTime();
+            InitializeInformation();   
+        }
 
+        private void InitializeTime()
+        {
+            timer1.Interval = 300000;
+            timer1.Enabled = true;
+            timer1.Start();
+        }
+
+        private void InitializeInformation()
+        {
             //读取账户信息
             Csv.ReadCustomCsv(custom);
             //读取开通城市详细信息
@@ -78,31 +91,7 @@ namespace train
             //    }
             //    carDisplay();
             //}
-            string fp_car_default = ".\\Record\\carDefault\\";
-            DirectoryInfo di = new DirectoryInfo(fp_car_default);
-            var t = di.GetFiles();
-            int a = 0;
-            int b = 0;
-            Random r = new System.Random();
-            for (int i = 0; i < 5; i++)
-            {
-                do
-                {
-                    a = r.Next(t.Length);
-                } while (b == a);
-                b = a;
-                string p = t[b].Name;
-                string[] c = p.Split('.');
-                comboBox1.Items.Add(c[0]);
-            }
         }
-
-        //public FileInfo[] GetFiles()
-        //{
-        //    string fp_car_default = ".\\Record\\carDefault\\";
-        //    DirectoryInfo di = new DirectoryInfo(fp_car_default);
-        //}
-
 
         /// <summary>
         /// 关闭窗口
@@ -111,12 +100,12 @@ namespace train
         /// <param name="e"></param>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //custom[0].closeTime = DateTime.Now;
-            //Csv.UpdateCustomCsv(custom);
-            //Csv.UpdateCityCsv(city);
-            //Csv.UpdateGarageCsv(garage);
-            //Csv.UpdateCarCsv(car);
-            //Csv.UpdateCityToCityCsv(citytocity);
+            custom[0].closeTime = DateTime.Now;
+            Csv.SaveCustomCsv(custom);
+            Csv.SaveCityCsv(city);
+            //Csv.SaveGarageCsv(garage);
+            //Csv.SaveCarCsv(car);
+            Csv.SaveCityToCityCsv(citytocity);
         }
 
         private void carDisplay()
@@ -138,7 +127,6 @@ namespace train
             }
 
         }
-
 
         //public void button1_Click(object sender, EventArgs e)
         //{
@@ -289,12 +277,29 @@ namespace train
 
         private void button4_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(comboBox1.SelectedItem.ToString());
+            Store store = new Store();
+            store.Show();
+            if (store.Text != null)
+            {
+                Csv.BuyCarGarageCsv(garage, store.Text, custom[0].carCount);
+            }
+            store.Dispose();
         }
 
+        
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            Csv.UpdateCityToCity(citytocity, city);
+            timer1.Enabled = true; 
+        }
 
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("{0}", comboBox1.SelectedItem.ToString());
+        }
 
-
+        
     }
 }
