@@ -77,6 +77,9 @@ namespace train
                         case 8:
                             custom[0].closeTime = DateTime.Parse(csv[column]);
                             break;
+                        case 9:
+                            custom[0].storeTime = DateTime.Parse(csv[column]);
+                            break;
                         default:
                             break;
                     }
@@ -102,7 +105,8 @@ namespace train
                               + custom[0].carVolume.ToString() + ","
                               + custom[0].garageVolume.ToString() + ","
                               + custom[0].carCount.ToString() + ","
-                              + custom[0].closeTime.ToString();
+                              + custom[0].closeTime.ToString() + ","
+                              + custom[0].storeTime.ToString();
 
             sw.Write(rowCsvInfo);
             sw.Write("\n");

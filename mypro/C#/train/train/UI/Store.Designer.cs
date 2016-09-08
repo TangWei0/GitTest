@@ -65,6 +65,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Store
             // 
@@ -85,6 +86,6 @@
         public System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ListBox listBox1;
-        public System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button1;
     }
 }

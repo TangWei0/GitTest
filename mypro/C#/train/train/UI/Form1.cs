@@ -277,13 +277,13 @@ namespace train
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Store store = new Store();
-            store.Show();
-            if (store.Text != null)
+            Store store = new Store(this.custom[0].storeTime);
+            store.ShowDialog();
+            custom[0].storeTime = store.target;
+            if (store.buy)
             {
-                Csv.BuyCarGarageCsv(garage, store.Text, custom[0].carCount);
+                Csv.BuyCarGarageCsv(garage, store.comboBox1.SelectedItem.ToString(), custom[0].carCount);
             }
-            store.Dispose();
         }
 
         

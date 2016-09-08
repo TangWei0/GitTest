@@ -19,7 +19,8 @@ namespace train
             public UInt16 carVolume;
             public UInt16 garageVolume;
             public UInt32 carCount;
-            public DateTime closeTime;        
+            public DateTime closeTime;
+            public DateTime storeTime;
         }
 
         public struct City
