@@ -72,7 +72,7 @@ namespace train
                             custom[0].garageVolume = Convert.ToUInt16(csv[column]);
                             break;
                         case 7:
-                            custom[0].carCount = Convert.ToUInt32(csv[column]);
+                            custom[0].carCount = Convert.ToUInt64(csv[column]);
                             break;
                         case 8:
                             custom[0].closeTime = DateTime.Parse(csv[column]);
@@ -405,7 +405,7 @@ namespace train
         /// <param name="garage"></param>
         /// <param name="carList"></param>
         /// <param name="carName"></param>
-        public void BuyCarGarageCsv(List<Parameter.Garage> garage, string carName, UInt32 carCount)
+        public void BuyCarGarageCsv(List<Parameter.Garage> garage, string carName, UInt64 carCount)
         {
             string fp_search = fp_car_default + carName + ".csv";
             if (!File.Exists(fp_search))

@@ -278,15 +278,16 @@ namespace train
         private void button4_Click(object sender, EventArgs e)
         {
             Store store = new Store(this.custom[0].storeTime);
+            this.Visible = false;
             store.ShowDialog();
             custom[0].storeTime = store.target;
+            this.Visible = true;
             if (store.buy)
             {
-                Csv.BuyCarGarageCsv(garage, store.comboBox1.SelectedItem.ToString(), custom[0].carCount);
+                Csv.BuyCarGarageCsv(garage, store.StoreListBox.SelectedItem.ToString(), custom[0].carCount);
+                custom[0].carCount++;
             }
         }
-
-        
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -295,11 +296,5 @@ namespace train
             timer1.Enabled = true; 
         }
 
-        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
-        {
-            Console.WriteLine("{0}", comboBox1.SelectedItem.ToString());
-        }
-
-        
     }
 }

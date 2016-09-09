@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Timers;
+using setting = train.Properties.Settings;
 
 namespace train
 {
@@ -18,11 +19,17 @@ namespace train
         public DateTime target = new DateTime();
         TimeSpan span = new TimeSpan(0, 5, 0);
         public bool buy = false;
-        string[] listName = new string[6] { "list1", "list2", "list3", "list4", "list5", "list6" };
+        string[] listName = new string[6]{setting.Default.list1,
+                                          setting.Default.list2,
+                                          setting.Default.list3,
+                                          setting.Default.list4,
+                                          setting.Default.list5,
+                                          setting.Default.list6};
         public Store(DateTime storeTime)
         {
             InitializeComponent();
 
+            //this.ControlBox = false;
             target = storeTime;
             if (DateTime.Now > target)
             {
@@ -31,7 +38,6 @@ namespace train
             else
             {
                 readList();
-                //diff = target - DateTime.Now;
                 timer1.Interval = ((target - DateTime.Now).Minutes * 60 + (target - DateTime.Now).Seconds) * 1000;
             }
             timer1.Enabled = true;
@@ -40,7 +46,7 @@ namespace train
 
         private void updateStore()
         {
-            comboBox1.Items.Clear();
+            StoreListBox.Items.Clear();
             DirectoryInfo di = new DirectoryInfo(fp_car_default);
             var t = di.GetFiles();
             int newRandom = 0;
@@ -55,53 +61,10 @@ namespace train
                 oldRandom = newRandom;
                 string p = t[oldRandom].Name;
                 string[] fileName = p.Split('.');
-                comboBox1.Items.Add(fileName[0]);
+                StoreListBox.Items.Add(fileName[0]);
             }
             timer1.Interval = 300000;
             target = DateTime.Now + span;
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            listBox1.Items.Clear();
-            string fp_search = fp_car_default + comboBox1.SelectedItem.ToString() + ".csv";
-            StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
-
-            String lin = sr.ReadLine();
-            if (lin != null)
-            {
-                String[] csv = lin.Split(',');
-                for (int column = 0; column < csv.GetLength(0); column++)
-                {
-                    switch (column)
-                    {
-                        case 0:
-                            listBox1.Items.Add("列车名称:" + csv[column]);
-                            break;
-                        case 1:
-                            listBox1.Items.Add("客运能力:" + csv[column]);
-                            break;
-                        case 2:
-                            listBox1.Items.Add("货运能力:" + csv[column]);
-                            break;
-                        case 3:
-                            listBox1.Items.Add("列车速度:" + csv[column]);
-                            break;
-                        case 4:
-                            listBox1.Items.Add("列车电量:" + csv[column]);
-                            break;
-                        case 5:
-                            listBox1.Items.Add("列车重量:" + csv[column]);
-                            break;
-                        case 6:
-                            listBox1.Items.Add("列车价值:" + csv[column]);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            sr.Close();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -119,27 +82,76 @@ namespace train
                 saveList();
                 this.Close();
             }
+            else
+            {
+                Properties.Settings.Default.Save();
+            }
         }
 
         private void readList()
         {
-            comboBox1.Items.Add(Properties.Settings.Default.list1);
-            comboBox1.Items.Add(Properties.Settings.Default.list2);
-            comboBox1.Items.Add(Properties.Settings.Default.list3);
-            comboBox1.Items.Add(Properties.Settings.Default.list4);
-            comboBox1.Items.Add(Properties.Settings.Default.list5);
-            comboBox1.Items.Add(Properties.Settings.Default.list6);
+            for (int i = 0; i < 6; i++)
+            {
+                StoreListBox.Items.Add(listName[i]);
+            }
         }
 
         private void saveList()
         {
-            Properties.Settings.Default.list1 = comboBox1.Items[0].ToString();
-            Properties.Settings.Default.list2 = comboBox1.Items[1].ToString();
-            Properties.Settings.Default.list3 = comboBox1.Items[2].ToString();
-            Properties.Settings.Default.list4 = comboBox1.Items[3].ToString();
-            Properties.Settings.Default.list5 = comboBox1.Items[4].ToString();
-            Properties.Settings.Default.list6 = comboBox1.Items[5].ToString();
-            Properties.Settings.Default.Save();
+            Properties.Settings.Default.list1 = StoreListBox.Items[0].ToString();
+            Properties.Settings.Default.list2 = StoreListBox.Items[1].ToString();
+            Properties.Settings.Default.list3 = StoreListBox.Items[2].ToString();
+            Properties.Settings.Default.list4 = StoreListBox.Items[3].ToString();
+            Properties.Settings.Default.list5 = StoreListBox.Items[4].ToString();
+            Properties.Settings.Default.list6 = StoreListBox.Items[5].ToString();
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CarDetailListBox.Items.Clear();
+            string fp_search = fp_car_default + StoreListBox.SelectedItem.ToString() + ".csv";
+            StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
+
+            String lin = sr.ReadLine();
+            if (lin != null)
+            {
+                String[] csv = lin.Split(',');
+                for (int column = 0; column < csv.GetLength(0); column++)
+                {
+                    switch (column)
+                    {
+                        case 0:
+                            CarDetailListBox.Items.Add("列车名称:" + csv[column]);
+                            break;
+                        case 1:
+                            CarDetailListBox.Items.Add("客运能力:" + csv[column]);
+                            break;
+                        case 2:
+                            CarDetailListBox.Items.Add("货运能力:" + csv[column]);
+                            break;
+                        case 3:
+                            CarDetailListBox.Items.Add("列车速度:" + csv[column]);
+                            break;
+                        case 4:
+                            CarDetailListBox.Items.Add("列车电量:" + csv[column]);
+                            break;
+                        case 5:
+                            CarDetailListBox.Items.Add("列车重量:" + csv[column]);
+                            break;
+                        case 6:
+                            CarDetailListBox.Items.Add("列车价值:" + csv[column]);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            sr.Close();
+        }
+
+        private void Store_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
         }
 
     }
