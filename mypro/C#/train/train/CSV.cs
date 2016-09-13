@@ -683,7 +683,7 @@ namespace train
             sw.Close();
         }
 
-        public void UpdateCityToCity(List<List<Parameter.CityToCity>> citytocity, List<Parameter.City> city)
+        public void UpdateCityToCity(List<List<Parameter.CityToCity>> citytocity, List<Parameter.City> city,int updateTimes)
         {
             for (int i = 0; i < citytocity.Count; i++)
             {

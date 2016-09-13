@@ -84,6 +84,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Store";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Store_FormClosing);
+            this.Load += new System.EventHandler(this.Store_Load);
+            this.SizeChanged += new System.EventHandler(this.Store_SizeChanged);
             this.ResumeLayout(false);
 
         }

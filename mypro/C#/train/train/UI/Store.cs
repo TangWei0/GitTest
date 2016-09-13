@@ -15,6 +15,7 @@ namespace train
 {
     public partial class Store : Form
     {
+        AutoResizeForm asc = new AutoResizeForm();
         string fp_car_default = ".\\Record\\carDefault\\";
         public DateTime target = new DateTime();
         TimeSpan span = new TimeSpan(0, 5, 0);
@@ -149,9 +150,35 @@ namespace train
             sr.Close();
         }
 
+        /* 以下为窗体设计程序 */
+        /// <summary>
+        /// 取消窗体关闭按键
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
+        }
+
+        /// <summary>
+        /// 记录窗体和其控件的初始位置和大小
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Store_Load(object sender, EventArgs e)
+        {
+            asc.controllInitializeSize(this);
+        }
+
+        /// <summary>
+        /// 窗体和控件自适配
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Store_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
         }
 
     }

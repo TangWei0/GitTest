@@ -1,6 +1,6 @@
 namespace train
 {
-    partial class Form1
+    partial class Main
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -30,7 +30,7 @@ namespace train
         {
             this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.CloseButton = new System.Windows.Forms.Button();
             this.Previous = new System.Windows.Forms.Button();
             this.Next = new System.Windows.Forms.Button();
             this.carNameLabel = new System.Windows.Forms.Label();
@@ -39,11 +39,11 @@ namespace train
             this.button2 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.StoreButton = new System.Windows.Forms.Button();
+            this.GarageButton = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.PeopleAndCargoUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // textBox1
@@ -54,14 +54,15 @@ namespace train
             this.textBox1.Size = new System.Drawing.Size(613, 405);
             this.textBox1.TabIndex = 0;
             // 
-            // button1
+            // CloseButton
             // 
-            this.button1.Location = new System.Drawing.Point(40, 450);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.CloseButton.Location = new System.Drawing.Point(40, 450);
+            this.CloseButton.Name = "CloseButton";
+            this.CloseButton.Size = new System.Drawing.Size(75, 23);
+            this.CloseButton.TabIndex = 1;
+            this.CloseButton.Text = "离开";
+            this.CloseButton.UseVisualStyleBackColor = true;
+            this.CloseButton.Click += new System.EventHandler(this.CloseButton_Click);
             // 
             // Previous
             // 
@@ -120,15 +121,15 @@ namespace train
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(75, 589);
+            this.textBox2.Location = new System.Drawing.Point(40, 589);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 19);
+            this.textBox2.Size = new System.Drawing.Size(156, 19);
             this.textBox2.TabIndex = 8;
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(144, 557);
+            this.button3.Location = new System.Drawing.Point(121, 557);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 9;
@@ -136,28 +137,29 @@ namespace train
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button4
+            // StoreButton
             // 
-            this.button4.Location = new System.Drawing.Point(257, 557);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "购买列车";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.StoreButton.Location = new System.Drawing.Point(225, 557);
+            this.StoreButton.Name = "StoreButton";
+            this.StoreButton.Size = new System.Drawing.Size(75, 23);
+            this.StoreButton.TabIndex = 10;
+            this.StoreButton.Text = "商城";
+            this.StoreButton.UseVisualStyleBackColor = true;
+            this.StoreButton.Click += new System.EventHandler(this.StoreButton_Click);
             // 
-            // button5
+            // GarageButton
             // 
-            this.button5.Location = new System.Drawing.Point(376, 557);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 11;
-            this.button5.Text = "使用列车";
-            this.button5.UseVisualStyleBackColor = true;
+            this.GarageButton.Location = new System.Drawing.Point(306, 557);
+            this.GarageButton.Name = "GarageButton";
+            this.GarageButton.Size = new System.Drawing.Size(75, 23);
+            this.GarageButton.TabIndex = 11;
+            this.GarageButton.Text = "仓库";
+            this.GarageButton.UseVisualStyleBackColor = true;
+            this.GarageButton.Click += new System.EventHandler(this.GarageButton_Click);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(487, 557);
+            this.button6.Location = new System.Drawing.Point(387, 557);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 12;
@@ -166,26 +168,27 @@ namespace train
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(594, 557);
+            this.button7.Location = new System.Drawing.Point(468, 557);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
             this.button7.TabIndex = 13;
             this.button7.Text = "列车报废";
             this.button7.UseVisualStyleBackColor = true;
             // 
-            // timer1
+            // PeopleAndCargoUpdateTimer
             // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.PeopleAndCargoUpdateTimer.Interval = 600000;
+            this.PeopleAndCargoUpdateTimer.Tick += new System.EventHandler(this.PeopleAndCargoUpdateTimer_Tick);
             // 
-            // Form1
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(993, 620);
+            this.ClientSize = new System.Drawing.Size(696, 620);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.GarageButton);
+            this.Controls.Add(this.StoreButton);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button2);
@@ -194,12 +197,14 @@ namespace train
             this.Controls.Add(this.carNameLabel);
             this.Controls.Add(this.Next);
             this.Controls.Add(this.Previous);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.textBox1);
-            this.Name = "Form1";
+            this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Text = "Main";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
+            this.Load += new System.EventHandler(this.Main_Load);
+            this.SizeChanged += new System.EventHandler(this.Main_SizeChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -208,7 +213,7 @@ namespace train
         #endregion
 
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Button Previous;
         private System.Windows.Forms.Button Next;
         private System.Windows.Forms.Label carNameLabel;
@@ -217,11 +222,11 @@ namespace train
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button StoreButton;
+        private System.Windows.Forms.Button GarageButton;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer PeopleAndCargoUpdateTimer;
     }
 }
 

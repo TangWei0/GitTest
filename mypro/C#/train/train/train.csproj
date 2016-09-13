@@ -44,14 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoResizeForm.cs" />
+    <Compile Include="CalculatorTime.cs" />
     <Compile Include="CSV.cs" />
-    <Compile Include="custom.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="UI\Form1.cs">
+    <Compile Include="UI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="UI\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Parameter.cs" />
     <Compile Include="Program.cs" />
@@ -62,8 +63,8 @@
     <Compile Include="UI\Store.Designer.cs">
       <DependentUpon>Store.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

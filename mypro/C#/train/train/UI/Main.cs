@@ -13,9 +13,11 @@ using System.Timers;
 
 namespace train
 {
-    public partial class Form1 : Form
+    public partial class Main : Form
     {
+        AutoResizeForm asc = new AutoResizeForm();
         CSV Csv = new CSV();
+        CalculatorTime calTime = new CalculatorTime();
         DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
 
         Parameter.City ReadCity = new Parameter.City();
@@ -36,18 +38,18 @@ namespace train
         string s = "";
         bool text = false;
         
-        public Form1()
+        public Main()
         {
             InitializeComponent();
+            InitializeInformation();
             InitializeTime();
-            InitializeInformation();   
         }
 
         private void InitializeTime()
         {
-            timer1.Interval = 300000;
-            timer1.Enabled = true;
-            timer1.Start();
+            
+            PeopleAndCargoUpdateTimer.Enabled = true;
+            PeopleAndCargoUpdateTimer.Start();
         }
 
         private void InitializeInformation()
@@ -63,8 +65,20 @@ namespace train
             //读取城市与城市之间信息
             Csv.ReadCityToCityCsv(citytocity, city.Count);
 
-            TimeSpan span = new TimeSpan(0, 0, 0);
-            span = DateTime.Now - custom[0].closeTime;
+            DateTime closeTimeNextUpdateTime = new DateTime();
+            DateTime nowTimeNextUpdateTime = new DateTime();
+
+            closeTimeNextUpdateTime = calTime.StationUpdateTime(custom[0].closeTime);
+            nowTimeNextUpdateTime = calTime.StationUpdateTime(DateTime.Now);
+            PeopleAndCargoUpdateTimer.Interval = calTime.countdownTime(DateTime.Now, nowTimeNextUpdateTime);
+
+            if (closeTimeNextUpdateTime != nowTimeNextUpdateTime)
+            {
+                Csv.UpdateCityToCity(citytocity, city, calTime.diffTime(closeTimeNextUpdateTime, nowTimeNextUpdateTime));
+            }
+            
+            //TimeSpan span = new TimeSpan(0, 0, 0);
+            //span = DateTime.Now - custom[0].closeTime;
             //this.Text = (span.Days*24 +span.Hours).ToString();
 
             //if (car.Count > 0)
@@ -91,21 +105,6 @@ namespace train
             //    }
             //    carDisplay();
             //}
-        }
-
-        /// <summary>
-        /// 关闭窗口
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            custom[0].closeTime = DateTime.Now;
-            Csv.SaveCustomCsv(custom);
-            Csv.SaveCityCsv(city);
-            //Csv.SaveGarageCsv(garage);
-            //Csv.SaveCarCsv(car);
-            Csv.SaveCityToCityCsv(citytocity);
         }
 
         private void carDisplay()
@@ -275,7 +274,12 @@ namespace train
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 进入商城界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StoreButton_Click(object sender, EventArgs e)
         {
             Store store = new Store(this.custom[0].storeTime);
             this.Visible = false;
@@ -289,12 +293,74 @@ namespace train
             }
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        /// <summary>
+        /// 进入仓库界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GarageButton_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
-            Csv.UpdateCityToCity(citytocity, city);
-            timer1.Enabled = true; 
+
         }
 
+        /// <summary>
+        /// 关闭程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            custom[0].closeTime = DateTime.Now;
+            Csv.SaveCustomCsv(custom);
+            Csv.SaveCityCsv(city);
+            Csv.SaveGarageCsv(garage);
+            Csv.SaveCarCsv(car);
+            Csv.SaveCityToCityCsv(citytocity);
+        }
+
+        /// <summary>
+        /// 车站人员和货物数量更新计时器
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PeopleAndCargoUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            PeopleAndCargoUpdateTimer.Enabled = false;
+            Csv.UpdateCityToCity(citytocity, city,1);
+            PeopleAndCargoUpdateTimer.Interval = 600000;
+            PeopleAndCargoUpdateTimer.Enabled = true; 
+        }
+
+        /* 以下为窗体设计程序 */
+        /// <summary>
+        /// 窗体和控件自适配
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Main_SizeChanged(object sender, EventArgs e)
+        {
+            asc.controlAutoSize(this);
+        }
+
+        /// <summary>
+        /// 记录窗体和其控件的初始位置和大小
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Main_Load(object sender, EventArgs e)
+        {
+            asc.controllInitializeSize(this);
+        }
+
+        /// <summary>
+        /// 取消窗体关闭按键
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+        }
+     
     }
 }
