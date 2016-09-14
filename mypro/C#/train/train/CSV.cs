@@ -30,7 +30,6 @@ namespace train
         {
             distance = -1,
             cashfare = -1,
-            coinfare = -1,
             people = -1,
             cargo = -1
         };
@@ -144,16 +143,19 @@ namespace train
                                 ReadCity.cityName = csv[column];
                                 break;
                             case 2:
-                                ReadCity.cityPeopleNumber = Convert.ToUInt32(csv[column]);
-                                break;
-                            case 3:
                                 ReadCity.cityStars = Convert.ToByte(csv[column]);
                                 break;
-                            case 4:
+                            case 3:
                                 ReadCity.cityLever = Convert.ToByte(csv[column]);
                                 break;
-                            case 5:
+                            case 4:
                                 ReadCity.cityValue = Convert.ToUInt64(csv[column]);
+                                break;
+                            case 5:
+                                ReadCity.stationVolume = Convert.ToInt32(csv[column]);
+                                break;
+                            case 6:
+                                ReadCity.strandedNumber = Convert.ToInt32(csv[column]);
                                 break;
                             default:
                                 break;
@@ -208,15 +210,12 @@ namespace train
                             ReadCity.cityName = csv[column];
                             break;
                         case 2:
-                            ReadCity.cityPeopleNumber = Convert.ToUInt32(csv[column]);
-                            break;
-                        case 3:
                             ReadCity.cityStars = Convert.ToByte(csv[column]);
                             break;
-                        case 4:
+                        case 3:
                             ReadCity.cityLever = Convert.ToByte(csv[column]);
                             break;
-                        case 5:
+                        case 4:
                             ReadCity.cityValue = Convert.ToUInt64(csv[column]);
                             break;
                         default:
@@ -225,6 +224,8 @@ namespace train
                 }
             }
             sr.Close();
+            ReadCity.stationVolume = Convert.ToInt32(ReadCity.cityStars * ReadCity.cityLever * 1000);
+            ReadCity.strandedNumber = 0;
             city.Add(ReadCity);
             return true;
         }
@@ -250,10 +251,11 @@ namespace train
                 lin = "";
                 lin = city[i].cityIndex.ToString() + ","
                     + city[i].cityName + ","
-                    + city[i].cityPeopleNumber.ToString() + ","
                     + city[i].cityStars.ToString() + ","
                     + city[i].cityLever.ToString() + ","
-                    + city[i].cityValue.ToString() + "\r\n";
+                    + city[i].cityValue.ToString() + ","
+                    + city[i].stationVolume.ToString() + ","
+                    + city[i].strandedNumber.ToString() + "\r\n";
                 sw.Write(lin);
             }
             sw.Close();
@@ -414,7 +416,6 @@ namespace train
                                 "エラー",
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
-                //return false;
             }
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
 
@@ -560,12 +561,9 @@ namespace train
                                 ele.cashfare = Convert.ToInt32(csv[column]);
                                 break;
                             case 2:
-                                ele.coinfare = Convert.ToInt32(csv[column]);
-                                break;
-                            case 3:
                                 ele.people = Convert.ToInt32(csv[column]);
                                 break;
-                            case 4:
+                            case 3:
                                 ele.cargo = Convert.ToInt32(csv[column]);
                                 break;
                             default:
@@ -625,9 +623,6 @@ namespace train
                             case 1:
                                 ele.cashfare = Convert.ToInt32(csv[column]);
                                 break;
-                            case 2:
-                                ele.coinfare = Convert.ToInt32(csv[column]);
-                                break;
                             default:
                                 break;
                         }
@@ -673,7 +668,6 @@ namespace train
                     {
                         lin = citytocity[i][j].distance.ToString() + ","
                             + citytocity[i][j].cashfare.ToString() + ","
-                            + citytocity[i][j].coinfare.ToString() + ","
                             + citytocity[i][j].people.ToString() + ","
                             + citytocity[i][j].cargo.ToString() + "\r\n";
                     }
@@ -683,31 +677,58 @@ namespace train
             sw.Close();
         }
 
+        /// <summary>
+        /// 更新城市之间信息
+        /// </summary>
+        /// <param name="citytocity"></param>
+        /// <param name="city"></param>
+        /// <param name="updateTimes"></param>
         public void UpdateCityToCity(List<List<Parameter.CityToCity>> citytocity, List<Parameter.City> city,int updateTimes)
-        {
+        {           
+            if (city.Count <= 1)
+            {
+                MessageBox.Show("没有两个以上车站，车站之间信息无法更新",
+                                "エラー",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return;
+            }
             for (int i = 0; i < citytocity.Count; i++)
             {
-                for (int j = i + 1; j < citytocity.Count; j++)
+                ReadCity = city[i];
+                int creaseMax = (ReadCity.stationVolume - ReadCity.strandedNumber) / (city.Count - 1);
+                int crease = compare(creaseMax, updateTimes);
+                for (int j = 0; j < citytocity.Count; j++)
                 {
-                    int creat = 0;
-                    int diff = city[i].cityStars * city[i].cityLever - city[j].cityStars * city[j].cityLever;
-                    if ((city[i].cityStars * city[i].cityLever - city[j].cityStars * city[j].cityLever) == 0)
+                    if (i != j)
                     {
-                        creat = Convert.ToInt32(System.Math.Abs(city[i].cityPeopleNumber - city[j].cityPeopleNumber) / 10);
+                        ele = citytocity[i][j];
+                        ele.people += crease / 2;
+                        ele.cargo += crease / 2; 
+                        citytocity[i][j] = ele;
                     }
-                    else
-                    {
-                        creat = Convert.ToInt32(System.Math.Abs(city[i].cityPeopleNumber - city[j].cityPeopleNumber) * diff);
-                    }
-                    ele = citytocity[i][j];
-                    ele.people += Convert.ToInt32(creat / 2);
-                    ele.cargo += Convert.ToInt32(creat / 2);
-                    citytocity[i][j] = ele;
-                    ele = citytocity[j][i];
-                    ele.people += Convert.ToInt32(creat / 2);
-                    ele.cargo += Convert.ToInt32(creat / 2);
-                    citytocity[j][i] = ele;
                 }
+                ReadCity.strandedNumber += (city.Count - 1) * crease;
+                city[i] = ReadCity;
+            }
+        }
+
+        private int compare(int creaseMax, int updateTimes)
+        {
+            if (updateTimes * 10 > creaseMax)
+            {
+                if (creaseMax % 2 == 0)
+                {
+                    return creaseMax;
+                }
+                else
+                {
+                    return creaseMax - 1;
+                }
+            }
+            else
+            {
+                return updateTimes * 10;
             }
         }
     }

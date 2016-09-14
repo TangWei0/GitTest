@@ -27,10 +27,11 @@ namespace train
         {
             public UInt16 cityIndex;
             public string cityName;
-            public UInt32 cityPeopleNumber;
             public byte cityStars;
             public byte cityLever;
             public UInt64 cityValue;
+            public Int32 stationVolume;
+            public Int32 strandedNumber;
         }
 
         public struct Garage
@@ -69,7 +70,6 @@ namespace train
         {
             public int distance;
             public int cashfare;
-            public int coinfare;
             public int people;
             public int cargo;
         }
