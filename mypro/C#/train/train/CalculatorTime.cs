@@ -14,7 +14,7 @@ namespace train
 
             if (dateTime.Minute < 50)
             {
-                stationUpdate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, (dateTime.Month / 10 + 1) * 10, 0);
+                stationUpdate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, (dateTime.Minute / 10 + 1) * 10, 0);
             }
             else
             {

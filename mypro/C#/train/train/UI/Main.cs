@@ -72,7 +72,7 @@ namespace train
             nowTimeNextUpdateTime = calTime.StationUpdateTime(DateTime.Now);
             PeopleAndCargoUpdateTimer.Interval = calTime.countdownTime(DateTime.Now, nowTimeNextUpdateTime);
 
-            if (closeTimeNextUpdateTime != nowTimeNextUpdateTime)
+            if (closeTimeNextUpdateTime != nowTimeNextUpdateTime && custom[0].cityVolume >= 2)
             {
                 Csv.UpdateCityToCity(citytocity, city, calTime.diffTime(closeTimeNextUpdateTime, nowTimeNextUpdateTime));
             }
@@ -215,10 +215,23 @@ namespace train
             else
             {
                 text = false;
-                if (!Csv.AddCity(city, s))
+                if (!File.Exists(Csv.fp_city_default + s + ".csv"))
                 {
+                    MessageBox.Show("没有该城市",
+                                    "エラー",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
                     return;
                 }
+                if (city.Exists(x => x.cityName == s))
+                {
+                    MessageBox.Show("已开通该城市",
+                                    "エラー",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error);
+                    return;
+                }
+                Csv.AddCity(city, s);
                 custom[0].cityVolume++;
                 Csv.CreatCityToCityCsv(citytocity, city);
             }
@@ -282,10 +295,10 @@ namespace train
         private void StoreButton_Click(object sender, EventArgs e)
         {
             Store store = new Store(this.custom[0].storeTime);
-            this.Visible = false;
+            //this.Visible = false;
             store.ShowDialog();
             custom[0].storeTime = store.target;
-            this.Visible = true;
+            //this.Visible = true;
             if (store.buy)
             {
                 Csv.BuyCarGarageCsv(garage, store.StoreListBox.SelectedItem.ToString(), custom[0].carCount);
@@ -316,6 +329,7 @@ namespace train
             Csv.SaveGarageCsv(garage);
             Csv.SaveCarCsv(car);
             Csv.SaveCityToCityCsv(citytocity);
+            System.Environment.Exit(0);
         }
 
         /// <summary>

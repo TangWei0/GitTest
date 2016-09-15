@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Timers;
 using setting = train.Properties.Settings;
+using train.UI;
 
 namespace train
 {
@@ -83,10 +84,6 @@ namespace train
                 saveList();
                 this.Close();
             }
-            else
-            {
-                Properties.Settings.Default.Save();
-            }
         }
 
         private void readList()
@@ -105,6 +102,7 @@ namespace train
             Properties.Settings.Default.list4 = StoreListBox.Items[3].ToString();
             Properties.Settings.Default.list5 = StoreListBox.Items[4].ToString();
             Properties.Settings.Default.list6 = StoreListBox.Items[5].ToString();
+            Properties.Settings.Default.Save();
         }
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -158,7 +156,11 @@ namespace train
         /// <param name="e"></param>
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
+            if (MessageBox.Show("确定离开商城吗？", "离开商城", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                saveList();
+                buy = false;
+            }
         }
 
         /// <summary>

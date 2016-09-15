@@ -12,7 +12,7 @@ namespace train
     {
         static string fp_custom = ".\\Record\\custom.csv";
         static string fp_city = ".\\Record\\city\\city.csv";
-        static string fp_city_default = ".\\Record\\cityDefault\\";
+        public string fp_city_default = ".\\Record\\cityDefault\\";
         static string fp_car_default = ".\\Record\\carDefault\\";
         static string fp_using_car = ".\\Record\\garage\\usingCar.csv";
         static string fp_unused_car = ".\\Record\\garage\\unusedCar.csv";
@@ -172,28 +172,9 @@ namespace train
         /// </summary>
         /// <param name="city"></param>
         /// <param name="cityName"></param>
-        public bool AddCity(List<Parameter.City> city, string cityName)
+        public void AddCity(List<Parameter.City> city, string cityName)
         {
             string fp_search = fp_city_default + cityName + ".csv";
-            if (!File.Exists(fp_search))
-            {
-                MessageBox.Show("没有该城市",
-                                "エラー",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                return false;
-            }
-            for (int i = 0; i < city.Count; i++)
-            {
-                if (cityName == city[i].cityName)
-                {
-                    MessageBox.Show("已开通该城市",
-                                    "エラー",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                    return false;
-                }
-            }
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
             String lin = sr.ReadLine();
             if (lin != null)
@@ -227,7 +208,6 @@ namespace train
             ReadCity.stationVolume = Convert.ToInt32(ReadCity.cityStars * ReadCity.cityLever * 1000);
             ReadCity.strandedNumber = 0;
             city.Add(ReadCity);
-            return true;
         }
 
         /// <summary>
@@ -683,8 +663,8 @@ namespace train
         /// <param name="citytocity"></param>
         /// <param name="city"></param>
         /// <param name="updateTimes"></param>
-        public void UpdateCityToCity(List<List<Parameter.CityToCity>> citytocity, List<Parameter.City> city,int updateTimes)
-        {           
+        public void UpdateCityToCity(List<List<Parameter.CityToCity>> citytocity, List<Parameter.City> city, int updateTimes)
+        {
             if (city.Count <= 1)
             {
                 MessageBox.Show("没有两个以上车站，车站之间信息无法更新",
@@ -704,7 +684,7 @@ namespace train
                     {
                         ele = citytocity[i][j];
                         ele.people += crease / 2;
-                        ele.cargo += crease / 2; 
+                        ele.cargo += crease / 2;
                         citytocity[i][j] = ele;
                     }
                 }

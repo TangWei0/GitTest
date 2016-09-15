@@ -48,6 +48,7 @@
     <Compile Include="CalculatorTime.cs" />
     <Compile Include="CSV.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UI\FormClosingEventArge.cs" />
     <Compile Include="UI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
