@@ -32,11 +32,10 @@ namespace train
         List<Parameter.Car> car = new List<Parameter.Car>();
         List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
 
-        DirectoryInfo[] t = new DirectoryInfo[3];
-
         int count = 0;
         string s = "";
         bool text = false;
+        int[] stationUpdateTimeArray = new int[2];
         
         public Main()
         {
@@ -45,9 +44,10 @@ namespace train
             InitializeTime();
         }
 
+        
+
         private void InitializeTime()
-        {
-            
+        {        
             PeopleAndCargoUpdateTimer.Enabled = true;
             PeopleAndCargoUpdateTimer.Start();
         }
@@ -65,16 +65,12 @@ namespace train
             //读取城市与城市之间信息
             Csv.ReadCityToCityCsv(citytocity, city.Count);
 
-            DateTime closeTimeNextUpdateTime = new DateTime();
-            DateTime nowTimeNextUpdateTime = new DateTime();
+            stationUpdateTimeArray = (int[])calTime.StationUpdateTimeArray(custom[0].closeTime);
+            PeopleAndCargoUpdateTimer.Interval = stationUpdateTimeArray[0];
 
-            closeTimeNextUpdateTime = calTime.StationUpdateTime(custom[0].closeTime);
-            nowTimeNextUpdateTime = calTime.StationUpdateTime(DateTime.Now);
-            PeopleAndCargoUpdateTimer.Interval = calTime.countdownTime(DateTime.Now, nowTimeNextUpdateTime);
-
-            if (closeTimeNextUpdateTime != nowTimeNextUpdateTime && custom[0].cityVolume >= 2)
+            if (stationUpdateTimeArray[1] != 0 && custom[0].cityVolume >= 2)
             {
-                Csv.UpdateCityToCity(citytocity, city, calTime.diffTime(closeTimeNextUpdateTime, nowTimeNextUpdateTime));
+                Csv.UpdateCityToCity(citytocity, city, stationUpdateTimeArray[1]);
             }
             
             //TimeSpan span = new TimeSpan(0, 0, 0);
@@ -294,16 +290,10 @@ namespace train
         /// <param name="e"></param>
         private void StoreButton_Click(object sender, EventArgs e)
         {
-            Store store = new Store(this.custom[0].storeTime);
-            //this.Visible = false;
+            Store store = new Store(this);
+            this.Visible = false;
             store.ShowDialog();
-            custom[0].storeTime = store.target;
-            //this.Visible = true;
-            if (store.buy)
-            {
-                Csv.BuyCarGarageCsv(garage, store.StoreListBox.SelectedItem.ToString(), custom[0].carCount);
-                custom[0].carCount++;
-            }
+            this.Visible = true;
         }
 
         /// <summary>

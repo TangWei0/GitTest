@@ -13,7 +13,6 @@ namespace train
         static string fp_custom = ".\\Record\\custom.csv";
         static string fp_city = ".\\Record\\city\\city.csv";
         public string fp_city_default = ".\\Record\\cityDefault\\";
-        static string fp_car_default = ".\\Record\\carDefault\\";
         static string fp_using_car = ".\\Record\\garage\\usingCar.csv";
         static string fp_unused_car = ".\\Record\\garage\\unusedCar.csv";
         static string fp_city_to_city_default = ".\\Record\\CityToCityDefault\\city_to_city_";
@@ -65,26 +64,19 @@ namespace train
                             custom[0].cityVolume = Convert.ToUInt16(csv[column]);
                             break;
                         case 5:
-                            custom[0].carVolume = Convert.ToUInt16(csv[column]);
-                            break;
-                        case 6:
                             custom[0].garageVolume = Convert.ToUInt16(csv[column]);
                             break;
+                        case 6:
+                            custom[0].carVolume = Convert.ToUInt16(csv[column]);
+                            break;
                         case 7:
-                            custom[0].carCount = Convert.ToUInt64(csv[column]);
-                            break;
-                        case 8:
                             custom[0].closeTime = DateTime.Parse(csv[column]);
-                            break;
-                        case 9:
-                            custom[0].storeTime = DateTime.Parse(csv[column]);
                             break;
                         default:
                             break;
                     }
                 }
             }
-
             sr.Close();
         }
 
@@ -101,15 +93,10 @@ namespace train
                               + custom[0].cash.ToString() + ","
                               + custom[0].coin.ToString() + ","
                               + custom[0].cityVolume.ToString() + ","
-                              + custom[0].carVolume.ToString() + ","
                               + custom[0].garageVolume.ToString() + ","
-                              + custom[0].carCount.ToString() + ","
-                              + custom[0].closeTime.ToString() + ","
-                              + custom[0].storeTime.ToString();
-
+                              + custom[0].carVolume.ToString() + ","
+                              + custom[0].closeTime.ToString() + "\r\n";
             sw.Write(rowCsvInfo);
-            sw.Write("\n");
-
             sw.Close();
         }
 
@@ -379,62 +366,6 @@ namespace train
                 }
             }
             sr.Close();
-        }
-
-        /// <summary>
-        /// 从商城购入到仓库
-        /// </summary>
-        /// <param name="garage"></param>
-        /// <param name="carList"></param>
-        /// <param name="carName"></param>
-        public void BuyCarGarageCsv(List<Parameter.Garage> garage, string carName, UInt64 carCount)
-        {
-            string fp_search = fp_car_default + carName + ".csv";
-            if (!File.Exists(fp_search))
-            {
-                MessageBox.Show("没有该列车",
-                                "エラー",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
-            StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
-
-            String lin = sr.ReadLine();
-            if (lin != null)
-            {
-                String[] csv = lin.Split(',');
-                for (int column = 0; column < csv.GetLength(0); column++)
-                {
-                    switch (column)
-                    {
-                        case 0:
-                            ReadGarage.carName = csv[column] + "_" + carCount.ToString("00000000");
-                            break;
-                        case 1:
-                            ReadGarage.carPeopleVolume = Convert.ToByte(csv[column]);
-                            break;
-                        case 2:
-                            ReadGarage.carCargoVolume = Convert.ToByte(csv[column]);
-                            break;
-                        case 3:
-                            ReadGarage.carSpeed = Convert.ToUInt16(csv[column]);
-                            break;
-                        case 4:
-                            ReadGarage.carPower = Convert.ToUInt16(csv[column]);
-                            break;
-                        case 5:
-                            ReadGarage.carWeight = Convert.ToUInt16(csv[column]);
-                            break;
-                        case 6:
-                            ReadGarage.carValue = Convert.ToUInt64(csv[column]) * 1000000;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            sr.Close();
-            garage.Add(ReadGarage);
         }
 
         /// <summary>

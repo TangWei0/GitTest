@@ -16,11 +16,9 @@ namespace train
             public UInt64 cash;
             public UInt64 coin;
             public UInt16 cityVolume;
-            public UInt16 carVolume;
             public UInt16 garageVolume;
-            public UInt64 carCount;
+            public UInt16 carVolume;
             public DateTime closeTime;
-            public DateTime storeTime;
         }
 
         public struct City

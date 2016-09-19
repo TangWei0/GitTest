@@ -8,53 +8,85 @@ namespace train
 {
     public class CalculatorTime
     {
-        public DateTime StationUpdateTime(DateTime dateTime)
+        public Array StationUpdateTimeArray(DateTime closeTime)
         {
-            DateTime stationUpdate = new DateTime();
+            int[] stationUpdateTimeArray = new int[2];
+            DateTime closeTimeNextUpdateTime = new DateTime();
+            DateTime nowTimeNextUpdateTime = new DateTime();
+
+            closeTimeNextUpdateTime = StationUpdateTime(closeTime);
+            nowTimeNextUpdateTime = StationUpdateTime(DateTime.Now);
+
+            stationUpdateTimeArray[0] = countdownTime(DateTime.Now, nowTimeNextUpdateTime);
+
+            if (closeTimeNextUpdateTime != nowTimeNextUpdateTime)
+            {
+                stationUpdateTimeArray[1] = UpdateTimes(DateTime.Now, nowTimeNextUpdateTime);
+            }
+            else
+            {
+                stationUpdateTimeArray[1] = 0;
+            }
+
+            return stationUpdateTimeArray;
+        }
+
+        public int StoreUpdateTime(DateTime storeTime)
+        {
+            int storeUpdateTime = 300000;
+            if (DateTime.Now <= storeTime)
+            {
+                storeUpdateTime = ((storeTime - DateTime.Now).Minutes * 60 + (storeTime - DateTime.Now).Seconds) * 1000;
+            }
+            return storeUpdateTime;
+        }
+
+        private DateTime StationUpdateTime(DateTime dateTime)
+        {
+            DateTime stationUpdateTime = new DateTime();
 
             if (dateTime.Minute < 50)
             {
-                stationUpdate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, (dateTime.Minute / 10 + 1) * 10, 0);
+                stationUpdateTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, (dateTime.Minute / 10 + 1) * 10, 0);
             }
             else
             {
                 if (dateTime.Hour < 23)
                 {
-                    stationUpdate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour + 1, 0, 0);
+                    stationUpdateTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour + 1, 0, 0);
                 }
                 else
                 {
                     if (checkTime(dateTime) == false)
                     {
-                        stationUpdate = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day + 1, 0, 0, 0);
+                        stationUpdateTime = new DateTime(dateTime.Year, dateTime.Month, dateTime.Day + 1, 0, 0, 0);
                     }
                     else
                     {
                         if (dateTime.Month != 12)
                         {
-                            stationUpdate = new DateTime(dateTime.Year, dateTime.Month + 1, 1, 0, 0, 0);
+                            stationUpdateTime = new DateTime(dateTime.Year, dateTime.Month + 1, 1, 0, 0, 0);
                         }
                         else
                         {
-                            stationUpdate = new DateTime(dateTime.Year + 1, 1, 1, 0, 0, 0);
+                            stationUpdateTime = new DateTime(dateTime.Year + 1, 1, 1, 0, 0, 0);
                         }
                     }
                 }
             }
-
-            return stationUpdate;
+            return stationUpdateTime;
         }
 
-        public int diffTime(DateTime closeTime, DateTime nowTime)
+        private int UpdateTimes(DateTime closeTime, DateTime nowTime)
         {
-            int diff = 0;
+            int updateTimes = 0;
             TimeSpan span = new TimeSpan();
             span = nowTime - closeTime;
-            diff = span.Days * 144 + span.Hours * 6 + span.Minutes / 10;
-            return diff;
+            updateTimes = span.Days * 144 + span.Hours * 6 + span.Minutes / 10;
+            return updateTimes;
         }
 
-        public int countdownTime(DateTime nowTime, DateTime nowTimeNextUpdateTime)
+        private int countdownTime(DateTime nowTime, DateTime nowTimeNextUpdateTime)
         {
             int countTime = 0;
             TimeSpan span = new TimeSpan();

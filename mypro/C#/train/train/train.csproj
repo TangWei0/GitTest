@@ -48,7 +48,12 @@
     <Compile Include="CalculatorTime.cs" />
     <Compile Include="CSV.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="UI\FormClosingEventArge.cs" />
+    <Compile Include="UI\Exchange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Exchange.Designer.cs">
+      <DependentUpon>Exchange.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +69,9 @@
     <Compile Include="UI\Store.Designer.cs">
       <DependentUpon>Store.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\Exchange.resx">
+      <DependentUpon>Exchange.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -83,11 +91,13 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>

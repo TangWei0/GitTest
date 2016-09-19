@@ -16,98 +16,89 @@ namespace train
 {
     public partial class Store : Form
     {
+        Main main = new Main();
         AutoResizeForm asc = new AutoResizeForm();
+        CSV Csv = new CSV();
+        CalculatorTime calTime = new CalculatorTime();
         string fp_car_default = ".\\Record\\carDefault\\";
-        public DateTime target = new DateTime();
+        DateTime target = new DateTime();
+        Parameter.Garage ReadGarage = new Parameter.Garage();
         TimeSpan span = new TimeSpan(0, 5, 0);
+        public ulong exchangeCoin;
         public bool buy = false;
-        string[] listName = new string[6]{setting.Default.list1,
-                                          setting.Default.list2,
-                                          setting.Default.list3,
-                                          setting.Default.list4,
-                                          setting.Default.list5,
-                                          setting.Default.list6};
-        public Store(DateTime storeTime)
+        /// <summary>
+        /// 读取商城窗体信息
+        /// </summary>
+        /// <param name="_Main"></param>
+        public Store(Main _main)
         {
             InitializeComponent();
+            main = _main;
+            StoreUpdateTimer.Interval = calTime.StoreUpdateTime(setting.Default.storeUpdateTime);
+            InitializeTime();   
+        }
 
-            //this.ControlBox = false;
-            target = storeTime;
-            if (DateTime.Now > target)
+        /// <summary>
+        /// 商城更新时间初始化
+        /// </summary>
+        private void InitializeTime()
+        {
+            if (StoreUpdateTimer.Interval == 300000)
             {
                 updateStore();
             }
             else
             {
                 readList();
-                timer1.Interval = ((target - DateTime.Now).Minutes * 60 + (target - DateTime.Now).Seconds) * 1000;
             }
-            timer1.Enabled = true;
-            timer1.Start();
+            StoreUpdateTimer.Enabled = true;
+            StoreUpdateTimer.Start();
         }
 
+        /// <summary>
+        /// 触发商城更新事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StoreUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            StoreUpdateTimer.Enabled = false;
+            updateStore();
+            StoreUpdateTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// 更新商城车辆列表
+        /// </summary>
         private void updateStore()
         {
             StoreListBox.Items.Clear();
             DirectoryInfo di = new DirectoryInfo(fp_car_default);
             var t = di.GetFiles();
-            int newRandom = 0;
-            int oldRandom = 0;
             Random r = new System.Random();
             for (int i = 0; i < 6; i++)
             {
-                do
-                {
-                    newRandom = r.Next(t.Length);
-                } while (oldRandom == newRandom);
-                oldRandom = newRandom;
-                string p = t[oldRandom].Name;
+                int random = r.Next(t.Length);
+                string p = t[random].Name;
                 string[] fileName = p.Split('.');
                 StoreListBox.Items.Add(fileName[0]);
             }
-            timer1.Interval = 300000;
+            StoreUpdateTimer.Interval = 300000;
             target = DateTime.Now + span;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            timer1.Enabled = false;
-            updateStore();
-            timer1.Enabled = true;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("购买该列车吗？", "买", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-            {
-                buy = true;
-                saveList();
-                this.Close();
-            }
-        }
-
-        private void readList()
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                StoreListBox.Items.Add(listName[i]);
-            }
-        }
-
-        private void saveList()
-        {
-            Properties.Settings.Default.list1 = StoreListBox.Items[0].ToString();
-            Properties.Settings.Default.list2 = StoreListBox.Items[1].ToString();
-            Properties.Settings.Default.list3 = StoreListBox.Items[2].ToString();
-            Properties.Settings.Default.list4 = StoreListBox.Items[3].ToString();
-            Properties.Settings.Default.list5 = StoreListBox.Items[4].ToString();
-            Properties.Settings.Default.list6 = StoreListBox.Items[5].ToString();
-            Properties.Settings.Default.Save();
-        }
-
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// 触发商城车辆详细列表事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StoreListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             CarDetailListBox.Items.Clear();
+            if (StoreListBox.SelectedItem == null || StoreListBox.SelectedItem.ToString() == "空")
+            {
+                return;
+            }
             string fp_search = fp_car_default + StoreListBox.SelectedItem.ToString() + ".csv";
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
 
@@ -146,20 +137,153 @@ namespace train
                 }
             }
             sr.Close();
+        }      
+
+        /// <summary>
+        /// 触发购买事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BuyCarButton_Click(object sender, EventArgs e)
+        {
+            if (StoreListBox.SelectedItem == null || StoreListBox.SelectedItem.ToString() == "空")
+            {
+                if (MessageBox.Show("你还没有选择车辆", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
+                {
+                    return;
+                }           
+            }
+            if (MessageBox.Show("购买该列车吗？", "购买提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                buy = true;
+                ulong a = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString()));
+                exchangeCoin = a - main.custom[0].coin;
+                if (exchangeCoin > 0)
+                {
+                    if (MessageBox.Show("您当前点券不够,进入兑换界面吗？", "兑换提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Exchange exchange = new Exchange(main.custom[0].cash, main.custom[0].coin,exchangeCoin);
+                        this.Visible = false;
+                        exchange.ShowDialog();
+                        this.Visible = true;
+                    }
+                }
+                BuyCar();               
+                saveList();
+                this.Close();
+            }
+        }       
+
+        /// <summary>
+        /// 购买车辆
+        /// </summary>
+        private void BuyCar()
+        {
+            for (int i = 0; i < CarDetailListBox.Items.Count; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            ReadGarage.carName = CarInformation(CarDetailListBox.Items[0].ToString()) + "_" + Properties.Settings.Default.carCount.ToString("00000000");
+                            break;
+                        case 1:
+                            ReadGarage.carPeopleVolume = Convert.ToByte(CarInformation(CarDetailListBox.Items[1].ToString()));
+                            break;
+                        case 2:
+                            ReadGarage.carCargoVolume = Convert.ToByte(CarInformation(CarDetailListBox.Items[2].ToString()));
+                            break;
+                        case 3:
+                            ReadGarage.carSpeed = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[3].ToString()));
+                            break;
+                        case 4:
+                            ReadGarage.carPower = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[4].ToString()));
+                            break;
+                        case 5:
+                            ReadGarage.carWeight = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[5].ToString()));
+                            break;
+                        case 6:
+                            ReadGarage.carValue = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())) * 1000000;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            main.garage.Add(ReadGarage);
+            setting.Default.carCount++;
+            main.custom[0].garageVolume++;
+            main.custom[0].coin -= Convert.ToUInt64(CarDetailListBox.Items[5].ToString());
+            resetList();
+        }
+
+        /// <summary>
+        /// 读取商城车辆列表
+        /// </summary>
+        private void readList()
+        {
+            StoreListBox.Items.Add(setting.Default.list1);
+            StoreListBox.Items.Add(setting.Default.list2);
+            StoreListBox.Items.Add(setting.Default.list3);
+            StoreListBox.Items.Add(setting.Default.list4);
+            StoreListBox.Items.Add(setting.Default.list5);
+            StoreListBox.Items.Add(setting.Default.list6);
+        }
+
+        /// <summary>
+        /// 买取车辆后重新设置商城车辆列表
+        /// </summary>
+        private void resetList()
+        {
+            int selIndex = StoreListBox.SelectedIndex;
+            StoreListBox.Items.RemoveAt(selIndex);
+            StoreListBox.Items.Add("空");
+        }
+
+        /// <summary>
+        /// 保存商城车辆列表
+        /// </summary>
+        private void saveList()
+        {
+            setting.Default.list1 = StoreListBox.Items[0].ToString();
+            setting.Default.list2 = StoreListBox.Items[1].ToString();
+            setting.Default.list3 = StoreListBox.Items[2].ToString();
+            setting.Default.list4 = StoreListBox.Items[3].ToString();
+            setting.Default.list5 = StoreListBox.Items[4].ToString();
+            setting.Default.list6 = StoreListBox.Items[5].ToString();
+            setting.Default.storeUpdateTime = target;
+            setting.Default.Save();
+        }
+
+        /// <summary>
+        /// 车辆详细信息转换函数
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        private string CarInformation(string name)
+        {
+            string[] csv = name.Split(':');
+            return csv[1];
         }
 
         /* 以下为窗体设计程序 */
         /// <summary>
-        /// 取消窗体关闭按键
+        /// 窗体关闭按键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("确定离开商城吗？", "离开商城", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+            if (!buy)
             {
-                saveList();
-                buy = false;
+                if (MessageBox.Show("确定离开商城吗？", "离开商城提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                {
+                    saveList();
+                    buy = false;
+                    this.Close();
+                }
             }
         }
 
@@ -182,6 +306,5 @@ namespace train
         {
             asc.controlAutoSize(this);
         }
-
     }
 }
