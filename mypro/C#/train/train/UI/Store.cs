@@ -11,6 +11,7 @@ using System.IO;
 using System.Timers;
 using setting = train.Properties.Settings;
 using train.UI;
+using System.Diagnostics;
 
 namespace train
 {
@@ -35,7 +36,7 @@ namespace train
             InitializeComponent();
             main = _main;
             StoreUpdateTimer.Interval = calTime.StoreUpdateTime(setting.Default.storeUpdateTime);
-            InitializeTime();   
+            InitializeTime();
         }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace train
                 }
             }
             sr.Close();
-        }      
+        }
 
         /// <summary>
         /// 触发购买事件
@@ -151,7 +152,7 @@ namespace train
                 if (MessageBox.Show("你还没有选择车辆", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
                     return;
-                }           
+                }
             }
             if (MessageBox.Show("购买该列车吗？", "购买提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
@@ -166,17 +167,22 @@ namespace train
                     }
                     else
                     {
-                        Exchange exchange = new Exchange(main.custom[0].cash, main.custom[0].coin,exchangeCoin);
+                        if (exchangeCoin > (main.custom[0].cash / 1000000))
+                        {
+                            MessageBox.Show("即使典当所有现金，点券还是不够。下次再来购买吧！", "兑换不足提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        Exchange exchange = new Exchange(main, exchangeCoin);
                         this.Visible = false;
                         exchange.ShowDialog();
                         this.Visible = true;
                     }
                 }
-                BuyCar();               
+                BuyCar();
                 saveList();
                 this.Close();
             }
-        }       
+        }
 
         /// <summary>
         /// 购买车辆
@@ -184,34 +190,34 @@ namespace train
         private void BuyCar()
         {
             for (int i = 0; i < CarDetailListBox.Items.Count; i++)
+            {
+                switch (i)
                 {
-                    switch (i)
-                    {
-                        case 0:
-                            ReadGarage.carName = CarInformation(CarDetailListBox.Items[0].ToString()) + "_" + Properties.Settings.Default.carCount.ToString("00000000");
-                            break;
-                        case 1:
-                            ReadGarage.carPeopleVolume = Convert.ToByte(CarInformation(CarDetailListBox.Items[1].ToString()));
-                            break;
-                        case 2:
-                            ReadGarage.carCargoVolume = Convert.ToByte(CarInformation(CarDetailListBox.Items[2].ToString()));
-                            break;
-                        case 3:
-                            ReadGarage.carSpeed = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[3].ToString()));
-                            break;
-                        case 4:
-                            ReadGarage.carPower = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[4].ToString()));
-                            break;
-                        case 5:
-                            ReadGarage.carWeight = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[5].ToString()));
-                            break;
-                        case 6:
-                            ReadGarage.carValue = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())) * 1000000;
-                            break;
-                        default:
-                            break;
-                    }
+                    case 0:
+                        ReadGarage.carName = CarInformation(CarDetailListBox.Items[0].ToString()) + "_" + Properties.Settings.Default.carCount.ToString("00000000");
+                        break;
+                    case 1:
+                        ReadGarage.carPeopleVolume = Convert.ToByte(CarInformation(CarDetailListBox.Items[1].ToString()));
+                        break;
+                    case 2:
+                        ReadGarage.carCargoVolume = Convert.ToByte(CarInformation(CarDetailListBox.Items[2].ToString()));
+                        break;
+                    case 3:
+                        ReadGarage.carSpeed = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[3].ToString()));
+                        break;
+                    case 4:
+                        ReadGarage.carPower = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[4].ToString()));
+                        break;
+                    case 5:
+                        ReadGarage.carWeight = Convert.ToUInt16(CarInformation(CarDetailListBox.Items[5].ToString()));
+                        break;
+                    case 6:
+                        ReadGarage.carValue = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())) * 1000000;
+                        break;
+                    default:
+                        break;
                 }
+            }
             main.garage.Add(ReadGarage);
             setting.Default.carCount++;
             main.custom[0].garageVolume++;

@@ -13,13 +13,18 @@ namespace train.UI
     public partial class Exchange : Form
     {
         AutoResizeForm asc = new AutoResizeForm();
-        //Main main = new Main();
+        Main main = new Main();
 
-        public Exchange(ulong cash, ulong coin,ulong exchangeCoin)
+        public Exchange(Main _main, ulong exchangeCoin)
         {
             InitializeComponent();
-            CashValueLabel.Text = cash.ToString();
-            CoinValueLabel.Text = coin.ToString();
+            main = _main;
+            CashValueLabel.Text = main.custom[0].cash.ToString();
+            CoinValueLabel.Text = main.custom[0].coin.ToString();
+            ExchangeTrackBar.Maximum = Convert.ToInt32(main.custom[0].cash / 1000000);
+            ExchangeCoinMaxLabel.Text = ExchangeTrackBar.Maximum.ToString();
+            ExchangeTrackBar.Value = Convert.ToInt32(exchangeCoin);
+            ExchangeCoinTextBox.Text = exchangeCoin.ToString();
         }
 
         /* 以下为窗体设计程序 */
@@ -30,15 +35,15 @@ namespace train.UI
         /// <param name="e"></param>
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
-        //    if (!buy)
-        //    {
-        //        if (MessageBox.Show("确定离开商城吗？", "离开商城提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-        //        {
-        //            saveList();
-        //            buy = false;
-        //            this.Close();
-        //        }
-        //    }
+            //    if (!buy)
+            //    {
+            //        if (MessageBox.Show("确定离开商城吗？", "离开商城提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            //        {
+            //            saveList();
+            //            buy = false;
+            //            this.Close();
+            //        }
+            //    }
         }
 
         /// <summary>

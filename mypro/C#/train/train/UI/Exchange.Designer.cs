@@ -32,6 +32,12 @@
             this.CoinLabel = new System.Windows.Forms.Label();
             this.CashValueLabel = new System.Windows.Forms.Label();
             this.CoinValueLabel = new System.Windows.Forms.Label();
+            this.ExchangeTrackBar = new System.Windows.Forms.TrackBar();
+            this.ExchangeCoinLabel = new System.Windows.Forms.Label();
+            this.ExchangeCoinMinLabel = new System.Windows.Forms.Label();
+            this.ExchangeCoinMaxLabel = new System.Windows.Forms.Label();
+            this.ExchangeCoinTextBox = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.ExchangeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // CashLabel
@@ -57,28 +63,79 @@
             this.CashValueLabel.AutoSize = true;
             this.CashValueLabel.Location = new System.Drawing.Point(163, 38);
             this.CashValueLabel.Name = "CashValueLabel";
-            this.CashValueLabel.Size = new System.Drawing.Size(0, 12);
+            this.CashValueLabel.Size = new System.Drawing.Size(60, 12);
             this.CashValueLabel.TabIndex = 2;
+            this.CashValueLabel.Text = "CashValue";
             // 
             // CoinValueLabel
             // 
             this.CoinValueLabel.AutoSize = true;
             this.CoinValueLabel.Location = new System.Drawing.Point(163, 92);
             this.CoinValueLabel.Name = "CoinValueLabel";
-            this.CoinValueLabel.Size = new System.Drawing.Size(0, 12);
+            this.CoinValueLabel.Size = new System.Drawing.Size(57, 12);
             this.CoinValueLabel.TabIndex = 3;
+            this.CoinValueLabel.Text = "CoinValue";
+            // 
+            // ExchangeTrackBar
+            // 
+            this.ExchangeTrackBar.Location = new System.Drawing.Point(41, 192);
+            this.ExchangeTrackBar.Maximum = 100;
+            this.ExchangeTrackBar.Name = "ExchangeTrackBar";
+            this.ExchangeTrackBar.Size = new System.Drawing.Size(459, 45);
+            this.ExchangeTrackBar.TabIndex = 4;
+            this.ExchangeTrackBar.TickFrequency = 5;
+            // 
+            // ExchangeCoinLabel
+            // 
+            this.ExchangeCoinLabel.AutoSize = true;
+            this.ExchangeCoinLabel.Location = new System.Drawing.Point(39, 151);
+            this.ExchangeCoinLabel.Name = "ExchangeCoinLabel";
+            this.ExchangeCoinLabel.Size = new System.Drawing.Size(89, 12);
+            this.ExchangeCoinLabel.TabIndex = 5;
+            this.ExchangeCoinLabel.Text = "需兑换点券数量";
+            // 
+            // ExchangeCoinMinLabel
+            // 
+            this.ExchangeCoinMinLabel.AutoSize = true;
+            this.ExchangeCoinMinLabel.Location = new System.Drawing.Point(49, 225);
+            this.ExchangeCoinMinLabel.Name = "ExchangeCoinMinLabel";
+            this.ExchangeCoinMinLabel.Size = new System.Drawing.Size(11, 12);
+            this.ExchangeCoinMinLabel.TabIndex = 6;
+            this.ExchangeCoinMinLabel.Text = "0";
+            // 
+            // ExchangeCoinMaxLabel
+            // 
+            this.ExchangeCoinMaxLabel.AutoSize = true;
+            this.ExchangeCoinMaxLabel.Location = new System.Drawing.Point(481, 225);
+            this.ExchangeCoinMaxLabel.Name = "ExchangeCoinMaxLabel";
+            this.ExchangeCoinMaxLabel.Size = new System.Drawing.Size(11, 12);
+            this.ExchangeCoinMaxLabel.TabIndex = 7;
+            this.ExchangeCoinMaxLabel.Text = "1";
+            // 
+            // ExchangeCoinTextBox
+            // 
+            this.ExchangeCoinTextBox.Location = new System.Drawing.Point(520, 192);
+            this.ExchangeCoinTextBox.Name = "ExchangeCoinTextBox";
+            this.ExchangeCoinTextBox.Size = new System.Drawing.Size(40, 19);
+            this.ExchangeCoinTextBox.TabIndex = 8;
             // 
             // Exchange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(486, 249);
+            this.ClientSize = new System.Drawing.Size(646, 329);
+            this.Controls.Add(this.ExchangeCoinTextBox);
+            this.Controls.Add(this.ExchangeCoinMaxLabel);
+            this.Controls.Add(this.ExchangeCoinMinLabel);
+            this.Controls.Add(this.ExchangeCoinLabel);
+            this.Controls.Add(this.ExchangeTrackBar);
             this.Controls.Add(this.CoinValueLabel);
             this.Controls.Add(this.CashValueLabel);
             this.Controls.Add(this.CoinLabel);
             this.Controls.Add(this.CashLabel);
             this.Name = "Exchange";
             this.Text = "Exchange";
+            ((System.ComponentModel.ISupportInitialize)(this.ExchangeTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -90,6 +147,11 @@
         private System.Windows.Forms.Label CoinLabel;
         private System.Windows.Forms.Label CashValueLabel;
         private System.Windows.Forms.Label CoinValueLabel;
+        private System.Windows.Forms.TrackBar ExchangeTrackBar;
+        private System.Windows.Forms.Label ExchangeCoinLabel;
+        private System.Windows.Forms.Label ExchangeCoinMinLabel;
+        private System.Windows.Forms.Label ExchangeCoinMaxLabel;
+        private System.Windows.Forms.TextBox ExchangeCoinTextBox;
 
 
     }
