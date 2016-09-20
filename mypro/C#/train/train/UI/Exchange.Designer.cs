@@ -114,10 +114,12 @@
             // 
             // ExchangeCoinTextBox
             // 
-            this.ExchangeCoinTextBox.Location = new System.Drawing.Point(520, 192);
+            this.ExchangeCoinTextBox.Location = new System.Drawing.Point(502, 192);
             this.ExchangeCoinTextBox.Name = "ExchangeCoinTextBox";
-            this.ExchangeCoinTextBox.Size = new System.Drawing.Size(40, 19);
+            this.ExchangeCoinTextBox.Size = new System.Drawing.Size(132, 19);
             this.ExchangeCoinTextBox.TabIndex = 8;
+            this.ExchangeCoinTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ExchangeCoinTextBox_KeyPress);
+            this.ExchangeCoinTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.ExchangeCoinTextBox_Validating);
             // 
             // Exchange
             // 

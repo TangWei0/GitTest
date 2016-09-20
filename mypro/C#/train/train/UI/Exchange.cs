@@ -65,5 +65,38 @@ namespace train.UI
         {
             asc.controlAutoSize(this);
         }
+
+        private void ExchangeCoinTextBox_KeyPress(object sender, KeyPressEventArgs e)
+       {
+            if (Char.IsNumber(e.KeyChar) || e.KeyChar == (char)8)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                MessageBox.Show("请输入数字！","错误提示",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                e.Handled = true;
+            }
+            ExchangeCoinTextBox_Validating(new object(), new CancelEventArgs());
+        }
+
+        private void ExchangeCoinTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                int v = Convert.ToInt32(ExchangeCoinTextBox.Text);
+                int w = Convert.ToInt32(ExchangeCoinMaxLabel.Text);
+                if (v < 0 || v > w)
+                {
+                    MessageBox.Show("请输入正确数值范围", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("异常处理，请重新输入数字","异常提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                e.Cancel = true;
+            }
+        }
     }
 }
