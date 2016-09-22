@@ -172,10 +172,15 @@ namespace train
                             MessageBox.Show("即使典当所有现金，点券还是不够。下次再来购买吧！", "兑换不足提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
-                        Exchange exchange = new Exchange(main, exchangeCoin);
-                        this.Visible = false;
-                        exchange.ShowDialog();
-                        this.Visible = true;
+                        else
+                        {
+                            
+                            Exchange exchange = new Exchange(main, exchangeCoin);
+                            this.Visible = false;
+                            exchange.ShowDialog();
+                            this.Close();
+                            return;
+                        }
                     }
                 }
                 BuyCar();
@@ -221,7 +226,7 @@ namespace train
             main.garage.Add(ReadGarage);
             setting.Default.carCount++;
             main.custom[0].garageVolume++;
-            main.custom[0].coin -= Convert.ToUInt64(CarDetailListBox.Items[5].ToString());
+            main.custom[0].coin -= Convert.ToUInt64(CarDetailListBox.Items[6].ToString());
             resetList();
         }
 

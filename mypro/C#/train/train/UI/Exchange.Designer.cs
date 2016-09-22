@@ -37,6 +37,7 @@
             this.ExchangeCoinMinLabel = new System.Windows.Forms.Label();
             this.ExchangeCoinMaxLabel = new System.Windows.Forms.Label();
             this.ExchangeCoinTextBox = new System.Windows.Forms.TextBox();
+            this.ExchangeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ExchangeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,6 +85,7 @@
             this.ExchangeTrackBar.Size = new System.Drawing.Size(459, 45);
             this.ExchangeTrackBar.TabIndex = 4;
             this.ExchangeTrackBar.TickFrequency = 5;
+            this.ExchangeTrackBar.ValueChanged += new System.EventHandler(this.ExchangeTrackBar_ValueChanged);
             // 
             // ExchangeCoinLabel
             // 
@@ -118,14 +120,25 @@
             this.ExchangeCoinTextBox.Name = "ExchangeCoinTextBox";
             this.ExchangeCoinTextBox.Size = new System.Drawing.Size(132, 19);
             this.ExchangeCoinTextBox.TabIndex = 8;
+            this.ExchangeCoinTextBox.TextChanged += new System.EventHandler(this.ExchangeCoinTextBox_TextChanged);
             this.ExchangeCoinTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ExchangeCoinTextBox_KeyPress);
-            this.ExchangeCoinTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.ExchangeCoinTextBox_Validating);
+            // 
+            // ExchangeButton
+            // 
+            this.ExchangeButton.Location = new System.Drawing.Point(285, 269);
+            this.ExchangeButton.Name = "ExchangeButton";
+            this.ExchangeButton.Size = new System.Drawing.Size(75, 29);
+            this.ExchangeButton.TabIndex = 9;
+            this.ExchangeButton.Text = "兑换";
+            this.ExchangeButton.UseVisualStyleBackColor = true;
+            this.ExchangeButton.Click += new System.EventHandler(this.ExchangeButton_Click);
             // 
             // Exchange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 329);
+            this.Controls.Add(this.ExchangeButton);
             this.Controls.Add(this.ExchangeCoinTextBox);
             this.Controls.Add(this.ExchangeCoinMaxLabel);
             this.Controls.Add(this.ExchangeCoinMinLabel);
@@ -154,6 +167,7 @@
         private System.Windows.Forms.Label ExchangeCoinMinLabel;
         private System.Windows.Forms.Label ExchangeCoinMaxLabel;
         private System.Windows.Forms.TextBox ExchangeCoinTextBox;
+        private System.Windows.Forms.Button ExchangeButton;
 
 
     }

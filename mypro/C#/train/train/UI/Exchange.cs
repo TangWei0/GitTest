@@ -15,16 +15,105 @@ namespace train.UI
         AutoResizeForm asc = new AutoResizeForm();
         Main main = new Main();
 
+        /// <summary>
+        /// 启动兑换界面
+        /// </summary>
+        /// <param name="_main"></param>
+        /// <param name="exchangeCoin"></param>
         public Exchange(Main _main, ulong exchangeCoin)
         {
             InitializeComponent();
             main = _main;
+            InitializeInformation(exchangeCoin);
+        }
+
+        /// <summary>
+        /// 各控件再设置
+        /// </summary>
+        /// <param name="exchangeCoin"></param>
+        private void InitializeInformation(ulong exchangeCoin)
+        {
             CashValueLabel.Text = main.custom[0].cash.ToString();
             CoinValueLabel.Text = main.custom[0].coin.ToString();
             ExchangeTrackBar.Maximum = Convert.ToInt32(main.custom[0].cash / 1000000);
             ExchangeCoinMaxLabel.Text = ExchangeTrackBar.Maximum.ToString();
-            ExchangeTrackBar.Value = Convert.ToInt32(exchangeCoin);
             ExchangeCoinTextBox.Text = exchangeCoin.ToString();
+        }
+
+        /// <summary>
+        /// 数值输入控制事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExchangeCoinTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsNumber(e.KeyChar) || e.KeyChar == (char)8)
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                MessageBox.Show("请输入数字！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// 数值框数值变更事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExchangeCoinTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (ExchangeCoinTextBox.Text == "")
+            {
+                ExchangeCoinTextBox.Text = ExchangeTrackBar.Minimum.ToString();
+                return;
+            }
+            int v = Convert.ToInt32(ExchangeCoinTextBox.Text);
+            if (v < 0 || v > Convert.ToInt32(ExchangeCoinMaxLabel.Text))
+            {
+                MessageBox.Show("请输入正确数值范围", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (v < 0)
+                {
+                    ExchangeCoinTextBox.Text = "0";
+                }
+                else
+                {
+                    ExchangeCoinTextBox.Text = ExchangeCoinMaxLabel.Text;
+                }
+                //e.Cancel = true;
+            }
+            else
+            {
+                ExchangeTrackBar.Value = Convert.ToInt32(ExchangeCoinTextBox.Text);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 数值滑块变更事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExchangeTrackBar_ValueChanged(object sender, EventArgs e)
+        {
+            ExchangeCoinTextBox.Text = ExchangeTrackBar.Value.ToString();
+        }
+
+        /// <summary>
+        /// 兑换按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExchangeButton_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("你确定兑换吗？", "兑换提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                main.custom[0].cash -= Convert.ToUInt64(ExchangeTrackBar.Value) * 1000000;
+                main.custom[0].coin += Convert.ToUInt64(ExchangeTrackBar.Value);
+                InitializeInformation(0);
+            }
         }
 
         /* 以下为窗体设计程序 */
@@ -35,15 +124,10 @@ namespace train.UI
         /// <param name="e"></param>
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //    if (!buy)
-            //    {
-            //        if (MessageBox.Show("确定离开商城吗？", "离开商城提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-            //        {
-            //            saveList();
-            //            buy = false;
-            //            this.Close();
-            //        }
-            //    }
+            if (MessageBox.Show("确定离开商城吗？", "离开商城提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                this.Close();
+            }
         }
 
         /// <summary>
@@ -64,39 +148,6 @@ namespace train.UI
         private void Store_SizeChanged(object sender, EventArgs e)
         {
             asc.controlAutoSize(this);
-        }
-
-        private void ExchangeCoinTextBox_KeyPress(object sender, KeyPressEventArgs e)
-       {
-            if (Char.IsNumber(e.KeyChar) || e.KeyChar == (char)8)
-            {
-                e.Handled = false;
-            }
-            else
-            {
-                MessageBox.Show("请输入数字！","错误提示",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                e.Handled = true;
-            }
-            ExchangeCoinTextBox_Validating(new object(), new CancelEventArgs());
-        }
-
-        private void ExchangeCoinTextBox_Validating(object sender, CancelEventArgs e)
-        {
-            try
-            {
-                int v = Convert.ToInt32(ExchangeCoinTextBox.Text);
-                int w = Convert.ToInt32(ExchangeCoinMaxLabel.Text);
-                if (v < 0 || v > w)
-                {
-                    MessageBox.Show("请输入正确数值范围", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    e.Cancel = true;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("异常处理，请重新输入数字","异常提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                e.Cancel = true;
-            }
         }
     }
 }
