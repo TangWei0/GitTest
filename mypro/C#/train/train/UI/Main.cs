@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
 using System.IO;
-using System.Timers; 
+using System.Timers;
+using train.UI;
 
 namespace train
 {
@@ -364,6 +365,19 @@ namespace train
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
+        }
+
+        /// <summary>
+        /// 兑换点券按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExchangeButton_Click(object sender, EventArgs e)
+        {
+            Exchange exchange = new Exchange(this, 0);
+            this.Visible = false;
+            exchange.ShowDialog();
+            this.Visible = true;
         }
      
     }

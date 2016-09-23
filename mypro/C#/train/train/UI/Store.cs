@@ -184,8 +184,6 @@ namespace train
                     }
                 }
                 BuyCar();
-                saveList();
-                this.Close();
             }
         }
 
@@ -289,11 +287,14 @@ namespace train
         {
             if (!buy)
             {
-                if (MessageBox.Show("确定离开商城吗？", "离开商城提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                if (MessageBox.Show("确定离开商城界面吗？", "离开提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                {
+                    this.Close();
+                }
+                else
                 {
                     saveList();
                     buy = false;
-                    this.Close();
                 }
             }
         }

@@ -149,7 +149,11 @@
             this.Controls.Add(this.CoinLabel);
             this.Controls.Add(this.CashLabel);
             this.Name = "Exchange";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Exchange";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Exchange_FormClosing);
+            this.Load += new System.EventHandler(this.Exchange_Load);
+            this.SizeChanged += new System.EventHandler(this.Exchange_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.ExchangeTrackBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

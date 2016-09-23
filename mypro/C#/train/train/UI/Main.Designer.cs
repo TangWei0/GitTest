@@ -44,6 +44,7 @@ namespace train
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.PeopleAndCargoUpdateTimer = new System.Windows.Forms.Timer(this.components);
+            this.ExchangeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -180,11 +181,22 @@ namespace train
             this.PeopleAndCargoUpdateTimer.Interval = 600000;
             this.PeopleAndCargoUpdateTimer.Tick += new System.EventHandler(this.PeopleAndCargoUpdateTimer_Tick);
             // 
+            // ExchangeButton
+            // 
+            this.ExchangeButton.Location = new System.Drawing.Point(609, 557);
+            this.ExchangeButton.Name = "ExchangeButton";
+            this.ExchangeButton.Size = new System.Drawing.Size(75, 23);
+            this.ExchangeButton.TabIndex = 14;
+            this.ExchangeButton.Text = "兑换点券";
+            this.ExchangeButton.UseVisualStyleBackColor = true;
+            this.ExchangeButton.Click += new System.EventHandler(this.ExchangeButton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 620);
+            this.Controls.Add(this.ExchangeButton);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.GarageButton);
@@ -227,6 +239,7 @@ namespace train
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Timer PeopleAndCargoUpdateTimer;
+        private System.Windows.Forms.Button ExchangeButton;
     }
 }
 

@@ -122,9 +122,9 @@ namespace train.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Store_FormClosing(object sender, FormClosingEventArgs e)
+        private void Exchange_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("确定离开商城吗？", "离开商城提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("确定离开兑换点券界面吗？", "离开提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
             {
                 this.Close();
             }
@@ -135,7 +135,7 @@ namespace train.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Store_Load(object sender, EventArgs e)
+        private void Exchange_Load(object sender, EventArgs e)
         {
             asc.controllInitializeSize(this);
         }
@@ -145,9 +145,10 @@ namespace train.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Store_SizeChanged(object sender, EventArgs e)
+        private void Exchange_SizeChanged(object sender, EventArgs e)
         {
             asc.controlAutoSize(this);
         }
+     
     }
 }
