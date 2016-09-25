@@ -44,7 +44,11 @@ namespace train
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.PeopleAndCargoUpdateTimer = new System.Windows.Forms.Timer(this.components);
+<<<<<<< HEAD
+            this.button1 = new System.Windows.Forms.Button();
+=======
             this.ExchangeButton = new System.Windows.Forms.Button();
+>>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
             this.SuspendLayout();
             // 
             // textBox1
@@ -181,6 +185,16 @@ namespace train
             this.PeopleAndCargoUpdateTimer.Interval = 600000;
             this.PeopleAndCargoUpdateTimer.Tick += new System.EventHandler(this.PeopleAndCargoUpdateTimer_Tick);
             // 
+<<<<<<< HEAD
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(609, 557);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+=======
             // ExchangeButton
             // 
             this.ExchangeButton.Location = new System.Drawing.Point(609, 557);
@@ -190,13 +204,18 @@ namespace train
             this.ExchangeButton.Text = "兑换点券";
             this.ExchangeButton.UseVisualStyleBackColor = true;
             this.ExchangeButton.Click += new System.EventHandler(this.ExchangeButton_Click);
+>>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(696, 620);
+<<<<<<< HEAD
+            this.Controls.Add(this.button1);
+=======
             this.Controls.Add(this.ExchangeButton);
+>>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.GarageButton);
@@ -239,7 +258,11 @@ namespace train
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Timer PeopleAndCargoUpdateTimer;
+<<<<<<< HEAD
+        private System.Windows.Forms.Button button1;
+=======
         private System.Windows.Forms.Button ExchangeButton;
+>>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
     }
 }
 

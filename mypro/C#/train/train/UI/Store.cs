@@ -50,7 +50,7 @@ namespace train
             }
             else
             {
-                readList();
+                ReadList();
             }
             StoreUpdateTimer.Enabled = true;
             StoreUpdateTimer.Start();
@@ -157,9 +157,7 @@ namespace train
             if (MessageBox.Show("购买该列车吗？", "购买提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
                 buy = true;
-                ulong a = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString()));
-                exchangeCoin = a - main.custom[0].coin;
-                if (exchangeCoin > 0)
+                if (CoinSpread() != 0)
                 {
                     if (MessageBox.Show("您当前点券不够,进入兑换界面吗？", "兑换提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
@@ -167,6 +165,7 @@ namespace train
                     }
                     else
                     {
+                        exchangeCoin = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())) - main.custom[0].coin;
                         if (exchangeCoin > (main.custom[0].cash / 1000000))
                         {
                             MessageBox.Show("即使典当所有现金，点券还是不够。下次再来购买吧！", "兑换不足提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -174,16 +173,23 @@ namespace train
                         }
                         else
                         {
-                            
                             Exchange exchange = new Exchange(main, exchangeCoin);
                             this.Visible = false;
                             exchange.ShowDialog();
+                            SaveList();
                             this.Close();
                             return;
                         }
                     }
                 }
+<<<<<<< HEAD
+                else
+                {
+                    BuyCar();
+                }
+=======
                 BuyCar();
+>>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
             }
         }
 
@@ -224,14 +230,14 @@ namespace train
             main.garage.Add(ReadGarage);
             setting.Default.carCount++;
             main.custom[0].garageVolume++;
-            main.custom[0].coin -= Convert.ToUInt64(CarDetailListBox.Items[6].ToString());
-            resetList();
+            main.custom[0].coin -= Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString()));
+            ResetList();
         }
 
         /// <summary>
         /// 读取商城车辆列表
         /// </summary>
-        private void readList()
+        private void ReadList()
         {
             StoreListBox.Items.Add(setting.Default.list1);
             StoreListBox.Items.Add(setting.Default.list2);
@@ -244,7 +250,7 @@ namespace train
         /// <summary>
         /// 买取车辆后重新设置商城车辆列表
         /// </summary>
-        private void resetList()
+        private void ResetList()
         {
             int selIndex = StoreListBox.SelectedIndex;
             StoreListBox.Items.RemoveAt(selIndex);
@@ -254,7 +260,7 @@ namespace train
         /// <summary>
         /// 保存商城车辆列表
         /// </summary>
-        private void saveList()
+        private void SaveList()
         {
             setting.Default.list1 = StoreListBox.Items[0].ToString();
             setting.Default.list2 = StoreListBox.Items[1].ToString();
@@ -264,6 +270,20 @@ namespace train
             setting.Default.list6 = StoreListBox.Items[5].ToString();
             setting.Default.storeUpdateTime = target;
             setting.Default.Save();
+        }
+
+        /// <summary>
+        /// 判断是否进入兑换界面
+        /// </summary>
+        /// <returns></returns>
+        private ulong CoinSpread()
+        {
+            ulong coinSpread = 0;
+            if (main.custom[0].coin < Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())))
+            {
+                coinSpread = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())) - main.custom[0].coin;
+            }
+            return coinSpread;
         }
 
         /// <summary>
@@ -293,8 +313,13 @@ namespace train
                 }
                 else
                 {
+<<<<<<< HEAD
+                    SaveList();
+                    this.Close();
+=======
                     saveList();
                     buy = false;
+>>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
                 }
             }
         }

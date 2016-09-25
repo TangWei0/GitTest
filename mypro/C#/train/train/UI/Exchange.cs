@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace train.UI
 {
+    /// <summary>
+    /// 兑换界面窗体
+    /// </summary>
     public partial class Exchange : Form
     {
         AutoResizeForm asc = new AutoResizeForm();

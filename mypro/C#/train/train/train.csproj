@@ -54,6 +54,12 @@
     <Compile Include="UI\Exchange.Designer.cs">
       <DependentUpon>Exchange.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Garage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Garage.Designer.cs">
+      <DependentUpon>Garage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     </Compile>
     <EmbeddedResource Include="UI\Exchange.resx">
       <DependentUpon>Exchange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Garage.resx">
+      <DependentUpon>Garage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
