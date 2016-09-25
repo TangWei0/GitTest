@@ -29,9 +29,9 @@ namespace train.UI
         /// <param name="e"></param>
         private void Garage_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("确定离开车库吗？", "离开车库提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            if (MessageBox.Show("确定离开车库吗？", "离开提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
             {
-                this.Close();
+                e.Cancel = true;
             }
         }
 

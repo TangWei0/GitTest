@@ -129,7 +129,8 @@ namespace train.UI
         {
             if (MessageBox.Show("确定离开兑换点券界面吗？", "离开提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
             {
-                this.Close();
+                e.Cancel = true;
+                //return;
             }
         }
 

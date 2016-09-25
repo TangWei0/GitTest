@@ -32,3 +32,4 @@ D:\GitTest\mypro\C#\train\train\obj\Debug\train.UI.Exchange.resources
 C:\GitTest\mypro\C#\train\train\bin\Debug\Properties\Settings.Designer.cs
 C:\GitTest\mypro\C#\train\train\bin\Debug\Properties\Settings.settings
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.UI.Exchange.resources
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.UI.Garage.resources

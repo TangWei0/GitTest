@@ -26,7 +26,7 @@ namespace train
         Parameter.Garage ReadGarage = new Parameter.Garage();
         TimeSpan span = new TimeSpan(0, 5, 0);
         public ulong exchangeCoin;
-        public bool buy = false;
+        public bool storeQuitAsking = true;
         /// <summary>
         /// 读取商城窗体信息
         /// </summary>
@@ -155,8 +155,7 @@ namespace train
                 }
             }
             if (MessageBox.Show("购买该列车吗？", "购买提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-            {
-                buy = true;
+            {   
                 if (CoinSpread() != 0)
                 {
                     if (MessageBox.Show("您当前点券不够,进入兑换界面吗？", "兑换提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
@@ -176,20 +175,16 @@ namespace train
                             Exchange exchange = new Exchange(main, exchangeCoin);
                             this.Visible = false;
                             exchange.ShowDialog();
-                            SaveList();
+                            storeQuitAsking = false;
                             this.Close();
                             return;
                         }
                     }
                 }
-<<<<<<< HEAD
                 else
                 {
                     BuyCar();
                 }
-=======
-                BuyCar();
->>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
             }
         }
 
@@ -305,22 +300,20 @@ namespace train
         /// <param name="e"></param>
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!buy)
+            if (storeQuitAsking)
             {
                 if (MessageBox.Show("确定离开商城界面吗？", "离开提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
                 {
-                    this.Close();
+                    e.Cancel = true;
                 }
                 else
                 {
-<<<<<<< HEAD
                     SaveList();
-                    this.Close();
-=======
-                    saveList();
-                    buy = false;
->>>>>>> 7f3d2441602b24596ef5fe3e841fc121d94514d6
                 }
+            }
+            else
+            {
+                SaveList();
             }
         }
 

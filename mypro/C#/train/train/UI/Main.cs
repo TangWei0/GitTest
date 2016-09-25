@@ -304,7 +304,23 @@ namespace train
         /// <param name="e"></param>
         private void GarageButton_Click(object sender, EventArgs e)
         {
+            Garage garageForm = new Garage(this);
+            this.Visible = false;
+            garageForm.ShowDialog();
+            this.Visible = true;
+        }
 
+        /// <summary>
+        /// 兑换点券按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExchangeButton_Click(object sender, EventArgs e)
+        {
+            Exchange exchange = new Exchange(this, 0);
+            this.Visible = false;
+            exchange.ShowDialog();
+            this.Visible = true;
         }
 
         /// <summary>
@@ -366,19 +382,6 @@ namespace train
         {
             e.Cancel = true;
         }
-
-        /// <summary>
-        /// 兑换点券按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ExchangeButton_Click(object sender, EventArgs e)
-        {
-            Exchange exchange = new Exchange(this, 0);
-            this.Visible = false;
-            exchange.ShowDialog();
-            this.Visible = true;
-        }
-     
+ 
     }
 }
