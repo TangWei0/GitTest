@@ -11,6 +11,7 @@ using System.Collections;
 using System.IO;
 using System.Timers;
 using train.UI;
+using setting = train.Properties.Settings;
 
 namespace train
 {
@@ -37,7 +38,7 @@ namespace train
         string s = "";
         bool text = false;
         int[] stationUpdateTimeArray = new int[2];
-        
+
         public Main()
         {
             InitializeComponent();
@@ -45,10 +46,10 @@ namespace train
             InitializeTime();
         }
 
-        
+
 
         private void InitializeTime()
-        {        
+        {
             PeopleAndCargoUpdateTimer.Enabled = true;
             PeopleAndCargoUpdateTimer.Start();
         }
@@ -73,7 +74,7 @@ namespace train
             {
                 Csv.UpdateCityToCity(citytocity, city, stationUpdateTimeArray[1]);
             }
-            
+
             //TimeSpan span = new TimeSpan(0, 0, 0);
             //span = DateTime.Now - custom[0].closeTime;
             //this.Text = (span.Days*24 +span.Hours).ToString();
@@ -295,6 +296,10 @@ namespace train
             this.Visible = false;
             store.ShowDialog();
             this.Visible = true;
+            if (!store.storeQuitAsking)
+            {
+                ExchangeButton_Click(new object(), new EventArgs());
+            }
         }
 
         /// <summary>
@@ -317,7 +322,7 @@ namespace train
         /// <param name="e"></param>
         private void ExchangeButton_Click(object sender, EventArgs e)
         {
-            Exchange exchange = new Exchange(this, 0);
+            Exchange exchange = new Exchange(this);
             this.Visible = false;
             exchange.ShowDialog();
             this.Visible = true;
@@ -347,9 +352,9 @@ namespace train
         private void PeopleAndCargoUpdateTimer_Tick(object sender, EventArgs e)
         {
             PeopleAndCargoUpdateTimer.Enabled = false;
-            Csv.UpdateCityToCity(citytocity, city,1);
+            Csv.UpdateCityToCity(citytocity, city, 1);
             PeopleAndCargoUpdateTimer.Interval = 600000;
-            PeopleAndCargoUpdateTimer.Enabled = true; 
+            PeopleAndCargoUpdateTimer.Enabled = true;
         }
 
         /* 以下为窗体设计程序 */
@@ -382,6 +387,6 @@ namespace train
         {
             e.Cancel = true;
         }
- 
+
     }
 }

@@ -28,13 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.ExitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // ExitButton
+            // 
+            this.ExitButton.Location = new System.Drawing.Point(457, 269);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(75, 23);
+            this.ExitButton.TabIndex = 0;
+            this.ExitButton.Text = "回主菜单";
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // Garage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(544, 304);
+            this.Controls.Add(this.ExitButton);
             this.Name = "Garage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Garage";
@@ -46,5 +58,7 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Button ExitButton;
     }
 }

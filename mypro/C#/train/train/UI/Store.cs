@@ -25,7 +25,6 @@ namespace train
         DateTime target = new DateTime();
         Parameter.Garage ReadGarage = new Parameter.Garage();
         TimeSpan span = new TimeSpan(0, 5, 0);
-        public ulong exchangeCoin;
         public bool storeQuitAsking = true;
         /// <summary>
         /// 读取商城窗体信息
@@ -164,8 +163,8 @@ namespace train
                     }
                     else
                     {
-                        exchangeCoin = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())) - main.custom[0].coin;
-                        if (exchangeCoin > (main.custom[0].cash / 1000000))
+                        setting.Default.exchangeCoin = Convert.ToUInt64(CarInformation(CarDetailListBox.Items[6].ToString())) - main.custom[0].coin;
+                        if (setting.Default.exchangeCoin > (main.custom[0].cash / 1000000))
                         {
                             MessageBox.Show("即使典当所有现金，点券还是不够。下次再来购买吧！", "兑换不足提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
@@ -173,11 +172,13 @@ namespace train
                         else
                         {
                             storeQuitAsking = false;
-                            Exchange exchange = new Exchange(main, exchangeCoin);
-                            this.Visible = false;
-                            exchange.ShowDialog();
                             this.Close();
                             return;
+                            //Exchange exchange = new Exchange(main, exchangeCoin);
+                            //this.Visible = false;
+                            //exchange.ShowDialog();
+                            //this.Close();
+                            //return;
                         }
                     }
                 }
@@ -292,6 +293,16 @@ namespace train
             return csv[1];
         }
 
+        /// <summary>
+        /// 返回主菜单界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         /* 以下为窗体设计程序 */
         /// <summary>
         /// 窗体关闭按键
@@ -336,5 +347,7 @@ namespace train
         {
             asc.controlAutoSize(this);
         }
+
+        
     }
 }

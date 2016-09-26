@@ -38,6 +38,7 @@
             this.ExchangeCoinMaxLabel = new System.Windows.Forms.Label();
             this.ExchangeCoinTextBox = new System.Windows.Forms.TextBox();
             this.ExchangeButton = new System.Windows.Forms.Button();
+            this.ExitButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ExchangeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -133,11 +134,22 @@
             this.ExchangeButton.UseVisualStyleBackColor = true;
             this.ExchangeButton.Click += new System.EventHandler(this.ExchangeButton_Click);
             // 
+            // ExitButton
+            // 
+            this.ExitButton.Location = new System.Drawing.Point(559, 294);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(75, 23);
+            this.ExitButton.TabIndex = 10;
+            this.ExitButton.Text = "回主菜单";
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // 
             // Exchange
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 329);
+            this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.ExchangeButton);
             this.Controls.Add(this.ExchangeCoinTextBox);
             this.Controls.Add(this.ExchangeCoinMaxLabel);
@@ -172,6 +184,7 @@
         private System.Windows.Forms.Label ExchangeCoinMaxLabel;
         private System.Windows.Forms.TextBox ExchangeCoinTextBox;
         private System.Windows.Forms.Button ExchangeButton;
+        private System.Windows.Forms.Button ExitButton;
 
 
     }

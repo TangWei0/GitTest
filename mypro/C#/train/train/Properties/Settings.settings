@@ -26,5 +26,8 @@
     <Setting Name="storeUpdateTime" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">2000-01-01</Value>
     </Setting>
+    <Setting Name="exchangeCoin" Type="System.UInt64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

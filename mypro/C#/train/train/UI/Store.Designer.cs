@@ -34,6 +34,7 @@
             this.BuyCarButton = new System.Windows.Forms.Button();
             this.StoreListBox = new System.Windows.Forms.ListBox();
             this.StoreLabel = new System.Windows.Forms.Label();
+            this.ExitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // StoreUpdateTimer
@@ -83,11 +84,22 @@
             this.StoreLabel.TabIndex = 4;
             this.StoreLabel.Text = "商城";
             // 
+            // ExitButton
+            // 
+            this.ExitButton.Location = new System.Drawing.Point(363, 179);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(75, 23);
+            this.ExitButton.TabIndex = 5;
+            this.ExitButton.Text = "回主菜单";
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.ExitButton_Click);
+            // 
             // Store
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(437, 186);
+            this.ClientSize = new System.Drawing.Size(445, 209);
+            this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.StoreLabel);
             this.Controls.Add(this.StoreListBox);
             this.Controls.Add(this.BuyCarButton);
@@ -110,5 +122,6 @@
         private System.Windows.Forms.Button BuyCarButton;
         public System.Windows.Forms.ListBox StoreListBox;
         private System.Windows.Forms.Label StoreLabel;
+        private System.Windows.Forms.Button ExitButton;
     }
 }

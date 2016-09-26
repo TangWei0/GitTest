@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using setting = train.Properties.Settings;
 
 namespace train.UI
 {
@@ -23,11 +24,11 @@ namespace train.UI
         /// </summary>
         /// <param name="_main"></param>
         /// <param name="exchangeCoin"></param>
-        public Exchange(Main _main, ulong exchangeCoin)
+        public Exchange(Main _main)
         {
             InitializeComponent();
             main = _main;
-            InitializeInformation(exchangeCoin);
+            InitializeInformation(setting.Default.exchangeCoin);
         }
 
         /// <summary>
@@ -118,6 +119,16 @@ namespace train.UI
             }
         }
 
+        /// <summary>
+        /// 返回主菜单界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
         /* 以下为窗体设计程序 */
         /// <summary>
         /// 窗体关闭按键
@@ -129,7 +140,14 @@ namespace train.UI
             if (MessageBox.Show("确定离开兑换点券界面吗？", "离开提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
             {
                 e.Cancel = true;
-                //return;
+            }
+            else
+            {
+                if (setting.Default.exchangeCoin != 0)
+                {
+                    setting.Default.exchangeCoin = 0;
+                    setting.Default.Save();
+                }
             }
         }
 
@@ -152,6 +170,8 @@ namespace train.UI
         {
             asc.controlAutoSize(this);
         }
+
+        
      
     }
 }

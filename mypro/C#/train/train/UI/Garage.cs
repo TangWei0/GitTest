@@ -21,6 +21,16 @@ namespace train.UI
             main = _main;
         }
 
+        /// <summary>
+        /// 返回主菜单界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }    
+
         /* 以下为窗体设计程序 */
         /// <summary>
         /// 窗体关闭按键
@@ -53,6 +63,8 @@ namespace train.UI
         private void Garage_SizeChanged(object sender, EventArgs e)
         {
             asc.controlAutoSize(this);
-        }        
+        }
+
+            
     }
 }
