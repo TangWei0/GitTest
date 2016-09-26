@@ -172,10 +172,10 @@ namespace train
                         }
                         else
                         {
+                            storeQuitAsking = false;
                             Exchange exchange = new Exchange(main, exchangeCoin);
                             this.Visible = false;
                             exchange.ShowDialog();
-                            storeQuitAsking = false;
                             this.Close();
                             return;
                         }

@@ -85,7 +85,6 @@ namespace train.UI
                 {
                     ExchangeCoinTextBox.Text = ExchangeCoinMaxLabel.Text;
                 }
-                //e.Cancel = true;
             }
             else
             {

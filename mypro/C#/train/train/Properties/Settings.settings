@@ -24,7 +24,7 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="storeUpdateTime" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)">09/09/2016 16:44:04</Value>
+      <Value Profile="(Default)">2000-01-01</Value>
     </Setting>
   </Settings>
 </SettingsFile>
