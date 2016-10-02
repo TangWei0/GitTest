@@ -169,9 +169,6 @@ namespace train.UI
         private void Exchange_SizeChanged(object sender, EventArgs e)
         {
             asc.controlAutoSize(this);
-        }
-
-        
-     
+        }     
     }
 }

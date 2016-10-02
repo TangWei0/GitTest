@@ -174,11 +174,6 @@ namespace train
                             storeQuitAsking = false;
                             this.Close();
                             return;
-                            //Exchange exchange = new Exchange(main, exchangeCoin);
-                            //this.Visible = false;
-                            //exchange.ShowDialog();
-                            //this.Close();
-                            //return;
                         }
                     }
                 }
