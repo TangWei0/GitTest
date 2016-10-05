@@ -26,6 +26,7 @@ namespace train
         Parameter.Garage ReadGarage = new Parameter.Garage();
         TimeSpan span = new TimeSpan(0, 5, 0);
         public bool storeQuitAsking = true;
+        public string selectName= "";
         /// <summary>
         /// 读取商城窗体信息
         /// </summary>
@@ -74,14 +75,12 @@ namespace train
         {
             StoreListBox.Items.Clear();
             DirectoryInfo di = new DirectoryInfo(fp_car_default);
-            var t = di.GetFiles();
+            var t = di.GetDirectories();
             Random r = new System.Random();
             for (int i = 0; i < 6; i++)
             {
                 int random = r.Next(t.Length);
-                string p = t[random].Name;
-                string[] fileName = p.Split('.');
-                StoreListBox.Items.Add(fileName[0]);
+                StoreListBox.Items.Add(t[random].Name);
             }
             StoreUpdateTimer.Interval = 300000;
             target = DateTime.Now + span;
@@ -92,14 +91,19 @@ namespace train
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void StoreListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void StoreListBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            CarDetailListBox.Items.Clear();
-            if (StoreListBox.SelectedItem == null || StoreListBox.SelectedItem.ToString() == "空")
+            if (StoreListBox.SelectedItem == null || StoreListBox.SelectedItem.ToString() == "空" || StoreListBox.SelectedItem.ToString() == selectName)
             {
                 return;
             }
-            string fp_search = fp_car_default + StoreListBox.SelectedItem.ToString() + ".csv";
+            else
+            {
+                selectName = StoreListBox.SelectedItem.ToString();
+            }
+            CarDetailListBox.Items.Clear();
+
+            string fp_search = fp_car_default + StoreListBox.SelectedItem.ToString() + "\\" + StoreListBox.SelectedItem.ToString() + ".csv";
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
 
             String lin = sr.ReadLine();
@@ -136,7 +140,7 @@ namespace train
                     }
                 }
             }
-            sr.Close();
+            sr.Close();           
         }
 
         /// <summary>
@@ -342,6 +346,8 @@ namespace train
         {
             asc.controlAutoSize(this);
         }
+
+        
 
         
     }

@@ -29,7 +29,7 @@ namespace train
         Parameter.CityToCity ele = new Parameter.CityToCity();
 
         public Parameter.Custom[] custom = new Parameter.Custom[1];
-        List<Parameter.City> city = new List<Parameter.City>();
+        public List<Parameter.City> city = new List<Parameter.City>();
         public List<Parameter.Garage> garage = new List<Parameter.Garage>();
         List<Parameter.Car> car = new List<Parameter.Car>();
         List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
@@ -213,7 +213,7 @@ namespace train
             else
             {
                 text = false;
-                if (!File.Exists(Csv.fp_city_default + s + ".csv"))
+                if (!File.Exists(Csv.fp_city_default + s + "\\" + s + ".csv"))
                 {
                     MessageBox.Show("没有该城市",
                                     "エラー",
@@ -286,6 +286,19 @@ namespace train
         }
 
         /// <summary>
+        /// 进入城市管理界面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CityManageButton_Click(object sender, EventArgs e)
+        {
+            CityManage cityManage = new CityManage(this);
+            this.Visible = false;
+            cityManage.ShowDialog();
+            this.Visible = true;
+        }
+
+        /// <summary>
         /// 进入商城界面
         /// </summary>
         /// <param name="sender"></param>
@@ -351,10 +364,13 @@ namespace train
         /// <param name="e"></param>
         private void PeopleAndCargoUpdateTimer_Tick(object sender, EventArgs e)
         {
-            PeopleAndCargoUpdateTimer.Enabled = false;
-            Csv.UpdateCityToCity(citytocity, city, 1);
-            PeopleAndCargoUpdateTimer.Interval = 600000;
-            PeopleAndCargoUpdateTimer.Enabled = true;
+            if (city.Count >= 2)
+            {
+                PeopleAndCargoUpdateTimer.Enabled = false;
+                Csv.UpdateCityToCity(citytocity, city, 1);
+                PeopleAndCargoUpdateTimer.Interval = 600000;
+                PeopleAndCargoUpdateTimer.Enabled = true;
+            }
         }
 
         /* 以下为窗体设计程序 */
@@ -387,6 +403,5 @@ namespace train
         {
             e.Cancel = true;
         }
-
     }
 }

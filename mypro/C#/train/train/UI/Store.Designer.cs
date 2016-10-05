@@ -72,7 +72,7 @@
             this.StoreListBox.Name = "StoreListBox";
             this.StoreListBox.Size = new System.Drawing.Size(207, 84);
             this.StoreListBox.TabIndex = 3;
-            this.StoreListBox.SelectedIndexChanged += new System.EventHandler(this.StoreListBox_SelectedIndexChanged);
+            this.StoreListBox.SelectedValueChanged += new System.EventHandler(this.StoreListBox_SelectedValueChanged);
             // 
             // StoreLabel
             // 

@@ -159,9 +159,9 @@ namespace train
         /// </summary>
         /// <param name="city"></param>
         /// <param name="cityName"></param>
-        public void AddCity(List<Parameter.City> city, string cityName)
+        public void AddCity(List<Parameter.City> city, string fp_search)
         {
-            string fp_search = fp_city_default + cityName + ".csv";
+            //string fp_search = fp_city_default + cityName + ".csv";
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
             String lin = sr.ReadLine();
             if (lin != null)
@@ -596,14 +596,6 @@ namespace train
         /// <param name="updateTimes"></param>
         public void UpdateCityToCity(List<List<Parameter.CityToCity>> citytocity, List<Parameter.City> city, int updateTimes)
         {
-            if (city.Count <= 1)
-            {
-                MessageBox.Show("没有两个以上车站，车站之间信息无法更新",
-                                "エラー",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                return;
-            }
             for (int i = 0; i < citytocity.Count; i++)
             {
                 ReadCity = city[i];

@@ -54,6 +54,12 @@
     <Compile Include="CalculatorTime.cs" />
     <Compile Include="CSV.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UI\CityManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CityManage.Designer.cs">
+      <DependentUpon>CityManage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Exchange.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     <Compile Include="UI\Store.Designer.cs">
       <DependentUpon>Store.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\CityManage.resx">
+      <DependentUpon>CityManage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Exchange.resx">
       <DependentUpon>Exchange.cs</DependentUpon>
     </EmbeddedResource>
