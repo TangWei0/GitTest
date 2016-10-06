@@ -63,6 +63,7 @@
             this.CityListBox.Size = new System.Drawing.Size(120, 88);
             this.CityListBox.TabIndex = 2;
             this.CityListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.CityListBox_DrawItem);
+            this.CityListBox.SelectedIndexChanged += new System.EventHandler(this.CityListBox_SelectedIndexChanged);
             // 
             // OpenCityOrCloseCityButton
             // 

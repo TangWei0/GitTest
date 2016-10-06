@@ -18,6 +18,7 @@ namespace train.UI
         AutoResizeForm asc = new AutoResizeForm();
         CSV Csv = new CSV();
         string fp_city_default = ".\\Record\\cityDefault\\";
+        bool buyCityCheck = false;
 
 
         public CityManage(Main _main)
@@ -43,6 +44,7 @@ namespace train.UI
             {
                 return;
             }
+
             CityListBox.Items.Clear();
 
             DirectoryInfo TheFolder = new DirectoryInfo(fp_city_default + ProvinceListBox.SelectedItem.ToString());
@@ -50,23 +52,47 @@ namespace train.UI
             foreach (DirectoryInfo NextFolder in TheFolder.GetDirectories())
             {
                 CityListBox.Items.Add(NextFolder.Name);
+                
+
+                
             }
+
             CityListBox.DrawMode = DrawMode.OwnerDrawFixed;
+            //CityListBox.DrawItem += new DrawItemEventHandler(CityListBox_DrawItem);
+            //buyCityCheck = true;
+            
+        }
+
+        private void CityListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("################");
         }
 
         private void CityListBox_DrawItem(object sender, DrawItemEventArgs e)
         {
-            e.DrawBackground();
+            CityListBox_SelectedIndexChanged(new object(), new EventArgs());
+            //int i = 0;
+            //if (buyCityCheck)
+            //{
+                e.DrawBackground();
 
-            if (main.city.Exists(x => x.cityName == CityListBox.Items[e.Index].ToString()))
-            {
-                e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Red), e.Bounds);
-            }
-            else
-            {
-                e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
-            }
-            e.DrawFocusRectangle();
+                if (main.city.Exists(x => x.cityName == CityListBox.Items[e.Index].ToString()))
+                {
+                    e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Red), e.Bounds);
+                }
+                else
+                {
+                    e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
+                }
+                e.DrawFocusRectangle();
+                //i++;
+                //if (i > CityListBox.Items.Count)
+                //{
+                //    buyCityCheck = false;
+                //    return;
+                //}
+           
+            
         }
 
         private void OpenCityOrCloseCityButton_Click(object sender, EventArgs e)
@@ -84,7 +110,8 @@ namespace train.UI
                                      + ProvinceListBox.SelectedItem.ToString() + "\\"
                                      + CityListBox.SelectedItem.ToString() + "\\"
                                      + CityListBox.SelectedItem.ToString() + ".csv");
-                CityListBox.DrawMode = DrawMode.OwnerDrawFixed;
+                //buyCityCheck = true;
+                //ProvinceListBox_SelectedIndexChanged(new object(), new EventArgs());
             }
             else
             {
@@ -130,6 +157,8 @@ namespace train.UI
         {
             asc.controlAutoSize(this);
         }
+
+        
 
 
 
