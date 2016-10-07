@@ -30,8 +30,9 @@
         {
             this.ExitButton = new System.Windows.Forms.Button();
             this.ProvinceListBox = new System.Windows.Forms.ListBox();
-            this.CityListBox = new System.Windows.Forms.ListBox();
             this.OpenCityOrCloseCityButton = new System.Windows.Forms.Button();
+            this.CityListView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // ExitButton
@@ -54,17 +55,6 @@
             this.ProvinceListBox.TabIndex = 1;
             this.ProvinceListBox.SelectedIndexChanged += new System.EventHandler(this.ProvinceListBox_SelectedIndexChanged);
             // 
-            // CityListBox
-            // 
-            this.CityListBox.FormattingEnabled = true;
-            this.CityListBox.ItemHeight = 12;
-            this.CityListBox.Location = new System.Drawing.Point(177, 46);
-            this.CityListBox.Name = "CityListBox";
-            this.CityListBox.Size = new System.Drawing.Size(120, 88);
-            this.CityListBox.TabIndex = 2;
-            this.CityListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.CityListBox_DrawItem);
-            this.CityListBox.SelectedIndexChanged += new System.EventHandler(this.CityListBox_SelectedIndexChanged);
-            // 
             // OpenCityOrCloseCityButton
             // 
             this.OpenCityOrCloseCityButton.Location = new System.Drawing.Point(177, 350);
@@ -75,13 +65,30 @@
             this.OpenCityOrCloseCityButton.UseVisualStyleBackColor = true;
             this.OpenCityOrCloseCityButton.Click += new System.EventHandler(this.OpenCityOrCloseCityButton_Click);
             // 
+            // CityListView
+            // 
+            this.CityListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.CityListView.FullRowSelect = true;
+            this.CityListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.CityListView.Location = new System.Drawing.Point(168, 46);
+            this.CityListView.MultiSelect = false;
+            this.CityListView.Name = "CityListView";
+            this.CityListView.Size = new System.Drawing.Size(121, 88);
+            this.CityListView.TabIndex = 4;
+            this.CityListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "\"\"";
+            // 
             // CityManage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 423);
+            this.Controls.Add(this.CityListView);
             this.Controls.Add(this.OpenCityOrCloseCityButton);
-            this.Controls.Add(this.CityListBox);
             this.Controls.Add(this.ProvinceListBox);
             this.Controls.Add(this.ExitButton);
             this.Name = "CityManage";
@@ -98,7 +105,8 @@
 
         private System.Windows.Forms.Button ExitButton;
         private System.Windows.Forms.ListBox ProvinceListBox;
-        private System.Windows.Forms.ListBox CityListBox;
         private System.Windows.Forms.Button OpenCityOrCloseCityButton;
+        private System.Windows.Forms.ListView CityListView;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
     }
 }

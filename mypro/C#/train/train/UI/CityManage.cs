@@ -18,12 +18,20 @@ namespace train.UI
         AutoResizeForm asc = new AutoResizeForm();
         CSV Csv = new CSV();
         string fp_city_default = ".\\Record\\cityDefault\\";
-        bool buyCityCheck = false;
-
+        int cityIndex = 0;
+        ListViewItem itemx = new ListViewItem();
 
         public CityManage(Main _main)
         {
             InitializeComponent();
+            CityListView.View = View.Details;
+            //CityListView.HeaderStyle = ColumnHeaderStyle.None;
+            CityListView.FullRowSelect = true;
+            CityListView.Columns.Add("");
+            CityListView.Columns[0].Width = CityListView.Width - 24;
+            //CityListView.Scrollable = true;
+            //CityListView.Columns.Add("");
+            //CityListView.Columns[0].Width = CityListView.Width - 24;
             main = _main;
             InitializeInformate();
         }
@@ -45,59 +53,40 @@ namespace train.UI
                 return;
             }
 
-            CityListBox.Items.Clear();
-
+            CityListView.Items.Clear();
             DirectoryInfo TheFolder = new DirectoryInfo(fp_city_default + ProvinceListBox.SelectedItem.ToString());
             //遍历文件夹
             foreach (DirectoryInfo NextFolder in TheFolder.GetDirectories())
             {
-                CityListBox.Items.Add(NextFolder.Name);
-                
-
-                
+                CityListView.Items.Add(NextFolder.Name);
+                if (main.city.Exists(x => x.cityName == NextFolder.Name))
+                {
+                    int i = CityListView.Items.IndexOfKey(NextFolder.Name);
+                    CityListView.Items[0].ForeColor = Color.Red; 
+                }
             }
-
-            CityListBox.DrawMode = DrawMode.OwnerDrawFixed;
-            //CityListBox.DrawItem += new DrawItemEventHandler(CityListBox_DrawItem);
-            //buyCityCheck = true;
-            
         }
 
-        private void CityListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Console.WriteLine("################");
-        }
+        //private void CityListBox_DrawItem(object sender, DrawItemEventArgs e)
+        //{
+        //    Console.WriteLine("{0}", i);
+        //    e.DrawBackground();
 
-        private void CityListBox_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            CityListBox_SelectedIndexChanged(new object(), new EventArgs());
-            //int i = 0;
-            //if (buyCityCheck)
-            //{
-                e.DrawBackground();
-
-                if (main.city.Exists(x => x.cityName == CityListBox.Items[e.Index].ToString()))
-                {
-                    e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Red), e.Bounds);
-                }
-                else
-                {
-                    e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
-                }
-                e.DrawFocusRectangle();
-                //i++;
-                //if (i > CityListBox.Items.Count)
-                //{
-                //    buyCityCheck = false;
-                //    return;
-                //}
-           
-            
-        }
+        //    if (main.city.Exists(x => x.cityName == CityListBox.Items[e.Index].ToString()))
+        //    {
+        //        e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Red), e.Bounds);
+        //    }
+        //    else
+        //    {
+        //        e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
+        //    }
+        //    e.DrawFocusRectangle();
+        //    i++;
+        //}
 
         private void OpenCityOrCloseCityButton_Click(object sender, EventArgs e)
         {
-            if (CityListBox.SelectedItem == null)
+            if (CityListView.SelectedItems == null)
             {
                 if (MessageBox.Show("你还没有选择城市", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
@@ -106,12 +95,14 @@ namespace train.UI
             }
             if (OpenCityOrCloseCityButton.Text == "开通城市")
             {
+
+                itemx = CityListView.SelectedItems[0];
+
                 Csv.AddCity(main.city, fp_city_default
                                      + ProvinceListBox.SelectedItem.ToString() + "\\"
-                                     + CityListBox.SelectedItem.ToString() + "\\"
-                                     + CityListBox.SelectedItem.ToString() + ".csv");
-                //buyCityCheck = true;
-                //ProvinceListBox_SelectedIndexChanged(new object(), new EventArgs());
+                                     + itemx.Text + "\\"
+                                     + itemx.Text + ".csv");
+                ProvinceListBox_SelectedIndexChanged(new object(), new EventArgs());
             }
             else
             {
@@ -157,16 +148,5 @@ namespace train.UI
         {
             asc.controlAutoSize(this);
         }
-
-        
-
-
-
-
-
-
-
-
-
     }
 }
