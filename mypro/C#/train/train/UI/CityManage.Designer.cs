@@ -74,7 +74,7 @@
             this.CityListView.Location = new System.Drawing.Point(168, 46);
             this.CityListView.MultiSelect = false;
             this.CityListView.Name = "CityListView";
-            this.CityListView.Size = new System.Drawing.Size(121, 88);
+            this.CityListView.Size = new System.Drawing.Size(120, 88);
             this.CityListView.TabIndex = 4;
             this.CityListView.UseCompatibleStateImageBehavior = false;
             // 

@@ -34,3 +34,4 @@ C:\GitTest\mypro\C#\train\train\obj\Debug\train.Store.resources
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.csproj.GenerateResource.Cache
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.exe
 C:\GitTest\mypro\C#\train\train\obj\Debug\train.pdb
+D:\GitTest\mypro\C#\train\train\obj\Debug\train.UI.CityManage.resources

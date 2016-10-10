@@ -18,7 +18,7 @@ namespace train.UI
         AutoResizeForm asc = new AutoResizeForm();
         CSV Csv = new CSV();
         string fp_city_default = ".\\Record\\cityDefault\\";
-        int cityIndex = 0;
+        //int cityIndex = 0;
         ListViewItem itemx = new ListViewItem();
 
         public CityManage(Main _main)
@@ -28,7 +28,7 @@ namespace train.UI
             //CityListView.HeaderStyle = ColumnHeaderStyle.None;
             CityListView.FullRowSelect = true;
             CityListView.Columns.Add("");
-            CityListView.Columns[0].Width = CityListView.Width - 24;
+            CityListView.Columns[0].Width = CityListView.Width - 70;
             //CityListView.Scrollable = true;
             //CityListView.Columns.Add("");
             //CityListView.Columns[0].Width = CityListView.Width - 24;
