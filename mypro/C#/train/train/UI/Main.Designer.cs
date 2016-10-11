@@ -36,9 +36,6 @@ namespace train
             this.carNameLabel = new System.Windows.Forms.Label();
             this.carNameText = new System.Windows.Forms.TextBox();
             this.cityNameLabel = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
             this.StoreButton = new System.Windows.Forms.Button();
             this.GarageButton = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -111,34 +108,6 @@ namespace train
             this.cityNameLabel.TabIndex = 6;
             this.cityNameLabel.Text = "City";
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(40, 557);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "开通城市";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(40, 589);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(156, 19);
-            this.textBox2.TabIndex = 8;
-            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(121, 557);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "删除城市";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // StoreButton
             // 
             this.StoreButton.Location = new System.Drawing.Point(225, 557);
@@ -194,7 +163,7 @@ namespace train
             // 
             // CityManageButton
             // 
-            this.CityManageButton.Location = new System.Drawing.Point(40, 503);
+            this.CityManageButton.Location = new System.Drawing.Point(40, 557);
             this.CityManageButton.Name = "CityManageButton";
             this.CityManageButton.Size = new System.Drawing.Size(75, 23);
             this.CityManageButton.TabIndex = 15;
@@ -213,9 +182,6 @@ namespace train
             this.Controls.Add(this.button6);
             this.Controls.Add(this.GarageButton);
             this.Controls.Add(this.StoreButton);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.cityNameLabel);
             this.Controls.Add(this.carNameText);
             this.Controls.Add(this.carNameLabel);
@@ -243,9 +209,6 @@ namespace train
         private System.Windows.Forms.Label carNameLabel;
         private System.Windows.Forms.TextBox carNameText;
         private System.Windows.Forms.Label cityNameLabel;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button StoreButton;
         private System.Windows.Forms.Button GarageButton;
         private System.Windows.Forms.Button button6;

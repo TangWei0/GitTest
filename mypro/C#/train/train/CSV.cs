@@ -161,7 +161,6 @@ namespace train
         /// <param name="cityName"></param>
         public void AddCity(List<Parameter.City> city, string fp_search)
         {
-            //string fp_search = fp_city_default + cityName + ".csv";
             StreamReader sr = new StreamReader(fp_search, System.Text.Encoding.Unicode);
             String lin = sr.ReadLine();
             if (lin != null)
@@ -195,6 +194,11 @@ namespace train
             ReadCity.stationVolume = Convert.ToInt32(ReadCity.cityStars * ReadCity.cityLever * 1000);
             ReadCity.strandedNumber = 0;
             city.Add(ReadCity);
+        }
+
+        public void DeleteCity(List<Parameter.City> city, string cityName)
+        {
+            city.Remove(city.Find(x => x.cityName == cityName));
         }
 
         /// <summary>

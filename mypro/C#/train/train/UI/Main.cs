@@ -22,21 +22,15 @@ namespace train
         CalculatorTime calTime = new CalculatorTime();
         DateTime DefalutTime = new DateTime(0001, 01, 01, 00, 00, 00);
 
-        Parameter.City ReadCity = new Parameter.City();
-        //Parameter.Garage ReadGarage = new Parameter.Garage();
-        //Parameter.Car ReadCar = new Parameter.Car();
-        List<Parameter.CityToCity> item = new List<Parameter.CityToCity>();
-        Parameter.CityToCity ele = new Parameter.CityToCity();
+       
 
         public Parameter.Custom[] custom = new Parameter.Custom[1];
         public List<Parameter.City> city = new List<Parameter.City>();
         public List<Parameter.Garage> garage = new List<Parameter.Garage>();
-        List<Parameter.Car> car = new List<Parameter.Car>();
-        List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
+        public List<Parameter.Car> car = new List<Parameter.Car>();
+        public List<List<Parameter.CityToCity>> citytocity = new List<List<Parameter.CityToCity>>();
 
         int count = 0;
-        string s = "";
-        bool text = false;
         int[] stationUpdateTimeArray = new int[2];
 
         public Main()
@@ -188,101 +182,6 @@ namespace train
         {
             count--;
             carDisplay();
-        }
-
-        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar != 13)
-            {
-                text = false;
-                return;
-            }
-            else
-            {
-                s = textBox2.Text;
-                text = true;
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (!text)
-            {
-                return;
-            }
-            else
-            {
-                text = false;
-                if (!File.Exists(Csv.fp_city_default + s + "\\" + s + ".csv"))
-                {
-                    MessageBox.Show("没有该城市",
-                                    "エラー",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                    return;
-                }
-                if (city.Exists(x => x.cityName == s))
-                {
-                    MessageBox.Show("已开通该城市",
-                                    "エラー",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                    return;
-                }
-                Csv.AddCity(city, s);
-                custom[0].cityVolume++;
-                Csv.CreatCityToCityCsv(citytocity, city);
-            }
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (!text)
-            {
-                return;
-            }
-            else
-            {
-                text = false;
-                if (city.Count == 0)
-                {
-                    MessageBox.Show("你当前没有开通城市",
-                                    "エラー",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
-                    return;
-                }
-                for (int i = 0; i < city.Count; i++)
-                {
-                    if (city[i].cityName == s)
-                    {
-                        ReadCity = city[i];
-                        city.Remove(ReadCity);
-                        custom[0].cityVolume--;
-                        item = citytocity[i];
-                        citytocity.Remove(item);
-                        if (city.Count == 0)
-                        {
-                            MessageBox.Show("你当前没有开通城市之间信息列表",
-                                            "エラー",
-                                            MessageBoxButtons.OK,
-                                            MessageBoxIcon.Error);
-                            return;
-                        }
-                        for (int j = 0; j < city.Count; j++)
-                        {
-                            ele = citytocity[j][i];
-                            citytocity[j].Remove(ele);
-                        }
-                        return;
-                    }
-                }
-                MessageBox.Show("开通城市中没有你想删除的城市",
-                                "エラー",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-            }
         }
 
         /// <summary>

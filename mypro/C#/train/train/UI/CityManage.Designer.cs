@@ -61,7 +61,7 @@
             this.OpenCityOrCloseCityButton.Name = "OpenCityOrCloseCityButton";
             this.OpenCityOrCloseCityButton.Size = new System.Drawing.Size(75, 23);
             this.OpenCityOrCloseCityButton.TabIndex = 3;
-            this.OpenCityOrCloseCityButton.Text = "开通城市";
+            this.OpenCityOrCloseCityButton.Text = "未选中城市";
             this.OpenCityOrCloseCityButton.UseVisualStyleBackColor = true;
             this.OpenCityOrCloseCityButton.Click += new System.EventHandler(this.OpenCityOrCloseCityButton_Click);
             // 
@@ -77,10 +77,7 @@
             this.CityListView.Size = new System.Drawing.Size(120, 88);
             this.CityListView.TabIndex = 4;
             this.CityListView.UseCompatibleStateImageBehavior = false;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "\"\"";
+            this.CityListView.SelectedIndexChanged += new System.EventHandler(this.CityListView_SelectedIndexChanged);
             // 
             // CityManage
             // 

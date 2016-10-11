@@ -18,20 +18,15 @@ namespace train.UI
         AutoResizeForm asc = new AutoResizeForm();
         CSV Csv = new CSV();
         string fp_city_default = ".\\Record\\cityDefault\\";
-        //int cityIndex = 0;
-        ListViewItem itemx = new ListViewItem();
+        ListViewItem item = new ListViewItem();
 
         public CityManage(Main _main)
         {
             InitializeComponent();
             CityListView.View = View.Details;
-            //CityListView.HeaderStyle = ColumnHeaderStyle.None;
             CityListView.FullRowSelect = true;
             CityListView.Columns.Add("");
             CityListView.Columns[0].Width = CityListView.Width - 70;
-            //CityListView.Scrollable = true;
-            //CityListView.Columns.Add("");
-            //CityListView.Columns[0].Width = CityListView.Width - 24;
             main = _main;
             InitializeInformate();
         }
@@ -52,41 +47,53 @@ namespace train.UI
             {
                 return;
             }
-
             CityListView.Items.Clear();
             DirectoryInfo TheFolder = new DirectoryInfo(fp_city_default + ProvinceListBox.SelectedItem.ToString());
             //遍历文件夹
             foreach (DirectoryInfo NextFolder in TheFolder.GetDirectories())
             {
+
                 CityListView.Items.Add(NextFolder.Name);
                 if (main.city.Exists(x => x.cityName == NextFolder.Name))
                 {
-                    int i = CityListView.Items.IndexOfKey(NextFolder.Name);
-                    CityListView.Items[0].ForeColor = Color.Red; 
+                    ListViewItem foundItem = CityListView.FindItemWithText(NextFolder.Name, false, 0);
+                    if (foundItem != null)
+                    {
+                        CityListView.TopItem = foundItem;  //定位到该项  
+                        foundItem.ForeColor = Color.Red;
+                    }
                 }
             }
         }
 
-        //private void CityListBox_DrawItem(object sender, DrawItemEventArgs e)
-        //{
-        //    Console.WriteLine("{0}", i);
-        //    e.DrawBackground();
-
-        //    if (main.city.Exists(x => x.cityName == CityListBox.Items[e.Index].ToString()))
-        //    {
-        //        e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(Color.Red), e.Bounds);
-        //    }
-        //    else
-        //    {
-        //        e.Graphics.DrawString(((ListBox)sender).Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
-        //    }
-        //    e.DrawFocusRectangle();
-        //    i++;
-        //}
+        private void CityListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CityListView.SelectedItems.Count == 0)
+            {
+                OpenCityOrCloseCityButton.Text = "未选中城市";
+            }
+            else
+            {
+                item = CityListView.SelectedItems[0];
+                if (item.ForeColor == Color.Red)
+                {
+                    OpenCityOrCloseCityButton.Text = "关闭城市";
+                }
+                else
+                {
+                    OpenCityOrCloseCityButton.Text = "开通城市";
+                }
+            }
+        }
 
         private void OpenCityOrCloseCityButton_Click(object sender, EventArgs e)
         {
-            if (CityListView.SelectedItems == null)
+            item = CityListView.SelectedItems[0];
+            string selectCityPath = fp_city_default
+                                  + ProvinceListBox.SelectedItem.ToString() + "\\"
+                                  + item.Text + "\\"
+                                  + item.Text + ".csv";
+            if (OpenCityOrCloseCityButton.Text == "未选中城市")
             {
                 if (MessageBox.Show("你还没有选择城市", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
@@ -95,18 +102,31 @@ namespace train.UI
             }
             if (OpenCityOrCloseCityButton.Text == "开通城市")
             {
-
-                itemx = CityListView.SelectedItems[0];
-
-                Csv.AddCity(main.city, fp_city_default
-                                     + ProvinceListBox.SelectedItem.ToString() + "\\"
-                                     + itemx.Text + "\\"
-                                     + itemx.Text + ".csv");
-                ProvinceListBox_SelectedIndexChanged(new object(), new EventArgs());
+                Csv.AddCity(main.city, selectCityPath);
+                main.custom[0].cityVolume++;
+                Csv.CreatCityToCityCsv(main.citytocity, main.city);
+                item.ForeColor = Color.Red;
+                CityListView.SelectedItems.Clear();
             }
-            else
+            if (OpenCityOrCloseCityButton.Text == "关闭城市")
             {
-
+                int cityIndex = main.city.FindIndex(x => x.cityName == item.Text);                
+                main.city.Remove(main.city[cityIndex]);
+                main.custom[0].cityVolume--;
+                if (main.city.Count == 0)
+                {
+                    main.citytocity.Clear();
+                }
+                else
+                {
+                    main.citytocity.Remove(main.citytocity[cityIndex]);
+                    for (int j = 0; j < main.city.Count; j++)
+                    {
+                        main.citytocity[j].Remove(main.citytocity[j][cityIndex]);
+                    }
+                }
+                item.ForeColor = Color.Black;
+                CityListView.SelectedItems.Clear();
             }
         }
 
@@ -148,5 +168,21 @@ namespace train.UI
         {
             asc.controlAutoSize(this);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (main.city.Count == 0)
+            {
+                return;
+            }
+            for (int i = 0; i < main.city.Count; i++)
+            {
+                Console.WriteLine(main.city[i].cityName);
+                for (int j = 0; j < main.city.Count; j++)
+                {
+                    Console.WriteLine("{0},{1},{2},{3}", main.citytocity[i][j].distance, main.citytocity[i][j].cashfare, main.citytocity[i][j].people, main.citytocity[i][j].cargo);
+                }
+            }
+        }       
     }
 }
