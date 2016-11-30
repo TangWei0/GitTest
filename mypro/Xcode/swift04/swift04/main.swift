@@ -15,7 +15,7 @@ import Foundation
           第二种:[数据类型]
 */
 var a = Array<String> ()//创建空数组
-var b = Array<Int> (count: 3, repeatedValue: 1)
+var b = Array<Int> (repeating: 1, count: 3)
 //print("\(a)\n\(b)")
 
 var c : [Int] = [1 , 2 , 3]
@@ -23,12 +23,12 @@ print("\(c)")
 
 //使用构造语法来创建一个由特定数据类型构成数组,多数使用第三种定义方法
 var d = [Int] () //创建空数组
-var e = [Double] (count: 5, repeatedValue: 1.0)
+var e = [Double] (repeating: 1.0, count: 5)
 var f = ["apple" , "banana" , "orange" , "tomato" , "potato"]
 //print("\(e)\n\(f[3])\n\(f.count)")
 
 //数组中的类型不固定，那么该数组就是属于NSObject类型
-var g = ["Eggs" , 100 , true]
+var g = ["Eggs" , 100 , true] as [Any]
 for h in g {//for...in...语句中h默认是常量，不可以重新赋值
     //print("\(h)")
 }
@@ -48,11 +48,11 @@ f[0...2] =  ["a" , "b"]
 //print("\(f)")
 
 //4.根据索引值插入数据
-f.insert("插入", atIndex: 0)
+f.insert("插入", at: 0)
 //print("\(f)")
 
 //5.根据索引值删除数据
-f.removeAtIndex(1)
+f.remove(at: 1)
 //print("\(f)")
 
 //6.删除最后一项数据
@@ -60,7 +60,7 @@ f.removeLast()
 //print("\(f)")
 
 //7.删除数组中所有数据,这里默认参数是false
-f.removeAll(keepCapacity: false)
+f.removeAll(keepingCapacity: false)
 //print("\(f)")
 
 /****字典(构造体)****/
@@ -80,7 +80,7 @@ var k : [String : Int] = [ : ]//空字典
 //print("\(k.isEmpty)")
 
 //3.通过常量或变量决定字典是否可变
-var l = ["age" : 30 , "name" : "Toui" , "height" : 170]
+var l = ["age" : 30 , "name" : "Toui" , "height" : 170] as [String : Any]
 //print("\(l["age"]!)\n\(l["name"]!)\n\(l["height"]!)")//这里定义时，数据是需要强制解析的，否则系统无法正确判断数据类型
 //print("\(l["weight"])")//key不存在时，返回nil
 
@@ -110,9 +110,9 @@ for (key,value) in l {
 }
 
 //字典的删除，一种是和元组中removeAll()一样的删除，另一种是根据key删除value，参数函数是removeValueForKey("key的名称")
-l.removeValueForKey("height")
+l.removeValue(forKey: "height")
 print("\(l)")
-l.removeAll(keepCapacity: false)
+l.removeAll(keepingCapacity: false)
 print("\(l)")
 
 //字典中所有所有key成为一个数组，所有value成为一个数组的方法

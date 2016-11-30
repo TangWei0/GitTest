@@ -89,7 +89,7 @@ else {
 //可以用在if或者while语句中，来对可选类型的值进行判断，并把值为给一个常量或者变量
 var x : String? = "Hello,Swift"
 if var y : String = x! {
-    //print("x的值为：\(y)")
+    print("x的值为：\(y)")
 }
 else {
     print("x的值为nil，不能解析")
