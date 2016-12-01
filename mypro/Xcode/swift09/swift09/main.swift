@@ -12,7 +12,7 @@ import Foundation
 class Person {
     var name : String = "Jack"
     var age : Int = 19
-    func say (_ dialog : String) {
+    func say (dialog : String) {
         print("Hello,\(name)!\(dialog)")
     }
 }

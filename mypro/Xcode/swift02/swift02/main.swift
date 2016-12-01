@@ -29,7 +29,7 @@ var str1 = "你好"
 //1.2.使用构造器创建字符串
 var str2 = String()
 //1.3.创建多个重复字符的字符串
-var str3 = String(repeating: "😄" , count: 5)
+var str3 = String(count : 5 , repeatedValue: UnicodeScalar("😄"))
 print("\(str1)\n\(str2)\n\(str3)")
 
 
@@ -71,4 +71,4 @@ if (str1 == str6) {
 5.2hasPrefix函数可进行字符串前缀判别，返还值是boolean值
 5.3hasSuffix函数可进行字符串后缀判别，返还值是boolean值
 */
-print("\(str4.hasPrefix("你"))\n\(str4.hasSuffix("!"))")
+//print("\(str4.hasPrefix("你"))\n\(str4.hasSuffix("!"))")

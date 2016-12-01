@@ -9,11 +9,11 @@
 import Foundation
 
 /******嵌套函数******/
-func getMathFunc1(type : String) -> (Int) -> Int {
-    func squre (_ num : Int) -> Int {
+func getMathFunc1(type type : String) -> (Int) -> Int {
+    func squre (num : Int) -> Int {
         return num * num
     }
-    func cube (_ num : Int) -> Int {
+    func cube (num : Int) -> Int {
         return num * num * num
     }
     switch (type) {
@@ -27,7 +27,7 @@ var mathFunc = getMathFunc1(type: "squre")
 //print(mathFunc(5))
 
 /******闭包******/
-func getMathFunc2(type : String) -> (Int) -> Int {
+func getMathFunc2(type type : String) -> (Int) -> Int {
     switch (type) {
     case "squre" :
         return { (num : Int) -> Int in
@@ -60,7 +60,7 @@ var result : Int = {
 print(result)
 
 //尾随闭包
-func getFunc (_ num : Int , fn : (Int) -> Int) {
+func getFunc (num : Int , fn : (Int) -> Int) {
     if (num == fn(5)) {
         print("good job")
     }

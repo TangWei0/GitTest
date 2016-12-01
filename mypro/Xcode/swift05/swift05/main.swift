@@ -20,8 +20,7 @@ c = c &- 1
 //print("\(c)")
 
 //3.对浮点数求商和余数
-//d是取余数，e是商数
-var d = 100.truncatingRemainder(dividingBy: 2.3)
+var d = 100 % 2.3
 var e = 100 / 2.3
 //print("\(d)\n\(e)")
 
@@ -35,9 +34,9 @@ var e = 100 / 2.3
 */
 let f = "Hello"
 var g : String?
-let h = "Toui"
+var h = "Toui"
 var i = g ?? f
-var j = h
+var j = h ?? f
 //print("\(i)\n\(j)")
 
 //6.闭区间运算符 a...b 半开区间运算符 a..<b 意思是［a，b）
@@ -78,7 +77,7 @@ case (0,_):
 case (1..<Int.max , 1..<Int.max):
     print("\(point.0,point.1)在第一象限")
 case var (x , y) where x < 0 && y < 0:
-    print("(\(point.0,point.1))在第三象限")
+    print("(\(x),\(y))在第三象限")
 default:
     break;
 }
@@ -86,8 +85,7 @@ default:
 /****循环语句****/
 //for语句
 var s1 = 0
-for x in 1..<5 {
-    //1到4相加
+for var x = 1 ; x < 5 ; x++ {
     s1 += x
 }
 //print("\(s1)")
@@ -95,13 +93,12 @@ for x in 1..<5 {
 var s2 = 1
 var s3 = 2
 for _ in 1...5 {
-    //1到5相乘
     s2 *= s3
 }
 //print("\(s2)")
 
-for i in 1...5 {
-    for j in 1...5 {
+for var i = 1 ; i <= 5 ; i++ {
+    for var j = 1 ; j <= 5 ; j++ {
         if j == 3 {
             break //跳出j，继续执行i
         }
@@ -111,8 +108,8 @@ for i in 1...5 {
     }
 }
 print("\n")
-for i in 1...5 {
-    for j in 1...5 {
+for var i = 1 ; i <= 5 ; i++ {
+    for var j = 1 ; j <= 5 ; j++ {
         if j == 3 {
             continue//跳出j＝3，继续执行j
         }
@@ -122,8 +119,8 @@ for i in 1...5 {
     }
 }
 print("\n")
-out1: for i in 1...5 {
-    for j in 1...5 {
+out1: for var i = 1 ; i <= 5 ; i++ {
+    for var j = 1 ; j <= 5 ; j++ {
         if j == 3 {
             break out1 //跳出i，执行后面程序
         }
@@ -133,8 +130,8 @@ out1: for i in 1...5 {
     }
 }
 print("\n")
-out2: for i in 1...5 {
-    for j in 1...5 {
+out2: for var i = 1 ; i <= 5 ; i++ {
+    for var j = 1 ; j <= 5 ; j++ {
         if j == 3 {
             continue out2 //跳出j，继续执行i
         }
@@ -143,4 +140,3 @@ out2: for i in 1...5 {
         }
     }
 }
-print("\n")
