@@ -1,0 +1,4 @@
+#Wed Dec 14 12:12:44 JST 2016
+base.0=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex

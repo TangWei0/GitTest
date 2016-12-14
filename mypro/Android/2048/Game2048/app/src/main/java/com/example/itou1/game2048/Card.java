@@ -4,10 +4,6 @@ import android.content.Context;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-/**
- * Created by NSW00_905181 on 2016/12/05.
- */
-
 public class Card extends FrameLayout {
     public Card (Context context) {
         super(context);
@@ -31,6 +27,22 @@ public class Card extends FrameLayout {
         tvNumber.setText(number + "");
     }
 
+    public boolean equals(Card o){
+        return getNumber() == o.getNumber();
+    }
+
     private int number = 0;
     private TextView tvNumber;
+
+    @Override
+    protected  void  onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w,h,oldw,oldh);
+
+        int cardSize = (Math.min(w,h) - 10) / 4;
+        addCards(cardSize);
+    }
+
+    private void addCards(int cardSize) {
+        Card card;
+    }
 }
