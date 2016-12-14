@@ -27,6 +27,22 @@ public class Card extends FrameLayout {
         tvNumber.setText(number + "");
     }
 
+    public boolean equals(Card o){
+        return getNumber() == o.getNumber();
+    }
+
     private int number = 0;
     private TextView tvNumber;
+
+    @Override
+    protected  void  onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w,h,oldw,oldh);
+
+        int cardSize = (Math.min(w,h) - 10) / 4;
+        addCards(cardSize);
+    }
+
+    private void addCards(int cardSize) {
+        Card card;
+    }
 }
