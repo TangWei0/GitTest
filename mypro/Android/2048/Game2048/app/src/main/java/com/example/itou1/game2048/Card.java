@@ -4,10 +4,6 @@ import android.content.Context;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-/**
- * Created by NSW00_905181 on 2016/12/05.
- */
-
 public class Card extends FrameLayout {
     public Card (Context context) {
         super(context);
