@@ -1,6 +1,6 @@
 ﻿namespace remember
 {
-    partial class Form1
+    partial class CreatText
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -81,7 +81,7 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Form1
+            // CreatText
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -90,8 +90,8 @@
             this.Controls.Add(this.yearBox);
             this.Controls.Add(this.setTextButton);
             this.Controls.Add(this.getOpeningExcelButton);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "CreatText";
+            this.Text = "CreatText";
             this.ResumeLayout(false);
             this.PerformLayout();
 

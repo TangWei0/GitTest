@@ -12,7 +12,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace remember
 {
-    public partial class Form1 : Form
+    public partial class CreatText : Form
     {
         FileCheck fileCheck = new FileCheck();
         SetTable setTable = new SetTable();
@@ -30,7 +30,7 @@ namespace remember
 
         //public string year;
 
-        public Form1()
+        public CreatText()
         {
             InitializeComponent();
 
@@ -67,8 +67,7 @@ namespace remember
         }
 
         private void setTextButton_Click(object sender, EventArgs e)
-        {
-            
+        {            
             if (int.Parse(setTable.year) >= 1900 && int.Parse(setTable.year) < 2100)
             {
                 int[] Index = fileCheck.sheetCheck(xlSheets, xlSheet, status, setTable.year);
@@ -86,6 +85,9 @@ namespace remember
                 }
             }
 
+            UI.Main main = new UI.Main();
+            main.Show();
+            this.Close();
         }
 
         private void yearBox_KeyPress(object sender, KeyPressEventArgs e)
