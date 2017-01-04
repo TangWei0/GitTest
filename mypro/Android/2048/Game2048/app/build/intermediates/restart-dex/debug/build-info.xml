@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86"
+    api-level="23"
+    density="xhdpi"
+    format="8"
+    plugin-version="2.2.3"
+    timestamp="290892568446664"
+    token="8781645227821785740"
+    verifier="COLD_SWAP_REQUESTED" >
+
+    <task
+        name="javac"
+        duration="6424" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="372" />
+    <task
+        name="verifier"
+        duration="3" />
+
+    <artifact
+        location="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
+        type="DEX" />
+    <artifact
+        location="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_3\classes.dex"
+        type="DEX" />
+
+    <build
+        timestamp="283096863978105"
+        verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\outputs\apk\app-debug.apk"
+            type="MAIN" />
+    </build>
+    <build
+        timestamp="290892568446664"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_3\classes.dex"
+            type="DEX" />
+    </build>
+
+</instant-run>

@@ -2,166 +2,184 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
+        is-multidex="true"
         jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-25.0.1_9f64ce263686f6896504431e18356883cec171e7.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_9f64ce263686f6896504431e18356883cec171e7\classes.dex" />
     </item>
     <item
-        is-multidex="false"
+        is-multidex="true"
         jar="C:\Users\itou1\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\support-annotations-25.0.1_46a45a4b559d18477d1d16db2f8d72f8c17d457d.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_46a45a4b559d18477d1d16db2f8d72f8c17d457d\classes.dex" />
     </item>
     <item
-        is-multidex="false"
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d637c7347da185fd6f1461833fd508e583094da2">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_daf4f84f6ef259b245eead31745ac6a89a617756\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\internal_impl-25.0.1_324fb81e93c416f754da3553339970574839f532.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_324fb81e93c416f754da3553339970574839f532\classes.dex" />
     </item>
     <item
-        is-multidex="false"
+        is-multidex="true"
         jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-25.0.1_31849f76df5786c603d14834bc47abf33ed6777d.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_31849f76df5786c603d14834bc47abf33ed6777d\classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-25.0.1_d9690dce7a607c126951999f5ee20059e583387f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-25.0.1_949c75bfc1669352f712e7ceb8332960f953119f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\internal_impl-25.0.1_07553d580b789946b1780d4940a1bb119dc924b8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\internal_impl-25.0.1_ec1a1c4707e6a6ff21a4240bd52d58c51e287fbe.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-design-25.0.1_0a61cbeea9e40b95ffdf7d371cb700080e7a065a.jar" />
-    </item>
-    <item
-        is-multidex="false"
+        is-multidex="true"
         jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-25.0.1_d3d62800fe33c18497dbaec6b37fa126f3908ed1.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_d3d62800fe33c18497dbaec6b37fa126f3908ed1\classes.dex" />
     </item>
     <item
-        is-multidex="false"
+        is-multidex="true"
         jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\internal_impl-25.0.1_7c9834d8f44d63225620abf551c732b84adbd329.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_7c9834d8f44d63225620abf551c732b84adbd329\classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-25.0.1_d360ba7e4ab2f815040a1ab3370aa49428f70972.jar" />
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_949c75bfc1669352f712e7ceb8332960f953119f\classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\internal_impl-25.0.1_081e10af71deb50d7c3c7d095a5893996059d2ec.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-25.0.1_838e512e1e0d7de1c1d38395f4956975136b8a6f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-25.0.1_05d271571123807fcf98c362bfd761c46d37a377.jar" />
-    </item>
-    <item
-        is-multidex="false"
+        is-multidex="true"
         jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-25.0.1_e3c5a720cd81579510c2cdfacd52dc733a122ec5.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_e3c5a720cd81579510c2cdfacd52dc733a122ec5\classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-transition-25.0.1_9e2ea828328b706454731f0c1063b66bc02b3b99.jar" />
+        sha1="d4bae529a72c0bc3b215bcd9f0841a1d79b7394b">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_e173bd37920a2e0f4dc0342ff6a4f716c36acd72\classes.dex" />
     </item>
     <item
-        is-multidex="false"
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_d9690dce7a607c126951999f5ee20059e583387f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
-        jumboMode="false"
+        jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
-        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-25.0.1_0091f3abf7c4fc77dd722d231c370f848f502447.jar" />
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_0091f3abf7c4fc77dd722d231c370f848f502447\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_07553d580b789946b1780d4940a1bb119dc924b8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_d360ba7e4ab2f815040a1ab3370aa49428f70972\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.1_0a61cbeea9e40b95ffdf7d371cb700080e7a065a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_ec1a1c4707e6a6ff21a4240bd52d58c51e287fbe\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_9e2ea828328b706454731f0c1063b66bc02b3b99\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_081e10af71deb50d7c3c7d095a5893996059d2ec\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_05d271571123807fcf98c362bfd761c46d37a377\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="C:\Users\itou1\Desktop\GitTest\mypro\Android\2048\Game2048\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_838e512e1e0d7de1c1d38395f4956975136b8a6f\classes.dex" />
     </item>
 
 </items>

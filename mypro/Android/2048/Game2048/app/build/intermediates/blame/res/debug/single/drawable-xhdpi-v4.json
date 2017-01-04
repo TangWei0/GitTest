@@ -60,12 +60,12 @@
         "source": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png"
     },
     {
-        "merged": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\notification_bg_normal.9.png",
-        "source": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\drawable-xhdpi-v4\\notification_bg_normal.9.png"
-    },
-    {
         "merged": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
         "source": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\notification_bg_normal.9.png",
+        "source": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\drawable-xhdpi-v4\\notification_bg_normal.9.png"
     },
     {
         "merged": "C:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\abc_scrubber_control_off_mtrl_alpha.png",

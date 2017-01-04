@@ -1,4 +1,7 @@
-#Wed Dec 14 12:12:44 JST 2016
-base.0=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
-renamed.0=classes.dex
-file.0=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
+#Thu Dec 15 15:25:34 JST 2016
+base.0=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_e173bd37920a2e0f4dc0342ff6a4f716c36acd72
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_daf4f84f6ef259b245eead31745ac6a89a617756\\classes.dex
+base.1=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_daf4f84f6ef259b245eead31745ac6a89a617756
+file.0=C\:\\Users\\itou1\\Desktop\\GitTest\\mypro\\Android\\2048\\Game2048\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_e173bd37920a2e0f4dc0342ff6a4f716c36acd72\\classes.dex
