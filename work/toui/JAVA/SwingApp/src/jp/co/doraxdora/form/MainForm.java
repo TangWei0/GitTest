@@ -11,6 +11,7 @@ import java.awt.CardLayout;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 public class MainForm extends JFrame {
 
@@ -36,6 +37,7 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm() {
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 705, 563);
 		contentPane = new JPanel();
@@ -43,47 +45,53 @@ public class MainForm extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel_3 = new JLabel("");
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\itou1\\Desktop\\toui\\JAVA\\SwingApp\\Picture\\A_BlackPeach.jpg"));
-		lblNewLabel_3.setBounds(350, 385, 93, 130);
+		JLabel lblNewLabel_3 = new JLabel("");		
+		lblNewLabel_3.setBounds(350, 385, 40, 50);
 		lblNewLabel_3.setVisible(false);
 		contentPane.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setBounds(330, 385, 93, 130);
+		lblNewLabel_1.setBounds(330, 385, 40, 50);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setVisible(false);
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\itou1\\Desktop\\toui\\JAVA\\SwingApp\\Picture\\A_BlackPeach.jpg"));
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setBounds(309, 385, 93, 130);
+		lblNewLabel_2.setBounds(309, 385, 40, 50);
 		lblNewLabel_2.setVisible(false);
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\itou1\\Desktop\\toui\\JAVA\\SwingApp\\Picture\\A_BlackPeach.jpg"));
 		contentPane.add(lblNewLabel_2);
 		
-		Game game = new Game();
-		System.out.println(game.num);
-		switch (game.num) {
-		case 0:
-			break;
+		DisplayCard display = new DisplayCard();
+		for (int i=0;i<display.num;i++)
+		{
+		    int cardType =(int)(Math.random() * 4) + 1;
+	        list.add(cardType);
+		}
+		System.out.println(display.num);
+		for (int i=0;i<list.size();i++)
+		{
+			System.out.println(list.get(i));
+		}
+		
+		switch (display.num) {
 		case 1:
 			lblNewLabel_1.setVisible(true);
+			lblNewLabel_1.setIcon(new ImageIcon(display.CardDisplay(list.get(0))));
 			break;
 		case 2:
 			lblNewLabel_1.setVisible(true);
+			lblNewLabel_1.setIcon(new ImageIcon(display.CardDisplay(list.get(0))));
 			lblNewLabel_2.setVisible(true);
+			lblNewLabel_2.setIcon(new ImageIcon(display.CardDisplay(list.get(1))));
 			break;
 		case 3:
 			lblNewLabel_1.setVisible(true);
+			lblNewLabel_1.setIcon(new ImageIcon(display.CardDisplay(list.get(0))));
 			lblNewLabel_2.setVisible(true);
+			lblNewLabel_2.setIcon(new ImageIcon(display.CardDisplay(list.get(1))));
 			lblNewLabel_3.setVisible(true);
+			lblNewLabel_3.setIcon(new ImageIcon(display.CardDisplay(list.get(2))));
 			break;
 		}
-		
-	}
-	
-	public class Game {
-		int num =(int)(Math.random() * 4);
 	}
 }
