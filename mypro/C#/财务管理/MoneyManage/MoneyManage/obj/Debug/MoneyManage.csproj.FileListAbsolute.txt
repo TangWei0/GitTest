@@ -1,9 +1,0 @@
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\bin\Debug\MoneyManage.exe.config
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\bin\Debug\MoneyManage.exe
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\bin\Debug\MoneyManage.pdb
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\obj\Debug\MoneyManage.csprojResolveAssemblyReference.cache
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\obj\Debug\MoneyManage.MoneyManage.resources
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\obj\Debug\MoneyManage.Properties.Resources.resources
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\obj\Debug\MoneyManage.csproj.GenerateResource.Cache
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\obj\Debug\MoneyManage.exe
-D:\GitTest\GitTest\mypro\C#\财务管理\MoneyManage\MoneyManage\obj\Debug\MoneyManage.pdb
