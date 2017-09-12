@@ -9,7 +9,7 @@ public class DisplayCard
 	ArrayList<Integer> cardDefault = new ArrayList<Integer>();
 	Calculation Calculation = new Calculation();
 	
-	int num =(int)(Math.random() * 20) + 1;
+	static int num =17;
 	
 	public ArrayList<Integer> CardDefault()
 	{
@@ -24,10 +24,11 @@ public class DisplayCard
 	public ArrayList<Integer> SelectCard()
 	{
 		CardDefault();
-		for (int i=1; i<=num; i++)
+		for (int i=1; i<=17; i++)
 		{
 			int selectIndex = (int)(Math.random() * cardDefault.size());
-			cardList.add(Calculation.Search(cardList, cardDefault.get(selectIndex)),cardDefault.get(selectIndex));
+			int selectSearchIndex = Calculation.Search(cardList, cardDefault.get(selectIndex));
+			cardList.add(selectSearchIndex,cardDefault.get(selectIndex));
 			cardDefault.remove(selectIndex);
 		}		
 		return cardList;
