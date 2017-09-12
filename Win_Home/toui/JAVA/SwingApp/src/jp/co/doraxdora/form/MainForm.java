@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainForm extends JFrame {
 
@@ -15,7 +16,7 @@ public class MainForm extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ArrayList<Integer> list = new ArrayList<Integer>();
+	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	JPanel contentPane;
 	JLabel lblNewLabel_1 = new JLabel("");
 	JLabel lblNewLabel_2 = new JLabel("");
@@ -59,15 +60,22 @@ public class MainForm extends JFrame {
 	 */
 	public MainForm() {
 		
-		//ç”»é¢è¨­å®šã™ã‚‹
+		//‰æ–Ê‚ğİ’è‚·‚é
 		SetScreen();
 		
 		DisplayCard display = new DisplayCard();
-		for (int i=0;i<display.num;i++)
+		cardList = display.SelectCard();
+		
+		//‰æ–Ê‚ğXV‚·‚é
+		//ScreenUpdate();
+		
+		System.out.println(cardList.size());
+		for (int i=0;i<cardList.size();i++)
 		{
-		    int cardType =(int)(Math.random() * 4) + 1;
-	        list.add(cardType);
+			System.out.print(cardList.get(i) + " ");
 		}
+		
+		/*
 		System.out.println(display.num);
 		for (int i=0;i<list.size();i++)
 		{
@@ -93,7 +101,7 @@ public class MainForm extends JFrame {
 			lblNewLabel_3.setVisible(true);
 			lblNewLabel_3.setIcon(new ImageIcon(display.CardDisplay(list.get(2))));
 			break;
-		}
+		}*/
 	}
 	
 	public void SetScreen()
@@ -186,4 +194,9 @@ public class MainForm extends JFrame {
 		lblNewLabel_1.setVisible(false);
 		contentPane.add(lblNewLabel_1);
 	}
+
+    public void ScreenUpdate()
+    {
+    	
+    }
 }

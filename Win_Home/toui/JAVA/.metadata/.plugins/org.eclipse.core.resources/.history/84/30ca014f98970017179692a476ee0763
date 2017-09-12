@@ -1,0 +1,43 @@
+package jp.co.doraxdora.form;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class DisplayCard 
+{
+	ArrayList<Integer> list = new ArrayList<Integer>();
+	int num =(int)(Math.random() * 20) + 1;
+	int cardNumber = 1;
+	
+	public ArrayList<Integer> SelectCard()
+	{
+		for (int i=0; i<num; i++)
+		{
+			list.add((int)(Math.random() * 54) + 1);
+		}
+		Collections.sort(list);
+		return list;
+	}
+		
+	public String CardDisplay(int i)
+	{
+		String s ="";
+		switch(i)
+		{
+		    case 1:
+		    	s = "C:\\Users\\itou1\\Desktop\\GitTest\\Win_Home\\toui\\JAVA\\SwingApp\\Picture\\A_GrassFlowers.png";
+		    break;
+		    case 2:
+		    	s = "C:\\Users\\itou1\\Desktop\\GitTest\\Win_Home\\toui\\JAVA\\SwingApp\\Picture\\A_SquarePiece.png";
+		    break;
+		    case 3:
+		    	s = "C:\\Users\\itou1\\Desktop\\GitTest\\Win_Home\\toui\\JAVA\\SwingApp\\Picture\\A_RedHeart.png";
+		    break;
+		    case 4:
+		    	s = "C:\\Users\\itou1\\Desktop\\GitTest\\Win_Home\\toui\\JAVA\\SwingApp\\Picture\\A_BlackPeach.png";
+		    break;
+		}
+		return s;
+	}
+}
+	
