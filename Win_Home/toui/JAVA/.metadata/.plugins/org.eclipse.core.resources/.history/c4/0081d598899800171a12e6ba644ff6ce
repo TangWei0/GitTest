@@ -87,7 +87,7 @@ public class MainForm extends JFrame {
 		
 		for (int i=19; i>=0; i--)
 		{
-			Jlabel[i].setBounds(50 + i*40, 600, 80, 100);
+			Jlabel[i].setBounds(130 + i*20, 385, 40, 50);
 			Jlabel[i].setVisible(false);
 			contentPane.add(Jlabel[i]);
 			if (i == 10)
