@@ -1,0 +1,14 @@
+package jp.co.doraxdora.form;
+
+public class Translation {
+	
+	static String rootPath = System.getProperty("user.dir");
+	public String path = rootPath + "\\Picture\\";
+	
+	public String TranslationPicture (int Date)
+	{
+		String path = rootPath + "\\Picture\\";
+		
+		return path;
+	}
+}

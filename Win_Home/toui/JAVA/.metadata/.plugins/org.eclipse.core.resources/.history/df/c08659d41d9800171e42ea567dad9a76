@@ -1,0 +1,8 @@
+package jp.co.doraxdora.form;
+
+public class Translation {
+	
+	public String rootPath = getClass().getResource("/").getFile().toString();
+	public String currentPath1 = getClass().getResource(".").getFile().toString();
+	public String parentPath = getClass().getResource("../").getFile().toString();
+}

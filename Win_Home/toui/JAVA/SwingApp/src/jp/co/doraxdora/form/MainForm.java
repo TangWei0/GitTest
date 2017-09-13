@@ -16,6 +16,7 @@ public class MainForm extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	static int LBLNEWLABEL_NUM = 20;
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	JPanel contentPane;
 	JLabel lblNewLabel_1 = new JLabel("");
@@ -38,6 +39,11 @@ public class MainForm extends JFrame {
 	JLabel lblNewLabel_18 = new JLabel("");
 	JLabel lblNewLabel_19 = new JLabel("");
 	JLabel lblNewLabel_20 = new JLabel("");
+	JLabel Jlabel[] = { lblNewLabel_1, lblNewLabel_2, lblNewLabel_3, lblNewLabel_4, 
+			            lblNewLabel_5, lblNewLabel_6, lblNewLabel_7, lblNewLabel_8, 
+			            lblNewLabel_9, lblNewLabel_10,lblNewLabel_11, lblNewLabel_12, 
+			            lblNewLabel_13, lblNewLabel_14, lblNewLabel_15, lblNewLabel_16, 
+			            lblNewLabel_17, lblNewLabel_18, lblNewLabel_19, lblNewLabel_20};
 
 	/**
 	 * Launch the application.
@@ -60,21 +66,23 @@ public class MainForm extends JFrame {
 	 */
 	public MainForm() {
 		
-		//âÊñ Çê›íËÇ∑ÇÈ
-		SetScreen();
-		
 		DisplayCard display = new DisplayCard();
+		Calculation Calculation = new Calculation();
+		Translation Translation = new Translation();
 		cardList = display.SelectCard();
 		
-		//âÊñ ÇçXêVÇ∑ÇÈ
-		//ScreenUpdate();
 		
-		System.out.println(cardList.size());
+		SetScreen();
+		ScreenUpdate();
+		
 		for (int i=0;i<cardList.size();i++)
 		{
-			System.out.print(cardList.get(i) + " ");
+			System.out.println(cardList.get(i));
+			System.out.println(Translation.TranslationPicture(cardList.get(i)));
 		}
-		
+		System.out.println();
+		System.out.println(Calculation.Aear(cardList.size()));
+
 		/*
 		System.out.println(display.num);
 		for (int i=0;i<list.size();i++)
@@ -103,7 +111,7 @@ public class MainForm extends JFrame {
 			break;
 		}*/
 	}
-	
+
 	public void SetScreen()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,90 +121,21 @@ public class MainForm extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblNewLabel_20.setBounds(510, 385, 40, 50);
-		lblNewLabel_20.setVisible(false);
-		contentPane.add(lblNewLabel_20);
-		
-		lblNewLabel_19.setBounds(490, 385, 40, 50);
-		lblNewLabel_19.setVisible(false);
-		contentPane.add(lblNewLabel_19);
-		
-		lblNewLabel_18.setBounds(470, 385, 40, 50);
-		lblNewLabel_18.setVisible(false);
-		contentPane.add(lblNewLabel_18);
-		
-		lblNewLabel_17.setBounds(450, 385, 40, 50);
-		lblNewLabel_17.setVisible(false);
-		contentPane.add(lblNewLabel_17);
-		
-		lblNewLabel_16.setBounds(430, 385, 40, 50);
-		lblNewLabel_16.setVisible(false);
-		contentPane.add(lblNewLabel_16);
-		
-		lblNewLabel_15.setBounds(410, 385, 40, 50);
-		lblNewLabel_15.setVisible(false);
-		contentPane.add(lblNewLabel_15);
-		
-		lblNewLabel_14.setBounds(390, 385, 40, 50);
-		lblNewLabel_14.setVisible(false);
-		contentPane.add(lblNewLabel_14);
-		
-		lblNewLabel_13.setBounds(370, 385, 40, 50);
-		lblNewLabel_13.setVisible(false);
-		contentPane.add(lblNewLabel_13);
-		
-		lblNewLabel_12.setBounds(350, 385, 40, 50);
-		lblNewLabel_12.setVisible(false);
-		contentPane.add(lblNewLabel_12);
-		
-		lblNewLabel_11.setBounds(330, 385, 40, 50);
-		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_11.setVisible(false);
-		contentPane.add(lblNewLabel_11);
-		
-		lblNewLabel_10.setBounds(310, 385, 40, 50);
-		lblNewLabel_10.setVisible(false);
-		contentPane.add(lblNewLabel_10);
-		
-		lblNewLabel_9.setBounds(290, 385, 40, 50);
-		lblNewLabel_9.setVisible(false);
-		contentPane.add(lblNewLabel_9);
-		
-		lblNewLabel_8.setBounds(270, 385, 40, 50);
-		lblNewLabel_8.setVisible(false);
-		contentPane.add(lblNewLabel_8);
-		
-		lblNewLabel_7.setBounds(250, 385, 40, 50);
-		lblNewLabel_7.setVisible(false);
-		contentPane.add(lblNewLabel_7);
-		
-		lblNewLabel_6.setBounds(230, 385, 40, 50);
-		lblNewLabel_6.setVisible(false);
-		contentPane.add(lblNewLabel_6);
-		
-		lblNewLabel_5.setBounds(210, 385, 40, 50);
-		lblNewLabel_5.setVisible(false);
-		contentPane.add(lblNewLabel_5);
-		
-		lblNewLabel_4.setBounds(190, 385, 40, 50);
-		lblNewLabel_4.setVisible(false);
-		contentPane.add(lblNewLabel_4);
-		
-		lblNewLabel_3.setBounds(170, 385, 40, 50);
-		lblNewLabel_3.setVisible(false);
-		contentPane.add(lblNewLabel_3);
-		
-		lblNewLabel_2.setBounds(150, 385, 40, 50);
-		lblNewLabel_2.setVisible(false);
-		contentPane.add(lblNewLabel_2);
-		
-		lblNewLabel_1.setBounds(130, 385, 40, 50);
-		lblNewLabel_1.setVisible(false);
-		contentPane.add(lblNewLabel_1);
+		for (int i=19; i>=0; i--)
+		{
+			Jlabel[i].setBounds(130 + i*20, 385, 40, 50);
+			Jlabel[i].setVisible(false);
+			contentPane.add(Jlabel[i]);
+			if (i == 10)
+			{
+				Jlabel[i].setHorizontalAlignment(SwingConstants.CENTER);
+			}
+		}
 	}
 
-    public void ScreenUpdate()
-    {
-    	
-    }
+	public void ScreenUpdate()
+	{
+		//Calculation.
+		Translation.
+	}
 }
