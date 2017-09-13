@@ -73,7 +73,12 @@ public class MainForm extends JFrame {
 		
 		
 		SetScreen();
-		ScreenUpdate();
+		Jlabel[0].setVisible(true);
+		Jlabel[0].setIcon(new ImageIcon("C:\\Users\\itou1\\Desktop\\GitTest\\Win_Home\\toui\\JAVA\\SwingApp\\Picture\\3_SquarePiece.png"));
+		Jlabel[1].setVisible(true);
+		Jlabel[1].setIcon(new ImageIcon("C:\\Users\\itou1\\Desktop\\GitTest\\Win_Home\\toui\\JAVA\\SwingApp\\Picture\\5_SquarePiece.png"));
+		
+		//ScreenUpdate();
 		
 		for (int i=0;i<cardList.size();i++)
 		{
@@ -135,7 +140,6 @@ public class MainForm extends JFrame {
 
 	public void ScreenUpdate()
 	{
-		//Calculation.
-		Translation.
+		
 	}
 }

@@ -135,7 +135,6 @@ public class MainForm extends JFrame {
 
 	public void ScreenUpdate()
 	{
-		//Calculation.
-		Translation.
+		
 	}
 }

@@ -23,6 +23,6 @@ public class Calculation {
 
 	public int Aear(int Date)
 	{
-		return (int) Math.ceil((double)(Date + MainForm.LBLNEWLABEL_NUM)/2);
+		return (int) Math.ceil((double)(Date + MainForm.LBLNEWLABEL_NUM)/2) - Date;
 	}
 }
