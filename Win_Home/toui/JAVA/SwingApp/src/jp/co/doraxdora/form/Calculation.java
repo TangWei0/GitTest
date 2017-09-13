@@ -21,4 +21,8 @@ public class Calculation {
 		return 0;
 	}
 
+	public int Aear(int Date)
+	{
+		return (int) Math.ceil((double)(Date + MainForm.LBLNEWLABEL_NUM)/2);
+	}
 }

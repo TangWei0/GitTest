@@ -16,6 +16,7 @@ public class MainForm extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	static int LBLNEWLABEL_NUM = 20;
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	JPanel contentPane;
 	JLabel lblNewLabel_1 = new JLabel("");
@@ -38,6 +39,8 @@ public class MainForm extends JFrame {
 	JLabel lblNewLabel_18 = new JLabel("");
 	JLabel lblNewLabel_19 = new JLabel("");
 	JLabel lblNewLabel_20 = new JLabel("");
+	
+	JLabel Jlabel[] =new JLabel[LBLNEWLABEL_NUM];
 
 	/**
 	 * Launch the application.
@@ -69,12 +72,18 @@ public class MainForm extends JFrame {
 		//âÊñ ÇçXêVÇ∑ÇÈ
 		//ScreenUpdate();
 		
-		System.out.println(cardList.size());
+		Translation Translation = new Translation();
+		
 		for (int i=0;i<cardList.size();i++)
 		{
-			System.out.print(cardList.get(i) + " ");
+			System.out.println(cardList.get(i));
+			System.out.println(Translation.TranslationPicture(cardList.get(i)));
 		}
+		System.out.println();
 		
+		Calculation Calculation = new Calculation();
+		System.out.println(Calculation.Aear(cardList.size()));
+
 		/*
 		System.out.println(display.num);
 		for (int i=0;i<list.size();i++)
