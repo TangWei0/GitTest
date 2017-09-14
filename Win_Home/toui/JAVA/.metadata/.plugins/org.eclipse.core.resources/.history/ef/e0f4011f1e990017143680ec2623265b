@@ -5,9 +5,6 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -60,7 +57,7 @@ public class MainForm extends JFrame {
 			            lblNewLabel_13, lblNewLabel_14, lblNewLabel_15, lblNewLabel_16, 
 			            lblNewLabel_17, lblNewLabel_18, lblNewLabel_19, lblNewLabel_20};
 	
-	DisplayCard DisplayCard = new DisplayCard();
+	DisplayCard display = new DisplayCard();
 	Calculation Calculation = new Calculation();
 	Translation Translation = new Translation();
 
@@ -85,56 +82,10 @@ public class MainForm extends JFrame {
 	 */
 	public MainForm() {	
 		SetScreen();
-		
-		this.addMouseListener(new MyMouseListener());
 	}
-	
-	public class StartButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			btnNewBotton.setVisible(false);
-			DisplayCard.StartCard();
-			ScreenUpdate();	
-		}		
-	}
-	
-	public class MyMouseListener implements MouseListener{
-		//鼠标点击事件
-		public void mouseClicked(MouseEvent e){
-			int x=e.getX(); 
-			int y=e.getY(); 
-			String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
-			System.out.println(str);
-			}
 
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO 自動生成されたメソッド・スタブ
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO 自動生成されたメソッド・スタブ
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO 自動生成されたメソッド・スタブ
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO 自動生成されたメソッド・スタブ
-			
-		}
-		}
-
-	
 	public void SetScreen()
 	{
-		//画面設置
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1920, 1080);
 		contentPane = new JPanel();
@@ -143,14 +94,14 @@ public class MainForm extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		//開始ボタン設置
 		btnNewBotton.setForeground(Color.RED);
-		btnNewBotton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));	
+		btnNewBotton.setFont(new Font("�l�r �o�S�V�b�N", Font.BOLD | Font.ITALIC, 20));	
 		btnNewBotton.setBounds(923, 501, 153, 68);
 		btnNewBotton.setVisible(true);
 		contentPane.add(btnNewBotton);
 		
-		//トランプカード設定
+		btnNewBotton.addActionListener(new StartButtonListener());
+		
 		for (int i=LBLNEWLABEL_NUM-1; i>=0; i--)
 		{
 			Jlabel[i].setBounds(300 + i*CARD_WIDTH/2, 840, CARD_WIDTH, CARD_HIGHT);
@@ -161,17 +112,24 @@ public class MainForm extends JFrame {
 				Jlabel[i].setHorizontalAlignment(SwingConstants.CENTER);
 			}
 		}
-		
-		//開始ボタンクリックイベント
-		btnNewBotton.addActionListener(new StartButtonListener());	
 	}
+	
+	public class StartButtonListener implements ActionListener{
+		public void actionPerformed(ActionEvent e){
+			btnNewBotton.setVisible(false);
+			cardList = display.SelectCard();
+			ScreenUpdate();
+		}
+		
+	}
+
 
 	public void ScreenUpdate()
 	{	
 		int count = 0;
-		for (int i=DisplayCard.DisplayArea[0]; i<DisplayCard.DisplayArea[1]; i++)
+		for (int i=Calculation.Aear(cardList.size()); i<Calculation.Aear(cardList.size()) + cardList.size(); i++)
 		{			
-			img = new ImageIcon(Translation.TranslationPicture(DisplayCard.cardList.get(count)));
+			img = new ImageIcon(Translation.TranslationPicture(cardList.get(count)));
 			img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
 			Jlabel[i].setVisible(true);
 			Jlabel[i].setIcon(img);		

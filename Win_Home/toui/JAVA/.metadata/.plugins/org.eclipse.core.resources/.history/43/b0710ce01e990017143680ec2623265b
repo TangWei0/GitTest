@@ -6,7 +6,7 @@ public class DisplayCard
 {
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	ArrayList<Integer> cardDefault = new ArrayList<Integer>();
-	public int[] DisplayArea = new int[2];
+	public int DisplayArea = new int[2];
 	Calculation Calculation = new Calculation();
 	Translation Translation = new Translation();
 	

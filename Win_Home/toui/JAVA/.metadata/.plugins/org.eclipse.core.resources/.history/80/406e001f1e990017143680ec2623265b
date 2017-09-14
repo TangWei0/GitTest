@@ -17,8 +17,7 @@ public class DisplayCard
 	{
 		CardDefault();
 		SubCard();
-		DisplayArea[0] = Calculation.Area(CARD_INITIAL);
-		DisplayArea[1] = DisplayArea[0] + CARD_INITIAL ;
+		DisplayArea[0] = Calculation.Area(cardList);
 	}
 	
 	void CardDefault()

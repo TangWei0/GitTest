@@ -6,7 +6,7 @@ public class DisplayCard
 {
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	ArrayList<Integer> cardDefault = new ArrayList<Integer>();
-	public int[] DisplayArea = new int[2];
+	public int DisplayArea;
 	Calculation Calculation = new Calculation();
 	Translation Translation = new Translation();
 	
@@ -17,8 +17,8 @@ public class DisplayCard
 	{
 		CardDefault();
 		SubCard();
-		DisplayArea[0] = Calculation.Area(CARD_INITIAL);
-		DisplayArea[1] = DisplayArea[0] + CARD_INITIAL ;
+		DisplayArea = Calculation.Area(CARD_INITIAL);
+		DisplayArea[1] = DisplayArea[0]  ;
 	}
 	
 	void CardDefault()
