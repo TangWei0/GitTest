@@ -1,14 +1,19 @@
 package jp.co.doraxdora.form;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.awt.Font;
+import java.awt.Color;
 
 public class MainForm extends JFrame {
 
@@ -17,8 +22,14 @@ public class MainForm extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	static int LBLNEWLABEL_NUM = 20;
+	static int CARD_WIDTH = 120;
+	static int CARD_HIGHT = 150;
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
+	
+	private ImageIcon img;
+	
 	JPanel contentPane;
+	JButton btnNewBotton = new JButton("\u958B\u3000\u3000\u59CB");
 	JLabel lblNewLabel_1 = new JLabel("");
 	JLabel lblNewLabel_2 = new JLabel("");
 	JLabel lblNewLabel_3 = new JLabel("");
@@ -73,21 +84,28 @@ public class MainForm extends JFrame {
 		cardList = display.SelectCard();
 				
 		SetScreen();
-		ScreenUpdate();
+		//ScreenUpdate();
 	}
 
 	public void SetScreen()
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1024, 768);
+		setBounds(0, 0, 1920, 1080);
 		contentPane = new JPanel();
+		contentPane.setForeground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		for (int i=19; i>=0; i--)
+		btnNewBotton.setForeground(Color.RED);
+		btnNewBotton.setFont(new Font("‚l‚r ‚oƒSƒVƒbƒN", Font.BOLD | Font.ITALIC, 20));	
+		btnNewBotton.setBounds(923, 501, 153, 68);
+		btnNewBotton.setVisible(true);
+		contentPane.add(btnNewBotton);
+		
+		for (int i=LBLNEWLABEL_NUM-1; i>=0; i--)
 		{
-			Jlabel[i].setBounds(50 + i*40, 600, 80, 100);
+			Jlabel[i].setBounds(300 + i*CARD_WIDTH/2, 840, CARD_WIDTH, CARD_HIGHT);
 			Jlabel[i].setVisible(false);
 			contentPane.add(Jlabel[i]);
 			if (i == 10)
@@ -102,9 +120,10 @@ public class MainForm extends JFrame {
 		int count = 0;
 		for (int i=Calculation.Aear(cardList.size()); i<Calculation.Aear(cardList.size()) + cardList.size(); i++)
 		{			
+			img = new ImageIcon(Translation.TranslationPicture(cardList.get(count)));
+			img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
 			Jlabel[i].setVisible(true);
-			System.out.println(Translation.TranslationPicture(cardList.get(count)));
-			Jlabel[i].setIcon(new ImageIcon(Translation.TranslationPicture(cardList.get(count))));
+			Jlabel[i].setIcon(img);		
 			count++;
 		}
 	}
