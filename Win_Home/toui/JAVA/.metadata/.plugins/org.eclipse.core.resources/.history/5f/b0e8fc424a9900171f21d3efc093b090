@@ -29,6 +29,7 @@ public class Calculation {
 	public int ClickArea(int x, int y)
 	{
 		int ClickArea = -1;
+		switch 
 		
 		return ClickArea; 
 	}

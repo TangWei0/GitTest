@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -17,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.util.ArrayList;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -33,6 +33,7 @@ public class MainForm extends JFrame {
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	
 	private ImageIcon img;
+	
 	JPanel contentPane;
 	JButton btnNewBotton = new JButton("\u958B\u3000\u3000\u59CB");
 	JLabel lblNewLabel_1 = new JLabel("");
@@ -85,10 +86,9 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm() {
-		System.out.println(Frame.WIDTH);
-		System.out.println(Frame.HEIGHT);
+		
 		SetScreen();
-
+		
 		//マウス監視
 		this.addMouseListener(new MyMouseListener());
 	}
@@ -109,12 +109,13 @@ public class MainForm extends JFrame {
 			int x=e.getX(); 
 			int y=e.getY(); 
 			
-			Dimension d = getSize();
+			
 			String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
 			System.out.println(str);
 			
-			
-			
+			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+			System.out.println(mousePoint.x);
+			System.out.println(mousePoint.y);
 			if (y>=800 && y<=950)
 			{
 				
@@ -157,14 +158,13 @@ public class MainForm extends JFrame {
 		contentPane.setForeground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		//this.setUndecorated(true);
+		contentPane.setLayout(null);
 		
 		//開始ボタン設置
-		btnNewBotton.setBounds(923, 501, 153, 68);
 		btnNewBotton.setForeground(Color.RED);
-		btnNewBotton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
+		btnNewBotton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));	
+		btnNewBotton.setBounds(923, 501, 153, 68);
 		btnNewBotton.setVisible(true);
-		contentPane.setLayout(null);
 		contentPane.add(btnNewBotton);
 		
 		//トランプカード設定

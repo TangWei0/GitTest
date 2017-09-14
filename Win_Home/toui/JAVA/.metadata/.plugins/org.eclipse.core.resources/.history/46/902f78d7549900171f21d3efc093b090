@@ -85,8 +85,7 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm() {
-		System.out.println(Frame.WIDTH);
-		System.out.println(Frame.HEIGHT);
+		
 		SetScreen();
 
 		//マウス監視
@@ -114,7 +113,8 @@ public class MainForm extends JFrame {
 			System.out.println(str);
 			
 			
-			
+			System.out.println(Frame.WIDTH);
+			System.out.println(Frame.HEIGHT);
 			if (y>=800 && y<=950)
 			{
 				
