@@ -2,24 +2,19 @@ package jp.co.doraxdora.form;
 
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.util.ArrayList;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Color;
-import java.awt.Dimension;
 
 public class MainForm extends JFrame {
 
@@ -33,29 +28,29 @@ public class MainForm extends JFrame {
 	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	
 	private ImageIcon img;
-	JPanel contentPane;
-	JButton btnNewBotton = new JButton("\u958B\u3000\u3000\u59CB");
-	JLabel lblNewLabel_1 = new JLabel("");
-	JLabel lblNewLabel_2 = new JLabel("");
-	JLabel lblNewLabel_3 = new JLabel("");
-	JLabel lblNewLabel_4 = new JLabel("");
-	JLabel lblNewLabel_5 = new JLabel("");
-	JLabel lblNewLabel_6 = new JLabel("");
-	JLabel lblNewLabel_7 = new JLabel("");
-	JLabel lblNewLabel_8 = new JLabel("");
-	JLabel lblNewLabel_9 = new JLabel("");
-	JLabel lblNewLabel_10 = new JLabel("");
-	JLabel lblNewLabel_11 = new JLabel("");
-	JLabel lblNewLabel_12 = new JLabel("");
-	JLabel lblNewLabel_13 = new JLabel("");
-	JLabel lblNewLabel_14 = new JLabel("");
-	JLabel lblNewLabel_15 = new JLabel("");
-	JLabel lblNewLabel_16 = new JLabel("");
-	JLabel lblNewLabel_17 = new JLabel("");
-	JLabel lblNewLabel_18 = new JLabel("");
-	JLabel lblNewLabel_19 = new JLabel("");
-	JLabel lblNewLabel_20 = new JLabel("");
-	JLabel Jlabel[] = { lblNewLabel_1, lblNewLabel_2, lblNewLabel_3, lblNewLabel_4, 
+	private JPanel contentPane = new JPanel();
+	private JButton btnNewBotton = new JButton("\u958B\u3000\u3000\u59CB");
+	private JLabel lblNewLabel_1 = new JLabel("");
+	private JLabel lblNewLabel_2 = new JLabel("");
+	private JLabel lblNewLabel_3 = new JLabel("");
+	private JLabel lblNewLabel_4 = new JLabel("");
+	private JLabel lblNewLabel_5 = new JLabel("");
+	private JLabel lblNewLabel_6 = new JLabel("");
+	private JLabel lblNewLabel_7 = new JLabel("");
+	private JLabel lblNewLabel_8 = new JLabel("");
+	private JLabel lblNewLabel_9 = new JLabel("");
+	private JLabel lblNewLabel_10 = new JLabel("");
+	private JLabel lblNewLabel_11 = new JLabel("");
+	private JLabel lblNewLabel_12 = new JLabel("");
+	private JLabel lblNewLabel_13 = new JLabel("");
+	private JLabel lblNewLabel_14 = new JLabel("");
+	private JLabel lblNewLabel_15 = new JLabel("");
+	private JLabel lblNewLabel_16 = new JLabel("");
+	private JLabel lblNewLabel_17 = new JLabel("");
+	private JLabel lblNewLabel_18 = new JLabel("");
+	private JLabel lblNewLabel_19 = new JLabel("");
+	private JLabel lblNewLabel_20 = new JLabel("");
+	private JLabel Jlabel[] = { lblNewLabel_1, lblNewLabel_2, lblNewLabel_3, lblNewLabel_4, 
 			            lblNewLabel_5, lblNewLabel_6, lblNewLabel_7, lblNewLabel_8, 
 			            lblNewLabel_9, lblNewLabel_10,lblNewLabel_11, lblNewLabel_12, 
 			            lblNewLabel_13, lblNewLabel_14, lblNewLabel_15, lblNewLabel_16, 
@@ -73,7 +68,9 @@ public class MainForm extends JFrame {
 			public void run() {
 				try {
 					MainForm frame = new MainForm();
+					frame.setLayout(null);
 					frame.setVisible(true);
+					frame.setResizable(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -85,12 +82,11 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm() {
-		System.out.println(Frame.WIDTH);
-		System.out.println(Frame.HEIGHT);
+		
 		SetScreen();
 
 		//マウス監視
-		this.addMouseListener(new MyMouseListener());
+		contentPane.addMouseListener(new MyMouseListener());
 	}
 	
 	//開始ボタンクリック事件
@@ -106,10 +102,11 @@ public class MainForm extends JFrame {
 		
 		//マウスクリック事件
 		public void mouseClicked(MouseEvent e){
+			System.out.println(e.getSource());
+
 			int x=e.getX(); 
 			int y=e.getY(); 
 			
-			Dimension d = getSize();
 			String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
 			System.out.println(str);
 			
@@ -150,21 +147,28 @@ public class MainForm extends JFrame {
 	
 	public void SetScreen()
 	{
+		//Container cont = getContentPane();
+
+		
+
+		 
 		//画面設置
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1920, 1080);
-		contentPane = new JPanel();
+		
+		
 		contentPane.setForeground(Color.BLACK);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
 		//this.setUndecorated(true);
+		System.out.println(contentPane.getSize());
 		
 		//開始ボタン設置
 		btnNewBotton.setBounds(923, 501, 153, 68);
 		btnNewBotton.setForeground(Color.RED);
 		btnNewBotton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
 		btnNewBotton.setVisible(true);
-		contentPane.setLayout(null);
 		contentPane.add(btnNewBotton);
 		
 		//トランプカード設定
@@ -178,6 +182,7 @@ public class MainForm extends JFrame {
 				Jlabel[i].setHorizontalAlignment(SwingConstants.CENTER);
 			}
 		}
+		
 		
 		//開始ボタン監視
 		btnNewBotton.addActionListener(new StartButtonListener());	
