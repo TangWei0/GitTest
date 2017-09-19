@@ -84,7 +84,7 @@ public class MainForm extends JFrame {
 	public MainForm() {
 		
 		SetScreen();
-		
+
 		//マウス監視
 		contentPane.addMouseListener(new MyMouseListener());
 	}
@@ -102,19 +102,19 @@ public class MainForm extends JFrame {
 		
 		//マウスクリック事件
 		public void mouseClicked(MouseEvent e){
+			System.out.println(e.getSource());
+
 			int x=e.getX(); 
 			int y=e.getY(); 
 			
-			//String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
+			String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
+			System.out.println(str);
+			
+			
+			
 			if (y>=800 && y<=950)
 			{
-				if (x >= 300 && x<= 1560)
-				{
-					
-						System.out.println((x-300)/60);
-					
-
-				}
+				
 			}
 		}
 
@@ -146,15 +146,23 @@ public class MainForm extends JFrame {
 
 	
 	public void SetScreen()
-	{	 
+	{
+		//Container cont = getContentPane();
+
+		
+
+		 
 		//画面設置
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1920, 1080);
 		
-		//容器设置
+		
 		contentPane.setForeground(Color.BLACK);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		//this.setUndecorated(true);
+		System.out.println(contentPane.getSize());
 		
 		//開始ボタン設置
 		btnNewBotton.setBounds(923, 501, 153, 68);
@@ -174,6 +182,7 @@ public class MainForm extends JFrame {
 				Jlabel[i].setHorizontalAlignment(SwingConstants.CENTER);
 			}
 		}
+		
 		
 		//開始ボタン監視
 		btnNewBotton.addActionListener(new StartButtonListener());	

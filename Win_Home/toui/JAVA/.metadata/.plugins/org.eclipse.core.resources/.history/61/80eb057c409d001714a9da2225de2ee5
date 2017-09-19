@@ -173,6 +173,7 @@ public class MainForm extends JFrame {
 			{
 				Jlabel[i].setHorizontalAlignment(SwingConstants.CENTER);
 			}
+			//System.out.println(Jlabel[i].getLocation().x);
 		}
 		
 		//開始ボタン監視

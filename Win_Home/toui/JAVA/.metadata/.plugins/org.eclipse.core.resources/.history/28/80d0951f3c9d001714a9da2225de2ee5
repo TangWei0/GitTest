@@ -105,15 +105,12 @@ public class MainForm extends JFrame {
 			int x=e.getX(); 
 			int y=e.getY(); 
 			
-			//String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
+			String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
 			if (y>=800 && y<=950)
 			{
-				if (x >= 300 && x<= 1560)
+				if (Jlabel[(x-300)/60].isVisible() == true )
 				{
-					
-						System.out.println((x-300)/60);
-					
-
+					System.out.println((x-300)/60);
 				}
 			}
 		}
