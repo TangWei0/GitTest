@@ -21,8 +21,15 @@ public class Calculation {
 		return 0;
 	}
 
-	public int Aear(int Date)
+	public int Area(int Date)
 	{
 		return (int) Math.ceil((double)(Date + MainForm.LBLNEWLABEL_NUM)/2) - Date;
+	}
+	
+	public int ClickArea(int x, int y)
+	{
+		int ClickArea = -1;
+		
+		return ClickArea; 
 	}
 }

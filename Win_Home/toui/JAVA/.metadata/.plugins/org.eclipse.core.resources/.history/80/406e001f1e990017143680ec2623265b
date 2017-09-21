@@ -1,0 +1,42 @@
+package jp.co.doraxdora.form;
+
+import java.util.ArrayList;
+
+public class DisplayCard 
+{
+	ArrayList<Integer> cardList = new ArrayList<Integer>();
+	ArrayList<Integer> cardDefault = new ArrayList<Integer>();
+	public int[] DisplayArea = new int[2];
+	Calculation Calculation = new Calculation();
+	Translation Translation = new Translation();
+	
+	static int CARD_INITIAL =17;
+	static int CARD_TOTAL = 54;
+	
+	void StartCard()
+	{
+		CardDefault();
+		SubCard();
+		DisplayArea[0] = Calculation.Area(cardList);
+	}
+	
+	void CardDefault()
+	{
+		cardDefault.clear();
+		for (int i=1; i<=CARD_TOTAL; i++)
+		{
+			cardDefault.add(i);
+		}
+	}
+
+	void SubCard()
+	{
+		for (int i=1; i<=CARD_INITIAL; i++)
+		{
+			int selectIndex = (int)(Math.random() * cardDefault.size());
+			cardList.add(Calculation.Search(cardList, cardDefault.get(selectIndex)),cardDefault.get(selectIndex));
+			cardDefault.remove(selectIndex);
+		}
+	}
+
+}
