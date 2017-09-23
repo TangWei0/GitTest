@@ -25,12 +25,11 @@ public class MainForm extends JFrame {
 	static int LBLNEWLABEL_NUM = 20;
 	static int CARD_WIDTH = 120;
 	static int CARD_HIGHT = 150;
-	private int SelectCardCount = 0;
+	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	
 	private ImageIcon img;
 	private JPanel contentPane = new JPanel();
-	private JButton StartButton = new JButton("开　　始");
-	private JButton OutButton = new JButton("出　　牌");
+	private JButton btnNewBotton = new JButton("\u958B\u3000\u3000\u59CB");
 	private JLabel lblNewLabel_1 = new JLabel("");
 	private JLabel lblNewLabel_2 = new JLabel("");
 	private JLabel lblNewLabel_3 = new JLabel("");
@@ -58,6 +57,7 @@ public class MainForm extends JFrame {
 			            lblNewLabel_17, lblNewLabel_18, lblNewLabel_19, lblNewLabel_20};
 	
 	DisplayCard DisplayCard = new DisplayCard();
+	Calculation Calculation = new Calculation();
 	Translation Translation = new Translation();
 
 	/**
@@ -68,7 +68,7 @@ public class MainForm extends JFrame {
 			public void run() {
 				try {
 					MainForm frame = new MainForm();
-					frame.getContentPane().setLayout(null);
+					frame.setLayout(null);
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -90,18 +90,11 @@ public class MainForm extends JFrame {
 	//開始ボタンクリック事件
 	public class StartButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			StartButton.setVisible(false);
+			btnNewBotton.setVisible(false);
 			DisplayCard.StartCard();
 			ScreenUpdate();	
 		}		
 	}
-	
-	//出牌ボタンクリック事件
-		public class OutButtonListener implements ActionListener{
-			public void actionPerformed(ActionEvent e){
-				
-			}		
-		}
 	
 	//マウスクリック事件
 	public class MyMouseListener implements MouseListener{
@@ -113,18 +106,11 @@ public class MainForm extends JFrame {
 					if (Jlabel[i].getLocation().getY() == 750)
 					{
 						Jlabel[i].setLocation(300 + i*CARD_WIDTH/2, 800);
-						SelectCardCount--;
 					}
 					else if (Jlabel[i].getLocation().getY() == 800)
 					{
 						Jlabel[i].setLocation(300 + i*CARD_WIDTH/2, 750);
-						SelectCardCount++;
 					}
-					if (SelectCardCount > 0)
-					{
-						OutButton.setVisible(true);
-					}
-					else OutButton.setVisible(false);
 					return;
 				}
 			}
@@ -169,12 +155,11 @@ public class MainForm extends JFrame {
 		contentPane.setLayout(null);
 		
 		//開始ボタン設置
-		StartButton.setBounds(900, 450, 120, 80);
-		StartButton.setForeground(Color.RED);
-		StartButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
-		StartButton.setVisible(true);
-		contentPane.add(StartButton);
-		StartButton.addActionListener(new StartButtonListener());	
+		btnNewBotton.setBounds(923, 501, 153, 68);
+		btnNewBotton.setForeground(Color.RED);
+		btnNewBotton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
+		btnNewBotton.setVisible(true);
+		contentPane.add(btnNewBotton);
 		
 		//トランプカード設定
 		for (int i=LBLNEWLABEL_NUM-1; i>=0; i--)
@@ -189,13 +174,8 @@ public class MainForm extends JFrame {
 			Jlabel[i].addMouseListener(new MyMouseListener());
 		}
 		
-		//出牌ボタン設置
-		OutButton.setBounds(870, 650, 180, 50);
-		OutButton.setForeground(Color.RED);
-		OutButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
-		OutButton.setVisible(false);
-		contentPane.add(OutButton);
-		OutButton.addActionListener(new OutButtonListener());
+		//開始ボタン監視
+		btnNewBotton.addActionListener(new StartButtonListener());	
 	}
 
 	public void ScreenUpdate()

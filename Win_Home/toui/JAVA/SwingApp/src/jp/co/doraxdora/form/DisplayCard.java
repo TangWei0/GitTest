@@ -13,6 +13,7 @@ public class DisplayCard
 	static int CARD_INITIAL =17;
 	static int CARD_TOTAL = 54;
 	
+	//开始新一轮游戏
 	void StartCard()
 	{
 		CardDefault();
@@ -21,6 +22,7 @@ public class DisplayCard
 		DisplayArea[1] = DisplayArea[0] + CARD_INITIAL ;
 	}
 	
+	//分牌前所有牌初期化
 	void CardDefault()
 	{
 		cardDefault.clear();
@@ -30,6 +32,7 @@ public class DisplayCard
 		}
 	}
 
+	//每人分牌17张
 	void SubCard()
 	{
 		for (int i=1; i<=CARD_INITIAL; i++)

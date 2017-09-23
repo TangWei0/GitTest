@@ -26,11 +26,12 @@ public class MainForm extends JFrame {
 	static int CARD_WIDTH = 120;
 	static int CARD_HIGHT = 150;
 	private int SelectCardCount = 0;
+	ArrayList<Integer> cardList = new ArrayList<Integer>();
 	
 	private ImageIcon img;
 	private JPanel contentPane = new JPanel();
-	private JButton StartButton = new JButton("开　　始");
-	private JButton OutButton = new JButton("出　　牌");
+	private JButton StartButton = new JButton("\u958B\u3000\u3000\u59CB");
+	private JButton OutButton = new JButton("\u958B\u3000\u3000\u59CB");
 	private JLabel lblNewLabel_1 = new JLabel("");
 	private JLabel lblNewLabel_2 = new JLabel("");
 	private JLabel lblNewLabel_3 = new JLabel("");
@@ -58,6 +59,7 @@ public class MainForm extends JFrame {
 			            lblNewLabel_17, lblNewLabel_18, lblNewLabel_19, lblNewLabel_20};
 	
 	DisplayCard DisplayCard = new DisplayCard();
+	Calculation Calculation = new Calculation();
 	Translation Translation = new Translation();
 
 	/**
@@ -68,7 +70,7 @@ public class MainForm extends JFrame {
 			public void run() {
 				try {
 					MainForm frame = new MainForm();
-					frame.getContentPane().setLayout(null);
+					frame.setLayout(null);
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -169,7 +171,7 @@ public class MainForm extends JFrame {
 		contentPane.setLayout(null);
 		
 		//開始ボタン設置
-		StartButton.setBounds(900, 450, 120, 80);
+		StartButton.setBounds(923, 501, 153, 68);
 		StartButton.setForeground(Color.RED);
 		StartButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
 		StartButton.setVisible(true);
@@ -190,7 +192,7 @@ public class MainForm extends JFrame {
 		}
 		
 		//出牌ボタン設置
-		OutButton.setBounds(870, 650, 180, 50);
+		OutButton.setBounds(923, 501, 153, 68);
 		OutButton.setForeground(Color.RED);
 		OutButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
 		OutButton.setVisible(false);
