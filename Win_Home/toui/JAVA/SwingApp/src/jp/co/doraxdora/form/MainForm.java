@@ -58,8 +58,7 @@ public class MainForm extends JFrame {
 			            lblNewLabel_17, lblNewLabel_18, lblNewLabel_19, lblNewLabel_20};
 	
 	DisplayCard DisplayCard = new DisplayCard();
-	Translation Translation = new Translation();
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -113,18 +112,24 @@ public class MainForm extends JFrame {
 					if (Jlabel[i].getLocation().getY() == 750)
 					{
 						Jlabel[i].setLocation(300 + i*CARD_WIDTH/2, 800);
+						DisplayCard.OutCreaseCard(i, "Reduce");
 						SelectCardCount--;
 					}
 					else if (Jlabel[i].getLocation().getY() == 800)
 					{
 						Jlabel[i].setLocation(300 + i*CARD_WIDTH/2, 750);
+						DisplayCard.OutCreaseCard(i, "Crease");
 						SelectCardCount++;
 					}
-					if (SelectCardCount > 0)
+					if (SelectCardCount == 0)
 					{
-						OutButton.setVisible(true);
+						OutButton.setVisible(false);
 					}
-					else OutButton.setVisible(false);
+					else
+					{
+						OutButton.setVisible(true); 
+					}
+					
 					return;
 				}
 			}
@@ -202,11 +207,11 @@ public class MainForm extends JFrame {
 	{	
 		int count = 0;
 		for (int i=DisplayCard.DisplayArea[0]; i<DisplayCard.DisplayArea[1]; i++)
-		{			
-			img = new ImageIcon(Translation.TranslationPicture(DisplayCard.cardList.get(count)));
+		{
+			img = new ImageIcon(DisplayCard.imagePathList.get(count));
 			img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
 			Jlabel[i].setVisible(true);
-			Jlabel[i].setIcon(img);		
+			Jlabel[i].setIcon(img);
 			count++;
 		}
 	}
