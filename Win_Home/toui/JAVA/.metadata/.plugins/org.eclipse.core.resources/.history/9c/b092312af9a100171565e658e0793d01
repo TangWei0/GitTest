@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.Color;
 
@@ -127,6 +128,7 @@ public class MainForm extends JFrame {
 	//出牌ボタンクリック事件
 		public class OutButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e){
+				//Todo 出牌函数
 				DisplayCard.OutCard();
 				//Todo 更新图像
 			}		

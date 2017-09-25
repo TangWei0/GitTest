@@ -7,7 +7,6 @@ public class DisplayCard
 	ArrayList<Integer> cardDefault = new ArrayList<Integer>();
 	ArrayList<Integer> cardList = new ArrayList<Integer>();	
 	ArrayList<Integer> selectCardList = new ArrayList<Integer>();
-	ArrayList<Integer> outCardList = new ArrayList<Integer>();
 	
 	ArrayList<String> imagePathList = new ArrayList<String>();
 	
@@ -29,28 +28,13 @@ public class DisplayCard
 	}
 	
 	//³öÅÆ
-	@SuppressWarnings("unchecked")
 	public void OutCard()
 	{
-		outCardList.clear();
-		outCardList = (ArrayList<Integer>) selectCardList.clone();
-		
-		for (int i=0;i<selectCardList.size();i++)
-		{
-			System.out.print(selectCardList.get(i));
-		}
-		
-		System.out.println();
-		
-		for (int i=0;i<outCardList.size();i++)
-		{
-			System.out.print(outCardList.get(i));
-		}
 		
 	}
 	
 	//³öÅÆÑ¡Ôñ
-	public void OutSelectCard(int index , String selectSwitch)
+	public void OutCreaseCard(int index , String selectSwitch)
 	{
 		switch (selectSwitch)
 		{

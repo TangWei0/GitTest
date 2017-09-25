@@ -29,7 +29,6 @@ public class DisplayCard
 	}
 	
 	//³öÅÆ
-	@SuppressWarnings("unchecked")
 	public void OutCard()
 	{
 		outCardList.clear();
