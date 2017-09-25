@@ -1,0 +1,135 @@
+“üŒû?
+
+import java.util.*;
+public class PalyCard
+{ 
+    public static void main(String[] args) 
+    { 
+        Game gm=new Game(); 
+        gm.setCards();//?æ?”v 
+        gm.shuffle();//ô”v 
+        gm.setPlayers();//?æ—p? 
+        gm.dealCards();//?”v 
+        gm.playCards();//?nŸà? 
+        gm.showCards();//“W¦?”v 
+    } 
+}
+
+class Game 
+{ 
+    private List<Card> cards; 
+    private List<Player> players; 
+    Game()
+    { 
+        cards=new ArrayList<Card>(); 
+        players=new ArrayList<Player>(); 
+    } 
+    //‰n‰»?”v
+    void setCards()
+    { 
+        System.out.println("-----------?Œš?”v--------------"); 
+        String[] suits={"üK“","?“","”~‰Ô","•û•Ğ"};//‰ÔF 
+        String[] numbers={"2","3","4","5","6","7","8","9","10", "J","Q","K","A"};//“_” 
+        for(int i=0;i<suits.length;i++)
+        { 
+            for(int j=0;j<numbers.length;j++)
+            { 
+                cards.add(new Card(suits[i],numbers[j]));
+            } 
+        } 
+        System.out.println("-----------?”v?Œš¬Œ÷I--------------"); 
+        System.out.println(cards); } //ô”vC‘æˆê˜¢?Û‡“üŠ÷ˆÊ’u 
+        void shuffle()
+        { 
+            System.out.println("-----------?nô”vI--------------"); 
+            Random random=new Random(); 
+            for(int i=0;i<cards.size();i++)
+            {
+                //ô”vŸ”‰ä•Ö?“IC–v—L‰ÈŠwˆË˜ 
+                Card c=cards.get(0);//?æ‘æˆê˜¢Œ³‘f 
+                cards.add(random.nextInt(cards.size()),c);//«‘æˆê˜¢Œ³‘fÄŸ“Y‰Áİ”CˆÓˆÊ’u 
+                cards.remove(0);//ˆÚœ‘æˆê˜¢Œ³‘f 
+            } 
+            System.out.println("-----------ô”v?‘©I--------------"); 
+            
+            //System.out.println(cards); 
+        } 
+        
+        //‰n‰»Šß‰Æ2l 
+        void setPlayers()
+        { 
+            Scanner in=new Scanner(System.in); 
+            int i=1; 
+            do
+            { 
+                System.out.println("??“ü‘æ"+i+"ˆÊŠß‰Æ“IID˜a©–¼:"); 
+                while(true)
+                { 
+                    try
+                    {
+                        System.out.println("??“üID:"); 
+                        int id=in.nextInt(); 
+                        if(players.contains(new Player(id+"",null))) throw new Exception();//ID›ß‘¶İCeo?í 
+                        System.out.println("??“üŠß‰Æ©–¼:"); 
+                        String name=in.next(); 
+                        players.add(new Player(id+"",name)); 
+                        break;//VŒšM‘§¬Œ÷C’µoz? 
+                    }catch(InputMismatchException e){ 
+                        in=new Scanner(System.in);//?˜¢•K?—LC•s‘RA¥€z?—¹ 
+                        System.out.println("??“ü®”?Œ^“IID!"); 
+                    }catch(Exception e){ 
+                        System.out.println("?ID›ß‘¶İC?dV?“üI"); 
+                    } 
+                } 
+                i++; 
+            }while(i<3); 
+             
+            for(int j=0;j<players.size();j++)
+            { 
+                System.out.println("---?Œ}Šß‰ÆF"+players.get(j).name); 
+            } 
+        } 
+        
+        //?”v 
+        void dealCards()
+        { 
+            System.out.println("-----------?n?”vI--------------"); 
+            for(int i=0;i<2;i++)
+            {
+                //?l?”v”i 
+                for(int j=0;j<players.size();j++)
+                {
+                    //Šß‰Æ”j
+                    System.out.println("---Šß‰Æ"+players.get(j).name+"-\”v"); 
+                    players.get(j).setCards(cards.get(0)); 
+                    cards.remove(0); 
+                }
+            }
+            System.out.println("-----------?”v?‘©I--------------"); 
+        } 
+        
+        //”ä??”v‘å¬ 
+        void playCards()
+        { 
+            System.out.println("-----------Ÿà??nI--------------"); 
+            for(int i=0;i<players.size();i++)
+            { 
+                Collections.sort(players.get(i).cards); 
+                System.out.println("Šß‰ÆF"+players.get(i).name+"Å‘å“Iè”v?"+players.get(i).cards.get(1)); 
+            } 
+             
+            int judge=players.get(0).cards.get(1).compareTo(players.get(1).cards.get(1)); 
+            String name=judge>0 ? players.get(0).name:players.get(1).name;//ğŒ?‹åC‘Š“–˜°if...else 
+            System.out.println("-----------Šß‰ÆF"+name+"??I--------------"); 
+        } 
+         
+        //“W¦è”v 
+        void showCards()
+        { 
+             System.out.println("-----------Šß‰Æè”v“W¦--------------"); 
+             System.out.println(players.get(0)+""+players.get(0).cards); 
+             System.out.println(players.get(1)+""+players.get(1).cards); 
+        } 
+    }
+}
+
