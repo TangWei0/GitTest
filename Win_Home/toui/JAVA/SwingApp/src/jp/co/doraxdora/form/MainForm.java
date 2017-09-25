@@ -25,11 +25,12 @@ public class MainForm extends JFrame {
 	static int LBLNEWLABEL_NUM = 20;
 	static int CARD_WIDTH = 120;
 	static int CARD_HIGHT = 150;
-	ArrayList<Integer> cardList = new ArrayList<Integer>();
+	private int SelectCardCount = 0;
 	
 	private ImageIcon img;
 	private JPanel contentPane = new JPanel();
-	private JButton btnNewBotton = new JButton("\u958B\u3000\u3000\u59CB");
+	private JButton StartButton = new JButton("开　　始");
+	private JButton OutButton = new JButton("出　　牌");
 	private JLabel lblNewLabel_1 = new JLabel("");
 	private JLabel lblNewLabel_2 = new JLabel("");
 	private JLabel lblNewLabel_3 = new JLabel("");
@@ -57,9 +58,7 @@ public class MainForm extends JFrame {
 			            lblNewLabel_17, lblNewLabel_18, lblNewLabel_19, lblNewLabel_20};
 	
 	DisplayCard DisplayCard = new DisplayCard();
-	Calculation Calculation = new Calculation();
-	Translation Translation = new Translation();
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -68,7 +67,7 @@ public class MainForm extends JFrame {
 			public void run() {
 				try {
 					MainForm frame = new MainForm();
-					frame.setLayout(null);
+					frame.getContentPane().setLayout(null);
 					frame.setVisible(true);
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -85,35 +84,53 @@ public class MainForm extends JFrame {
 		
 		SetScreen();
 		
-		//マウス監視
-		contentPane.addMouseListener(new MyMouseListener());
 	}
 	
 	//開始ボタンクリック事件
 	public class StartButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			btnNewBotton.setVisible(false);
+			StartButton.setVisible(false);
 			DisplayCard.StartCard();
 			ScreenUpdate();	
 		}		
 	}
 	
+	//出牌ボタンクリック事件
+		public class OutButtonListener implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				
+			}		
+		}
+	
+	//マウスクリック事件
 	public class MyMouseListener implements MouseListener{
-		
-		//マウスクリック事件
 		public void mouseClicked(MouseEvent e){
-			int x=e.getX(); 
-			int y=e.getY(); 
-			
-			//String str="鼠标当前点击位置的坐标是(" + x + "," + y+")";
-			if (y>=800 && y<=950)
-			{
-				if (x >= 300 && x<= 1560)
+			for (int i=DisplayCard.DisplayArea[0];i<DisplayCard.DisplayArea[1];i++)
+			{				
+				if(e.getSource() == Jlabel[i])
 				{
+					if (Jlabel[i].getLocation().getY() == 750)
+					{
+						Jlabel[i].setLocation(300 + i*CARD_WIDTH/2, 800);
+						DisplayCard.OutCreaseCard(i, "Reduce");
+						SelectCardCount--;
+					}
+					else if (Jlabel[i].getLocation().getY() == 800)
+					{
+						Jlabel[i].setLocation(300 + i*CARD_WIDTH/2, 750);
+						DisplayCard.OutCreaseCard(i, "Crease");
+						SelectCardCount++;
+					}
+					if (SelectCardCount == 0)
+					{
+						OutButton.setVisible(false);
+					}
+					else
+					{
+						OutButton.setVisible(true); 
+					}
 					
-						System.out.println((x-300)/60);
-					
-
+					return;
 				}
 			}
 		}
@@ -157,11 +174,12 @@ public class MainForm extends JFrame {
 		contentPane.setLayout(null);
 		
 		//開始ボタン設置
-		btnNewBotton.setBounds(923, 501, 153, 68);
-		btnNewBotton.setForeground(Color.RED);
-		btnNewBotton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
-		btnNewBotton.setVisible(true);
-		contentPane.add(btnNewBotton);
+		StartButton.setBounds(900, 450, 120, 80);
+		StartButton.setForeground(Color.RED);
+		StartButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
+		StartButton.setVisible(true);
+		contentPane.add(StartButton);
+		StartButton.addActionListener(new StartButtonListener());	
 		
 		//トランプカード設定
 		for (int i=LBLNEWLABEL_NUM-1; i>=0; i--)
@@ -173,21 +191,27 @@ public class MainForm extends JFrame {
 			{
 				Jlabel[i].setHorizontalAlignment(SwingConstants.CENTER);
 			}
+			Jlabel[i].addMouseListener(new MyMouseListener());
 		}
 		
-		//開始ボタン監視
-		btnNewBotton.addActionListener(new StartButtonListener());	
+		//出牌ボタン設置
+		OutButton.setBounds(870, 650, 180, 50);
+		OutButton.setForeground(Color.RED);
+		OutButton.setFont(new Font("ＭＳ Ｐゴシック", Font.BOLD | Font.ITALIC, 20));
+		OutButton.setVisible(false);
+		contentPane.add(OutButton);
+		OutButton.addActionListener(new OutButtonListener());
 	}
 
 	public void ScreenUpdate()
 	{	
 		int count = 0;
 		for (int i=DisplayCard.DisplayArea[0]; i<DisplayCard.DisplayArea[1]; i++)
-		{			
-			img = new ImageIcon(Translation.TranslationPicture(DisplayCard.cardList.get(count)));
+		{
+			img = new ImageIcon(DisplayCard.imagePathList.get(count));
 			img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
 			Jlabel[i].setVisible(true);
-			Jlabel[i].setIcon(img);		
+			Jlabel[i].setIcon(img);
 			count++;
 		}
 	}
