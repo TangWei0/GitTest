@@ -1,6 +1,0 @@
-package jp.co.doraxdora.form;
-
-public class Translation {
-	
-	public String rootPath = System.getProperty("user.dir");
-}

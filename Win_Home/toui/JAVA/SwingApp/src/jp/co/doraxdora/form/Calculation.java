@@ -26,10 +26,5 @@ public class Calculation {
 		return (int) Math.ceil((double)(Date + MainForm.LBLNEWLABEL_NUM)/2) - Date;
 	}
 	
-	public int ClickArea(int x, int y)
-	{
-		int ClickArea = -1;
-		
-		return ClickArea; 
-	}
+
 }
