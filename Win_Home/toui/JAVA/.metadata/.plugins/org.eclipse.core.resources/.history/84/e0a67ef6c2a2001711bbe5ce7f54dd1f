@@ -38,7 +38,6 @@ public class DisplayCard
 		}
 		myCardPathList = ImagePath(myCardList);
 		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
-		selectCardList.clear();
 	}
 	
 	//³ö¤¹¥«©`¥Éßx’k

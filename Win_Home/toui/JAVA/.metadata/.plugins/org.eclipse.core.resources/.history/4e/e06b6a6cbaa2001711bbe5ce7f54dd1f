@@ -24,21 +24,18 @@ public class DisplayCard
 	{
 		CardDefault();
 		SubCard();
-		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
+		DisplayArea[0] = Calculation.Area(CARD_INITIAL);
+		DisplayArea[1] = -1 ;
 	}
 	
 	//¥«©`¥É³ö¤¹
 	public void OutCard()
 	{
 		outCardList = new ArrayList<Integer>(selectCardList);
-		outCardPathList = ImagePath(outCardList);
 		for (int i=0;i<selectCardList.size();i++)
 		{
 			myCardList.remove(myCardList.indexOf(selectCardList.get(i)));
 		}
-		myCardPathList = ImagePath(myCardList);
-		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
-		selectCardList.clear();
 	}
 	
 	//³ö¤¹¥«©`¥Éßx’k
@@ -76,7 +73,6 @@ public class DisplayCard
 			cardDefault.remove(selectIndex);
 		}
 		myCardPathList = ImagePath(myCardList);
-	
 	}
 	
 	//¥«©`¥É¥¤¥á©`¥¸¥Ñ¥¹

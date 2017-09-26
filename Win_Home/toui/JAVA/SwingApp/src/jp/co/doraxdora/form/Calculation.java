@@ -3,6 +3,7 @@ package jp.co.doraxdora.form;
 import java.util.ArrayList;
 
 public class Calculation {
+	static int cardNum = 20;
 	
 	public int Search(ArrayList<Integer> list, int Date)
 	{
@@ -21,9 +22,22 @@ public class Calculation {
 		return 0;
 	}
 
-	public int Area(int Date)
+	public int[] DisplayArea(int myCardListSize, int outCardListSize)
 	{
-		return (int) Math.ceil((double)(Date + MainForm.LBLNEWLABEL_NUM)/2) - Date;
+		int[] DisplayArea = new int[2];
+		if (myCardListSize != 0)
+		{
+			DisplayArea[0] = (int) Math.ceil((double)(myCardListSize + cardNum)/2) - myCardListSize;
+		}
+		else DisplayArea[0] = -1;
+		
+		if (outCardListSize != 0)
+		{
+			DisplayArea[1] = (int) Math.ceil((double)(outCardListSize + cardNum)/2) - outCardListSize;
+		}
+		else DisplayArea[1] = -1;
+		
+		return DisplayArea;
 	}
 	
 

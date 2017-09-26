@@ -37,8 +37,10 @@ public class DisplayCard
 			myCardList.remove(myCardList.indexOf(selectCardList.get(i)));
 		}
 		myCardPathList = ImagePath(myCardList);
+		System.out.println(outCardList);
+		System.out.println(selectCardList);
+		System.out.println(myCardList);
 		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
-		selectCardList.clear();
 	}
 	
 	//³ö¤¹¥«©`¥Éßx’k

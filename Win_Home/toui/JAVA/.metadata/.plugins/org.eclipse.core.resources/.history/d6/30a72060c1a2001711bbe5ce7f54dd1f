@@ -128,14 +128,14 @@ public class MainForm extends JFrame {
 	public class OutButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e){
 				DisplayCard.OutCard();
-				ScreenUpdate();
+				//　TODO  更新图像
 			}		
 		}
 	
 	//マウスクリック事件
 	public class MyMouseListener implements MouseListener{
 		public void mouseClicked(MouseEvent e){
-			for (int i=DisplayCard.DisplayArea[0]; i<DisplayCard.DisplayArea[0] + DisplayCard.myCardList.size(); i++)
+			for (int i=DisplayCard.DisplayArea[0];i<DisplayCard.DisplayArea[1];i++)
 			{				
 				if(e.getSource() == DisplayMyCard[i])
 				{
@@ -234,53 +234,14 @@ public class MainForm extends JFrame {
 
 	public void ScreenUpdate()
 	{	
-		for (int i=0; i< DisplayMyCard.length; i++)
+		int myCardCount = 0;
+		for (int i=DisplayCard.DisplayArea[0]; i<DisplayCard.DisplayArea[0] + DisplayCard.myCardList.size() ; i++)
 		{
-			DisplayMyCard[i].setLocation(300 + i*CARD_WIDTH/2, 800);
-			if (DisplayCard.DisplayArea[0] == -1)
-			{
-				DisplayMyCard[i].setVisible(false);
-				continue;
-			}
-			else
-			{
-				if (i<DisplayCard.DisplayArea[0] || i >= DisplayCard.DisplayArea[0] + DisplayCard.myCardList.size())
-				{
-					DisplayMyCard[i].setVisible(false);
-					continue;
-				}
-				else
-				{
-					img = new ImageIcon(DisplayCard.myCardPathList.get(i-DisplayCard.DisplayArea[0]));
-					img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
-					DisplayMyCard[i].setVisible(true);
-					DisplayMyCard[i].setIcon(img);
-				}
-			}
-		}
-		
-		for (int j=0; j< DisplayOutCard.length; j++)
-		{
-			if (DisplayCard.DisplayArea[1] == -1)
-			{
-				DisplayOutCard[j].setVisible(false);
-				continue;
-			}
-			else
-			{
-				if (j<DisplayCard.DisplayArea[1] || j >= DisplayCard.DisplayArea[1] + DisplayCard.outCardList.size())
-				{
-					DisplayOutCard[j].setVisible(false);
-					continue;
-				}
-				else
-				{
-					img = new ImageIcon(DisplayCard.outCardPathList.get(j-DisplayCard.DisplayArea[1]));
-					img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
-					DisplayOutCard[j].setVisible(true);
-					DisplayOutCard[j].setIcon(img);
-				}
-			}
+			img = new ImageIcon(DisplayCard.myCardPathList.get(myCardCount));
+			img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
+			DisplayMyCard[i].setVisible(true);
+			DisplayMyCard[i].setIcon(img);
+			myCardCount++;
 		}
 	}
 

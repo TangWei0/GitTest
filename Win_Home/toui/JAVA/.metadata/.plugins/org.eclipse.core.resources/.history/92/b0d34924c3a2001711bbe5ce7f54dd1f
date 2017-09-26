@@ -236,7 +236,6 @@ public class MainForm extends JFrame {
 	{	
 		for (int i=0; i< DisplayMyCard.length; i++)
 		{
-			DisplayMyCard[i].setLocation(300 + i*CARD_WIDTH/2, 800);
 			if (DisplayCard.DisplayArea[0] == -1)
 			{
 				DisplayMyCard[i].setVisible(false);
@@ -275,7 +274,7 @@ public class MainForm extends JFrame {
 				}
 				else
 				{
-					img = new ImageIcon(DisplayCard.outCardPathList.get(j-DisplayCard.DisplayArea[1]));
+					img = new ImageIcon(DisplayCard.myCardPathList.get(j-DisplayCard.DisplayArea[1]));
 					img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
 					DisplayOutCard[j].setVisible(true);
 					DisplayOutCard[j].setIcon(img);

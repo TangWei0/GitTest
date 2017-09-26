@@ -5,12 +5,11 @@ import java.util.ArrayList;
 public class DisplayCard 
 {
 	ArrayList<Integer> cardDefault = new ArrayList<Integer>();
-	ArrayList<Integer> myCardList = new ArrayList<Integer>();	
+	ArrayList<Integer> cardList = new ArrayList<Integer>();	
 	ArrayList<Integer> selectCardList = new ArrayList<Integer>();
 	ArrayList<Integer> outCardList = new ArrayList<Integer>();
 	
-	ArrayList<String> myCardPathList = new ArrayList<String>();
-	ArrayList<String> outCardPathList = new ArrayList<String>();
+	ArrayList<String> imagePathList = new ArrayList<String>();
 	
 	public int[] DisplayArea = new int[2];
 	Calculation Calculation = new Calculation();
@@ -24,39 +23,41 @@ public class DisplayCard
 	{
 		CardDefault();
 		SubCard();
-		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
+		DisplayArea[0] = Calculation.Area(CARD_INITIAL);
+		DisplayArea[1] = DisplayArea[0] + CARD_INITIAL ;
 	}
 	
-	//カード出す
+	//僇乕僪弌偡
+	//@SuppressWarnings("unchecked")
 	public void OutCard()
 	{
+		//outCardList.clear();
+		//outCardList = (ArrayList<Integer>) selectCardList.clone();
 		outCardList = new ArrayList<Integer>(selectCardList);
-		outCardPathList = ImagePath(outCardList);
 		for (int i=0;i<selectCardList.size();i++)
 		{
-			myCardList.remove(myCardList.indexOf(selectCardList.get(i)));
+			cardList.remove(cardList.indexOf(selectCardList.get(i)));
 		}
-		myCardPathList = ImagePath(myCardList);
-		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
-		selectCardList.clear();
+		System.out.println(selectCardList);
+		System.out.println(outCardList);
 	}
 	
-	//出すカード選択
+	//僇乕僪慖戰
 	public void OutSelectCard(int index , String selectSwitch)
 	{
 		switch (selectSwitch)
 		{
 			case "Crease":
-				selectCardList.add(Calculation.Search(selectCardList, myCardList.get(index - DisplayArea[0])),myCardList.get(index - DisplayArea[0]));
+				selectCardList.add(Calculation.Search(selectCardList, cardList.get(index - DisplayArea[0])),cardList.get(index - DisplayArea[0]));
 				break;
 			
 			case "Reduce":
-				selectCardList.remove(selectCardList.indexOf(myCardList.get(index - DisplayArea[0])));
+				selectCardList.remove(selectCardList.indexOf(cardList.get(index - DisplayArea[0])));
 				break;
 		}	
 	}
 	
-	//初期化
+	//僇乕僪弶婜壔
 	public void CardDefault()
 	{
 		cardDefault.clear();
@@ -66,29 +67,26 @@ public class DisplayCard
 		}
 	}
 
-	//カード配る
+	//僇乕僪攝傞
 	public void SubCard()
 	{
 		for (int i=1; i<=CARD_INITIAL; i++)
 		{
 			int selectIndex = (int)(Math.random() * cardDefault.size());
-			myCardList.add(Calculation.Search(myCardList, cardDefault.get(selectIndex)),cardDefault.get(selectIndex));
+			cardList.add(Calculation.Search(cardList, cardDefault.get(selectIndex)),cardDefault.get(selectIndex));
 			cardDefault.remove(selectIndex);
 		}
-		myCardPathList = ImagePath(myCardList);
-	
+		ImagePath(cardList);
 	}
 	
-	//カードイメージパス
-	public ArrayList<String> ImagePath(ArrayList<Integer> list)
+	//僇乕僪幨恀僷僗傪媮傔傞
+	public void ImagePath(ArrayList<Integer> list)
 	{
-		ArrayList<String> imagePathList = new ArrayList<String>();
+		imagePathList.clear();
 		
 		for (int i=0; i<list.size(); i++)
 		{
 			imagePathList.add(Translation.TranslationPicture(list.get(i)));
 		}
-		
-		return imagePathList;
 	}
 }
