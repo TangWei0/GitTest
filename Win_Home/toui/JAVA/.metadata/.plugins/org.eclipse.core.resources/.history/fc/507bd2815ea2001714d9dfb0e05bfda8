@@ -34,10 +34,25 @@ public class DisplayCard
 		outCardList.clear();
 		outCardList = (ArrayList<Integer>) selectCardList.clone();
 		
+		for (int i=0;i<cardList.size();i++)
+		{
+			System.out.print(cardList.get(i) + " ");
+		}
+		
+		System.out.println();
+		
 		for (int i=0;i<selectCardList.size();i++)
 		{
-			cardList.remove(cardList.indexOf(selectCardList.get(i)));
+			System.out.print(selectCardList.get(i) + " ");
 		}
+		
+		System.out.println();
+		
+		for (int i=0;i<outCardList.size();i++)
+		{
+			System.out.print(outCardList.get(i) + " ");
+		}
+		
 	}
 	
 	//カード選択

@@ -18,16 +18,17 @@ public class DisplayCard
 	static int CARD_INITIAL =17;
 	static int CARD_TOTAL = 54;
 	
-	//僎乕儉奐巒
+	//开始新一轮游戏
 	public void StartCard()
 	{
 		CardDefault();
 		SubCard();
+		ImagePath();
 		DisplayArea[0] = Calculation.Area(CARD_INITIAL);
 		DisplayArea[1] = DisplayArea[0] + CARD_INITIAL ;
 	}
 	
-	//僇乕僪弌偡
+	//出牌
 	@SuppressWarnings("unchecked")
 	public void OutCard()
 	{
@@ -36,11 +37,19 @@ public class DisplayCard
 		
 		for (int i=0;i<selectCardList.size();i++)
 		{
-			cardList.remove(cardList.indexOf(selectCardList.get(i)));
+			System.out.print(selectCardList.get(i));
 		}
+		
+		System.out.println();
+		
+		for (int i=0;i<outCardList.size();i++)
+		{
+			System.out.print(outCardList.get(i));
+		}
+		
 	}
 	
-	//僇乕僪慖戰
+	//出牌选择
 	public void OutSelectCard(int index , String selectSwitch)
 	{
 		switch (selectSwitch)
@@ -55,7 +64,7 @@ public class DisplayCard
 		}	
 	}
 	
-	//僇乕僪弶婜壔
+	//分牌前所有牌初期化
 	public void CardDefault()
 	{
 		cardDefault.clear();
@@ -65,7 +74,7 @@ public class DisplayCard
 		}
 	}
 
-	//僇乕僪攝傞
+	//分牌
 	public void SubCard()
 	{
 		for (int i=1; i<=CARD_INITIAL; i++)
@@ -73,18 +82,17 @@ public class DisplayCard
 			int selectIndex = (int)(Math.random() * cardDefault.size());
 			cardList.add(Calculation.Search(cardList, cardDefault.get(selectIndex)),cardDefault.get(selectIndex));
 			cardDefault.remove(selectIndex);
-		}
-		ImagePath(cardList);
+		}	
 	}
 	
-	//僇乕僪幨恀僷僗傪媮傔傞
-	public void ImagePath(ArrayList<Integer> list)
+	//图片路径
+	public void ImagePath()
 	{
 		imagePathList.clear();
 		
-		for (int i=0; i<list.size(); i++)
+		for (int i=0; i<cardList.size(); i++)
 		{
-			imagePathList.add(Translation.TranslationPicture(list.get(i)));
+			imagePathList.add(Translation.TranslationPicture(cardList.get(i)));
 		}
 	}
 }

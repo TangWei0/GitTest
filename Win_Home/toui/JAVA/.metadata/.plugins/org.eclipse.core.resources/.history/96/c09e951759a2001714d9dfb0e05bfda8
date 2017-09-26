@@ -125,10 +125,10 @@ public class MainForm extends JFrame {
 	}
 	
 	//出牌ボタンクリック事件
-	public class OutButtonListener implements ActionListener{
+		public class OutButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e){
 				DisplayCard.OutCard();
-				//　TODO  更新图像
+				//Todo 更新图像
 			}		
 		}
 	
@@ -167,25 +167,30 @@ public class MainForm extends JFrame {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
 			
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
 			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
 			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
 			
 		}
 		
 	}
+
 	
 	public void SetScreen()
 	{	 
@@ -244,5 +249,4 @@ public class MainForm extends JFrame {
 			count++;
 		}
 	}
-
 }

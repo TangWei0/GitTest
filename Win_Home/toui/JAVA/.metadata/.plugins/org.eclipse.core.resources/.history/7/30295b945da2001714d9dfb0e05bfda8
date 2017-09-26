@@ -23,6 +23,7 @@ public class DisplayCard
 	{
 		CardDefault();
 		SubCard();
+		ImagePath();
 		DisplayArea[0] = Calculation.Area(CARD_INITIAL);
 		DisplayArea[1] = DisplayArea[0] + CARD_INITIAL ;
 	}
@@ -36,8 +37,16 @@ public class DisplayCard
 		
 		for (int i=0;i<selectCardList.size();i++)
 		{
-			cardList.remove(cardList.indexOf(selectCardList.get(i)));
+			System.out.print(selectCardList.get(i));
 		}
+		
+		System.out.println();
+		
+		for (int i=0;i<outCardList.size();i++)
+		{
+			System.out.print(outCardList.get(i));
+		}
+		
 	}
 	
 	//カード選択
@@ -73,18 +82,17 @@ public class DisplayCard
 			int selectIndex = (int)(Math.random() * cardDefault.size());
 			cardList.add(Calculation.Search(cardList, cardDefault.get(selectIndex)),cardDefault.get(selectIndex));
 			cardDefault.remove(selectIndex);
-		}
-		ImagePath(cardList);
+		}	
 	}
 	
 	//カード写真パスを求める
-	public void ImagePath(ArrayList<Integer> list)
+	public void ImagePath()
 	{
 		imagePathList.clear();
 		
-		for (int i=0; i<list.size(); i++)
+		for (int i=0; i<cardList.size(); i++)
 		{
-			imagePathList.add(Translation.TranslationPicture(list.get(i)));
+			imagePathList.add(Translation.TranslationPicture(cardList.get(i)));
 		}
 	}
 }

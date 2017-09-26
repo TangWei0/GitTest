@@ -125,7 +125,7 @@ public class MainForm extends JFrame {
 	}
 	
 	//出牌ボタンクリック事件
-	public class OutButtonListener implements ActionListener{
+		public class OutButtonListener implements ActionListener{
 			public void actionPerformed(ActionEvent e){
 				DisplayCard.OutCard();
 				//　TODO  更新图像
@@ -186,6 +186,7 @@ public class MainForm extends JFrame {
 		}
 		
 	}
+
 	
 	public void SetScreen()
 	{	 
@@ -244,5 +245,4 @@ public class MainForm extends JFrame {
 			count++;
 		}
 	}
-
 }
