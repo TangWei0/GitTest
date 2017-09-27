@@ -72,6 +72,10 @@ public class MainForm extends JFrame {
 	private JLabel DisplayOutCard19 = new JLabel("");
 	private JLabel DisplayOutCard20 = new JLabel("");
 	
+	private JLabel DisplayLandlordCard1 = new JLabel("");
+	private JLabel DisplayLandlordCard2 = new JLabel("");
+	private JLabel DisplayLandlordCard3 = new JLabel("");
+	
 	private JLabel DisplayMyCard[] = {
 			DisplayMyCard1, DisplayMyCard2, DisplayMyCard3, DisplayMyCard4, DisplayMyCard5, 
 			DisplayMyCard6, DisplayMyCard7, DisplayMyCard8, DisplayMyCard9, DisplayMyCard10,
@@ -85,6 +89,8 @@ public class MainForm extends JFrame {
             DisplayOutCard11, DisplayOutCard12, DisplayOutCard13, DisplayOutCard14, DisplayOutCard15, 
             DisplayOutCard16, DisplayOutCard17, DisplayOutCard18, DisplayOutCard19, DisplayOutCard20 
             };
+	
+	private JLabel DisplayLandlordCard[] = { DisplayLandlordCard1, DisplayLandlordCard2, DisplayLandlordCard3 };
 	
 	DisplayCard DisplayCard = new DisplayCard();
 	
@@ -222,6 +228,13 @@ public class MainForm extends JFrame {
 			}
 			DisplayMyCard[i].addMouseListener(new MyMouseListener());
 		}
+		for (int i=0; i<3; i++)
+		{
+			DisplayLandlordCard[i].setBounds(750 + i*CARD_HIGHT, 50, CARD_WIDTH, CARD_HIGHT);
+			DisplayLandlordCard[i].setVisible(false);
+			contentPane.add(DisplayLandlordCard[i]);
+		}
+		
 		
 		//出牌ボタン設置
 		OutButton.setBounds(870, 650, 180, 50);
@@ -234,7 +247,15 @@ public class MainForm extends JFrame {
 
 	//画面更新
 	public void ScreenUpdate()
-	{	
+	{
+		for (int i=0; i< DisplayLandlordCard.length; i++)
+		{
+			img = new ImageIcon(DisplayCard.defaultCardPathList.get(i));
+			img.setImage(img.getImage().getScaledInstance(CARD_WIDTH, CARD_HIGHT, Image.SCALE_DEFAULT));
+			DisplayLandlordCard[i].setVisible(true);
+			DisplayLandlordCard[i].setIcon(img);			
+		}
+		
 		for (int i=0; i< DisplayMyCard.length; i++)
 		{
 			DisplayMyCard[i].setLocation(300 + i*CARD_WIDTH/2, 800);

@@ -4,13 +4,16 @@ import java.util.ArrayList;
 
 public class DisplayCard 
 {
-	ArrayList<Integer> cardDefault = new ArrayList<Integer>();
-	ArrayList<Integer> myCardList = new ArrayList<Integer>();	
+	ArrayList<Integer> defaultCardList = new ArrayList<Integer>();
+	ArrayList<Integer> myCardList = new ArrayList<Integer>();
+	ArrayList<Integer> cpu1CardList = new ArrayList<Integer>();
+	ArrayList<Integer> cpu2CardList = new ArrayList<Integer>();
 	ArrayList<Integer> selectCardList = new ArrayList<Integer>();
 	ArrayList<Integer> outCardList = new ArrayList<Integer>();
 	
 	ArrayList<String> myCardPathList = new ArrayList<String>();
 	ArrayList<String> outCardPathList = new ArrayList<String>();
+	ArrayList<String> defaultCardPathList = new ArrayList<String>();
 	
 	public int[] DisplayArea = new int[2];
 	Calculation Calculation = new Calculation();
@@ -60,10 +63,10 @@ public class DisplayCard
 	//初始化
 	public void CardDefault()
 	{
-		cardDefault.clear();
+		defaultCardList.clear();
 		for (int i=1; i<=CARD_TOTAL; i++)
 		{
-			cardDefault.add(i);
+			defaultCardList.add(i);
 		}
 	}
 
@@ -72,12 +75,32 @@ public class DisplayCard
 	{
 		for (int i=1; i<=CARD_INITIAL; i++)
 		{
-			int selectIndex = (int)(Math.random() * cardDefault.size());
-			myCardList.add(Calculation.Search(myCardList, cardDefault.get(selectIndex)),cardDefault.get(selectIndex));
-			cardDefault.remove(selectIndex);
+			for (int turnCount=0; turnCount<3; turnCount++)
+			{
+				CardDrawingSystem(turnCount);
+			}
 		}
 		myCardPathList = ImagePath(myCardList);
+		defaultCardPathList = ImagePath(defaultCardList);
+	}
 	
+	//抽牌系统
+	public void CardDrawingSystem(int turnCount)
+	{
+		int selectIndex = Calculation.SelectIndex(defaultCardList);
+		switch (turnCount)
+		{
+		case 0:
+			myCardList.add(Calculation.Search(myCardList, defaultCardList.get(selectIndex)), defaultCardList.get(selectIndex));
+			break;
+		case 1:
+			cpu1CardList.add(Calculation.Search(cpu1CardList, defaultCardList.get(selectIndex)), defaultCardList.get(selectIndex));
+			break;
+		case 2:
+			cpu2CardList.add(Calculation.Search(cpu2CardList, defaultCardList.get(selectIndex)), defaultCardList.get(selectIndex));
+			break;
+		}
+		defaultCardList.remove(selectIndex);
 	}
 	
 	//牌面图像路径

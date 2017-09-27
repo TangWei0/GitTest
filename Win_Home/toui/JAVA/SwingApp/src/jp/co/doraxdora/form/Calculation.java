@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Calculation {
 	static int cardNum = 20;
 	
+	//排序
 	public int Search(ArrayList<Integer> list, int Date)
 	{
 		if (list.size() == 0 )
@@ -20,6 +21,12 @@ public class Calculation {
 			}
 		}
 		return 0;
+	}
+	
+	//随机抽牌
+	public int SelectIndex(ArrayList<Integer> cardDefault)
+	{	
+		return (int)(Math.random() * cardDefault.size());
 	}
 
 	public int[] DisplayArea(int myCardListSize, int outCardListSize)
@@ -40,5 +47,5 @@ public class Calculation {
 		return DisplayArea;
 	}
 	
-
+	
 }
