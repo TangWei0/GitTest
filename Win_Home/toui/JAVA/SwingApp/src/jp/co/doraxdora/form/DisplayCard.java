@@ -19,7 +19,7 @@ public class DisplayCard
 	static int CARD_INITIAL =17;
 	static int CARD_TOTAL = 54;
 	
-	//ƒQ[ƒ€ŠJn
+	//ã‚²ãƒ¼ãƒ é–‹å§‹
 	public void StartCard()
 	{
 		CardDefault();
@@ -27,7 +27,7 @@ public class DisplayCard
 		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
 	}
 	
-	//¥«©`¥É³ö¤¹
+	//å‡ºç‰Œ
 	public void OutCard()
 	{
 		outCardList = new ArrayList<Integer>(selectCardList);
@@ -41,7 +41,7 @@ public class DisplayCard
 		selectCardList.clear();
 	}
 	
-	//³ö¤¹¥«©`¥Éßx’k
+	//å‡ºç‰Œé€‰æ‹©
 	public void OutSelectCard(int index , String selectSwitch)
 	{
 		switch (selectSwitch)
@@ -56,7 +56,7 @@ public class DisplayCard
 		}	
 	}
 	
-	//³õÆÚ»¯
+	//åˆå§‹åŒ–
 	public void CardDefault()
 	{
 		cardDefault.clear();
@@ -66,7 +66,7 @@ public class DisplayCard
 		}
 	}
 
-	//¥«©`¥ÉÅä¤ë
+	//åˆ†ç‰Œ
 	public void SubCard()
 	{
 		for (int i=1; i<=CARD_INITIAL; i++)
@@ -79,7 +79,7 @@ public class DisplayCard
 	
 	}
 	
-	//¥«©`¥É¥¤¥á©`¥¸¥Ñ¥¹
+	//ç‰Œé¢å›¾åƒè·¯å¾„
 	public ArrayList<String> ImagePath(ArrayList<Integer> list)
 	{
 		ArrayList<String> imagePathList = new ArrayList<String>();

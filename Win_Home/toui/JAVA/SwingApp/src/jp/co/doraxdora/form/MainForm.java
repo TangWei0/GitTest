@@ -232,6 +232,7 @@ public class MainForm extends JFrame {
 		OutButton.addActionListener(new OutButtonListener());
 	}
 
+	//画面更新
 	public void ScreenUpdate()
 	{	
 		for (int i=0; i< DisplayMyCard.length; i++)
