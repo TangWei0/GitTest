@@ -39,6 +39,7 @@ public class DisplayCard
 		myCardPathList = ImagePath(myCardList);
 		DisplayArea = Calculation.DisplayArea(myCardList.size(),outCardList.size());
 		selectCardList.clear();
+		
 	}
 	
 	//出牌选择
