@@ -196,7 +196,7 @@
 				TargetAttributes = {
 					865AA8301E4589ED007FC21F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = SEUEA35K6J;
+						DevelopmentTeam = 84XB5HBV62;
 						ProvisioningStyle = Automatic;
 					};
 					865AA8471E4589EF007FC21F = {
@@ -415,11 +415,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = SEUEA35K6J;
+				DEVELOPMENT_TEAM = 84XB5HBV62;
 				INFOPLIST_FILE = "Hello World/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Tou.Hello-World";
+				PRODUCT_BUNDLE_IDENTIFIER = com.project.tangandzhao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -430,11 +430,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = SEUEA35K6J;
+				DEVELOPMENT_TEAM = 84XB5HBV62;
 				INFOPLIST_FILE = "Hello World/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Tou.Hello-World";
+				PRODUCT_BUNDLE_IDENTIFIER = com.project.tangandzhao;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
