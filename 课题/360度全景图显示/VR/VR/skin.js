@@ -1,7 +1,11 @@
 // Garden Gnome Software - Skin
 // Pano2VR 5.2.2/15983
 // Filename: cardboard.ggsk
+<<<<<<< HEAD
+// Generated 水 10月 4 11:52:37 2017
+=======
 // Generated 水 10月 4 03:39:30 2017
+>>>>>>> parent of a90f5f5... 这个有点大
 
 function pano2vrSkin(player,base) {
 	var ggSkinVars = [];

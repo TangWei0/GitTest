@@ -1,15 +1,16 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!-- Pano2VR project file  -->
-<pano2vrconfig rev="15983" version="5.2.2">
+<pano2vrconfig version="5.2.2" rev="15983">
   <tour>
     <panorama>
       <id>node1</id>
       <input>
         <patch/>
-        <type>equirectangular</type>
+        <type>auto</type>
         <filename>../snow.jpg</filename>
         <levelpitch>0</levelpitch>
         <levelroll>0</levelroll>
+        <videotype>equi</videotype>
       </input>
       <viewingparameter>
         <pan>
@@ -71,6 +72,7 @@
       <streetview/>
       <streetviewproject/>
       <sounds/>
+      <output/>
     </panorama>
     <panorama>
       <input>
@@ -127,7 +129,7 @@
           <enabled>1</enabled>
           <filename>VR/index.html</filename>
           <values>
-            <value id="css"></value>
+            <value id="css"/>
             <value id="gginfo">false</value>
             <value id="gyro">false</value>
             <value id="gyrodisable">false</value>
@@ -136,7 +138,7 @@
             <value id="gyrosmooth">true</value>
             <value id="jsxml">false</value>
             <value id="parseanchor">false</value>
-            <value id="swf"></value>
+            <value id="swf"/>
             <value id="swffirst">false</value>
             <value id="swfgeneric">false</value>
           </values>
@@ -151,11 +153,12 @@
         <tilesize>1135</tilesize>
         <filename>VR/pano.xml</filename>
         <skinfile>cardboard.ggsk</skinfile>
+        <hideaboutbox>1</hideaboutbox>
       </htmlcss>
       <htmlcss>
         <html>
           <values>
-            <value id="css"></value>
+            <value id="css"/>
             <value id="gginfo">false</value>
             <value id="gyro">false</value>
             <value id="gyrodisable">false</value>
@@ -164,7 +167,7 @@
             <value id="gyrosmooth">true</value>
             <value id="jsxml">false</value>
             <value id="parseanchor">false</value>
-            <value id="swf"></value>
+            <value id="swf"/>
             <value id="swffirst">false</value>
             <value id="swfgeneric">false</value>
           </values>
