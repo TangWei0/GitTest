@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tour apprev="15983" start="node1" appversion="5.2.2">
+  <panorama hideabout="1" id="node1">
+    <input leveltilesize="510" levelbiashidpi="0.400" leveltileurl="tiles/node1/cf_%c/l_%l/c_%x/tile_%y.jpg" height="1135" levelingpitch="0" width="1135" levelbias="0.400" overlap="1" levelingroll="0">
+      <level preload="0" height="1135" width="1135" predecode="0"/>
+      <level preload="0" height="567" width="567" predecode="0"/>
+      <level preload="1" height="283" width="283" predecode="1"/>
+      <preview color="0x808080" strip="1"/>
+    </input>
+    <view fovmode="0" pannorth="285">
+      <start fov="70" tilt="0" pan="0" projection="4"/>
+      <flyin fov="170" tilt="-90" pan="0" projection="9"/>
+      <min fov="5" tilt="-90" pan="0"/>
+      <max fov="120" fovfisheye="360" fovstereographic="270" tilt="90" pan="360" scaletofit="1"/>
+    </view>
+    <userdata customnodeid="" title="" info="" comment="" longitude="2.306156" copyright="" author="" description="" source="" latitude="49.900045" tags="360度全景图显示" datetime="2013/01/19 0:00"/>
+    <hotspots wordwrap="1" height="20" width="180">
+      <label background="1" backgroundalpha="1" wordwrap="1" textalpha="1" border="1" height="20" borderalpha="1" backgroundcolor="0xffffff" width="180" textcolor="0x000000" borderradius="1" enabled="1" bordercolor="0x000000"/>
+      <polystyle mode="0" backgroundalpha="0.2509803921568627" handcursor="1" borderalpha="1" backgroundcolor="0x0000ff" bordercolor="0x0000ff"/>
+      <hotspot target="" title="" id="Point01" tilt="-4.36" pan="8.65" skinid="ht_node" description="" url="{node2}"/>
+    </hotspots>
+    <media/>
+    <transition zoomin="0" zoomspeed="2" blendcolor="0x000000" zoomoutpause="1" zoomout="0" enabled="0" softedge="0" type="crossdissolve" zoomfov="20" blendtime="1"/>
+    <control sensitivity="8" invertcontrol="1" hideabout="1" simulatemass="1" rubberband="0" speedwheel="1" lockedmouse="0" lockedkeyboard="0" invertwheel="0" lockedkeyboardzoom="0" contextfullscreen="1" contextprojections="1" lockedwheel="0" dblclickfullscreen="0"/>
+  </panorama>
+  <panorama hideabout="1" id="node2">
+    <input leveltilesize="510" levelbiashidpi="0.400" leveltileurl="tiles/node2/cf_%c/l_%l/c_%x/tile_%y.jpg" height="625" levelingpitch="0" width="625" levelbias="0.400" overlap="1" levelingroll="0">
+      <level preload="0" height="625" width="625" predecode="0"/>
+      <level preload="1" height="312" width="312" predecode="1"/>
+      <preview color="0x808080" strip="1"/>
+    </input>
+    <view fovmode="0" pannorth="0">
+      <start fov="70" tilt="0" pan="0" projection="4"/>
+      <flyin fov="170" tilt="-90" pan="0" projection="9"/>
+      <min fov="5" tilt="-90" pan="0"/>
+      <max fov="120" fovfisheye="360" fovstereographic="270" tilt="90" pan="360" scaletofit="1"/>
+    </view>
+    <userdata customnodeid="" title="" info="" comment="" longitude="" copyright="" author="" description="" source="" latitude="" tags="360度全景图显示" datetime=""/>
+    <hotspots wordwrap="1" height="20" width="180">
+      <label background="1" backgroundalpha="1" wordwrap="1" textalpha="1" border="1" height="20" borderalpha="1" backgroundcolor="0xffffff" width="180" textcolor="0x000000" borderradius="1" enabled="1" bordercolor="0x000000"/>
+      <polystyle mode="0" backgroundalpha="0.2509803921568627" handcursor="1" borderalpha="1" backgroundcolor="0x0000ff" bordercolor="0x0000ff"/>
+      <hotspot target="_blank" title="" id="Point01" tilt="-1.2" pan="9.59" skinid="ht_url" description="" url="www.google.co.jp"/>
+    </hotspots>
+    <media/>
+    <transition zoomin="0" zoomspeed="2" blendcolor="0x000000" zoomoutpause="1" zoomout="0" enabled="0" softedge="0" type="crossdissolve" zoomfov="20" blendtime="1"/>
+    <control sensitivity="8" invertcontrol="1" hideabout="1" simulatemass="1" rubberband="0" speedwheel="1" lockedmouse="0" lockedkeyboard="0" invertwheel="0" lockedkeyboardzoom="0" contextfullscreen="1" contextprojections="1" lockedwheel="0" dblclickfullscreen="0"/>
+  </panorama>
+</tour>
