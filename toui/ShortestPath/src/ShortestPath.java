@@ -1,37 +1,24 @@
 import java.util.ArrayList;
 
 public class ShortestPath {
+
+	static CSVReadWrite csv = new CSVReadWrite();
+	static ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
 	
-
 	public static void main(String[] args) {
-		// TODO 自動生成されたメソッド・スタブ
-		Data Data1 = new Data(1,"2",<1,3>[4,5]);
-	}
-
-	class Data {
-		int num;
-		String path;
-		ArrayList<Integer> phase;
-		int[] motherVertices;
-
-		Data(int num, String path, ArrayList<Integer> phase, int[] motherVertices) {
-			this.num = num;
-			this.path = path;
-			this.phase = phase;
-			this.motherVertices = motherVertices;
-		}
-
-		void greet() {
-			System.out.println(this.num);
-			System.out.println(this.path);
-
-			for (int tmp : this.phase) {
-				System.out.println(tmp);
+		list = csv.CSVRead();
+		for (int i= 0;i<list.size();i++)
+		{
+			for (int j = 0;j<list.get(i).size();j++)
+			{
+				System.out.print(list.get(i).get(j));
+				
+				if (j < list.get(i).size()-1)
+				{
+				    System.out.print(",");
+				}
 			}
-
-			System.out.print(this.motherVertices[0]);
-			System.out.print(this.motherVertices[1]);
+			System.out.println();
 		}
-
 	}
 }
