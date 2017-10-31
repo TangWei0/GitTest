@@ -20,10 +20,13 @@ public class VertexFinishing {
 					int k = csv.list.get(i).indexOf(j);
 					if (k == -1) {
 						item.add(notConnected);
-					}else
+					}else{
+						item.add(j);
+					}
 				}
-
 			}
+			vertexPathList.add(item);
+			item = new ArrayList<Integer>();
 		}
 
 	}
