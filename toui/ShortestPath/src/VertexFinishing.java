@@ -12,16 +12,16 @@ public class VertexFinishing {
 	public void VertexPathList() {
 		csv.CSVRead();
 
-		for (int i = 1; i <= csv.list.size(); i++) {
-			for (int j = 1; j <= csv.list.size(); j++) {
+		for (int i = 0; i < csv.list.size(); i++) {
+			for (int j = 0; j < csv.list.size(); j++) {
 				if (i == j) {
 					item.add(standStill);
 				} else {
-					int k = csv.list.get(i).indexOf(j);
+					int k = csv.list.get(i).indexOf(String.valueOf(j+1));
 					if (k == -1) {
 						item.add(notConnected);
 					}else{
-						item.add(j);
+						item.add(j+1);
 					}
 				}
 			}

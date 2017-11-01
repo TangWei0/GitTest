@@ -2,18 +2,19 @@ import java.util.ArrayList;
 
 public class ShortestPath {
 
-	static CSVReadWrite csv = new CSVReadWrite();
-	static ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+	static VertexFinishing VertexFinishing = new VertexFinishing();
+	//static CSVReadWrite csv = new CSVReadWrite();
+	//static ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
 	
 	public static void main(String[] args) {
-		list = csv.CSVRead();
-		for (int i= 0;i<list.size();i++)
+		VertexFinishing.VertexPathList();
+		for (int i= 0;i<VertexFinishing.vertexPathList.size();i++)
 		{
-			for (int j = 0;j<list.get(i).size();j++)
+			for (int j = 0;j<VertexFinishing.vertexPathList.get(i).size();j++)
 			{
-				System.out.print(list.get(i).get(j));
+				System.out.print(VertexFinishing.vertexPathList.get(i).get(j));
 				
-				if (j < list.get(i).size()-1)
+				if (j < VertexFinishing.vertexPathList.get(i).size()-1)
 				{
 				    System.out.print(",");
 				}
