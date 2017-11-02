@@ -46,22 +46,6 @@ public class ShortestPath {
 		{
 			Item.add(EdgeList.get(0).get(i));
 		}
-		
-		
-		//VertexEdgeList = VertexFinishing.VertexEdgeList(PointList, EdgeList);
-
-		/*
-		 * for (int i = 0; i < VertexEdgeList.size(); i++) { ArrayList<String>
-		 * UsedPointList = new ArrayList<String>();
-		 * UsedPointList.add(PointList.get(i).get(0)); int floor = 0;
-		 * 
-		 * for (int j = 0; j < VertexEdgeList.size(); j++) { if (i!=j) { if
-		 * (VertexEdgeList.get(i).get(j) == 1) { //TODO输出
-		 * System.out.println(PointList.get(i).get(0) + "→" +PointList.get(j).get(0));
-		 * UsedPointList.add(PointList.get(j).get(0)); } else {
-		 * 
-		 * } } } System.out.println(); }
-		 */
 
 		long end = System.currentTimeMillis();
 		System.out.println((end - start) + "ms");
