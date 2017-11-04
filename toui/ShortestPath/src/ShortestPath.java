@@ -15,13 +15,15 @@ public class ShortestPath {
 	public static ArrayList<String> TempItem = new ArrayList<String>();
 	public static ArrayList<String> Item = new ArrayList<String>();
 	public static ArrayList<String> UsedPointList = new ArrayList<String>();
-	
+	public static ArrayList<String> UnusedPointList = new ArrayList<String>();
+
 	public static int ListCount = 0;
 	public static int Count = 0;
-	
+	public static boolean Check = true;
+
 	public static void main(String[] args) {
 		long start = System.currentTimeMillis();
-		
+
 		CSVReadWrite.CSVRead(PointList, EdgeList, ImagePathList);
 
 		for (int i = 0; i < PointList.size(); i++) {
@@ -31,25 +33,37 @@ public class ShortestPath {
 			TempItem = new ArrayList<String>();
 
 			UsedPointList.add(PointList.get(i));
+			UnusedPointList.remove(i);
 
-			while (Count < PointList.size()-1) {
-				while (ListCount < CurrentPathList.size()) {
-					Item = new ArrayList<String>(CurrentPathList.get(ListCount));
-					SearchList(); 
-					ListCount++;
+			Count++;
+
+			while (Count < PointList.size()) {
+				if (Check == true) {
+					Check = false;
+					while (ListCount < CurrentPathList.size()) {
+						Item = new ArrayList<String>(CurrentPathList.get(ListCount));
+						SearchList();
+						ListCount++;
+					}
+					CurrentPathList = new ArrayList<ArrayList<String>>(NextPathList);
+					ListCount = 0;
+				} else {
+					System.out.println(PointList.get(i) + "→" + UnusedPointList.get(0) + ": ルートが存在しません。");
+
+					UsedPointList.add(UnusedPointList.get(0));
+					UnusedPointList.remove(0);
+					Count++;
 				}
-
-				CurrentPathList = new ArrayList<ArrayList<String>>(NextPathList);
-				ListCount = 0;
 			}
-			
+
 			System.out.println();
 		}
+
 		long end = System.currentTimeMillis();
 		System.out.println((end - start) + "ms");
 
 	}
-	
+
 	public static void Default() {
 		CurrentPathList = new ArrayList<ArrayList<String>>();
 		NextPathList = new ArrayList<ArrayList<String>>();
@@ -57,9 +71,11 @@ public class ShortestPath {
 		TempItem = new ArrayList<String>();
 		Item = new ArrayList<String>();
 		UsedPointList = new ArrayList<String>();
-		
+		UnusedPointList = new ArrayList<String>(PointList);
+
 		ListCount = 0;
 		Count = 0;
+		Check = true;
 	}
 
 	public static void SearchList() {
@@ -74,8 +90,11 @@ public class ShortestPath {
 				NextPathList.add(TempItem);
 				Count++;
 
-				System.out.print(TempItem.get(0) + "→" + TempItem.get(TempItem.size() - 1) + ":");
+				if (Check == false) {
+					Check = true;
+				}
 
+				System.out.print(TempItem.get(0) + "→" + TempItem.get(TempItem.size() - 1) + ":");
 				for (int k = 0; k < TempItem.size(); k++) {
 					if (k != TempItem.size() - 1) {
 						System.out.print(ImagePathList.get(PointList.indexOf(TempItem.get(k))) + ",");
@@ -85,8 +104,8 @@ public class ShortestPath {
 				}
 
 				UsedPointList.add(EdgeList.get(index).get(j));
+				UnusedPointList.remove(EdgeList.get(index).get(j));
 			}
 		}
 	}
-
 }
