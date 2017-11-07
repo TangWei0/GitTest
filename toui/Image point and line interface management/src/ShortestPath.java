@@ -14,13 +14,13 @@ public class ShortestPath {
 
 	public static int ListCount = 0;
 	public static int Count = 0;
-	public static boolean Check = true;
+	public static boolean NextNodeCheck = true;
+	public static boolean OutputTypeCheck = false;
 
-	static String RootPath = "http://192.168.100.107/output/";
 	static String WriteData = "";
-	static String WriteName = "";
 
 	public void shortestPath() {
+		OutputTypeCheck = false;
 		for (int i = 0; i < Main.PointList.size(); i++) {
 			Default();
 			TempItem.add(Main.PointList.get(i));
@@ -33,8 +33,8 @@ public class ShortestPath {
 			Count++;
 
 			while (Count < Main.PointList.size()) {
-				if (Check == true) {
-					Check = false;
+				if (NextNodeCheck == true) {
+					NextNodeCheck = false;
 					while (ListCount < CurrentPathList.size()) {
 						Item = new ArrayList<String>(CurrentPathList.get(ListCount));
 						SearchList();
@@ -44,18 +44,19 @@ public class ShortestPath {
 					ListCount = 0;
 				} else {
 					WriteData = "";
-					System.out.println(Main.PointList.get(i) + "→" + UnusedPointList.get(0) + ": ルートが存在しません。");
 					WriteData = Main.PointList.get(i) + "→" + UnusedPointList.get(0) + ": ルートが存在しません。";
 
-					CSVReadWrite.CSVWrite(WriteName);
+					CSVReadWrite.ShortestPathWrite(OutputTypeCheck);
+					if (OutputTypeCheck != true)
+					{
+						OutputTypeCheck = true;
+					}
 
 					UsedPointList.add(UnusedPointList.get(0));
 					UnusedPointList.remove(0);
 					Count++;
 				}
 			}
-
-			System.out.println();
 		}
 	}
 
@@ -70,13 +71,12 @@ public class ShortestPath {
 
 		ListCount = 0;
 		Count = 0;
-		Check = true;
+		NextNodeCheck = true;
 	}
 
 	public static void SearchList() {
 
-		int index = Main.PointList
-				.indexOf(CurrentPathList.get(ListCount).get(CurrentPathList.get(ListCount).size() - 1));
+		int index = Main.PointList.indexOf(CurrentPathList.get(ListCount).get(CurrentPathList.get(ListCount).size() - 1));
 		// 寻找下一个点
 		for (int j = 0; j < Main.EdgeList.get(index).size(); j++) {
 			if (UsedPointList.indexOf(Main.EdgeList.get(index).get(j)) == -1) {
@@ -86,26 +86,27 @@ public class ShortestPath {
 				NextPathList.add(TempItem);
 				Count++;
 
-				if (Check == false) {
-					Check = true;
+				if (NextNodeCheck == false) {
+					NextNodeCheck = true;
 				}
 
-				System.out.print(TempItem.get(0) + "→" + TempItem.get(TempItem.size() - 1) + ":");
-				WriteName = TempItem.get(0) + "_" + TempItem.get(TempItem.size() - 1) + ".txt";
+				WriteData = TempItem.get(0) + "→" + TempItem.get(TempItem.size() - 1) + ":";
 				for (int k = 0; k < TempItem.size() - 1; k++) {
+					WriteData += TempItem.get(k) + "-" + TempItem.get(k + 1) ;
 					if (k != TempItem.size() - 2) {
-						System.out.print(RootPath + TempItem.get(k) + "-" + TempItem.get(k + 1) + ".html" + ",");
-						WriteData += RootPath + TempItem.get(k) + "-" + TempItem.get(k + 1) + ".html" + ",";
-					} else {
-						System.out.println(RootPath + TempItem.get(k) + "-" + TempItem.get(k + 1) + ".html");
-						WriteData += RootPath + TempItem.get(k) + "-" + TempItem.get(k + 1) + ".html";
-					}
+						WriteData +=  ",";
+					} 
 				}
 
 				UsedPointList.add(Main.EdgeList.get(index).get(j));
 				UnusedPointList.remove(Main.EdgeList.get(index).get(j));
 
-				CSVReadWrite.CSVWrite(WriteName);
+				CSVReadWrite.ShortestPathWrite(OutputTypeCheck);
+				if (OutputTypeCheck != true)
+				{
+					OutputTypeCheck = true;
+				}
+				
 			}
 		}
 	}

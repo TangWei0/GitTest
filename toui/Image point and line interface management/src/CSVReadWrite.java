@@ -3,19 +3,20 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class CSVReadWrite {
 
-	public void CSVRead(ArrayList<String> PointList, ArrayList<ArrayList<String>> EdgeList, ArrayList<String> ImagePathList) {
+	public void CSVRead(ArrayList<String> PointList, ArrayList<ArrayList<String>> EdgeList,
+			ArrayList<String> ImagePathList) {
 		try {
 			File ReadCSV = new File("AdjacentPoints.csv");
 			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
 			String line;
-			
+
 			while ((line = br.readLine()) != null) {
 				ArrayList<String> EdgeListItem = new ArrayList<String>();
 				String[] data = line.split(",", 0);
@@ -29,7 +30,7 @@ public class CSVReadWrite {
 				}
 
 				EdgeList.add(EdgeListItem);
-				
+
 			}
 			br.close();
 
@@ -38,17 +39,24 @@ public class CSVReadWrite {
 		}
 	}
 
-	public void CSVWrite(String WriteName) {
-	    try {
-	        File f = new File(WriteName);
-	        BufferedWriter bw = new BufferedWriter(new FileWriter(f,true));
+	public void ShortestPathWrite(boolean OutputTypeCheck) {
+		File file = new File("ShortestPath.txt");
+		PrintWriter p_writer;
+		try {		
+			
+			if (OutputTypeCheck == true) {
+				p_writer = new PrintWriter(new BufferedWriter
+		                (new OutputStreamWriter(new FileOutputStream(file,true),"utf-8")));
+			} else {
+				p_writer = new PrintWriter(new BufferedWriter
+		                (new OutputStreamWriter(new FileOutputStream(file),"utf-8")));
+			}
+			
+			p_writer.println(ShortestPath.WriteData);
 
-	        bw.write(ShortestPath.WriteData);
-	        bw.newLine();
-
-	        bw.close();
-	      } catch (IOException e) {
-	        System.out.println(e);
-	      }
+			p_writer.close();
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 	}
 }
