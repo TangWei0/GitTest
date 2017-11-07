@@ -4,14 +4,18 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
+import java.util.Vector;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class Main extends JFrame {
 
@@ -27,6 +31,7 @@ public class Main extends JFrame {
 	static CSVReadWrite CSVReadWrite = new CSVReadWrite();
 	static ShortestPath ShortestPath = new ShortestPath();
 
+	static ButtonGroup group = new ButtonGroup();
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +53,7 @@ public class Main extends JFrame {
 	Main() {
 		CSVReadWrite.CSVRead(PointList, EdgeList, ImagePathList);
 
-		setTitle("’¸“_ŠÇ—");
+		setTitle("é ‚ç‚¹ç®¡ç†ã‚·ã‚¹ãƒ†ãƒ ");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 600);
 		setLocationRelativeTo(null);
@@ -62,32 +67,54 @@ public class Main extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		//Å’ZŒo˜HŒvZƒ{ƒ^ƒ“
-		JButton ShortestPathButton = new JButton("Å’ZŒo˜HŒvZ");
+		//æœ€çŸ­çµŒè·¯è¨ˆç®—ãƒœã‚¿ãƒ³
+		JButton ShortestPathButton = new JButton("æœ€çŸ­çµŒè·¯è¨ˆç®—");
 		panel.add(ShortestPathButton);
 		ShortestPathButton.setBounds(600, 500, 150, 50);
 		ShortestPathButton.setForeground(Color.blue);
-		ShortestPathButton.setFont(new Font("‚l‚r ‚oƒSƒVƒbƒN", Font.BOLD | Font.ITALIC, 15));
 
 		ShortestPathButton.addActionListener(new StartButtonListener());
 
-		//
-		String combodata[] = new String[PointList.size()];
-		for (int i = 0; i < PointList.size(); i++) {
-			
-			combodata[i] = PointList.get(i);
+		/*
+		String combodata[] = new String[PointList.size() + 2];
+		combodata[0] = "é ‚ç‚¹ã‚’é¸ã‚“ã§ãã ã•ã„";
+		for (int i = 0; i < PointList.size(); i++) {		
+			combodata[i+1] = PointList.get(i);
 		}
+		combodata[PointList.size()+1] = "è¿½åŠ é ‚ç‚¹";
+		*/
 		
-		//’¸“_ComboBox
-		JComboBox<Object> PointCombo = new JComboBox<Object>(combodata);
-		PointCombo.setBounds(100, 100, 200, 50);
+		//
+		JRadioButton EditRadio = new JRadioButton("ç·¨é›†é ‚ç‚¹");
+		EditRadio.setBounds(100, 50, 100,30);
+		JRadioButton AddRadio = new JRadioButton("è¿½åŠ é ‚ç‚¹");
+		AddRadio.setBounds(200, 50, 100,30);
+		
+		
+		group.add(EditRadio);
+		group.add(AddRadio);
+		panel.add(EditRadio);
+		panel.add(AddRadio);
+		
+		group.setOnCheckedChangeListener(new onCheckedChanged());
+		
+		Vector<String> combodata = new Vector<String>(PointList);
+		//é ‚ç‚¹ComboBox
+		JComboBox<String> PointCombo = new JComboBox<String>(combodata);
+		PointCombo.setBounds(100, 100, 200, 30);
 		panel.add(PointCombo);
 		
-		//’¸“_Label
-		JLabel PointLabel = new JLabel("’¸“_‚ğ‘I‚ñ‚Å‚­‚¾‚³‚¢");
-		PointLabel.setBounds(100, 60, 200,30);
+		//é ‚ç‚¹Label
+		JLabel PointLabel = new JLabel("é ‚ç‚¹ã‚’é¸ã‚“ã§ãã ã•ã„");
+		PointLabel.setBounds(100, 70, 200,30);
 		panel.add(PointLabel);
 	}
+	
+	public class onCheckedChanged implements ActionListener {  
+        // TODO Auto-generated method stub  
+        RadioButton tempButton = (RadioButton)findViewById(checkedId); // é€šè¿‡RadioGroupçš„findViewByIdæ–¹æ³•ï¼Œæ‰¾åˆ°IDä¸ºcheckedIDçš„RadioButton  
+        // ä»¥ä¸‹å°±å¯ä»¥å¯¹è¿™ä¸ªRadioButtonè¿›è¡Œå¤„ç†äº†  
+    }  
 
 	public class StartButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {

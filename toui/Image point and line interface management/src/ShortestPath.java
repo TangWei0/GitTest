@@ -44,7 +44,7 @@ public class ShortestPath {
 					ListCount = 0;
 				} else {
 					WriteData = "";
-					WriteData = Main.PointList.get(i) + "→" + UnusedPointList.get(0) + ": ルートが存在しません。";
+					WriteData = Main.PointList.get(i) + "→" + UnusedPointList.get(0) + ", 安全なルードが存在しません、近くの係員にご連絡ください";
 
 					CSVReadWrite.ShortestPathWrite(OutputTypeCheck);
 					if (OutputTypeCheck != true)
@@ -90,7 +90,7 @@ public class ShortestPath {
 					NextNodeCheck = true;
 				}
 
-				WriteData = TempItem.get(0) + "→" + TempItem.get(TempItem.size() - 1) + ":";
+				WriteData = TempItem.get(0) + "→" + TempItem.get(TempItem.size() - 1) + ",";
 				for (int k = 0; k < TempItem.size() - 1; k++) {
 					WriteData += TempItem.get(k) + "-" + TempItem.get(k + 1) ;
 					if (k != TempItem.size() - 2) {

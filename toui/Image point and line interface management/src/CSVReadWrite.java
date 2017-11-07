@@ -40,7 +40,7 @@ public class CSVReadWrite {
 	}
 
 	public void ShortestPathWrite(boolean OutputTypeCheck) {
-		File file = new File("ShortestPath.txt");
+		File file = new File("ShortestPath.csv");
 		PrintWriter p_writer;
 		try {		
 			
