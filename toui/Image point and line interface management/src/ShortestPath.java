@@ -4,18 +4,18 @@ public class ShortestPath {
 
 	static CSVReadWrite CSVReadWrite = new CSVReadWrite();
 
-	public static ArrayList<ArrayList<String>> CurrentPathList = new ArrayList<ArrayList<String>>();
-	public static ArrayList<ArrayList<String>> NextPathList = new ArrayList<ArrayList<String>>();
+	static ArrayList<ArrayList<String>> CurrentPathList = new ArrayList<ArrayList<String>>();
+    static ArrayList<ArrayList<String>> NextPathList = new ArrayList<ArrayList<String>>();
 
-	public static ArrayList<String> TempItem = new ArrayList<String>();
-	public static ArrayList<String> Item = new ArrayList<String>();
-	public static ArrayList<String> UsedPointList = new ArrayList<String>();
-	public static ArrayList<String> UnusedPointList = new ArrayList<String>();
+	static ArrayList<String> TempItem = new ArrayList<String>();
+	static ArrayList<String> Item = new ArrayList<String>();
+	static ArrayList<String> UsedPointList = new ArrayList<String>();
+	static ArrayList<String> UnusedPointList = new ArrayList<String>();
 
-	public static int ListCount = 0;
-	public static int Count = 0;
-	public static boolean NextNodeCheck = true;
-	public static boolean OutputTypeCheck = false;
+	static int ListCount = 0;
+	static int Count = 0;
+	static boolean NextNodeCheck = true;
+	static boolean OutputTypeCheck = false;
 
 	static String WriteData = "";
 
