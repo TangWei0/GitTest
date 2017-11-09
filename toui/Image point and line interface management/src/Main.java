@@ -3,15 +3,22 @@ import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class Main extends JFrame {
 
@@ -19,12 +26,12 @@ public class Main extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
-
 	static CSVReadWrite CSVReadWrite = new CSVReadWrite();
 	static ShortestPath ShortestPath = new ShortestPath();
 	static EditPoint EditPoint = new EditPoint();
+	static ClientSend ClientSend = new ClientSend();
 
+	public static ArrayList<String> NoTrespassingList = new ArrayList<String>();
 	public static ArrayList<String> PointList = new ArrayList<String>();
 	public static ArrayList<ArrayList<String>> EdgeList = new ArrayList<ArrayList<String>>();
 	public static ArrayList<String> ImagePathList = new ArrayList<String>();
@@ -32,17 +39,22 @@ public class Main extends JFrame {
 	// 画面コントロール
 	static JPanel panel = new JPanel();
 	static JLabel PointLabel = new JLabel("緊急な事故を発生した頂点を選んでください");
+	static JLabel PointInforLabel = new JLabel("立ち入り禁止頂点：");
+	static JLabel MessageLabel = new JLabel("最新最短経路ではないので、最短経路計算ボタンをクッリクしてください。");
 	static JButton ConfirmButton = new JButton("確定");
-	static JButton SaveButton = new JButton("保存");
+	static JButton ShortestPathButton = new JButton("最短経路計算");
 	static JButton RebackButton = new JButton("復帰");
 	static JComboBox<String> PointComboBox = new JComboBox<String>();
-	static JLabel ConfirmeLabel = new JLabel();
-	
+	static JTextArea ConfirmeArea = new JTextArea();
+	static JScrollPane scrollbar = new JScrollPane();
+
+	static JButton bu = new JButton("送信");
 	static String SelectPoint = "";
 	static String ConfirmPointText = "";
-	
-	static ArrayList<String> ConfirmPoint = new ArrayList<String>();
-	
+
+	static boolean LeastestCheck = true;
+	static boolean MessageCheck = true;
+
 	/**
 	 * Launch the application.
 	 */
@@ -65,7 +77,7 @@ public class Main extends JFrame {
 		CSVReadWrite.PointRead();
 
 		setTitle("頂点管理システム");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setSize(800, 600);
 		setLocationRelativeTo(null);
 		ImageIcon icon = new ImageIcon("Picture/app.png");
@@ -77,27 +89,34 @@ public class Main extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		//確定ボタン
+		// 確定ボタン
 		ConfirmButton.setBounds(500, 100, 150, 50);
 		ConfirmButton.setForeground(Color.blue);
 		panel.add(ConfirmButton);
 
 		ConfirmButton.addActionListener(new ConfirmButtonListener());
 
-		//保存ボタン
-		SaveButton.setBounds(500, 200, 150, 50);
-		SaveButton.setForeground(Color.blue);
-		panel.add(SaveButton);
+		// 最短経路計算ボタン
+		ShortestPathButton.setBounds(500, 200, 150, 50);
+		ShortestPathButton.setForeground(Color.blue);
+		panel.add(ShortestPathButton);
 
-		SaveButton.addActionListener(new SaveButtonListener());
-		
-		//復帰ボタン
+		ShortestPathButton.addActionListener(new ShortestPathButtonListener());
+
+		// 復帰ボタン
 		RebackButton.setBounds(500, 300, 150, 50);
 		RebackButton.setForeground(Color.blue);
 		panel.add(RebackButton);
 
 		RebackButton.addActionListener(new RebackButtonListener());
-		
+
+		//
+		bu.setBounds(500, 400, 150, 50);
+		bu.setForeground(Color.blue);
+		panel.add(bu);
+
+		bu.addActionListener(new buListener());
+
 		// 頂点comboBox
 		Vector<String> combodata = new Vector<String>(PointList);
 		PointComboBox = new JComboBox<String>(combodata);
@@ -105,60 +124,170 @@ public class Main extends JFrame {
 		panel.add(PointComboBox);
 		PointComboBox.setVisible(true);
 
-		PointComboBox.addActionListener(new boxListener());
+		PointComboBox.addActionListener(new PointComboBoxListener());
 
 		// 頂点Label
 		PointLabel.setBounds(100, 70, 300, 30);
 		panel.add(PointLabel);
-		PointLabel.setVisible(true);
-		
-		//確定Label
-		ConfirmeLabel.setBounds(100, 200, 300, 30);
-		panel.add(ConfirmeLabel);
-		ConfirmeLabel.setVisible(true);
+
+		// 頂点Label
+		PointInforLabel.setBounds(100, 170, 300, 30);
+		panel.add(PointInforLabel);
+
+		//
+		NoTrespassingUpdate();
+		ConfirmeArea.setVisible(true);
+		ConfirmeArea.setEditable(false);
+
+		scrollbar = new JScrollPane(ConfirmeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollbar.setBounds(100, 200, 200, 200);
+		panel.add(scrollbar);
+
+		// メッセージLabel
+		MessageLabel.setBounds(100, 500, 500, 30);
+		MessageLabel.setForeground(Color.red);
+		panel.add(MessageLabel);
+		MessageLabel.setVisible(false);
+
+		this.addWindowListener(new WindowAdapter());
 	}
 
+	public class WindowAdapter implements WindowListener {
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+			if (MessageCheck == false) {
+				JOptionPane.showMessageDialog(null, "フレーム閉じることが出来ません。\r\n最新最短経路計算を行ってください。");
+			} else {
+				System.exit(0);
+			}
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+	}
+
+	public class buListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+			ClientSend.main();
+		}
+		
+	}
+	
 	public class RebackButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			CSVReadWrite.CopyFile();
+			NoTrespassingList = new ArrayList<String>();
+			NoTrespassingUpdate();
+			MessageLabel.setVisible(false);
+			MessageCheck = true;
 		}
-		
+
 	}
-	
-	public class SaveButtonListener implements ActionListener {
+
+	public class ShortestPathButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			CSVReadWrite.PointWrite();
 			ShortestPath.shortestPath();
+			NoTrespassingUpdate();
+
+			MessageLabel.setVisible(false);
+			MessageCheck = true;
 		}
-		
+
 	}
-	
+
 	public class ConfirmButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (ConfirmPoint.indexOf(SelectPoint) == -1)
-			{
+			if (NoTrespassingList.indexOf(SelectPoint) == -1) {
 				EditPoint.EditPointDelectEdge(SelectPoint);
-				ConfirmPoint.add(SelectPoint);
-				ConfirmPointText += SelectPoint + LINE_SEPARATOR;
-				ConfirmeLabel.setText(ConfirmPointText);
+				SortList(SelectPoint);
+				NoTrespassingUpdate();
+
+				MessageLabel.setVisible(true);
+				MessageCheck = false;
 			}
 		}
 
 	}
 
-	public class boxListener implements ActionListener {
+	public class PointComboBoxListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			SelectPoint = (String) PointComboBox.getSelectedItem();
 		}
 
+	}
+
+	public void NoTrespassingUpdate() {
+		ConfirmeArea.setText("");
+		if (NoTrespassingList.size() != 0) {
+			for (int i = 0; i < NoTrespassingList.size(); i++) {
+				ConfirmeArea.append(NoTrespassingList.get(i) + "\n");
+			}
+		}
+	}
+
+	public void SortList(String SelectPoint) {
+		int compare = Integer.parseInt(SelectPoint.substring(4, 7));
+		if (NoTrespassingList.size() == 0) {
+			NoTrespassingList.add(SelectPoint);
+		} else {
+			for (int i = 0; i < NoTrespassingList.size(); i++) {
+				int listnum = Integer.parseInt(NoTrespassingList.get(i).substring(4, 7));
+				if (compare < listnum) {
+					NoTrespassingList.add(i, SelectPoint);
+					return;
+				}
+			}
+			NoTrespassingList.add(NoTrespassingList.size(), SelectPoint);
+		}
 	}
 
 }

@@ -40,6 +40,23 @@ public class CSVReadWrite {
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+
+		try {
+			File ReadCSV = new File("File\\NoTrespassing.csv");
+			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
+			String line;
+
+			while ((line = br.readLine()) != null) {
+				String[] data = line.split(",", 0);
+				for (int i = 0; i < data.length; i++) {
+					Main.NoTrespassingList.add(data[i]);
+				}
+			}
+			br.close();
+
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 	}
 
 	public void PointWrite() {
@@ -49,12 +66,34 @@ public class CSVReadWrite {
 					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8")));
 
 			for (int i = 0; i < Main.PointList.size(); i++) {
-				p_writer.print(Main.PointList.get(i) + ",");
-				for (int j = 0; j < Main.EdgeList.get(i).size(); j++) {
-					if (j != Main.EdgeList.get(i).size() - 1) {
-						p_writer.print(Main.EdgeList.get(i).get(j) + ",");
+				if (Main.EdgeList.get(i).size() == 0) {
+					p_writer.println(Main.PointList.get(i));
+				} else {
+					p_writer.print(Main.PointList.get(i) + ",");
+					for (int j = 0; j < Main.EdgeList.get(i).size(); j++) {
+						if (j != Main.EdgeList.get(i).size() - 1) {
+							p_writer.print(Main.EdgeList.get(i).get(j) + ",");
+						} else {
+							p_writer.println(Main.EdgeList.get(i).get(j));
+						}
+					}
+				}
+			}
+			p_writer.close();
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+
+		File file1 = new File("File\\NoTrespassing.csv");
+		try {
+			PrintWriter p_writer = new PrintWriter(
+					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1), "utf-8")));
+			if (Main.NoTrespassingList.size() != 0) {
+				for (int i = 0; i < Main.NoTrespassingList.size(); i++) {
+					if (i == Main.NoTrespassingList.size() - 1) {
+						p_writer.print(Main.NoTrespassingList.get(i));
 					} else {
-						p_writer.println(Main.EdgeList.get(i).get(j));
+						p_writer.print(Main.NoTrespassingList.get(i) + ",");
 					}
 				}
 			}
@@ -90,9 +129,12 @@ public class CSVReadWrite {
 		Path TargetPointPath = Paths.get("File\\AdjacentPoints.csv");
 		Path SourceShortestPath = Paths.get("File\\DefaultShortestPath.csv");
 		Path TargetShortestPath = Paths.get("File\\ShortestPath.csv");
+		Path SourceNoTrespassingPath = Paths.get("File\\DefaultNoTrespassing.csv");
+		Path TargetNoTrespassingPath = Paths.get("File\\NoTrespassing.csv");
 		try {
 			Files.copy(SourcePointPath, TargetPointPath, StandardCopyOption.REPLACE_EXISTING);
 			Files.copy(SourceShortestPath, TargetShortestPath, StandardCopyOption.REPLACE_EXISTING);
+			Files.copy(SourceNoTrespassingPath, TargetNoTrespassingPath, StandardCopyOption.REPLACE_EXISTING);
 
 		} catch (IOException e) {
 			e.printStackTrace();
