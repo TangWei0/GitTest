@@ -7,8 +7,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -208,7 +206,7 @@ public class Main extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO 自動生成されたメソッド・スタブ
-			ClientSend.main();
+			ClientSend.send();
 		}
 		
 	}
