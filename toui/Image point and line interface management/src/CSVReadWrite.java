@@ -16,7 +16,7 @@ public class CSVReadWrite {
 
 	public void PointRead() {
 		try {
-			File ReadCSV = new File("File\\AdjacentPoints.csv");
+			File ReadCSV = new File("AdjacentPoints.csv");
 			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
 			String line;
 
@@ -42,7 +42,7 @@ public class CSVReadWrite {
 		}
 
 		try {
-			File ReadCSV = new File("File\\NoTrespassing.csv");
+			File ReadCSV = new File("NoTrespassing.csv");
 			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
 			String line;
 
@@ -60,7 +60,7 @@ public class CSVReadWrite {
 	}
 
 	public void PointWrite() {
-		File file = new File("File\\AdjacentPoints.csv");
+		File file = new File("AdjacentPoints.csv");
 		try {
 			PrintWriter p_writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8")));
@@ -84,7 +84,7 @@ public class CSVReadWrite {
 			System.out.println(e);
 		}
 
-		File file1 = new File("File\\NoTrespassing.csv");
+		File file1 = new File("NoTrespassing.csv");
 		try {
 			PrintWriter p_writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1), "utf-8")));
@@ -104,7 +104,7 @@ public class CSVReadWrite {
 	}
 
 	public void ShortestPathWrite(boolean OutputTypeCheck) {
-		File file = new File("File\\ShortestPath.csv");
+		File file = new File("ShortestPath.csv");
 		PrintWriter p_writer;
 		try {
 
@@ -125,12 +125,12 @@ public class CSVReadWrite {
 	}
 
 	public void CopyFile() {
-		Path SourcePointPath = Paths.get("File\\DefaultAdjacentPoints.csv");
-		Path TargetPointPath = Paths.get("File\\AdjacentPoints.csv");
-		Path SourceShortestPath = Paths.get("File\\DefaultShortestPath.csv");
-		Path TargetShortestPath = Paths.get("File\\ShortestPath.csv");
-		Path SourceNoTrespassingPath = Paths.get("File\\DefaultNoTrespassing.csv");
-		Path TargetNoTrespassingPath = Paths.get("File\\NoTrespassing.csv");
+		Path SourcePointPath = Paths.get("DefaultAdjacentPoints.csv");
+		Path TargetPointPath = Paths.get("AdjacentPoints.csv");
+		Path SourceShortestPath = Paths.get("DefaultShortestPath.csv");
+		Path TargetShortestPath = Paths.get("ShortestPath.csv");
+		Path SourceNoTrespassingPath = Paths.get("DefaultNoTrespassing.csv");
+		Path TargetNoTrespassingPath = Paths.get("NoTrespassing.csv");
 		try {
 			Files.copy(SourcePointPath, TargetPointPath, StandardCopyOption.REPLACE_EXISTING);
 			Files.copy(SourceShortestPath, TargetShortestPath, StandardCopyOption.REPLACE_EXISTING);

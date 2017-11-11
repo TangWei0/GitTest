@@ -27,8 +27,8 @@ public class Main extends JFrame {
 	static CSVReadWrite CSVReadWrite = new CSVReadWrite();
 	static ShortestPath ShortestPath = new ShortestPath();
 	static EditPoint EditPoint = new EditPoint();
-	static ClientSend ClientSend = new ClientSend();
-
+	static CUploadFileClient CUploadFileClient = new CUploadFileClient();
+	
 	public static ArrayList<String> NoTrespassingList = new ArrayList<String>();
 	public static ArrayList<String> PointList = new ArrayList<String>();
 	public static ArrayList<ArrayList<String>> EdgeList = new ArrayList<ArrayList<String>>();
@@ -205,8 +205,7 @@ public class Main extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO 自動生成されたメソッド・スタブ
-			ClientSend.send();
+			CUploadFileClient.upLoadFromProduction();
 		}
 		
 	}
