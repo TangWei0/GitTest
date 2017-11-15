@@ -18,17 +18,17 @@ public class CSVReadWrite {
 		try {
 			File ReadCSV = new File("AdjacentPoints.csv");
 			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
-			String line;
+			String PointLine;
 
-			while ((line = br.readLine()) != null) {
+			while ((PointLine = br.readLine()) != null) {
 				ArrayList<String> EdgeListItem = new ArrayList<String>();
-				String[] data = line.split(",", 0);
+				String[] PointData = line.split(",", 0);
 
-				for (int i = 0; i < data.length; i++) {
+				for (int i = 0; i < PointData.length; i++) {
 					if (i == 0) {
-						Main.PointList.add(data[i]);
+						Main.PointList.add(PointData[i]);
 					} else {
-						EdgeListItem.add(data[i]);
+						EdgeListItem.add(PointData[i]);
 					}
 				}
 
@@ -44,12 +44,12 @@ public class CSVReadWrite {
 		try {
 			File ReadCSV = new File("NoTrespassing.csv");
 			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
-			String line;
+			String NoTrespassingLine;
 
-			while ((line = br.readLine()) != null) {
-				String[] data = line.split(",", 0);
-				for (int i = 0; i < data.length; i++) {
-					Main.NoTrespassingList.add(data[i]);
+			while ((NoTrespassingLine = br.readLine()) != null) {
+				String[] NoTrespassingData = line.split(",", 0);
+				for (int j = 0; j < NoTrespassingData.length; j++) {
+					Main.NoTrespassingList.add(NoTrespassingData[j]);
 				}
 			}
 			br.close();
@@ -62,42 +62,42 @@ public class CSVReadWrite {
 	public void PointWrite() {
 		File file = new File("AdjacentPoints.csv");
 		try {
-			PrintWriter p_writer = new PrintWriter(
+			PrintWriter Point_writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8")));
 
 			for (int i = 0; i < Main.PointList.size(); i++) {
 				if (Main.EdgeList.get(i).size() == 0) {
-					p_writer.println(Main.PointList.get(i));
+					Point_writer.println(Main.PointList.get(i));
 				} else {
-					p_writer.print(Main.PointList.get(i) + ",");
+					Point_writer.print(Main.PointList.get(i) + ",");
 					for (int j = 0; j < Main.EdgeList.get(i).size(); j++) {
 						if (j != Main.EdgeList.get(i).size() - 1) {
-							p_writer.print(Main.EdgeList.get(i).get(j) + ",");
+							Point_writer.print(Main.EdgeList.get(i).get(j) + ",");
 						} else {
-							p_writer.println(Main.EdgeList.get(i).get(j));
+							Point_writer.println(Main.EdgeList.get(i).get(j));
 						}
 					}
 				}
 			}
-			p_writer.close();
+			Point_writer.close();
 		} catch (IOException e) {
 			System.out.println(e);
 		}
 
 		File file1 = new File("NoTrespassing.csv");
 		try {
-			PrintWriter p_writer = new PrintWriter(
+			PrintWriter NoTrespassing_writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1), "utf-8")));
 			if (Main.NoTrespassingList.size() != 0) {
-				for (int i = 0; i < Main.NoTrespassingList.size(); i++) {
-					if (i == Main.NoTrespassingList.size() - 1) {
-						p_writer.print(Main.NoTrespassingList.get(i));
+				for (int j = 0; j < Main.NoTrespassingList.size(); j++) {
+					if (j == Main.NoTrespassingList.size() - 1) {
+						NoTrespassing_writer.print(Main.NoTrespassingList.get(j));
 					} else {
-						p_writer.print(Main.NoTrespassingList.get(i) + ",");
+						NoTrespassing_writer.print(Main.NoTrespassingList.get(j) + ",");
 					}
 				}
 			}
-			p_writer.close();
+			NoTrespassing_writer.close();
 		} catch (IOException e) {
 			System.out.println(e);
 		}
