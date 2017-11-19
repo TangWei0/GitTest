@@ -16,13 +16,13 @@ public class CSVReadWrite {
 
 	public void PointRead() {
 		try {
-			File ReadCSV = new File("AdjacentPoints.csv");
+			File ReadCSV = new File("/Library/WebServer/Documents/doutai/AdjacentPoints.csv");
 			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
 			String PointLine;
 
 			while ((PointLine = br.readLine()) != null) {
 				ArrayList<String> EdgeListItem = new ArrayList<String>();
-				String[] PointData = line.split(",", 0);
+				String[] PointData = PointLine.split(",", 0);
 
 				for (int i = 0; i < PointData.length; i++) {
 					if (i == 0) {
@@ -42,12 +42,12 @@ public class CSVReadWrite {
 		}
 
 		try {
-			File ReadCSV = new File("NoTrespassing.csv");
+			File ReadCSV = new File("/Library/WebServer/Documents/doutai/NoTrespassing.csv");
 			BufferedReader br = new BufferedReader(new FileReader(ReadCSV));
 			String NoTrespassingLine;
 
 			while ((NoTrespassingLine = br.readLine()) != null) {
-				String[] NoTrespassingData = line.split(",", 0);
+				String[] NoTrespassingData = NoTrespassingLine.split(",", 0);
 				for (int j = 0; j < NoTrespassingData.length; j++) {
 					Main.NoTrespassingList.add(NoTrespassingData[j]);
 				}
@@ -60,7 +60,7 @@ public class CSVReadWrite {
 	}
 
 	public void PointWrite() {
-		File file = new File("AdjacentPoints.csv");
+		File file = new File("/Library/WebServer/Documents/doutai/AdjacentPoints.csv");
 		try {
 			PrintWriter Point_writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "utf-8")));
@@ -84,7 +84,7 @@ public class CSVReadWrite {
 			System.out.println(e);
 		}
 
-		File file1 = new File("NoTrespassing.csv");
+		File file1 = new File("/Library/WebServer/Documents/doutai/NoTrespassing.csv");
 		try {
 			PrintWriter NoTrespassing_writer = new PrintWriter(
 					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file1), "utf-8")));
@@ -104,7 +104,7 @@ public class CSVReadWrite {
 	}
 
 	public void ShortestPathWrite(boolean OutputTypeCheck) {
-		File file = new File("ShortestPath.csv");
+		File file = new File("/Library/WebServer/Documents/doutai/ShortestPath.csv");
 		PrintWriter p_writer;
 		try {
 
@@ -125,12 +125,12 @@ public class CSVReadWrite {
 	}
 
 	public void CopyFile() {
-		Path SourcePointPath = Paths.get("DefaultAdjacentPoints.csv");
-		Path TargetPointPath = Paths.get("AdjacentPoints.csv");
-		Path SourceShortestPath = Paths.get("DefaultShortestPath.csv");
-		Path TargetShortestPath = Paths.get("ShortestPath.csv");
-		Path SourceNoTrespassingPath = Paths.get("DefaultNoTrespassing.csv");
-		Path TargetNoTrespassingPath = Paths.get("NoTrespassing.csv");
+		Path SourcePointPath = Paths.get("/Library/WebServer/Documents/doutai/DefaultAdjacentPoints.csv");
+		Path TargetPointPath = Paths.get("/Library/WebServer/Documents/doutai/AdjacentPoints.csv");
+		Path SourceShortestPath = Paths.get("/Library/WebServer/Documents/doutai/DefaultShortestPath.csv");
+		Path TargetShortestPath = Paths.get("/Library/WebServer/Documents/doutai/ShortestPath.csv");
+		Path SourceNoTrespassingPath = Paths.get("/Library/WebServer/Documents/doutai/DefaultNoTrespassing.csv");
+		Path TargetNoTrespassingPath = Paths.get("/Library/WebServer/Documents/doutai/NoTrespassing.csv");
 		try {
 			Files.copy(SourcePointPath, TargetPointPath, StandardCopyOption.REPLACE_EXISTING);
 			Files.copy(SourceShortestPath, TargetShortestPath, StandardCopyOption.REPLACE_EXISTING);

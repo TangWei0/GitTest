@@ -27,7 +27,6 @@ public class Main extends JFrame {
 	static CSVReadWrite CSVReadWrite = new CSVReadWrite();
 	static ShortestPath ShortestPath = new ShortestPath();
 	static EditPoint EditPoint = new EditPoint();
-	static CUploadFileClient CUploadFileClient = new CUploadFileClient();
 	
 	public static ArrayList<String> NoTrespassingList = new ArrayList<String>();
 	public static ArrayList<String> PointList = new ArrayList<String>();
@@ -107,13 +106,6 @@ public class Main extends JFrame {
 		panel.add(RebackButton);
 
 		RebackButton.addActionListener(new RebackButtonListener());
-
-		//
-		bu.setBounds(500, 400, 150, 50);
-		bu.setForeground(Color.blue);
-		panel.add(bu);
-
-		bu.addActionListener(new buListener());
 
 		// 頂点comboBox
 		Vector<String> combodata = new Vector<String>(PointList);
@@ -200,15 +192,6 @@ public class Main extends JFrame {
 		}
 
 	}
-
-	public class buListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			CUploadFileClient.upLoadFromProduction();
-		}
-		
-	}
 	
 	public class RebackButtonListener implements ActionListener {
 
@@ -219,6 +202,8 @@ public class Main extends JFrame {
 			NoTrespassingUpdate();
 			MessageLabel.setVisible(false);
 			MessageCheck = true;
+
+			JOptionPane.showMessageDialog(null, "復帰が完了しました。");
 		}
 
 	}
@@ -233,6 +218,8 @@ public class Main extends JFrame {
 
 			MessageLabel.setVisible(false);
 			MessageCheck = true;
+
+			JOptionPane.showMessageDialog(null, "最新最短経路計算が完了しました。");
 		}
 
 	}
