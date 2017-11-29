@@ -1,9 +1,9 @@
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,10 +18,19 @@ public class SudokuGame extends JFrame {
 	private static int WIDTH_SIZE = 800;
 	private static int HEIGHT_SIZE = 800;
 	private static int NUM_SIZE = 9;
+	private static int BUTTON_SIZE = 49;
+	private static int SPACING = 50;
 
+	//データ
+	public ArrayList<Integer> SudokuNumItem = new ArrayList<Integer>(); 
+	public ArrayList<Integer>[][] SudokuNum = new ArrayList<Integer>[NUM_SIZE][NUM_SIZE]();
 	// 画面コントロール
 	static JPanel panel = new JPanel();
-	static JButton[][] sudoku = new JButton[NUM_SIZE][NUM_SIZE];
+	static JButton[][] SudokuButton = new JButton[NUM_SIZE][NUM_SIZE];
+	static JButton[] NumButton = new JButton[NUM_SIZE];
+	static JButton InitialButton = new JButton("初期化");
+
+	boolean SudokuButtonCheck = false;
 
 	/**
 	 * Launch the application.
@@ -53,61 +62,72 @@ public class SudokuGame extends JFrame {
 		panel.setLayout(null);
 		panel.setOpaque(false);
 
-		JButton button1 = new JButton("button1");
-		JButton button2 = new JButton("button2");
-		JButton button3 = new JButton("button3");
-		JButton button4 = new JButton("button4");
-		JButton button5 = new JButton("button5");
-		JButton button6 = new JButton("button6");
-		JButton button7 = new JButton("button7");
-		JButton button8 = new JButton("button8");
-		JButton button9 = new JButton("button9");
-		button1.setBounds(50, 50, 50, 50);
-		button2.setBounds(50, 100, 50, 50);
-		button3.setBounds(50, 150, 50, 50);
-		button4.setBounds(50, 200, 50, 50);
-		button5.setBounds(50, 250, 50, 50);
-		button6.setBounds(50, 300, 50, 50);
-		button7.setBounds(50, 350, 50, 50);
-		button8.setBounds(50, 400, 50, 50);
-		button9.setBounds(50, 450, 50, 50);
+		SetGameTable();
+		SetNumTable();
+
+		InitialButton.setBounds(11 * SPACING, SPACING, 2 * BUTTON_SIZE, BUTTON_SIZE);
+		panel.add(InitialButton);
+
+		InitialButton.addActionListener(new InitialButtonListener());
 		// JButton button2 = new JButton("button2");
 		// JButton button3 = new JButton("button3");
 		// JButton button4 = new JButton("button4");
 
 		// GridLayout layout = new GridLayout(9, 1);
 		// panel.setLayout(null);
+	}
 
-		button1.setContentAreaFilled(false);
-		button2.setContentAreaFilled(false);
-		button3.setContentAreaFilled(false);
-		button4.setContentAreaFilled(false);
-		button5.setContentAreaFilled(false);
-		button6.setContentAreaFilled(false);
-		button7.setContentAreaFilled(false);
-		button8.setContentAreaFilled(false);
-		button9.setContentAreaFilled(false);
+	public void SetGameTable() {
+		for (int i = 0; i < NUM_SIZE; i++) {
+			for (int j = 0; j < NUM_SIZE; j++) {
+				SudokuButton[i][j] = new JButton("");
+				SudokuButton[i][j].setBounds((i + 1) * SPACING, (j + 1) * SPACING, BUTTON_SIZE, BUTTON_SIZE);
+				panel.add(SudokuButton[i][j]);
 
-		panel.add(button1);
-		panel.add(button2);
-		panel.add(button3);
-		panel.add(button4);
-		panel.add(button5);
-		panel.add(button6);
-		panel.add(button7);
-		panel.add(button8);
-		panel.add(button9);
+				SudokuButton[i][j].addActionListener(new SudokuButtonListener());
+			}
+		}
+	}
 
-		panel.repaint();
+	public void SetNumTable() {
+		for (int i = 0; i < NUM_SIZE; i++) {
+			NumButton[i] = new JButton(String.valueOf(i + 1));
+			NumButton[i].setBounds((i + 1) * SPACING, 11 * SPACING, BUTTON_SIZE, BUTTON_SIZE);
+			panel.add(NumButton[i]);
+			
+			NumButton[i].addActionListener(new NumButtonListener());
+		}
+	}
+
+	public class InitialButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO 自動生成されたメソッド・スタブ
+			SudokuButtonCheck = true;
+		}
 
 	}
 
-	public void paint(Graphics g) {
-		super.paint(g);
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.BLACK);
-		g2.setStroke(new BasicStroke(3.0f));
-		g2.drawLine(50, 50, 50, 500);
-	}
+	public class SudokuButtonListener implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+			if (SudokuButtonCheck == true) {
+				System.out.println("按钮有效");
+			}
+		}
+
+	}
+	
+	public class NumButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+			
+		}
+
+	}
 }
