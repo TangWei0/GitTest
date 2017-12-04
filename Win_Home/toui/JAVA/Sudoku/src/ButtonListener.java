@@ -60,8 +60,8 @@ public class ButtonListener {
 				break;
 			case CALCULATE:
 				SudokuGame.Data.Calculate();
-				SudokuGame.mode = SudokuGame.Mode.RETYR;
-				SudokuGame.ScreenSetting.SetModeButton();
+				//SudokuGame.mode = SudokuGame.Mode.RETYR;
+				//SudokuGame.ScreenSetting.SetModeButton();
 				break;
 			case RETYR:
 				SudokuGame.mode = SudokuGame.Mode.SELECT;

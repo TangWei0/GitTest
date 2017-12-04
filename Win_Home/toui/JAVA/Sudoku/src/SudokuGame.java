@@ -41,6 +41,7 @@ public class SudokuGame extends JFrame {
 	public static int WIDTH_SIZE = 800;
 	public static int HEIGHT_SIZE = 800;
 	public static int NUM_SIZE = 9;
+	public static int OBJECT_SIZE = 3;
 	public static int BOTTOM_SIZE = 11;
 	public static int BUTTON_SIZE = 49;
 	public static int SPACING = 50;
