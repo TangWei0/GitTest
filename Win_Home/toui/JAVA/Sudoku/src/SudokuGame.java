@@ -30,13 +30,14 @@ public class SudokuGame extends JFrame {
 	}
 
 	public static Mode mode = Mode.INITIALIZATION;
-	//public static ExcludeObjects EObjects = ExcludeObjects.HORIZONTAL;
 	
 	// データ
 	public static ArrayList<ArrayList<Integer>> Candidate = new ArrayList<ArrayList<Integer>>();
-
-	public static ArrayList<Integer> CandidateItem = new ArrayList<Integer>();
-	public static ArrayList<Integer> DefaultCandidateItem = new ArrayList<Integer>();
+	
+	public static ArrayList<ArrayList<Integer>> CurrentObject = new ArrayList<ArrayList<Integer>>();
+	public static ArrayList<ArrayList<Integer>> NextObject = new ArrayList<ArrayList<Integer>>();
+	
+	public static ArrayList<Integer> CurrentObjectItem = new ArrayList<Integer>();
 
 	public static int WIDTH_SIZE = 800;
 	public static int HEIGHT_SIZE = 800;
@@ -92,17 +93,16 @@ public class SudokuGame extends JFrame {
 
 		contentPane = getContentPane();
 		if (mode == Mode.INITIALIZATION) {
-			Data.StatData();
 			ScreenSetting.ButtonSetting();
 		}
 	}
 
 	public static void SelectUpdate() {
 		Data.DataSelectUpdate();
-		ScreenSetting.SelectButtonUpdate();
+		//ScreenSetting.SelectButtonUpdate();
 
 		// 临时文件初始化
-		Data.TemporaryDataClear();
+		//Data.TemporaryDataClear();
 	}
 
 }

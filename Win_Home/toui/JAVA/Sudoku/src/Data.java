@@ -3,42 +3,34 @@ import java.util.ArrayList;
 public class Data {
 
 	public int[] ObjectIndex = new int[SudokuGame.NUM_SIZE];
-
-	public void StatData() {
-		GameDefaultInitial();
-		GameInitial();
-	}
-
-	public void GameDefaultInitial() {
-		for (int i = 0; i < SudokuGame.NUM_SIZE; i++) {
-			SudokuGame.DefaultCandidateItem.add(i + 1);
-		}
-	}
-
-	public void GameInitial() {
-		int count = 1;
-		for (int i = 0; i < SudokuGame.NUM_SIZE; i++) {
-			for (int j = 0; j < SudokuGame.NUM_SIZE; j++) {
-				SudokuGame.SudokuNum[i][j] = -count;
-				SudokuGame.Candidate.add(SudokuGame.DefaultCandidateItem);
-				count++;
-			}
-		}
+	
+	public void CurrentObjectItemClear()
+	{
+		SudokuGame.CurrentObject.add(SudokuGame.CurrentObjectItem);
+		SudokuGame.CurrentObjectItem = new ArrayList<Integer>();
 	}
 
 	public void DataSelectUpdate() {
-		// 候选ArrayList更新
-		int SelectCandidateIndex = -SudokuGame.SudokuNum[SudokuGame.SelectIndexValue[0]][SudokuGame.SelectIndexValue[1]]
-				- 1;
-		SudokuGame.CandidateItem.add(SudokuGame.SelectIndexValue[2]);
-		SudokuGame.Candidate.remove(SelectCandidateIndex);
-		SudokuGame.Candidate.add(SelectCandidateIndex, SudokuGame.CandidateItem);
-
+		// 最后选择的区域在当前列表的位置
+		int SelectIndex = SudokuGame.CurrentObject.size() - 1;
+		int SelectX = SudokuGame.CurrentObject.get(SelectIndex).get(0);
+		int SelectY = SudokuGame.CurrentObject.get(SelectIndex).get(1);
+		int SelectCandidateIndex = XYToIndex(SelectX, SelectY);
+		
+		SudokuGame.Candidate.get(SelectCandidateIndex).add(0);
+		SudokuGame.SudokuNum[SelectX][SelectY] = SudokuGame.CurrentObject.get(SelectIndex).get(2);
+		
+		SudokuGame.SudokuButton[SelectX][SelectY].setText(String.valueOf(SudokuGame.CurrentObject.get(SelectIndex).get(2)));
 		// 数独数组更新
-		SudokuGame.SudokuNum[SudokuGame.SelectIndexValue[0]][SudokuGame.SelectIndexValue[1]] = SudokuGame.SelectIndexValue[2];
+		//SudokuGame.SudokuNum[SudokuGame.SelectIndexValue[0]][SudokuGame.SelectIndexValue[1]] = SudokuGame.SelectIndexValue[2];
+	}
+	
+	public int XYToIndex (int X, int Y)
+	{
+		return X * SudokuGame.NUM_SIZE + Y;
 	}
 
-	public void TemporaryDataClear() {
+/*	public void TemporaryDataClear() {
 		SudokuGame.CandidateItem = new ArrayList<Integer>();
 		SudokuGame.SelectIndexValue = new int[3];
 	}
@@ -52,17 +44,17 @@ public class Data {
 						case HORIZONTAL:
 							HorizontalIndex(i, j);
 							NonObjectInvestigation(i, j);
-							//display();
+							// display();
 							break;
 						case LONGITUDINAL:
 							LongitudinalIndex(i, j);
 							NonObjectInvestigation(i, j);
-							//display();
+							// display();
 							break;
 						case PARTIAL:
 							PartialIndex(i, j);
 							NonObjectInvestigation(i, j);
-							//display();
+							// display();
 							break;
 						}
 					}
@@ -121,21 +113,25 @@ public class Data {
 			if (a != -1 && SudokuGame.Candidate.get(a).size() > 1) {
 				SudokuGame.CandidateItem = new ArrayList<Integer>(SudokuGame.Candidate.get(a));
 				int index = SudokuGame.CandidateItem.indexOf(SudokuGame.SudokuNum[i][j]);
-				SudokuGame.CandidateItem.remove(index);
-				SudokuGame.Candidate.remove(a);
-				SudokuGame.Candidate.add(a, SudokuGame.CandidateItem);
+				if (index == -1) {
+					SudokuGame.CandidateItem.remove(index);
+					SudokuGame.Candidate.remove(a);
+					SudokuGame.Candidate.add(a, SudokuGame.CandidateItem);
+				}
 				if (SudokuGame.Candidate.get(a).size() == 1) {
 					// 数组更新
-					SudokuGame.SudokuNum[k/SudokuGame.NUM_SIZE][k%SudokuGame.NUM_SIZE] = SudokuGame.Candidate.get(a).get(0);
+					SudokuGame.SudokuNum[k / SudokuGame.NUM_SIZE][k % SudokuGame.NUM_SIZE] = SudokuGame.Candidate.get(a)
+							.get(0);
 					// button显示
-					SudokuGame.SudokuButton[k/SudokuGame.NUM_SIZE][k%SudokuGame.NUM_SIZE].setText(String.valueOf(SudokuGame.Candidate.get(a).get(0)));
+					SudokuGame.SudokuButton[k / SudokuGame.NUM_SIZE][k % SudokuGame.NUM_SIZE]
+							.setText(String.valueOf(SudokuGame.Candidate.get(a).get(0)));
 				}
 				SudokuGame.CandidateItem = new ArrayList<Integer>();
 			}
 		}
 
 	}
-
+*/
 	// 测试用
 	public void display() {
 		for (int k = 0; k < SudokuGame.NUM_SIZE; k++) {

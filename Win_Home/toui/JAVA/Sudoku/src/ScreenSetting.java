@@ -70,8 +70,7 @@ public class ScreenSetting {
 	}
 
 	public void SelectButtonUpdate() {
-		SudokuGame.SudokuButton[SudokuGame.SelectIndexValue[0]][SudokuGame.SelectIndexValue[1]]
-				.setText(String.valueOf(SudokuGame.SelectIndexValue[2]));
+		
 	}
 	
 	public void ButtonUpdate() 
