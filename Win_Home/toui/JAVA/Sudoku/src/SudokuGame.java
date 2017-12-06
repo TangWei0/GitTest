@@ -33,11 +33,10 @@ public class SudokuGame extends JFrame {
 	
 	// データ
 	public static ArrayList<ArrayList<Integer>> Candidate = new ArrayList<ArrayList<Integer>>();
-	
 	public static ArrayList<ArrayList<Integer>> CurrentObject = new ArrayList<ArrayList<Integer>>();
 	public static ArrayList<ArrayList<Integer>> NextObject = new ArrayList<ArrayList<Integer>>();
 	
-	public static ArrayList<Integer> CurrentObjectItem = new ArrayList<Integer>();
+	public static ArrayList<Integer> Item = new ArrayList<Integer>();
 
 	public static int WIDTH_SIZE = 800;
 	public static int HEIGHT_SIZE = 800;
@@ -47,10 +46,11 @@ public class SudokuGame extends JFrame {
 	public static int BUTTON_SIZE = 49;
 	public static int SPACING = 50;
 	public static int SelectValue = 0;
+	
+	public static int IMPOSSIBLE_SIZE = 20;
+	public static int POSSIBLE_SIZE = 24;
 
 	public static int[][] SudokuNum = new int[NUM_SIZE][NUM_SIZE];
-
-	public static int[] SelectIndexValue = new int[3];
 
 	public static boolean SudokuButtonCheck = false;
 	public static boolean NumButtonCheck = false;
@@ -96,13 +96,4 @@ public class SudokuGame extends JFrame {
 			ScreenSetting.ButtonSetting();
 		}
 	}
-
-	public static void SelectUpdate() {
-		Data.DataSelectUpdate();
-		//ScreenSetting.SelectButtonUpdate();
-
-		// 临时文件初始化
-		//Data.TemporaryDataClear();
-	}
-
 }

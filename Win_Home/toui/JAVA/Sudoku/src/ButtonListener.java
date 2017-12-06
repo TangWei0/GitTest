@@ -15,8 +15,9 @@ public class ButtonListener {
 				for (int i = 0; i < SudokuGame.NUM_SIZE; i++) {
 					for (int j = 0; j < SudokuGame.NUM_SIZE; j++) {
 						if (e.getSource() == SudokuGame.SudokuButton[i][j]) {
-							SudokuGame.CurrentObjectItem.add(i);
-							SudokuGame.CurrentObjectItem.add(j);
+							SudokuGame.Item.add(i);
+							SudokuGame.Item.add(j);
+							break;
 						}
 					}
 				}
@@ -32,10 +33,10 @@ public class ButtonListener {
 			if (SudokuGame.NumButtonCheck == true) {
 				for (int i = 0; i < SudokuGame.NUM_SIZE; i++) {
 					if (e.getSource() == SudokuGame.NumButton[i]) {
-						SudokuGame.CurrentObjectItem.add(i + 1);
-						SudokuGame.Data.CurrentObjectItemClear();
-						SudokuGame.SelectUpdate();
+						SudokuGame.Item.add(i + 1);
+						SudokuGame.Data.SelectUpdate();
 						SudokuGame.NumButtonCheck = false;
+						break;
 					}
 				}
 			}
@@ -60,7 +61,7 @@ public class ButtonListener {
 				SudokuGame.ScreenSetting.SetModeButton();
 				break;
 			case CALCULATE:
-				//SudokuGame.Data.Calculate();
+				SudokuGame.Data.Calculate();
 				//SudokuGame.mode = SudokuGame.Mode.RETYR;
 				//SudokuGame.ScreenSetting.SetModeButton();
 				break;

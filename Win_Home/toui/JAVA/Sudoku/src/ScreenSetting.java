@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -48,11 +50,13 @@ public class ScreenSetting {
 	public void SetGameTable() {
 		for (int i = 0; i < SudokuGame.NUM_SIZE; i++) {
 			for (int j = 0; j < SudokuGame.NUM_SIZE; j++) {
+				SudokuGame.SudokuNum[i][j] = 0;
 				SudokuGame.SudokuButton[i][j] = new JButton("");
 				SudokuGame.SudokuButton[i][j].setBounds((j + 1) * SudokuGame.SPACING, (i + 1) * SudokuGame.SPACING,
 						SudokuGame.BUTTON_SIZE, SudokuGame.BUTTON_SIZE);
 				SudokuGame.panel.add(SudokuGame.SudokuButton[i][j]);
 
+				SudokuGame.Candidate.add(new ArrayList<Integer>());
 				SudokuGame.SudokuButton[i][j].addActionListener(ButtonListener.new SudokuButtonListener());
 			}
 		}
@@ -68,14 +72,4 @@ public class ScreenSetting {
 			SudokuGame.NumButton[i].addActionListener(ButtonListener.new NumButtonListener());
 		}
 	}
-
-	public void SelectButtonUpdate() {
-		
-	}
-	
-	public void ButtonUpdate() 
-	{
-		
-	}
-
 }
