@@ -22,7 +22,22 @@ public class ScreenSetting {
 		SudokuGame.mode = SudokuGame.Mode.SELECT;
 		SetModeButton();
 	}
-
+	
+	public void ButtonUpdate()
+	{
+		for (int i= 0;i < 9 ;i++)
+		{
+			for (int j =0;j<9;j++)
+			{
+				if (SudokuGame.SudokuNum[i][j] != 0)
+				{
+					System.out.println(i + ""+ j + "update");
+					SudokuGame.SudokuButton[i][j].setText(String.valueOf(SudokuGame.SudokuNum[i][j]));
+				}
+			}
+		}
+	}
+	
 	public void SetModeButton() {
 		if (SudokuGame.mode != SudokuGame.Mode.INITIALIZATION) {
 			switch (SudokuGame.mode) {

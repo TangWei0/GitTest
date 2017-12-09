@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+
 public class Data {
 	public static int[] Impossible = new int[SudokuGame.IMPOSSIBLE_SIZE];
 	public static int[] Possible = new int[SudokuGame.POSSIBLE_SIZE];
@@ -27,7 +29,7 @@ public class Data {
 	}
 
 	public void Calculate() {
-		do {
+		//do {
 			for (int i = 0; i < SudokuGame.CurrentObject.size(); i++) {
 				CurrentIndexX = SudokuGame.CurrentObject.get(i).get(0);
 				CurrentIndexY = SudokuGame.CurrentObject.get(i).get(1);
@@ -39,13 +41,23 @@ public class Data {
 			}
 
 			CalculateCheck();
-			
+
 			SudokuGame.CurrentObject = new ArrayList<ArrayList<Integer>>(SudokuGame.NextObject);
 			SudokuGame.NextObject = new ArrayList<ArrayList<Integer>>();
 
-		} while (SolveCount < 81);
+			System.out.println("----------------------------------------------------------");
+			//SudokuGame.ScreenSetting.ButtonUpdate();
+			for (int i = 0;i<9;i++)
+			{
+				for (int j =0;j<9;j++)
+				{
+					System.out.print(SudokuGame.SudokuNum[i][j] +",");
+				}
+				System.out.println();
+			}
+			
+		//} while (SolveCount < 81);
 
-		
 	}
 
 	public void CalculateCheck() {
@@ -66,15 +78,15 @@ public class Data {
 							if (Compare[m] == -1) {
 								continue;
 							} else {
-								if (SudokuGame.Candidate.get(Compare[m]).indexOf(-(SudokuGame.Item.get(k))) != -1) {
+								if (SudokuGame.Candidate.get(Compare[m]).indexOf(-(SudokuGame.Item.get(k))) == -1) {
 									break;
 								} else {
 									count++;
 									if (count == 8) {
 										SudokuGame.SudokuNum[i][j] = SudokuGame.Item.get(k);
-										SudokuGame.SudokuButton[i][j].setText(String.valueOf(SudokuGame.Item.get(k)));
 										SolveCount++;
-
+										SudokuGame.SudokuButton[i][j] = new JButton("a");
+										
 										SudokuGame.Item = new ArrayList<Integer>();
 										SudokuGame.Item.add(0);
 										SudokuGame.Candidate.set(XYToIndex(i, j), SudokuGame.Item);
@@ -138,14 +150,19 @@ public class Data {
 		for (int k = 0; k < SudokuGame.POSSIBLE_SIZE; k++) {
 			SudokuGame.Item = SudokuGame.Candidate.get(Possible[k]);
 
-			if (SudokuGame.Item.indexOf(0) == -1) {
-				int CurrentValueIndex = SudokuGame.Item.indexOf(-CurrentValue);
-				if (CurrentValueIndex == -1) {
-					SudokuGame.Item.add(CurrentValue);
-					SudokuGame.Candidate.set(Possible[k], SudokuGame.Item);
-					SudokuGame.Item = new ArrayList<Integer>();
-				}
+			if (SudokuGame.Item.indexOf(0) != -1) {
+				continue;
 			}
+			if (SudokuGame.Item.indexOf(-CurrentValue) != -1) {
+				continue;
+			}
+			if (SudokuGame.Item.indexOf(CurrentValue) != -1) {
+				continue;
+			}
+			SudokuGame.Item.add(CurrentValue);
+			SudokuGame.Candidate.set(Possible[k], SudokuGame.Item);
+			SudokuGame.Item = new ArrayList<Integer>();
+
 		}
 	}
 
@@ -155,8 +172,7 @@ public class Data {
 			if (SudokuGame.Item.indexOf(0) != -1) {
 				continue;
 			}
-			if (SudokuGame.Item.indexOf(-CurrentValue) != -1)
-			{
+			if (SudokuGame.Item.indexOf(-CurrentValue) != -1) {
 				continue;
 			}
 			int CurrentValueIndex = SudokuGame.Item.indexOf(CurrentValue);

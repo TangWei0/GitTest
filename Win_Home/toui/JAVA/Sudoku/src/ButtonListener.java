@@ -56,7 +56,7 @@ public class ButtonListener {
 				SudokuGame.ScreenSetting.SetModeButton();
 				break;
 			case CONFIRM:
-				SudokuGame.SudokuButtonCheck = false;
+				//SudokuGame.SudokuButtonCheck = false;
 				SudokuGame.mode = SudokuGame.Mode.CALCULATE;
 				SudokuGame.ScreenSetting.SetModeButton();
 				break;
