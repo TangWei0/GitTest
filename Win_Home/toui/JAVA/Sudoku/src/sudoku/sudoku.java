@@ -1,4 +1,4 @@
-package test;
+package sudoku;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class test {
+public class sudoku {
 
 	public static ArrayList<ArrayList<Integer>> Candidate = new ArrayList<ArrayList<Integer>>();
 
