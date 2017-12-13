@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class NumGame {
 
-	public static String ReadFile = "Input/Lev15.csv";
-	public static String WirteFile = "Output/Lev15.csv";
+	public static String ReadFile = "Input/Lev16.csv";
+	public static String WirteFile = "Output/Lev16.csv";
 	public static ArrayList<ArrayList<Integer>> Candidate = new ArrayList<ArrayList<Integer>>();
 
 	public static ArrayList<Integer> TmpItem = new ArrayList<Integer>();
