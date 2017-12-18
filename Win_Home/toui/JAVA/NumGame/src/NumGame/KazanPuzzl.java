@@ -6,11 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class KazanPuzzl {
 	public static String ReadFile = "Input/Kazan2.csv";
 	public static int Total = 26;
 	public static int Num = 4;
+	public static int ObjectCount = 0;
 
 	public static ArrayList<ArrayList<Integer>> AnalysisList = new ArrayList<ArrayList<Integer>>();
 	public static ArrayList<ArrayList<Integer>> ConditionList = new ArrayList<ArrayList<Integer>>();
@@ -40,33 +42,20 @@ public class KazanPuzzl {
 	}
 
 	public static void main(String[] args) {
-		double a = 17.15;
-		int b = (int) a;
-		double e = a-b;
-		int c = (int) (a*100);
-		int d = c%100;
-		
 		// TODO Auto-generated method stub
-		/*
+
 		DefalutList();
 		read();
 		statistics();
-		for (int i = 0; i < ConditionList.size(); i++) {
-			System.out.println(
-					MainBody.get(ConditionList.get(i).get(0)).get(ConditionList.get(i).get(1)).HorizontalTotal);
-			System.out
-					.println(MainBody.get(ConditionList.get(i).get(0)).get(ConditionList.get(i).get(1)).HorizontalNum);
-			System.out.println(
-					MainBody.get(ConditionList.get(i).get(0)).get(ConditionList.get(i).get(1)).LongitudinalTotal);
-			System.out.println(
-					MainBody.get(ConditionList.get(i).get(0)).get(ConditionList.get(i).get(1)).LongitudinalNum);
+		System.out.println(ObjectCount);
 
-			System.out.println("--------------------------------");
+		for (int i = 0; i < ResultList.size(); i++) {
+			int x = ResultList.get(i).get(0);
+			int y = ResultList.get(i).get(1);
+			System.out.println(MainBody.get(x).get(y).PossibleList);
+
 		}
 
-		SubCut(Total, Num);
-		System.out.println(AnalysisList);
-		*/
 	}
 
 	public static void read() {
@@ -78,6 +67,7 @@ public class KazanPuzzl {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		int LineCount = 0;
 		String PointLine;
 		try {
 			while ((PointLine = br.readLine()) != null) {
@@ -91,14 +81,29 @@ public class KazanPuzzl {
 					}
 					if (PointData[i].equals("0")) {
 						MainBodyItem.add(setConstructor(1, 0, 0, 0, 0, Def, Def, Def));
+						TmpItem = new ArrayList<Integer>();
+						TmpItem.add(LineCount);
+						TmpItem.add(i);
+						ResultList.add(TmpItem);
 						continue;
 					}
-					Data.DataConversion(PointData[i]);
 					TmpItem = new ArrayList<Integer>();
-					MainBodyItem.add(setConstructor(0, Data.HorizontalTotal, Data.LongitudinalTotal, 0, 0, TmpItem,
-							TmpItem, TmpItem));
+					int Horizontal = Integer.parseInt(PointData[i].substring(2, 4));
+					int Longitudinal = Integer.parseInt(PointData[i].substring(0, 2));
+					if (Horizontal != 0) {
+						ObjectCount++;
+					}
+					if (Longitudinal != 0) {
+						ObjectCount++;
+					}
+					MainBodyItem.add(setConstructor(0, Horizontal, Longitudinal, 0, 0, TmpItem, TmpItem, TmpItem));
+					TmpItem = new ArrayList<Integer>();
+					TmpItem.add(LineCount);
+					TmpItem.add(i);
+					ConditionList.add(TmpItem);
 				}
 				MainBody.add(MainBodyItem);
+				LineCount++;
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
@@ -110,51 +115,73 @@ public class KazanPuzzl {
 	}
 
 	public static void statistics() {
-		for (int i = 0; i < MainBody.size(); i++) {
-			for (int j = 0; j < MainBody.get(i).size(); j++) {
-				if (MainBody.get(i).get(j).UseSwitch == -1) {
-					continue;
-				}
-				if (MainBody.get(i).get(j).UseSwitch == 0) {
-					TmpItem = new ArrayList<Integer>();
-					TmpItem.add(i);
-					TmpItem.add(j);
-					ConditionList.add(TmpItem);
-					if (MainBody.get(i).get(j).HorizontalTotal != 0) {
-						int count = 0;
-						for (int k = j + 1; k < MainBody.get(i).size(); k++)
-						{
-							if (MainBody.get(i).get(k).UseSwitch != 1)
-							{
-								break;
-							}
-							count++;
+		for (int i = 0; i < ConditionList.size(); i++) {
+			int X = ConditionList.get(i).get(0);
+			int Y = ConditionList.get(i).get(1);
+			if (MainBody.get(X).get(Y).HorizontalTotal != 0) {
+				if (MainBody.get(X).get(Y).HorizontalNum == 0) {
+					for (int k = Y + 1; k < MainBody.get(X).size(); k++) {
+						if (MainBody.get(X).get(k).UseSwitch != 1) {
+							break;
 						}
-
-						MainBody.get(i).get(j).HorizontalNum = count;
-					}
-					if (MainBody.get(i).get(j).LongitudinalTotal != 0) {
-						int count = 0;
-						for (int k = i + 1; k < MainBody.size(); k++)
-						{
-							if (MainBody.get(k).get(j).UseSwitch != 1)
-							{
-								break;
-							}
-							count++;
-						}
-
-						MainBody.get(i).get(j).LongitudinalNum = count;
+						MainBody.get(X).get(Y).HorizontalNum++;
 					}
 				}
-				if (MainBody.get(i).get(j).UseSwitch == 1) {
-					TmpItem = new ArrayList<Integer>();
-					TmpItem.add(i);
-					TmpItem.add(j);
-					ResultList.add(TmpItem);
+
+				// SubCut函数运行前必须清空下面两个List
+				AnalysisList = new ArrayList<ArrayList<Integer>>();
+				TmpItem = new ArrayList<Integer>();
+
+				SubCut(MainBody.get(X).get(Y).HorizontalTotal, MainBody.get(X).get(Y).HorizontalNum);
+				TmpItem = Data.DataUnion(AnalysisList);
+				for (int k = 1; k <= MainBody.get(X).get(Y).HorizontalNum; k++) {
+					if (MainBody.get(X).get(Y + k).LongitudinalList.size() != 0) {
+						MainBody.get(X).get(Y + k).PossibleList = Data.DataIntersection(TmpItem,
+								MainBody.get(X).get(Y + k).LongitudinalList);
+						if (MainBody.get(X).get(Y + k).PossibleList.size() == 1) {
+							MainBody.get(X).get(Y).HorizontalList.add(k);
+						}
+						MainBody.get(X).get(Y + k).HorizontalList = MainBody.get(X).get(Y + k).PossibleList;
+						MainBody.get(X).get(Y + k).LongitudinalList = MainBody.get(X).get(Y + k).PossibleList;
+					} else {
+						MainBody.get(X).get(Y + k).HorizontalList = TmpItem;
+					}
+				}
+			}
+
+			if (MainBody.get(X).get(Y).LongitudinalTotal != 0) {
+				if (MainBody.get(X).get(Y).LongitudinalNum == 0) {
+					for (int k = X + 1; k < MainBody.size(); k++) {
+						if (MainBody.get(k).get(Y).UseSwitch != 1) {
+							break;
+						}
+						MainBody.get(X).get(Y).LongitudinalNum++;
+					}
+				}
+
+				// SubCut函数运行前必须清空下面两个List
+				AnalysisList = new ArrayList<ArrayList<Integer>>();
+				TmpItem = new ArrayList<Integer>();
+
+				SubCut(MainBody.get(X).get(Y).LongitudinalTotal, MainBody.get(X).get(Y).LongitudinalNum);
+				TmpItem = Data.DataUnion(AnalysisList);
+				for (int k = 1; k <= MainBody.get(X).get(Y).LongitudinalNum; k++) {
+					if (MainBody.get(X + k).get(Y).HorizontalList.size() != 0) {
+						MainBody.get(X + k).get(Y).PossibleList = Data.DataIntersection(TmpItem,
+								MainBody.get(X + k).get(Y).HorizontalList);
+						if (MainBody.get(X + k).get(Y).PossibleList.size() == 1) {
+							MainBody.get(X).get(Y).LongitudinalList.add(k);
+						}
+						MainBody.get(X + k).get(Y).HorizontalList = MainBody.get(X + k).get(Y).PossibleList;
+						MainBody.get(X + k).get(Y).LongitudinalList = MainBody.get(X + k).get(Y).PossibleList;
+					} else {
+						MainBody.get(X + k).get(Y).LongitudinalList = TmpItem;
+					}
+					MainBody.get(X + k).get(Y).LongitudinalList = TmpItem;
 				}
 			}
 		}
+
 	}
 
 	public static void DefalutList() {
@@ -206,9 +233,9 @@ public class KazanPuzzl {
 					AnalysisList.add(TmpItem);
 					TmpItem = new ArrayList<Integer>(AnalysisList.get(AnalysisList.size() - 1));
 					TmpItem.remove(TmpItem.size() - 1);
-					current = 10;
-					total += TmpItem.get(TmpItem.size() - 1);
-					TmpItem.remove(TmpItem.size() - 1);
+					current++;
+					total--;
+					TmpItem.set(TmpItem.size() - 1, current);
 					continue;
 				}
 			}

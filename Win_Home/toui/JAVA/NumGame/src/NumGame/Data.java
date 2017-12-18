@@ -3,24 +3,15 @@ package NumGame;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
 public class Data {
-	public int HorizontalTotal;
-	public int LongitudinalTotal;
-
-	public void DataConversion (String ReadData) {
-		double subData = Double.valueOf(ReadData);
-		LongitudinalTotal = (int) subData;
-		HorizontalTotal = (int) ((subData * 100) % 100);
-	}
 	
-	public ArrayList<Integer> DataUnion (ArrayList<ArrayList<Integer>> Group)
+	public ArrayList<Integer> DataUnion (ArrayList<ArrayList<Integer>> AnalysisList)
 	{
 		ArrayList<Integer> DataList = new ArrayList<Integer>();
 		
-		for (int i = 0; i < Group.size(); i++)
+		for (int i = 0; i < AnalysisList.size(); i++)
 		{
-			for (int value : Group.get(i))
+			for (int value : AnalysisList.get(i))
 			{
 				if (DataList.indexOf(value) != -1)
 				{
@@ -33,13 +24,11 @@ public class Data {
 		return DataList;
 	}
 	
-	public ArrayList<Integer> DataIntersection (ArrayList<Integer> HorizontalNum, ArrayList<Integer> LongitudinalNum)
-	{
+	public ArrayList<Integer> DataIntersection(ArrayList<Integer> HorizontalList,
+			ArrayList<Integer> LongitudinalList) {
 		ArrayList<Integer> DataList = new ArrayList<Integer>();
-		for (int value : HorizontalNum)
-		{
-			if (LongitudinalNum.indexOf(value) != -1)
-			{
+		for (int value : HorizontalList) {
+			if (LongitudinalList.indexOf(value) != -1) {
 				DataList.add(value);
 			}
 		}
