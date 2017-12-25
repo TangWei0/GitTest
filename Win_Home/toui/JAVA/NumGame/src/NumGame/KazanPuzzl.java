@@ -23,7 +23,7 @@ public class KazanPuzzl {
 	public static ArrayList<Integer> HorizontalNumItem = new ArrayList<Integer>();
 	public static ArrayList<Integer> LongitudinalNumItem = new ArrayList<Integer>();
 
-	public static ArrayList<ArrayList<Integer>>  UseSwitch = new ArrayList<ArrayList<Integer>> ();
+	public static ArrayList<ArrayList<Integer>> UseSwitch = new ArrayList<ArrayList<Integer>>();
 	public static ArrayList<ArrayList<Integer>> HorizontalTotal = new ArrayList<ArrayList<Integer>>();
 	public static ArrayList<ArrayList<Integer>> LongitudinalTotal = new ArrayList<ArrayList<Integer>>();
 	public static ArrayList<ArrayList<Integer>> HorizontalNum = new ArrayList<ArrayList<Integer>>();
@@ -45,30 +45,8 @@ public class KazanPuzzl {
 		// TODO Auto-generated method stub
 		DefalutList();
 		read();
-
-		for (int i = 0; i < UseSwitch.size(); i++) {
-			System.out.println(UseSwitch.get(i));
-			//for (int j = 0; j < UseSwitch.get(i).size(); j++) 
-			{
-				//System.out.print(UseSwitch.get(i).get(j) + ",");
-				//System.out.println("-------------------");
-				//System.out.println(HorizontalTotal);
-				//System.out.println("-------------------");
-				//System.out.println(LongitudinalTotal);
-				//System.out.println("-------------------");
-				//System.out.println(HorizontalNum);
-				//System.out.println("-------------------");
-				//System.out.println(LongitudinalNum);
-				//System.out.println("-------------------");
-				//System.out.println(PossibleList);
-				//System.out.println("-------------------");
-				//System.out.println(HorizontalList);
-				//System.out.println("-------------------");
-				//System.out.println(LongitudinalList);
-				//System.out.println("-------------------");			
-			}
-			//System.out.println();
-		}
+		statistics();
+		check();
 	}
 
 	public static void read() {
@@ -148,19 +126,18 @@ public class KazanPuzzl {
 				LongitudinalTotal.add(LongitudinalTotalItem);
 				HorizontalNum.add(HorizontalNumItem);
 				LongitudinalNum.add(LongitudinalNumItem);
-
 				PossibleList.add(PossibleListItem);
 				HorizontalList.add(HorizontalListItem);
 				LongitudinalList.add(LongitudinalListItem);
-				
-				UseSwitchItem = new ArrayList<Integer>(); 
-				HorizontalTotalItem = new ArrayList<Integer>(); 
-				LongitudinalTotalItem = new ArrayList<Integer>(); 
-				HorizontalNumItem = new ArrayList<Integer>(); 
-				LongitudinalNumItem = new ArrayList<Integer>(); 
-				PossibleListItem = new ArrayList<ArrayList<Integer>>(); 
-				HorizontalListItem = new ArrayList<ArrayList<Integer>>(); 
-				LongitudinalListItem = new ArrayList<ArrayList<Integer>>(); 
+
+				UseSwitchItem = new ArrayList<Integer>();
+				HorizontalTotalItem = new ArrayList<Integer>();
+				LongitudinalTotalItem = new ArrayList<Integer>();
+				HorizontalNumItem = new ArrayList<Integer>();
+				LongitudinalNumItem = new ArrayList<Integer>();
+				PossibleListItem = new ArrayList<ArrayList<Integer>>();
+				HorizontalListItem = new ArrayList<ArrayList<Integer>>();
+				LongitudinalListItem = new ArrayList<ArrayList<Integer>>();
 				LineCount++;
 			}
 		} catch (NumberFormatException e) {
@@ -172,95 +149,87 @@ public class KazanPuzzl {
 		}
 	}
 
-	/*
 	public static void statistics() {
 		for (int i = 0; i < ConditionList.size(); i++) {
 			int X = ConditionList.get(i).get(0);
 			int Y = ConditionList.get(i).get(1);
 			// 横向处理
-			if (MainBody.get(X).get(Y).PossibleList.indexOf(1) == -1) {
+			if (PossibleList.get(X).get(Y).indexOf(1) == -1) {
 				// 横向计数
-				if (MainBody.get(X).get(Y).HorizontalNum == 0) {
-					for (int k = 1; k < MainBody.get(X).size() - Y; k++) {
-						if (MainBody.get(X).get(Y + k).UseSwitch != 1) {
+				if (HorizontalNum.get(X).get(Y) == 0) {
+					int HorizontalCount = 0;
+					for (int k = 1; k < UseSwitch.get(X).size() - Y; k++) {
+						if (UseSwitch.get(X).get(Y + k) != 1) {
 							break;
 						}
-						MainBody.get(X).get(Y + k).HorizontalTotal = X;
-						MainBody.get(X).get(Y + k).HorizontalNum = Y;
-						MainBody.get(X).get(Y).HorizontalNum++;
+						HorizontalTotal.get(X).set(Y + k, X);
+						HorizontalNum.get(X).set(Y + k, Y);
+						HorizontalCount++;
 					}
+					HorizontalNum.get(X).set(Y, HorizontalCount);
 				}
-
-				int Total = MainBody.get(X).get(Y).HorizontalTotal;
-				int Num = MainBody.get(X).get(Y).HorizontalNum;
-				if (MainBody.get(X).get(Y).HorizontalList.size() != 0) {
-					Num -= MainBody.get(X).get(Y).HorizontalList.size();
-					for (int value : MainBody.get(X).get(Y).HorizontalList) {
+				int Total = HorizontalTotal.get(X).get(Y);
+				int Num = HorizontalNum.get(X).get(Y);
+				if (HorizontalList.get(X).get(Y).size() != 0) {
+					Num -= HorizontalList.get(X).get(Y).size();
+					for (int value : HorizontalList.get(X).get(Y)) {
 						Total -= value;
 					}
 				}
-
 				if (Num == 1) {
-					if (MainBody.get(X).get(Y).HorizontalList.indexOf(Total) == -1) {
+					if (HorizontalList.get(X).get(Y).indexOf(Total) == -1) {
 						TmpItem = new ArrayList<Integer>();
 						TmpItem.add(Total);
 					} else {
 						System.out.println("エラーが発生しました");
 					}
 				} else {
-					TmpItem = Data.SubCutProcess(Total, Num, MainBody.get(X)
-							.get(Y).HorizontalList);
+					TmpItem = Data.SubCutProcess(Total, Num, HorizontalList.get(X).get(Y));
 				}
-				for (int k = 1; k <= MainBody.get(X).get(Y).HorizontalNum; k++) {
-					if (MainBody.get(X).get(Y + k).PossibleList.size() != 1) {
-						MainBody.get(X).get(Y + k).HorizontalList = Data
-								.DataIntersection(
-										TmpItem,
-										MainBody.get(X).get(Y + k).HorizontalList);
+				for (int k = 1; k <= HorizontalNum.get(X).get(Y); k++) {
+					if (PossibleList.get(X).get(Y + k).size() != 1) {
+						HorizontalList.get(X).set(Y + k,
+								Data.DataIntersection(TmpItem, HorizontalList.get(X).get(Y + k)));
 					}
 				}
 			}
 			// 纵向处理
-			if (MainBody.get(X).get(Y).PossibleList.indexOf(2) == -1) {
-
+			if (PossibleList.get(X).get(Y).indexOf(2) == -1) {
 				// 纵向计数
-				if (MainBody.get(X).get(Y).LongitudinalNum == 0) {
-					for (int k = 1; k < MainBody.size() - X; k++) {
-						if (MainBody.get(X + k).get(Y).UseSwitch != 1) {
+				if (LongitudinalNum.get(X).get(Y) == 0) {
+					int LongitudinalCount = 0;
+					for (int k = 1; k < UseSwitch.size() - X; k++) {
+						if (UseSwitch.get(X + k).get(Y) != 1) {
 							break;
 						}
-						MainBody.get(X + k).get(Y).LongitudinalTotal = X;
-						MainBody.get(X + k).get(Y).LongitudinalNum = Y;
-						MainBody.get(X).get(Y).LongitudinalNum++;
+						LongitudinalTotal.get(X + k).set(Y, X);
+						LongitudinalNum.get(X + k).set(Y, Y);
+						LongitudinalCount++;
 					}
+					LongitudinalNum.get(X).set(Y, LongitudinalCount);
 				}
-
-				int Total = MainBody.get(X).get(Y).LongitudinalTotal;
-				int Num = MainBody.get(X).get(Y).LongitudinalNum;
-
-				if (MainBody.get(X).get(Y).LongitudinalList.size() != 0) {
-					Num -= MainBody.get(X).get(Y).LongitudinalList.size();
-					for (int value : MainBody.get(X).get(Y).LongitudinalList) {
+				int Total = LongitudinalTotal.get(X).get(Y);
+				int Num = LongitudinalNum.get(X).get(Y);
+				if (LongitudinalList.get(X).get(Y).size() != 0) {
+					Num -= LongitudinalList.get(X).get(Y).size();
+					for (int value : LongitudinalList.get(X).get(Y)) {
 						Total -= value;
 					}
 				}
-
 				if (Num == 1) {
-					if (MainBody.get(X).get(Y).LongitudinalList.indexOf(Total) == -1) {
+					if (LongitudinalList.get(X).get(Y).indexOf(Total) == -1) {
 						TmpItem = new ArrayList<Integer>();
 						TmpItem.add(Total);
 					} else {
 						System.out.println("エラーが発生しました");
 					}
 				} else {
-					TmpItem = Data.SubCutProcess(Total, Num, MainBody.get(X)
-							.get(Y).LongitudinalList);
+					TmpItem = Data.SubCutProcess(Total, Num, LongitudinalList.get(X).get(Y));
 				}
-				for (int k = 1; k <= MainBody.get(X).get(Y).LongitudinalNum; k++) {
-					if (MainBody.get(X + k).get(Y).PossibleList.size() != 1) {
-						MainBody.get(X + k).get(Y).LongitudinalList = Data
-								.DataIntersection(TmpItem, MainBody.get(X + k)
-										.get(Y).LongitudinalList);
+				for (int k = 1; k <= LongitudinalNum.get(X).get(Y); k++) {
+					if (PossibleList.get(X + k).get(Y).size() != 1) {
+						LongitudinalList.get(X + k).set(Y,
+								Data.DataIntersection(TmpItem, LongitudinalList.get(X + k).get(Y)));
 					}
 				}
 			}
@@ -274,54 +243,37 @@ public class KazanPuzzl {
 
 			int X = ResultList.get(i).get(0);
 			int Y = ResultList.get(i).get(1);
-			MainBody.get(X).get(Y).PossibleList = Data.DataIntersection(
-					MainBody.get(X).get(Y).HorizontalList,
-					MainBody.get(X).get(Y).LongitudinalList);
-			MainBody.get(X).get(Y).HorizontalList = MainBody.get(X).get(Y).PossibleList;
-			MainBody.get(X).get(Y).LongitudinalList = MainBody.get(X).get(Y).PossibleList;
+			PossibleList.get(X).set(Y, Data.DataIntersection(HorizontalList.get(X).get(Y), LongitudinalList.get(X).get(Y)));
+			HorizontalList.get(X).set(Y, PossibleList.get(X).get(Y));
+			LongitudinalList.get(X).set(Y, PossibleList.get(X).get(Y));
 
-			if (MainBody.get(X).get(Y).PossibleList.size() == 1) {
-				int value = MainBody.get(X).get(Y).PossibleList.get(0);
-				int HorizontalX = MainBody.get(X).get(Y).HorizontalTotal;
-				int HorizontalY = MainBody.get(X).get(Y).HorizontalNum;
-				int LongitudinalX = MainBody.get(X).get(Y).LongitudinalTotal;
-				int LongitudinalY = MainBody.get(X).get(Y).LongitudinalNum;
+			if (PossibleList.get(X).get(Y).size() == 1) {
+				int value = PossibleList.get(X).get(Y).get(0);
+				int HorizontalX = HorizontalTotal.get(X).get(Y);
+				int HorizontalY = HorizontalNum.get(X).get(Y);
+				int LongitudinalX = LongitudinalTotal.get(X).get(Y);
+				int LongitudinalY = LongitudinalNum.get(X).get(Y);
 
-				if (X == 9 && Y == 4) {
-					System.out.println(MainBody.get(9).get(1).HorizontalList);
-					System.out.println(MainBody.get(9).get(1).LongitudinalList);
-				}
 				TmpItem = new ArrayList<Integer>();
-				TmpItem = MainBody.get(HorizontalX).get(HorizontalY).HorizontalList;
+				TmpItem = HorizontalList.get(HorizontalX).get(HorizontalY);
 				TmpItem.add(value);
-				Kazan c = new Kazan();
-				c = MainBody.get(HorizontalX).get(HorizontalY);
-				c.HorizontalList = TmpItem;
-				MainBody.get(HorizontalX).get(HorizontalY).HorizontalList = new ArrayList<Integer>(
-						TmpItem);
-				if (X == 9 && Y == 4) {
-					System.out.println(MainBody.get(9).get(1).HorizontalList);
-					System.out.println(MainBody.get(9).get(1).LongitudinalList);
-				}
-				if (MainBody.get(HorizontalX).get(HorizontalY).HorizontalList
-						.size() == MainBody.get(HorizontalX).get(HorizontalY).HorizontalNum) {
-					TmpItem = new ArrayList<Integer>(MainBody.get(HorizontalX)
-							.get(HorizontalY).PossibleList);
+				HorizontalList.get(HorizontalX).set(HorizontalY, TmpItem);
+				if (HorizontalList.get(HorizontalX).get(HorizontalY).size() == HorizontalNum.get(HorizontalX).get(HorizontalY)) 
+				{
+					TmpItem = new ArrayList<Integer>(PossibleList.get(HorizontalX).get(HorizontalY));
 					TmpItem.add(1);
-					MainBody.get(HorizontalX).get(HorizontalY).PossibleList = TmpItem;
+					PossibleList.get(HorizontalX).set(HorizontalY, TmpItem);
 				}
 
 				TmpItem = new ArrayList<Integer>();
-				TmpItem = MainBody.get(LongitudinalX).get(LongitudinalY).LongitudinalList;
+				TmpItem = LongitudinalList.get(LongitudinalX).get(LongitudinalY);
 				TmpItem.add(value);
-				MainBody.get(LongitudinalX).get(LongitudinalY).LongitudinalList = TmpItem;
-				if (MainBody.get(LongitudinalX).get(LongitudinalY).LongitudinalList
-						.size() == MainBody.get(LongitudinalX).get(
-						LongitudinalY).LongitudinalNum) {
-					TmpItem = new ArrayList<Integer>(MainBody
-							.get(LongitudinalX).get(LongitudinalY).PossibleList);
+				LongitudinalList.get(LongitudinalX).set(LongitudinalY, TmpItem);
+				if (LongitudinalList.get(LongitudinalX).get(LongitudinalY).size() == LongitudinalNum.get(LongitudinalX).get(LongitudinalY)) 
+				{
+					TmpItem = new ArrayList<Integer>(PossibleList.get(LongitudinalX).get(LongitudinalY));
 					TmpItem.add(2);
-					MainBody.get(LongitudinalX).get(LongitudinalY).PossibleList = TmpItem;
+					PossibleList.get(LongitudinalX).set(LongitudinalY, TmpItem);
 				}
 			} else {
 				TmpItem = new ArrayList<Integer>();
@@ -332,15 +284,14 @@ public class KazanPuzzl {
 
 			if (NextList.size() == ResultList.size()) {
 				check = false;
-			}
-			// System.out.print(X + "," + Y + ":");
-			// System.out.println(MainBody.get(X).get(Y).PossibleList);
+			} 
+			System.out.print(X + "," + Y + ":"); //
+			System.out.println(PossibleList.get(X).get(Y));
 
 		}
 
 	}
-	*/
-	
+
 	public static void DefalutList() {
 		for (int i = 0; i < 9; i++) {
 			Def.add(i + 1);
