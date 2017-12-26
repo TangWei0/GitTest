@@ -17,26 +17,10 @@ public class KazanPuzzl {
 	public static ArrayList<Integer> TmpItem = new ArrayList<Integer>();
 	public static ArrayList<Integer> Def = new ArrayList<Integer>();
 
-	public static ArrayList<Integer> UseSwitchItem = new ArrayList<Integer>();
-	public static ArrayList<Integer> HorizontalTotalItem = new ArrayList<Integer>();
-	public static ArrayList<Integer> LongitudinalTotalItem = new ArrayList<Integer>();
-	public static ArrayList<Integer> HorizontalNumItem = new ArrayList<Integer>();
-	public static ArrayList<Integer> LongitudinalNumItem = new ArrayList<Integer>();
-
-	public static ArrayList<ArrayList<Integer>> UseSwitch = new ArrayList<ArrayList<Integer>>();
-	public static ArrayList<ArrayList<Integer>> HorizontalTotal = new ArrayList<ArrayList<Integer>>();
-	public static ArrayList<ArrayList<Integer>> LongitudinalTotal = new ArrayList<ArrayList<Integer>>();
-	public static ArrayList<ArrayList<Integer>> HorizontalNum = new ArrayList<ArrayList<Integer>>();
-	public static ArrayList<ArrayList<Integer>> LongitudinalNum = new ArrayList<ArrayList<Integer>>();
-
-	public static ArrayList<ArrayList<Integer>> PossibleListItem = new ArrayList<ArrayList<Integer>>();
-	public static ArrayList<ArrayList<Integer>> HorizontalListItem = new ArrayList<ArrayList<Integer>>();
-	public static ArrayList<ArrayList<Integer>> LongitudinalListItem = new ArrayList<ArrayList<Integer>>();
-
-	public static ArrayList<ArrayList<ArrayList<Integer>>> PossibleList = new ArrayList<ArrayList<ArrayList<Integer>>>();
-	public static ArrayList<ArrayList<ArrayList<Integer>>> HorizontalList = new ArrayList<ArrayList<ArrayList<Integer>>>();
-	public static ArrayList<ArrayList<ArrayList<Integer>>> LongitudinalList = new ArrayList<ArrayList<ArrayList<Integer>>>();
-
+	public static ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> MainList = new ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>>();
+	public static ArrayList<ArrayList<ArrayList<Integer>>> MainItemList = new ArrayList<ArrayList<ArrayList<Integer>>>();
+	public static ArrayList<ArrayList<Integer>> MainItemItemList = new ArrayList<ArrayList<Integer>>();
+	public static ArrayList<Integer> MainItemItemItemList = new ArrayList<Integer>();
 	public static boolean check = true;
 
 	static Data Data = new Data();
@@ -45,12 +29,18 @@ public class KazanPuzzl {
 		// TODO Auto-generated method stub
 		DefalutList();
 		read();
-		statistics();
-		check();
+		for (int a = 1; a < 5; a++) {
+			System.out.println(a + "ループ");
+			statistics();
+			check(a);
+			ResultList = NextList;
+		}
 	}
 
 	public static void read() {
 		File ReadCSV = new File(ReadFile);
+		MainItemItemItemList = new ArrayList<Integer>();
+		MainItemItemItemList.add(0);
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(ReadCSV));
@@ -63,81 +53,129 @@ public class KazanPuzzl {
 		try {
 			while ((PointLine = br.readLine()) != null) {
 				String[] PointData = PointLine.split(",", 0);
+				MainItemList = new ArrayList<ArrayList<ArrayList<Integer>>>();
 				for (int i = 0; i < PointData.length; i++) {
 					if (PointData[i].equals("-")) {
-						UseSwitchItem.add(-1);
-						HorizontalTotalItem.add(0);
-						LongitudinalTotalItem.add(0);
-						HorizontalNumItem.add(0);
-						LongitudinalNumItem.add(0);
+						MainItemItemList = new ArrayList<ArrayList<Integer>>();
 
-						TmpItem = new ArrayList<Integer>();
-						PossibleListItem.add(TmpItem);
-						HorizontalListItem.add(TmpItem);
-						LongitudinalListItem.add(TmpItem);
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(-1);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemList.add(MainItemItemList);
 						continue;
-					}
-					if (PointData[i].equals("0")) {
-						UseSwitchItem.add(1);
-						HorizontalTotalItem.add(0);
-						LongitudinalTotalItem.add(0);
-						HorizontalNumItem.add(0);
-						LongitudinalNumItem.add(0);
+					} else if (PointData[i].equals("0")) {
+						MainItemItemList = new ArrayList<ArrayList<Integer>>();
 
-						PossibleListItem.add(Def);
-						HorizontalListItem.add(Def);
-						LongitudinalListItem.add(Def);
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(1);
+						MainItemItemList.add(MainItemItemItemList);
 
-						TmpItem = new ArrayList<Integer>();
-						TmpItem.add(LineCount);
-						TmpItem.add(i);
-						ResultList.add(TmpItem);
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(0);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(0);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(0);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(0);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>(Def);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>(Def);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>(Def);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemList.add(MainItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(LineCount);
+						MainItemItemItemList.add(i);
+						ResultList.add(MainItemItemItemList);
 						continue;
+					} else {
+						int Hor = Integer
+								.parseInt(PointData[i].substring(2, 4));
+						int Long = Integer.parseInt(PointData[i]
+								.substring(0, 2));
+
+						MainItemItemList = new ArrayList<ArrayList<Integer>>();
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(0);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(Hor);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(Long);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(0);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(0);
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						if (Hor == 0) {
+							MainItemItemItemList.add(1);
+						}
+						if (Long == 0) {
+							MainItemItemItemList.add(2);
+						}
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemList.add(MainItemItemItemList);
+
+						MainItemList.add(MainItemItemList);
+
+						MainItemItemItemList = new ArrayList<Integer>();
+						MainItemItemItemList.add(LineCount);
+						MainItemItemItemList.add(i);
+						ConditionList.add(MainItemItemItemList);
 					}
-
-					int Hor = Integer.parseInt(PointData[i].substring(2, 4));
-					int Long = Integer.parseInt(PointData[i].substring(0, 2));
-
-					UseSwitchItem.add(0);
-					HorizontalTotalItem.add(Hor);
-					LongitudinalTotalItem.add(Long);
-					HorizontalNumItem.add(0);
-					LongitudinalNumItem.add(0);
-
-					TmpItem = new ArrayList<Integer>();
-					if (Hor == 0) {
-						TmpItem.add(1);
-					}
-					if (Long == 0) {
-						TmpItem.add(2);
-					}
-					PossibleListItem.add(TmpItem);
-
-					TmpItem = new ArrayList<Integer>();
-					HorizontalListItem.add(TmpItem);
-					LongitudinalListItem.add(TmpItem);
-
-					TmpItem.add(LineCount);
-					TmpItem.add(i);
-					ConditionList.add(TmpItem);
 				}
-				UseSwitch.add(UseSwitchItem);
-				HorizontalTotal.add(HorizontalTotalItem);
-				LongitudinalTotal.add(LongitudinalTotalItem);
-				HorizontalNum.add(HorizontalNumItem);
-				LongitudinalNum.add(LongitudinalNumItem);
-				PossibleList.add(PossibleListItem);
-				HorizontalList.add(HorizontalListItem);
-				LongitudinalList.add(LongitudinalListItem);
-
-				UseSwitchItem = new ArrayList<Integer>();
-				HorizontalTotalItem = new ArrayList<Integer>();
-				LongitudinalTotalItem = new ArrayList<Integer>();
-				HorizontalNumItem = new ArrayList<Integer>();
-				LongitudinalNumItem = new ArrayList<Integer>();
-				PossibleListItem = new ArrayList<ArrayList<Integer>>();
-				HorizontalListItem = new ArrayList<ArrayList<Integer>>();
-				LongitudinalListItem = new ArrayList<ArrayList<Integer>>();
+				MainList.add(MainItemList);
 				LineCount++;
 			}
 		} catch (NumberFormatException e) {
@@ -154,82 +192,92 @@ public class KazanPuzzl {
 			int X = ConditionList.get(i).get(0);
 			int Y = ConditionList.get(i).get(1);
 			// 横向处理
-			if (PossibleList.get(X).get(Y).indexOf(1) == -1) {
+			if (MainList.get(X).get(Y).get(5).indexOf(1) == -1) {
 				// 横向计数
-				if (HorizontalNum.get(X).get(Y) == 0) {
+				if (MainList.get(X).get(Y).get(3).get(0) == 0) {
 					int HorizontalCount = 0;
-					for (int k = 1; k < UseSwitch.get(X).size() - Y; k++) {
-						if (UseSwitch.get(X).get(Y + k) != 1) {
+					for (int k = 1; k < MainList.get(X).size() - Y; k++) {
+						if (MainList.get(X).get(Y + k).get(0).get(0) != 1) {
 							break;
 						}
-						HorizontalTotal.get(X).set(Y + k, X);
-						HorizontalNum.get(X).set(Y + k, Y);
+						MainList.get(X).get(Y + k).get(1).set(0, X);
+						MainList.get(X).get(Y + k).get(3).set(0, Y);
 						HorizontalCount++;
 					}
-					HorizontalNum.get(X).set(Y, HorizontalCount);
+					MainList.get(X).get(Y).get(3).set(0, HorizontalCount);
 				}
-				int Total = HorizontalTotal.get(X).get(Y);
-				int Num = HorizontalNum.get(X).get(Y);
-				if (HorizontalList.get(X).get(Y).size() != 0) {
-					Num -= HorizontalList.get(X).get(Y).size();
-					for (int value : HorizontalList.get(X).get(Y)) {
+				int Total = MainList.get(X).get(Y).get(1).get(0);
+				int Num = MainList.get(X).get(Y).get(3).get(0);
+				if (MainList.get(X).get(Y).get(6).size() != 0) {
+					Num -= MainList.get(X).get(Y).get(6).size();
+					for (int value : MainList.get(X).get(Y).get(6)) {
 						Total -= value;
 					}
 				}
+
 				if (Num == 1) {
-					if (HorizontalList.get(X).get(Y).indexOf(Total) == -1) {
+					if (MainList.get(X).get(Y).get(6).indexOf(Total) == -1) {
 						TmpItem = new ArrayList<Integer>();
 						TmpItem.add(Total);
 					} else {
-						System.out.println("エラーが発生しました");
+						System.out.println(X + "," + Y + "でエラーが発生しました");
 					}
 				} else {
-					TmpItem = Data.SubCutProcess(Total, Num, HorizontalList.get(X).get(Y));
+					TmpItem = Data.SubCutProcess(Total, Num, MainList.get(X)
+							.get(Y).get(6));
 				}
-				for (int k = 1; k <= HorizontalNum.get(X).get(Y); k++) {
-					if (PossibleList.get(X).get(Y + k).size() != 1) {
-						HorizontalList.get(X).set(Y + k,
-								Data.DataIntersection(TmpItem, HorizontalList.get(X).get(Y + k)));
+				for (int k = 1; k <= MainList.get(X).get(Y).get(3).get(0); k++) {
+					if (MainList.get(X).get(Y + k).get(5).size() != 1) {
+						MainList.get(X)
+								.get(Y + k)
+								.set(6,
+										Data.DataIntersection(TmpItem, MainList
+												.get(X).get(Y + k).get(6)));
 					}
 				}
 			}
 			// 纵向处理
-			if (PossibleList.get(X).get(Y).indexOf(2) == -1) {
+			if (MainList.get(X).get(Y).get(5).indexOf(2) == -1) {
 				// 纵向计数
-				if (LongitudinalNum.get(X).get(Y) == 0) {
+				if (MainList.get(X).get(Y).get(4).get(0) == 0) {
 					int LongitudinalCount = 0;
-					for (int k = 1; k < UseSwitch.size() - X; k++) {
-						if (UseSwitch.get(X + k).get(Y) != 1) {
+					for (int k = 1; k < MainList.size() - X; k++) {
+						if (MainList.get(X + k).get(Y).get(0).get(0) != 1) {
 							break;
 						}
-						LongitudinalTotal.get(X + k).set(Y, X);
-						LongitudinalNum.get(X + k).set(Y, Y);
+
+						MainList.get(X + k).get(Y).get(2).set(0, X);
+						MainList.get(X + k).get(Y).get(4).set(0, Y);
 						LongitudinalCount++;
 					}
-					LongitudinalNum.get(X).set(Y, LongitudinalCount);
+					MainList.get(X).get(Y).get(4).set(0, LongitudinalCount);
 				}
-				int Total = LongitudinalTotal.get(X).get(Y);
-				int Num = LongitudinalNum.get(X).get(Y);
-				if (LongitudinalList.get(X).get(Y).size() != 0) {
-					Num -= LongitudinalList.get(X).get(Y).size();
-					for (int value : LongitudinalList.get(X).get(Y)) {
+				int Total = MainList.get(X).get(Y).get(2).get(0);
+				int Num = MainList.get(X).get(Y).get(4).get(0);
+				if (MainList.get(X).get(Y).get(7).size() != 0) {
+					Num -= MainList.get(X).get(Y).get(7).size();
+					for (int value : MainList.get(X).get(Y).get(7)) {
 						Total -= value;
 					}
 				}
 				if (Num == 1) {
-					if (LongitudinalList.get(X).get(Y).indexOf(Total) == -1) {
+					if (MainList.get(X).get(Y).get(7).indexOf(Total) == -1) {
 						TmpItem = new ArrayList<Integer>();
 						TmpItem.add(Total);
 					} else {
-						System.out.println("エラーが発生しました");
+						System.out.println(X + "," + Y + "でエラーが発生しました");
 					}
 				} else {
-					TmpItem = Data.SubCutProcess(Total, Num, LongitudinalList.get(X).get(Y));
+					TmpItem = Data.SubCutProcess(Total, Num, MainList.get(X)
+							.get(Y).get(7));
 				}
-				for (int k = 1; k <= LongitudinalNum.get(X).get(Y); k++) {
-					if (PossibleList.get(X + k).get(Y).size() != 1) {
-						LongitudinalList.get(X + k).set(Y,
-								Data.DataIntersection(TmpItem, LongitudinalList.get(X + k).get(Y)));
+				for (int k = 1; k <= MainList.get(X).get(Y).get(4).get(0); k++) {
+					if (MainList.get(X + k).get(Y).get(5).size() != 1) {
+						MainList.get(X + k)
+								.get(Y)
+								.set(7,
+										Data.DataIntersection(TmpItem, MainList
+												.get(X + k).get(Y).get(7)));
 					}
 				}
 			}
@@ -237,43 +285,41 @@ public class KazanPuzzl {
 
 	}
 
-	public static void check() {
+	public static void check(int a) {
 		NextList = new ArrayList<ArrayList<Integer>>();
 		for (int i = 0; i < ResultList.size(); i++) {
 
 			int X = ResultList.get(i).get(0);
 			int Y = ResultList.get(i).get(1);
-			PossibleList.get(X).set(Y, Data.DataIntersection(HorizontalList.get(X).get(Y), LongitudinalList.get(X).get(Y)));
-			HorizontalList.get(X).set(Y, PossibleList.get(X).get(Y));
-			LongitudinalList.get(X).set(Y, PossibleList.get(X).get(Y));
+			MainList.get(X)
+					.get(Y)
+					.set(5,
+							Data.DataIntersection(
+									MainList.get(X).get(Y).get(6), MainList
+											.get(X).get(Y).get(7)));
+			MainList.get(X).get(Y).set(6, MainList.get(X).get(Y).get(5));
+			MainList.get(X).get(Y).set(7, MainList.get(X).get(Y).get(5));
 
-			if (PossibleList.get(X).get(Y).size() == 1) {
-				int value = PossibleList.get(X).get(Y).get(0);
-				int HorizontalX = HorizontalTotal.get(X).get(Y);
-				int HorizontalY = HorizontalNum.get(X).get(Y);
-				int LongitudinalX = LongitudinalTotal.get(X).get(Y);
-				int LongitudinalY = LongitudinalNum.get(X).get(Y);
+			if (MainList.get(X).get(Y).get(5).size() == 1) {
+				int value = MainList.get(X).get(Y).get(5).get(0);
+				int HorizontalX = MainList.get(X).get(Y).get(1).get(0);
+				int HorizontalY = MainList.get(X).get(Y).get(3).get(0);
+				int LongitudinalX = MainList.get(X).get(Y).get(2).get(0);
+				int LongitudinalY = MainList.get(X).get(Y).get(4).get(0);
 
-				TmpItem = new ArrayList<Integer>();
-				TmpItem = HorizontalList.get(HorizontalX).get(HorizontalY);
-				TmpItem.add(value);
-				HorizontalList.get(HorizontalX).set(HorizontalY, TmpItem);
-				if (HorizontalList.get(HorizontalX).get(HorizontalY).size() == HorizontalNum.get(HorizontalX).get(HorizontalY)) 
-				{
-					TmpItem = new ArrayList<Integer>(PossibleList.get(HorizontalX).get(HorizontalY));
-					TmpItem.add(1);
-					PossibleList.get(HorizontalX).set(HorizontalY, TmpItem);
+				MainList.get(HorizontalX).get(HorizontalY).get(6).add(value);
+				if (MainList.get(HorizontalX).get(HorizontalY).get(6).size() == MainList
+						.get(HorizontalX).get(HorizontalY).get(3).get(0)) {
+					MainList.get(HorizontalX).get(HorizontalY).get(5).add(1);
 				}
 
-				TmpItem = new ArrayList<Integer>();
-				TmpItem = LongitudinalList.get(LongitudinalX).get(LongitudinalY);
-				TmpItem.add(value);
-				LongitudinalList.get(LongitudinalX).set(LongitudinalY, TmpItem);
-				if (LongitudinalList.get(LongitudinalX).get(LongitudinalY).size() == LongitudinalNum.get(LongitudinalX).get(LongitudinalY)) 
-				{
-					TmpItem = new ArrayList<Integer>(PossibleList.get(LongitudinalX).get(LongitudinalY));
-					TmpItem.add(2);
-					PossibleList.get(LongitudinalX).set(LongitudinalY, TmpItem);
+				MainList.get(LongitudinalX).get(LongitudinalY).get(7)
+						.add(value);
+				if (MainList.get(LongitudinalX).get(LongitudinalY).get(7)
+						.size() == MainList.get(LongitudinalX)
+						.get(LongitudinalY).get(4).get(0)) {
+					MainList.get(LongitudinalX).get(LongitudinalY).get(5)
+							.add(2);
 				}
 			} else {
 				TmpItem = new ArrayList<Integer>();
@@ -284,12 +330,11 @@ public class KazanPuzzl {
 
 			if (NextList.size() == ResultList.size()) {
 				check = false;
-			} 
-			System.out.print(X + "," + Y + ":"); //
-			System.out.println(PossibleList.get(X).get(Y));
-
+			}
+			if (a == 4) {
+				System.out.println(MainList.get(X).get(Y).get(5));
+			}
 		}
-
 	}
 
 	public static void DefalutList() {
