@@ -29,18 +29,18 @@ public class KazanPuzzl {
 		// TODO Auto-generated method stub
 		DefalutList();
 		read();
-		for (int a = 1; a < 10; a++) {
+		for (int a = 1; a < 20; a++) {
 			System.out.println(a + "ループ");
 			statistics();
-			check(a);
+			check();
 			for (int j = 0; j < ResultList.size(); j++) {
 				int X = ResultList.get(j).get(0);
 				int Y = ResultList.get(j).get(1);
-				if (a == 8) {
+				if (a == 10) {
 					System.out.println(MainList.get(X).get(Y).get(5));
 				}
 			}
-			ResultList = NextList;
+			ResultList = new ArrayList<ArrayList<Integer>>(NextList);
 		}
 	}
 
@@ -282,7 +282,7 @@ public class KazanPuzzl {
 
 	}
 
-	public static void check(int a) {
+	public static void check() {
 		NextList = new ArrayList<ArrayList<Integer>>();
 		for (int i = 0; i < ResultList.size(); i++) {
 
@@ -324,86 +324,78 @@ public class KazanPuzzl {
 	}
 
 	public static void check2() {
+		int count = 0;
 		for (int i = 0; i < ResultList.size(); i++) {
 			int X = ResultList.get(i).get(0);
 			int Y = ResultList.get(i).get(1);
+			int HorizontalX = MainList.get(X).get(Y).get(1).get(0);
+			int HorizontalY = MainList.get(X).get(Y).get(3).get(0);
+			int LongitudinalX = MainList.get(X).get(Y).get(2).get(0);
+			int LongitudinalY = MainList.get(X).get(Y).get(4).get(0);
 
-			if (MainList.get(X).get(Y).get(5).size() == 2) {
-				int HorizontalX = MainList.get(X).get(Y).get(1).get(0);
-				int HorizontalY = MainList.get(X).get(Y).get(3).get(0);
-				int LongitudinalX = MainList.get(X).get(Y).get(2).get(0);
-				int LongitudinalY = MainList.get(X).get(Y).get(4).get(0);
+			if (MainList.get(HorizontalX).get(HorizontalY).get(3).get(0)
+					- MainList.get(HorizontalX).get(HorizontalY).get(6).size() == 2) {
+				int Total = MainList.get(HorizontalX).get(HorizontalY).get(1).get(0);
+				for (int HorizontalValue : MainList.get(HorizontalX).get(HorizontalY).get(6)) {
+					Total -= HorizontalValue;
+				}
 
-				if (MainList.get(HorizontalX).get(HorizontalY).get(3).get(0)
-						- MainList.get(HorizontalX).get(HorizontalY).get(6).size() == 2) {
-					int Total = MainList.get(HorizontalX).get(HorizontalY).get(1).get(0);
-					for (int HorizontalValue : MainList.get(HorizontalX).get(HorizontalY).get(6)) {
-						Total -= HorizontalValue;
+				for (int k = 1; k <= MainList.get(HorizontalX).get(HorizontalY).get(3).get(0) ; k++) {
+					if (MainList.get(HorizontalX).get(HorizontalY + k).get(5).size() == 1) {
+						continue;
 					}
-
-					for (int k = 1; k < MainList.get(HorizontalX).get(HorizontalY).get(3).get(0); k++) {
-						if (MainList.get(HorizontalX).get(HorizontalY + k).get(5).size() == 1) {
-							continue;
-						}
-						if (MainList.get(HorizontalX).get(HorizontalY + k).get(5).size() == MainList.get(X).get(Y)
-								.get(5).size()
-								&& MainList.get(HorizontalX).get(HorizontalY + k).get(5).get(0) == MainList.get(X)
-										.get(Y).get(5).get(0)
-								&& MainList.get(HorizontalX).get(HorizontalY + k).get(5).get(1) == MainList.get(X)
-										.get(Y).get(5).get(1)) {
-							break;
-						}
-						for (int value : MainList.get(X).get(Y).get(5)) {
-							if (MainList.get(HorizontalX).get(HorizontalY + k).get(5).indexOf(Total - value) != -1) {
-								MainList.get(X).get(Y).get(5).remove(1);
-								MainList.get(X).get(Y).get(5).set(0, value);
-								MainList.get(X).get(Y).set(6, MainList.get(X).get(Y).get(5));
-								MainList.get(X).get(Y).set(7, MainList.get(X).get(Y).get(5));
-								MainList.get(HorizontalX).get(HorizontalY).get(6).add(value);
-								MainList.get(LongitudinalX).get(LongitudinalY).get(7).add(value);
-								NextList.remove(i);
-								return;
-							}
+					if (HorizontalY + k == Y) {
+						continue;
+					}
+					for (int j = MainList.get(X).get(Y).get(5).size() - 1; j >= 0; j--) {
+						int value = MainList.get(X).get(Y).get(5).get(j);
+						if (MainList.get(HorizontalX).get(HorizontalY + k).get(5).indexOf(Total - value) == -1) {
+							MainList.get(X).get(Y).get(5).remove(j);
 						}
 					}
 				}
+				MainList.get(X).get(Y).set(6, MainList.get(X).get(Y).get(5));
+				MainList.get(X).get(Y).set(7, MainList.get(X).get(Y).get(5));
+				if (MainList.get(X).get(Y).get(5).size() == 1) {
+					MainList.get(HorizontalX).get(HorizontalY).get(6).add(MainList.get(X).get(Y).get(5).get(0));
+					MainList.get(LongitudinalX).get(LongitudinalY).get(7).add(MainList.get(X).get(Y).get(5).get(0));
+					NextList.remove(i);
+					return;
+				}
+			}
 
-				if (MainList.get(LongitudinalX).get(LongitudinalY).get(4).get(0)
-						- MainList.get(LongitudinalX).get(LongitudinalY).get(7).size() == 2) {
-					int Total = MainList.get(LongitudinalX).get(LongitudinalY).get(2).get(0);
-					for (int LongitudinalValue : MainList.get(LongitudinalX).get(LongitudinalY).get(7)) {
-						Total -= LongitudinalValue;
+			if (MainList.get(LongitudinalX).get(LongitudinalY).get(4).get(0)
+					- MainList.get(LongitudinalX).get(LongitudinalY).get(7).size() == 2) {
+				int Total = MainList.get(LongitudinalX).get(LongitudinalY).get(2).get(0);
+				for (int LongitudinalValue : MainList.get(LongitudinalX).get(LongitudinalY).get(7)) {
+					Total -= LongitudinalValue;
+				}
+
+				for (int k = 1; k <= MainList.get(LongitudinalX).get(LongitudinalY).get(4).get(0); k++) {
+					if (MainList.get(LongitudinalX + k).get(LongitudinalY).get(5).size() == 1) {
+						continue;
 					}
-
-					for (int k = 1; k < MainList.get(LongitudinalX).get(LongitudinalY).get(4).get(0); k++) {
-						if (MainList.get(LongitudinalX + k).get(LongitudinalY).get(5).size() == 1) {
-							continue;
-						}
-						if (MainList.get(LongitudinalX + k).get(LongitudinalY).get(5).size() == MainList.get(X).get(Y)
-								.get(5).size()
-								&& MainList.get(LongitudinalX + k).get(LongitudinalY).get(5).get(0) == MainList.get(X)
-										.get(Y).get(5).get(0)
-								&& MainList.get(LongitudinalX + k).get(LongitudinalY).get(5).get(1) == MainList.get(X)
-										.get(Y).get(5).get(1)) {
-							break;
-						}
-						for (int value : MainList.get(X).get(Y).get(5)) {
-							if (MainList.get(LongitudinalX + k).get(LongitudinalY).get(5)
-									.indexOf(Total - value) != -1) {
-								MainList.get(X).get(Y).get(5).remove(1);
-								MainList.get(X).get(Y).get(5).set(0, value);
-								MainList.get(X).get(Y).set(6, MainList.get(X).get(Y).get(5));
-								MainList.get(X).get(Y).set(7, MainList.get(X).get(Y).get(5));
-								MainList.get(HorizontalX).get(HorizontalY).get(6).add(value);
-								MainList.get(LongitudinalX).get(LongitudinalY).get(7).add(value);
-								NextList.remove(i);
-								return;
-							}
+					if (LongitudinalX + k == X) {
+						continue;
+					}
+					for (int j = MainList.get(X).get(Y).get(5).size() - 1; j >= 0; j--) {
+						int value = MainList.get(X).get(Y).get(5).get(j);
+						if (MainList.get(LongitudinalX + k).get(LongitudinalY).get(5).indexOf(Total - value) == -1) {
+							MainList.get(X).get(Y).get(5).remove(j);
 						}
 					}
+				}
+				MainList.get(X).get(Y).set(6, MainList.get(X).get(Y).get(5));
+				MainList.get(X).get(Y).set(7, MainList.get(X).get(Y).get(5));
+				if (MainList.get(X).get(Y).get(5).size() == 1) {
+					MainList.get(HorizontalX).get(HorizontalY).get(6).add(MainList.get(X).get(Y).get(5).get(0));
+					MainList.get(LongitudinalX).get(LongitudinalY).get(7).add(MainList.get(X).get(Y).get(5).get(0));
+					NextList.remove(i);
+					return;
 				}
 			}
 		}
+
 	}
 
 	public static void DefalutList() {
