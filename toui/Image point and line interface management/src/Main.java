@@ -3,17 +3,20 @@ import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class Main extends JFrame {
 
@@ -21,24 +24,33 @@ public class Main extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	static CSVReadWrite CSVReadWrite = new CSVReadWrite();
 	static ShortestPath ShortestPath = new ShortestPath();
-
+	static EditPoint EditPoint = new EditPoint();
+	
+	public static ArrayList<String> NoTrespassingList = new ArrayList<String>();
 	public static ArrayList<String> PointList = new ArrayList<String>();
 	public static ArrayList<ArrayList<String>> EdgeList = new ArrayList<ArrayList<String>>();
 	public static ArrayList<String> ImagePathList = new ArrayList<String>();
 
 	// 画面コントロール
-	public static JPanel panel = new JPanel();
-	public static JLabel PointLabel = new JLabel("頂点を選んでください");
-	public static JButton ShortestPathButton = new JButton("最短経路計算");
-	public static JComboBox<String> PointComboBox = new JComboBox<String>();
-	public static JRadioButton EditPointRadioButton = new JRadioButton("頂点編集");
-	public static JRadioButton AddPointRadioButton = new JRadioButton("頂点追加");
-	public static ButtonGroup PointRadioButtonGroup = new ButtonGroup();
+	static JPanel panel = new JPanel();
+	static JLabel PointLabel = new JLabel("緊急な事故を発生した頂点を選んでください");
+	static JLabel PointInforLabel = new JLabel("立ち入り禁止頂点：");
+	static JLabel MessageLabel = new JLabel("最新最短経路ではないので、最短経路計算ボタンをクッリクしてください。");
+	static JButton ConfirmButton = new JButton("確定");
+	static JButton ShortestPathButton = new JButton("最短経路計算");
+	static JButton RebackButton = new JButton("復帰");
+	static JComboBox<String> PointComboBox = new JComboBox<String>();
+	static JTextArea ConfirmeArea = new JTextArea();
+	static JScrollPane scrollbar = new JScrollPane();
 
-	public static String OperationType = "頂点編集";
+	static JButton bu = new JButton("送信");
+	static String SelectPoint = "";
+	static String ConfirmPointText = "";
+
+	static boolean LeastestCheck = true;
+	static boolean MessageCheck = true;
 
 	/**
 	 * Launch the application.
@@ -59,10 +71,10 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	Main() {
-		CSVReadWrite.CSVRead(PointList, EdgeList, ImagePathList);
+		CSVReadWrite.PointRead();
 
 		setTitle("頂点管理システム");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setSize(800, 600);
 		setLocationRelativeTo(null);
 		ImageIcon icon = new ImageIcon("Picture/app.png");
@@ -74,91 +86,192 @@ public class Main extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
+		// 確定ボタン
+		ConfirmButton.setBounds(500, 100, 150, 50);
+		ConfirmButton.setForeground(Color.blue);
+		panel.add(ConfirmButton);
+
+		ConfirmButton.addActionListener(new ConfirmButtonListener());
+
 		// 最短経路計算ボタン
-		ShortestPathButton.setBounds(600, 500, 150, 50);
+		ShortestPathButton.setBounds(500, 200, 150, 50);
 		ShortestPathButton.setForeground(Color.blue);
 		panel.add(ShortestPathButton);
 
 		ShortestPathButton.addActionListener(new ShortestPathButtonListener());
 
-		/*
-		 * String combodata[] = new String[PointList.size() + 2]; combodata[0] =
-		 * "鬆らせ繧帝∈繧薙〒縺上□縺輔＞"; for (int i = 0; i < PointList.size(); i++) {
-		 * combodata[i+1] = PointList.get(i); } combodata[PointList.size()+1] =
-		 * "霑ｽ蜉�鬆らせ";
-		 */
+		// 復帰ボタン
+		RebackButton.setBounds(500, 300, 150, 50);
+		RebackButton.setForeground(Color.blue);
+		panel.add(RebackButton);
 
-		// 頂点操作ラジオボタン
-		EditPointRadioButton.setSelected(true);
-		EditPointRadioButton.setBounds(100, 50, 100, 30);
-		AddPointRadioButton.setBounds(200, 50, 100, 30);
-		PointRadioButtonGroup.add(EditPointRadioButton);
-		PointRadioButtonGroup.add(AddPointRadioButton);
-		panel.add(EditPointRadioButton);
-		panel.add(AddPointRadioButton);
+		RebackButton.addActionListener(new RebackButtonListener());
 
-		EditPointRadioButton.addActionListener(new OperationTypeButtonListener());
-		AddPointRadioButton.addActionListener(new OperationTypeButtonListener());
-
-		//頂点comboBox
-		PointComboBoxUpdate(); 
-		
-		// 頂点Label
-		PointLabel.setBounds(100, 70, 200, 30);
-		panel.add(PointLabel);
-		PointLabel.setVisible(true);
-	}
-
-	//頂点comboBoxの値更新
-	public void PointComboBoxUpdate() {
+		// 頂点comboBox
 		Vector<String> combodata = new Vector<String>(PointList);
 		PointComboBox = new JComboBox<String>(combodata);
 		PointComboBox.setBounds(100, 100, 200, 30);
 		panel.add(PointComboBox);
 		PointComboBox.setVisible(true);
 
-		PointComboBox.addActionListener(new boxListener());
+		PointComboBox.addActionListener(new PointComboBoxListener());
+
+		// 頂点Label
+		PointLabel.setBounds(100, 70, 300, 30);
+		panel.add(PointLabel);
+
+		// 頂点Label
+		PointInforLabel.setBounds(100, 170, 300, 30);
+		panel.add(PointInforLabel);
+
+		//
+		NoTrespassingUpdate();
+		ConfirmeArea.setVisible(true);
+		ConfirmeArea.setEditable(false);
+
+		scrollbar = new JScrollPane(ConfirmeArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollbar.setBounds(100, 200, 200, 200);
+		panel.add(scrollbar);
+
+		// メッセージLabel
+		MessageLabel.setBounds(100, 500, 500, 30);
+		MessageLabel.setForeground(Color.red);
+		panel.add(MessageLabel);
+		MessageLabel.setVisible(false);
+
+		this.addWindowListener(new WindowAdapter());
 	}
-	
-	// 頂点comboBoxイベント
- 	public class boxListener implements ActionListener {
+
+	public class WindowAdapter implements WindowListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			String s = (String) PointComboBox.getSelectedItem();
-			System.out.println(s);
+		public void windowOpened(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
 		}
 
-	}
-
-	// 頂点操作ラジオボタンイベント
-	public class OperationTypeButtonListener implements ActionListener {
-
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (OperationType != e.getActionCommand()) {
-				if (e.getActionCommand() == "頂点追加") {
-					PointComboBox.setVisible(false);
-					PointLabel.setVisible(false);
-				} else {
-					PointComboBoxUpdate();
-					PointLabel.setVisible(true);
-				}
-				OperationType = e.getActionCommand();
-				System.out.println(OperationType);
+		public void windowClosing(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+			if (MessageCheck == false) {
+				JOptionPane.showMessageDialog(null, "フレーム閉じることが出来ません。\r\n最新最短経路計算を行ってください。");
+			} else {
+				System.exit(0);
 			}
 		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+
+		}
+
+	}
+	
+	public class RebackButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			CSVReadWrite.CopyFile();
+			NoTrespassingList = new ArrayList<String>();
+			NoTrespassingUpdate();
+			MessageLabel.setVisible(false);
+			MessageCheck = true;
+
+			JOptionPane.showMessageDialog(null, "復帰が完了しました。");
+		}
+
 	}
 
-	// 最短経路計算ボタンイベント
 	public class ShortestPathButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			long start = System.currentTimeMillis();
+			CSVReadWrite.PointWrite();
 			ShortestPath.shortestPath();
-			long end = System.currentTimeMillis();
-			System.out.println((end - start) + "ms");
+			NoTrespassingUpdate();
+
+			MessageLabel.setVisible(false);
+			MessageCheck = true;
+
+			JOptionPane.showMessageDialog(null, "最新最短経路計算が完了しました。");
+		}
+
+	}
+
+	public class ConfirmButtonListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (NoTrespassingList.indexOf(SelectPoint) == -1) {
+				EditPoint.EditPointDelectEdge(SelectPoint);
+				SortList(SelectPoint);
+				NoTrespassingUpdate();
+
+				MessageLabel.setVisible(true);
+				MessageCheck = false;
+			}
+		}
+
+	}
+
+	public class PointComboBoxListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SelectPoint = (String) PointComboBox.getSelectedItem();
+		}
+
+	}
+
+	public void NoTrespassingUpdate() {
+		ConfirmeArea.setText("");
+		if (NoTrespassingList.size() != 0) {
+			for (int i = 0; i < NoTrespassingList.size(); i++) {
+				ConfirmeArea.append(NoTrespassingList.get(i) + "\n");
+			}
 		}
 	}
+
+	public void SortList(String SelectPoint) {
+		int compare = Integer.parseInt(SelectPoint.substring(4, 7));
+		if (NoTrespassingList.size() == 0) {
+			NoTrespassingList.add(SelectPoint);
+		} else {
+			for (int i = 0; i < NoTrespassingList.size(); i++) {
+				int listnum = Integer.parseInt(NoTrespassingList.get(i).substring(4, 7));
+				if (compare < listnum) {
+					NoTrespassingList.add(i, SelectPoint);
+					return;
+				}
+			}
+			NoTrespassingList.add(NoTrespassingList.size(), SelectPoint);
+		}
+	}
+
 }
