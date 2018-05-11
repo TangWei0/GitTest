@@ -1,88 +1,123 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class tgrCardStructure {
 
-	public void tgrSelectDigitalCard() {
-		Random rand = new Random();
-		Integer[] user1SelectedIndex = new Integer[tgrMain.SELECTDIGITALSIZE];
-		Integer[] user2SelectedIndex = new Integer[tgrMain.SELECTDIGITALSIZE];
-		int num1, num2;
-		for (int i = 0; i < tgrMain.SELECTDIGITALSIZE; i++) {
-			do {
-				num1 = rand.nextInt(tgrMain.DIGITALSIZE);
-				num2 = rand.nextInt(tgrMain.DIGITALSIZE);
-			} while ((Arrays.asList(user1SelectedIndex).contains(num1)) ||
-						(Arrays.asList(user1SelectedIndex).contains(num2)) ||
-						(Arrays.asList(user2SelectedIndex).contains(num1)) ||
-						(Arrays.asList(user2SelectedIndex).contains(num2)) ||
-						(num1 == num2));
-			tgrSelectedDigitalCardSort(user1SelectedIndex, num1);
-			tgrSelectedDigitalCardSort(user2SelectedIndex, num2);
-		}
-		tgrMain.User1DigitalCardArray = tgrDigitalCardDefind(user1SelectedIndex);
-		tgrMain.User2DigitalCardArray = tgrDigitalCardDefind(user2SelectedIndex);
+	private static ArrayList<Integer> DigitalCardArray = new ArrayList<Integer>();
+	private static ArrayList<Integer> QuestionCardArray = new ArrayList<Integer>();
+
+	Random rand = new Random();
+
+	// STARTボタンを押した後、数字カードと問題カードを抽選する
+	public void tgrCardDefind() {
+		// 数字カードと問題カードを初期化する
+		tgrCardInitialization();
+
+		// 数字カードと問題カードを抽選する
+		tgrSelectDigitalCard();
+		tgrSelectQuestionCard();
 	}
 
-	private Integer[][] tgrDigitalCardDefind(Integer[] selectedIndex) {
-		Integer[][] digitalCardArrayTmp = new Integer[tgrMain.SELECTDIGITALSIZE][tgrMain.DIGITALPARAMETERS];
-		for (int i = 0; i < tgrMain.SELECTDIGITALSIZE; i++) {
-			digitalCardArrayTmp[i][0] = selectedIndex[i] % tgrMain.DIGITALHALFSIZE;
-			if (selectedIndex[i] % tgrMain.DIGITALHALFSIZE == 5) {
-				digitalCardArrayTmp[i][1] = tgrMain.ColorEnum.valueOfByName("Green").getId();
+	public boolean tgrSupplementQuestionCard(int index) {
+		if (QuestionCardArray.size() != 0) {
+			int num = rand.nextInt(QuestionCardArray.size());
+			tgrMain.usingQuestionCardArray[index] = QuestionCardArray.get(num);
+			QuestionCardArray.remove(num);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private void tgrCardInitialization() {
+		tgrMain.User1DigitalCardArray = new int[tgrMain.SELECT_DIGITAL_SIZE][tgrMain.DIGITAL_PARAMETERS];
+		tgrMain.User2DigitalCardArray = new int[tgrMain.SELECT_DIGITAL_SIZE][tgrMain.DIGITAL_PARAMETERS];
+		tgrMain.usingQuestionCardArray = new int[tgrMain.SELECT_QUESTION_SIZE];
+		DigitalCardArray = new ArrayList<Integer>();
+		QuestionCardArray = new ArrayList<Integer>();
+		
+		for (int i = 0; i < tgrMain.DIGITAL_SIZE; i++) {
+			DigitalCardArray.add(i);
+		}
+
+		for (int i = 0; i < tgrMain.QUESTION_SIZE; i++) {
+			QuestionCardArray.add(i);
+		}
+	}
+
+	private void tgrSelectDigitalCard() {
+		int num1, num2;
+		ArrayList<Integer> User1Array = new ArrayList<Integer>();
+		ArrayList<Integer> User2Array = new ArrayList<Integer>();
+		for (int i = 0; i < tgrMain.SELECT_DIGITAL_SIZE; i++) {
+			do {
+				num1 = rand.nextInt(DigitalCardArray.size());
+				num2 = rand.nextInt(DigitalCardArray.size());
+			} while (num1 == num2);
+			tgrSelectedDigitalCardSort(User1Array, DigitalCardArray.get(num1));
+			tgrSelectedDigitalCardSort(User2Array, DigitalCardArray.get(num2));
+			if (num1 < num2) {
+				int tmp = num2;
+				num2 = num1;
+				num1 = tmp;
+			}
+			DigitalCardArray.remove(num1);
+			DigitalCardArray.remove(num2);
+		}
+		tgrMain.User1DigitalCardArray = tgrDigitalCardDefind(User1Array);
+		tgrMain.User2DigitalCardArray = tgrDigitalCardDefind(User2Array);
+	}
+
+	private int[][] tgrDigitalCardDefind(ArrayList<Integer> UserArray) {
+		int[][] TmpArray = new int[tgrMain.SELECT_DIGITAL_SIZE][tgrMain.DIGITAL_PARAMETERS];
+		for (int i = 0; i < tgrMain.SELECT_DIGITAL_SIZE; i++) {
+			TmpArray[i][0] = UserArray.get(i) % 10;
+
+			if (UserArray.get(i) % 10 == 5) {
+				TmpArray[i][1] = tgrMain.ColorEnum.valueOfByName("Green").getId();
 			} else {
-				if (selectedIndex[i] < tgrMain.DIGITALHALFSIZE) {
-					digitalCardArrayTmp[i][1] = tgrMain.ColorEnum.valueOfByName("Red").getId();
+				if (UserArray.get(i) < tgrMain.HALF_DIGITAL_SIZE) {
+					TmpArray[i][1] = tgrMain.ColorEnum.valueOfByName("Red").getId();
 				} else {
-					digitalCardArrayTmp[i][1] = tgrMain.ColorEnum.valueOfByName("Blue").getId();
+					TmpArray[i][1] = tgrMain.ColorEnum.valueOfByName("Blue").getId();
 				}
 			}
 		}
-		return digitalCardArrayTmp;
+		return TmpArray;
 	}
 
-	private void tgrSelectedDigitalCardSort(Integer[] selectedIndex, int num) {
-		for (int i = 0; i < tgrMain.SELECTDIGITALSIZE; i++) {
-			if (selectedIndex[i] == null) {
-				selectedIndex[i] = num;
-				return;
-			} else {
-				if ((num % tgrMain.DIGITALHALFSIZE < selectedIndex[i] % tgrMain.DIGITALHALFSIZE) ||
-						((num % tgrMain.DIGITALHALFSIZE == selectedIndex[i] % tgrMain.DIGITALHALFSIZE) && (num < selectedIndex[i]))) {
-					for (int j = tgrMain.SELECTDIGITALSIZE - 1; j > i; j--) {
-						selectedIndex[j] = selectedIndex[j - 1];
-					}
-					selectedIndex[i] = num;
+	private void tgrSelectedDigitalCardSort(ArrayList<Integer> UserArray, int num) {
+		if (UserArray.size() == 0) {
+			UserArray.add(num);
+			return;
+		}
+		for (int i = 0; i < UserArray.size(); i++) {
+			if (num % 10 == UserArray.get(i) % 10) {
+				if (num < UserArray.get(i)) {
+					UserArray.add(i, num);
 					return;
 				} else {
-					continue;
+					UserArray.add(i + 1, num);
+					return;
 				}
+			}
+			if (num % 10 < UserArray.get(i) % 10) {
+				UserArray.add(i, num);
+				return;
+			}
+			if (i == UserArray.size() - 1) {
+				UserArray.add(num);
+				return;
 			}
 		}
 	}
 
-	public void tgrSelectQuestionCard() {
-		int count = 0;
-		for (Integer num : tgrMain.usingQuestionCardArray) {
-			if (num != null) {
-
-			} else {
-				count++;
-				if (count == tgrMain.SELECTQUESTIONSIZE) {
-					tgrSelectQuestionCardInitialization();
-				}
-			}
-		}
-	}
-
-	private void tgrSelectQuestionCardInitialization() {
-		Random rand = new Random();
+	private void tgrSelectQuestionCard() {
 		int num;
-		for (int i = 0; i < tgrMain.SELECTQUESTIONSIZE; i++) {
-			do {
-				num = rand.nextInt(tgrMain.QUESTIONSIZE);
-			} while (Arrays.asList(tgrMain.usingQuestionCardArray).contains(num));
-			tgrMain.usingQuestionCardArray[i] = num;
+		for (int i = 0; i < tgrMain.SELECT_QUESTION_SIZE; i++) {
+			num = rand.nextInt(QuestionCardArray.size());
+			tgrMain.usingQuestionCardArray[i] = QuestionCardArray.get(num);
+			QuestionCardArray.remove(num);
 		}
 	}
 }
