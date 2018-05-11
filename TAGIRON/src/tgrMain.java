@@ -39,9 +39,11 @@ public class tgrMain extends JFrame {
 	static int CARD_WIDTH = 120;
 	static int CARD_HIGHT = 160;
 	static int CARD_SPACING = 40;
-	static int QUSETION_CARD_DX = FRAME_WIDTH / 2 - (CARD_WIDTH + CARD_SPACING) * SELECT_QUESTION_SIZE / 2 + CARD_SPACING / 2;
+	static int QUSETION_CARD_DX = FRAME_WIDTH / 2 - (CARD_WIDTH + CARD_SPACING) * SELECT_QUESTION_SIZE / 2
+			+ CARD_SPACING / 2;
 	static int QUSETION_CARD_DY = FRAME_HIGHT / 2 - CARD_HIGHT / 2;
-	static int USER1_DIGITAL_CARD_DX = FRAME_WIDTH / 2 - (CARD_WIDTH + CARD_SPACING) * (SELECT_DIGITAL_SIZE - 1) / 2 - CARD_WIDTH / 2;
+	static int USER1_DIGITAL_CARD_DX = FRAME_WIDTH / 2 - (CARD_WIDTH + CARD_SPACING) * (SELECT_DIGITAL_SIZE - 1) / 2
+			- CARD_WIDTH / 2;
 	static int USER1_DIGITAL_CARD_DY = FRAME_HIGHT - FRAME_HIGHT / 6 - CARD_HIGHT / 2;
 	static int USER2_DIGITAL_CARD_DX = USER1_DIGITAL_CARD_DX;
 	static int USER2_DIGITAL_CARD_DY = FRAME_HIGHT / 6 - CARD_HIGHT / 2;;
@@ -52,7 +54,7 @@ public class tgrMain extends JFrame {
 	static int BUTTON_DX = FRAME_WIDTH / 2 - BUTTON_WIDTH / 2;
 	static int BUTTON_DY = FRAME_HIGHT / 2 - BUTTON_HIGHT / 2;
 
-	static int ALLUPDATE = 0;
+	static int ALLUPDATE = 128;
 	static int OVER = 128;
 
 	boolean SUPPLEMENT = true;
@@ -139,7 +141,7 @@ public class tgrMain extends JFrame {
 		setSize(FRAME_WIDTH, FRAME_HIGHT);
 		setLocationRelativeTo(null);
 
-		// ToDo　画像を挿入する
+		// ToDo 画像を挿入する
 		// ImageIcon icon = new ImageIcon("Picture/app.png");
 		// setIconImage(icon.getImage());
 
@@ -164,14 +166,16 @@ public class tgrMain extends JFrame {
 			// User1カードを配置する
 			UserLabel1[i] = new JLabel("", JLabel.CENTER);
 			UserLabel1[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
-			UserLabel1[i].setBounds(USER1_DIGITAL_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), USER1_DIGITAL_CARD_DY, CARD_WIDTH, CARD_HIGHT);
+			UserLabel1[i].setBounds(USER1_DIGITAL_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), USER1_DIGITAL_CARD_DY,
+					CARD_WIDTH, CARD_HIGHT);
 			UserLabel1[i].setVisible(false);
 			panel.add(UserLabel1[i]);
 
 			// User2カードを配置する
 			UserLabel2[i] = new JLabel("", JLabel.CENTER);
 			UserLabel2[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
-			UserLabel2[i].setBounds(USER2_DIGITAL_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), USER2_DIGITAL_CARD_DY, CARD_WIDTH, CARD_HIGHT);
+			UserLabel2[i].setBounds(USER2_DIGITAL_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), USER2_DIGITAL_CARD_DY,
+					CARD_WIDTH, CARD_HIGHT);
 			UserLabel2[i].setVisible(false);
 			panel.add(UserLabel2[i]);
 		}
@@ -180,7 +184,8 @@ public class tgrMain extends JFrame {
 			QusetionLabel[i] = new JLabel("", JLabel.CENTER);
 			QusetionLabel[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
 			QusetionLabel[i].setBorder(new LineBorder(Color.orange, 5, true));
-			QusetionLabel[i].setBounds(QUSETION_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), QUSETION_CARD_DY, CARD_WIDTH, CARD_HIGHT);
+			QusetionLabel[i].setBounds(QUSETION_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), QUSETION_CARD_DY, CARD_WIDTH,
+					CARD_HIGHT);
 			QusetionLabel[i].setVisible(false);
 			panel.add(QusetionLabel[i]);
 
@@ -199,7 +204,8 @@ public class tgrMain extends JFrame {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			// TODO 自動生成されたメソッド・スタブ
-			int exitComfirm = JOptionPane.showConfirmDialog(null, "キャンセルしますか？", "最終確認", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			int exitComfirm = JOptionPane.showConfirmDialog(null, "キャンセルしますか？", "最終確認", JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE);
 			// 0=yes, 1=no
 			if (exitComfirm == 0) {
 				System.exit(0);
@@ -246,13 +252,16 @@ public class tgrMain extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			// TODO 自動生成されたメソッド・スタブ
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
-				if (e.getSource() == QusetionLabel[i]) {
-					usingQuestionCardArray[i] = OVER;
-					if (SUPPLEMENT == true) {
-						SUPPLEMENT = cardStructure.tgrSupplementQuestionCard(i);
+				if (usingQuestionCardArray[i] != OVER) {
+					if (e.getSource() == QusetionLabel[i]) {
+						if (cardStructure.QuestionCardArray.size() != 0) {
+							cardStructure.tgrSupplementQuestionCard(i);
+						} else {
+							usingQuestionCardArray[i] = OVER;
+						}
+						SreenUpdate(i);
+						return;
 					}
-					SreenUpdate(i);
-					return;
 				}
 			}
 		}

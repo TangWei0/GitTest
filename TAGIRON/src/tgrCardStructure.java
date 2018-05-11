@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class tgrCardStructure {
 
-	private static ArrayList<Integer> DigitalCardArray = new ArrayList<Integer>();
-	private static ArrayList<Integer> QuestionCardArray = new ArrayList<Integer>();
+	public ArrayList<Integer> DigitalCardArray = new ArrayList<Integer>();
+	public ArrayList<Integer> QuestionCardArray = new ArrayList<Integer>();
 
 	Random rand = new Random();
 
@@ -18,15 +18,10 @@ public class tgrCardStructure {
 		tgrSelectQuestionCard();
 	}
 
-	public boolean tgrSupplementQuestionCard(int index) {
-		if (QuestionCardArray.size() != 0) {
-			int num = rand.nextInt(QuestionCardArray.size());
-			tgrMain.usingQuestionCardArray[index] = QuestionCardArray.get(num);
-			QuestionCardArray.remove(num);
-			return true;
-		} else {
-			return false;
-		}
+	public void tgrSupplementQuestionCard(int index) {
+		int num = rand.nextInt(QuestionCardArray.size());
+		tgrMain.usingQuestionCardArray[index] = QuestionCardArray.get(num);
+		QuestionCardArray.remove(num);
 	}
 
 	private void tgrCardInitialization() {
@@ -35,7 +30,7 @@ public class tgrCardStructure {
 		tgrMain.usingQuestionCardArray = new int[tgrMain.SELECT_QUESTION_SIZE];
 		DigitalCardArray = new ArrayList<Integer>();
 		QuestionCardArray = new ArrayList<Integer>();
-		
+
 		for (int i = 0; i < tgrMain.DIGITAL_SIZE; i++) {
 			DigitalCardArray.add(i);
 		}
