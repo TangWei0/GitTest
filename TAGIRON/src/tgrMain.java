@@ -59,9 +59,13 @@ public class tgrMain extends JFrame {
 
 	boolean SUPPLEMENT = true;
 
+	int count = 1;
+
 	// 画面コントロール
-	private JPanel panel = new JPanel();
+	private JPanel panel = new JPanel(); 
+	private JPanel betPanel = new BetPanel();
 	private JButton StartButton = new JButton("開始");
+	private JButton BetButton = new JButton("先手を決める");
 
 	private JLabel[] UserLabel1 = new JLabel[SELECT_DIGITAL_SIZE];
 	private JLabel[] UserLabel2 = new JLabel[SELECT_DIGITAL_SIZE];
@@ -153,7 +157,11 @@ public class tgrMain extends JFrame {
 		panel.setLayout(null);
 
 		this.addWindowListener(new WindowAdapter());
-
+		
+		
+		contentPane.add(betPanel);
+		betPanel.setVisible(false);
+		
 		// 開始ボタン
 		StartButton.setBounds(BUTTON_DX, BUTTON_DY, BUTTON_WIDTH, BUTTON_HIGHT);
 		StartButton.setForeground(Color.blue);
@@ -191,6 +199,16 @@ public class tgrMain extends JFrame {
 
 			QusetionLabel[i].addMouseListener(new MyMouseListener());
 		}
+
+		// 先手を決めるボタン
+		//　定数をstaticにする
+		BetButton.setBounds(10, 10, 150, 80);
+		BetButton.setForeground(Color.blue);
+		BetButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
+		BetButton.setVisible(false);
+		panel.add(BetButton);
+		
+		BetButton.addActionListener(new BetButtonListener());
 	}
 
 	private class WindowAdapter implements WindowListener {
@@ -319,10 +337,20 @@ public class tgrMain extends JFrame {
 			StartButton.setVisible(false);
 			cardStructure.tgrCardDefind();
 			SreenUpdate(ALLUPDATE);
+			BetButton.setVisible(true);
 		}
 	}
+	
+	private class BetButtonListener implements ActionListener{
 
-	private String tgrQuestionShow(int num) {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO 自動生成されたメソッド・スタブ
+			betPanel.setVisible(true);
+		}	
+	}
+
+ 	private String tgrQuestionShow(int num) {
 		String title = "";
 		switch (num) {
 		case 0:
