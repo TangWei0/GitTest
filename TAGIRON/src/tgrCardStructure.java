@@ -20,22 +20,22 @@ public class tgrCardStructure {
 
 	public void tgrSupplementQuestionCard(int index) {
 		int num = rand.nextInt(QuestionCardArray.size());
-		tgrMain.usingQuestionCardArray[index] = QuestionCardArray.get(num);
+		StartSubView.usingQuestionCardArray[index] = QuestionCardArray.get(num);
 		QuestionCardArray.remove(num);
 	}
 
 	private void tgrCardInitialization() {
-		tgrMain.User1DigitalCardArray = new int[tgrMain.SELECT_DIGITAL_SIZE][tgrMain.DIGITAL_PARAMETERS];
-		tgrMain.User2DigitalCardArray = new int[tgrMain.SELECT_DIGITAL_SIZE][tgrMain.DIGITAL_PARAMETERS];
-		tgrMain.usingQuestionCardArray = new int[tgrMain.SELECT_QUESTION_SIZE];
+		StartSubView.User1DigitalCardArray = new int[StartSubView.SELECT_DIGITAL_SIZE][StartSubView.DIGITAL_PARAMETERS];
+		StartSubView.User2DigitalCardArray = new int[StartSubView.SELECT_DIGITAL_SIZE][StartSubView.DIGITAL_PARAMETERS];
+		StartSubView.usingQuestionCardArray = new int[StartSubView.SELECT_QUESTION_SIZE];
 		DigitalCardArray = new ArrayList<Integer>();
 		QuestionCardArray = new ArrayList<Integer>();
 
-		for (int i = 0; i < tgrMain.DIGITAL_SIZE; i++) {
+		for (int i = 0; i < StartSubView.DIGITAL_SIZE; i++) {
 			DigitalCardArray.add(i);
 		}
 
-		for (int i = 0; i < tgrMain.QUESTION_SIZE; i++) {
+		for (int i = 0; i < StartSubView.QUESTION_SIZE; i++) {
 			QuestionCardArray.add(i);
 		}
 	}
@@ -44,7 +44,7 @@ public class tgrCardStructure {
 		int num1, num2;
 		ArrayList<Integer> User1Array = new ArrayList<Integer>();
 		ArrayList<Integer> User2Array = new ArrayList<Integer>();
-		for (int i = 0; i < tgrMain.SELECT_DIGITAL_SIZE; i++) {
+		for (int i = 0; i < StartSubView.SELECT_DIGITAL_SIZE; i++) {
 			do {
 				num1 = rand.nextInt(DigitalCardArray.size());
 				num2 = rand.nextInt(DigitalCardArray.size());
@@ -59,19 +59,19 @@ public class tgrCardStructure {
 			DigitalCardArray.remove(num1);
 			DigitalCardArray.remove(num2);
 		}
-		tgrMain.User1DigitalCardArray = tgrDigitalCardDefind(User1Array);
-		tgrMain.User2DigitalCardArray = tgrDigitalCardDefind(User2Array);
+		StartSubView.User1DigitalCardArray = tgrDigitalCardDefind(User1Array);
+		StartSubView.User2DigitalCardArray = tgrDigitalCardDefind(User2Array);
 	}
 
 	private int[][] tgrDigitalCardDefind(ArrayList<Integer> UserArray) {
-		int[][] TmpArray = new int[tgrMain.SELECT_DIGITAL_SIZE][tgrMain.DIGITAL_PARAMETERS];
-		for (int i = 0; i < tgrMain.SELECT_DIGITAL_SIZE; i++) {
+		int[][] TmpArray = new int[StartSubView.SELECT_DIGITAL_SIZE][StartSubView.DIGITAL_PARAMETERS];
+		for (int i = 0; i < StartSubView.SELECT_DIGITAL_SIZE; i++) {
 			TmpArray[i][0] = UserArray.get(i) % 10;
 
 			if (UserArray.get(i) % 10 == 5) {
 				TmpArray[i][1] = tgrMain.ColorEnum.valueOfByName("Green").getId();
 			} else {
-				if (UserArray.get(i) < tgrMain.HALF_DIGITAL_SIZE) {
+				if (UserArray.get(i) < StartSubView.HALF_DIGITAL_SIZE) {
 					TmpArray[i][1] = tgrMain.ColorEnum.valueOfByName("Red").getId();
 				} else {
 					TmpArray[i][1] = tgrMain.ColorEnum.valueOfByName("Blue").getId();
@@ -109,9 +109,9 @@ public class tgrCardStructure {
 
 	private void tgrSelectQuestionCard() {
 		int num;
-		for (int i = 0; i < tgrMain.SELECT_QUESTION_SIZE; i++) {
+		for (int i = 0; i < StartSubView.SELECT_QUESTION_SIZE; i++) {
 			num = rand.nextInt(QuestionCardArray.size());
-			tgrMain.usingQuestionCardArray[i] = QuestionCardArray.get(num);
+			StartSubView.usingQuestionCardArray[i] = QuestionCardArray.get(num);
 			QuestionCardArray.remove(num);
 		}
 	}
