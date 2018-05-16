@@ -1,5 +1,7 @@
 package panels;
 
+import static constants.MathConstants.*;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -11,16 +13,12 @@ public class BetSubView extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JButton button = new JButton("ñﬂÇÈ");
-	tgrMain tgrMain;
-	String str;
-	public BetSubView(tgrMain tgr,String s) {
-		tgrMain = tgr;
-		str = s;
-		this.setName("betSubView");
+	
+	public BetSubView() {
 		this.setLayout(null);
-		this.setSize(1280, 960);
-		
-		button.setBounds(10, 10, 150, 80);
+		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
+
+		button.setBounds(COMMON_BUTTON_DX, COMMON_BUTTON_DY, COMMON_BUTTON_WIDTH, COMMON_BUTTON_HIGHT);
 		button.setForeground(Color.blue);
 		button.setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.ITALIC, 16));
 		button.setVisible(true);
@@ -33,12 +31,9 @@ public class BetSubView extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pc();
+			tgrMain.betSubView.setVisible(false);
+			tgrMain.mainView.setVisible(true);
 		}
 	}
-	
-	public void pc(){
-		tgrMain.PanelChange((JPanel)this, tgrMain.PanelNames[1]);
-    }
 	
 }

@@ -9,38 +9,31 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+
 public class StartSubView extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private JButton StartButton = new JButton("開始");
-	tgrMain tgr;
-	String str;
+	
 
-	public StartSubView(tgrMain Main, String s) {
-		tgr = Main;
-		str = s;
-		this.setName("startSubView");
+	public StartSubView() {
 		this.setLayout(null);
-		this.setSize(1280, 960);
+		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 
 		// 開始ボタン
-		StartButton.setBounds(BUTTON_DX, BUTTON_DY,BUTTON_WIDTH, BUTTON_HIGHT);
+		StartButton.setBounds(START_BUTTON_DX, START_BUTTON_DY, START_BUTTON_WIDTH, START_BUTTON_HIGHT);
 		StartButton.setForeground(Color.blue);
 		StartButton.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
 		StartButton.addActionListener(new StartButtonListener());
 		this.add(StartButton);
 	}
-
+	
 	private class StartButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			pc(tgr.PanelNames[1]);
+			tgrMain.startSubView.setVisible(false);
+			tgrMain.mainView.setVisible(true);
 		}
 	}
-	
-	public void pc(String str){
-		tgr.PanelChange((JPanel)this, str);
-    }
-
 }
