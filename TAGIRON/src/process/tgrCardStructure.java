@@ -1,4 +1,4 @@
-package process;
+package Process;
 
 import static Declaration.MathConstants.*;
 import static Declaration.Variable.*;
@@ -64,14 +64,14 @@ public class tgrCardStructure {
 
 	public void tgrSupplementQuestionCard(int index) {
 		int num = rand.nextInt(QuestionCardArray.size());
-		usingQuestionCardArray[index] = QuestionCardArray.get(num);
+		UsingQuestionCardArray[index] = QuestionCardArray.get(num);
 		QuestionCardArray.remove(num);
 	}
 
 	private void tgrCardInitialization() {
 		User1DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
 		User2DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-		usingQuestionCardArray = new int[SELECT_QUESTION_SIZE];
+		UsingQuestionCardArray = new int[SELECT_QUESTION_SIZE];
 		DigitalCardArray = new ArrayList<Integer>();
 		QuestionCardArray = new ArrayList<Integer>();
 
@@ -155,7 +155,7 @@ public class tgrCardStructure {
 		int num;
 		for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 			num = rand.nextInt(QuestionCardArray.size());
-			usingQuestionCardArray[i] = QuestionCardArray.get(num);
+			UsingQuestionCardArray[i] = QuestionCardArray.get(num);
 			QuestionCardArray.remove(num);
 		}
 	}

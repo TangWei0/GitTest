@@ -1,8 +1,8 @@
-package panels;
+package Panels;
 
 import static Declaration.MathConstants.*;
 import static Declaration.Variable.*;
-import process.tgrCardStructure;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -11,8 +11,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import Process.tgrCardStructure;
 
 public class MainView extends JPanel {
 	/**
@@ -28,6 +31,8 @@ public class MainView extends JPanel {
 	private JLabel[] QusetionLabel = new JLabel[SELECT_QUESTION_SIZE];
 
 	tgrCardStructure CardStructure = new tgrCardStructure();
+
+	private int nullQusetionCount = 0;
 
 	public MainView() {
 		this.setLayout(null);
@@ -82,18 +87,36 @@ public class MainView extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO 自動生成されたメソッド・スタブ
-			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
-				if (usingQuestionCardArray[i] != OVER) {
-					if (e.getSource() == QusetionLabel[i]) {
-						if (QuestionCardArray.size() != 0) {
-							CardStructure.tgrSupplementQuestionCard(i);
+			if (Number != NO_DECISION) {
+				if (nullQusetionCount != SELECT_QUESTION_SIZE) {
+					for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
+						if (UsingQuestionCardArray[i] != OVER) {
+							if (e.getSource() == QusetionLabel[i]) {
+								if (QuestionCardArray.size() != 0) {
+									CardStructure.tgrSupplementQuestionCard(i);
+								} else {
+									UsingQuestionCardArray[i] = OVER;
+									nullQusetionCount++;
+								}
+								SreenUpdate(i);
+								if (nullQusetionCount == SELECT_QUESTION_SIZE) {
+									JOptionPane.showMessageDialog(null, ERROR_2);
+								} else {
+									// 何もしない
+								}
+								return;
+							} else {
+								// 何もしない
+							}
 						} else {
-							usingQuestionCardArray[i] = OVER;
+							// 何もしない
 						}
-						SreenUpdate(i);
-						return;
 					}
+				} else {
+					JOptionPane.showMessageDialog(null, ERROR_2);
 				}
+			} else {
+				JOptionPane.showMessageDialog(null, ERROR_1);
 			}
 		}
 
@@ -101,13 +124,15 @@ public class MainView extends JPanel {
 		public void mouseEntered(MouseEvent e) {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				if (e.getSource() == QusetionLabel[i]) {
-					if (usingQuestionCardArray[i] != OVER) {
+					if (UsingQuestionCardArray[i] != OVER) {
 						QusetionLabel[i].setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
-						QusetionLabel[i].setText(QuestionNames[usingQuestionCardArray[i]]);
+						QusetionLabel[i].setText(QuestionNames[UsingQuestionCardArray[i]]);
 					} else {
 						QusetionLabel[i].setText("");
 					}
 					return;
+				} else {
+					// 何もしない
 				}
 			}
 		}
@@ -117,13 +142,15 @@ public class MainView extends JPanel {
 			// TODO 自動生成されたメソッド・スタブ
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				if (e.getSource() == QusetionLabel[i]) {
-					if (usingQuestionCardArray[i] != OVER) {
+					if (UsingQuestionCardArray[i] != OVER) {
 						QusetionLabel[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
-						QusetionLabel[i].setText("問題" + String.valueOf(usingQuestionCardArray[i]));
+						QusetionLabel[i].setText("問題" + String.valueOf(UsingQuestionCardArray[i]));
 					} else {
 						QusetionLabel[i].setText("");
 					}
 					return;
+				}else {
+					// 何もしない
 				}
 			}
 		}
@@ -154,7 +181,7 @@ public class MainView extends JPanel {
 	private void SreenUpdate(int updateSwitch) {
 		if (updateSwitch == ALLUPDATE) {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
-				QusetionLabel[i].setText("問題" + String.valueOf(usingQuestionCardArray[i]));
+				QusetionLabel[i].setText("問題" + String.valueOf(UsingQuestionCardArray[i]));
 				QusetionLabel[i].setVisible(true);
 			}
 			for (int j = 0; j < SELECT_DIGITAL_SIZE; j++) {
@@ -189,8 +216,8 @@ public class MainView extends JPanel {
 				UserLabel2[k].setVisible(true);
 			}
 		} else {
-			if (usingQuestionCardArray[updateSwitch] != OVER) {
-				QusetionLabel[updateSwitch].setText("問題" + String.valueOf(usingQuestionCardArray[updateSwitch]));
+			if (UsingQuestionCardArray[updateSwitch] != OVER) {
+				QusetionLabel[updateSwitch].setText("問題" + String.valueOf(UsingQuestionCardArray[updateSwitch]));
 				QusetionLabel[updateSwitch].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
 			} else {
 				QusetionLabel[updateSwitch].setText("");

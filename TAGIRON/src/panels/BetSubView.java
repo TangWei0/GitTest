@@ -1,42 +1,44 @@
-package panels;
+package Panels;
 
 import static Declaration.MathConstants.*;
-import process.tgrFirstMove;
+import static Declaration.Variable.*;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class BetSubView extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JButton button = new JButton("戻る");
-	private JTextArea textArea = new JTextArea();
-	tgrFirstMove FistMove = new tgrFirstMove();
-
+	private JButton ReturnButton = new JButton("戻る");
+	private JButton StartStopButton = new JButton("スタート");
+	
+	private String input1 = "";
+	private String input2 = "";
+	
+	private int count = 1;
+	
 	public BetSubView() {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 
-		button.setBounds(COMMON_BUTTON_DX, COMMON_BUTTON_DY, COMMON_BUTTON_WIDTH, COMMON_BUTTON_HIGHT);
-		button.setForeground(Color.blue);
-		button.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
-		button.setVisible(true);
-		this.add(button);
+		ReturnButton.setBounds(COMMON_BUTTON_DX, COMMON_BUTTON_DY, COMMON_BUTTON_WIDTH, COMMON_BUTTON_HIGHT);
+		ReturnButton.setForeground(Color.blue);
+		ReturnButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
+		ReturnButton.setVisible(true);
+		this.add(ReturnButton);
 
-		button.addActionListener(new returnButtonListener());
-		System.out.println(this.isVisible());
+		ReturnButton.addActionListener(new returnButtonListener());
 		
-        this.add(textArea);
-        textArea.setBounds(300, 300, 900, 600);
-        textArea.addKeyListener(new MyListener());
-        textArea.append("?始?：\n");
-        textArea.setVisible(true);
+		StartStopButton.setBounds(START_BUTTON_DX, START_BUTTON_DY, START_BUTTON_WIDTH, START_BUTTON_HIGHT);
+		StartStopButton.setForeground(Color.blue);
+		StartStopButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
+		StartStopButton.setVisible(true);
+		this.add(StartStopButton);
+
+		//StartStopButton.addActionListener(new returnButtonListener());
 
 	}
 
@@ -46,26 +48,8 @@ public class BetSubView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			tgrMain.betSubView.setVisible(false);
 			tgrMain.mainView.setVisible(true);
+			Number = USER1_DECISION;
 		}
 	}
-	
-	class MyListener implements KeyListener {
-        @Override // 按下
-        public void keyPressed(KeyEvent e) {
-            textArea.append("按下："+KeyEvent.getKeyText(e.getKeyCode()) + "\n");
-        }
-        @Override // 松?
-        public void keyReleased(KeyEvent e) {
-            textArea.append("松?：" + KeyEvent.getKeyText(e.getKeyCode()) + "\n");
-            if(KeyEvent.getKeyText(e.getKeyCode()).equals("C")) {
-                textArea.setText("");
-            }
-        }
-        @Override // ?入的内容
-        public void keyTyped(KeyEvent e) {
-            textArea.append("?入：" + e.getKeyChar() + "\n");
-        }
-    }
-
 	
 }
