@@ -1,20 +1,18 @@
 package panels;
 
-import static constants.MathConstants.*;
-
+import static Declaration.MathConstants.*;
+import static Declaration.Variable.*;
+import process.tgrCardStructure;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-
-import process.tgrCardStructure;
 
 public class MainView extends JPanel {
 	/**
@@ -29,13 +27,13 @@ public class MainView extends JPanel {
 	private JLabel[] UserLabel2 = new JLabel[SELECT_DIGITAL_SIZE];
 	private JLabel[] QusetionLabel = new JLabel[SELECT_QUESTION_SIZE];
 
-	tgrCardStructure cardStructure = new tgrCardStructure();
+	tgrCardStructure CardStructure = new tgrCardStructure();
 
 	public MainView() {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 
-		cardStructure.tgrCardDefind();
+		CardStructure.tgrCardDefind();
 		// 画面を配置する
 		for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
 			// User1カードを配置する
@@ -85,12 +83,12 @@ public class MainView extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			// TODO 自動生成されたメソッド・スタブ
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
-				if (tgrMain.usingQuestionCardArray[i] != OVER) {
+				if (usingQuestionCardArray[i] != OVER) {
 					if (e.getSource() == QusetionLabel[i]) {
-						if (cardStructure.QuestionCardArray.size() != 0) {
-							cardStructure.tgrSupplementQuestionCard(i);
+						if (QuestionCardArray.size() != 0) {
+							CardStructure.tgrSupplementQuestionCard(i);
 						} else {
-							tgrMain.usingQuestionCardArray[i] = OVER;
+							usingQuestionCardArray[i] = OVER;
 						}
 						SreenUpdate(i);
 						return;
@@ -103,9 +101,9 @@ public class MainView extends JPanel {
 		public void mouseEntered(MouseEvent e) {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				if (e.getSource() == QusetionLabel[i]) {
-					if (tgrMain.usingQuestionCardArray[i] != OVER) {
+					if (usingQuestionCardArray[i] != OVER) {
 						QusetionLabel[i].setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
-						QusetionLabel[i].setText(QuestionNames[tgrMain.usingQuestionCardArray[i]]);
+						QusetionLabel[i].setText(QuestionNames[usingQuestionCardArray[i]]);
 					} else {
 						QusetionLabel[i].setText("");
 					}
@@ -119,9 +117,9 @@ public class MainView extends JPanel {
 			// TODO 自動生成されたメソッド・スタブ
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				if (e.getSource() == QusetionLabel[i]) {
-					if (tgrMain.usingQuestionCardArray[i] != OVER) {
+					if (usingQuestionCardArray[i] != OVER) {
 						QusetionLabel[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
-						QusetionLabel[i].setText("問題" + String.valueOf(tgrMain.usingQuestionCardArray[i]));
+						QusetionLabel[i].setText("問題" + String.valueOf(usingQuestionCardArray[i]));
 					} else {
 						QusetionLabel[i].setText("");
 					}
@@ -156,12 +154,12 @@ public class MainView extends JPanel {
 	private void SreenUpdate(int updateSwitch) {
 		if (updateSwitch == ALLUPDATE) {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
-				QusetionLabel[i].setText("問題" + String.valueOf(tgrMain.usingQuestionCardArray[i]));
+				QusetionLabel[i].setText("問題" + String.valueOf(usingQuestionCardArray[i]));
 				QusetionLabel[i].setVisible(true);
 			}
 			for (int j = 0; j < SELECT_DIGITAL_SIZE; j++) {
-				UserLabel1[j].setText(String.valueOf(tgrMain.User1DigitalCardArray[j][0]));
-				switch (tgrMain.User1DigitalCardArray[j][1]) {
+				UserLabel1[j].setText(String.valueOf(User1DigitalCardArray[j][0]));
+				switch (User1DigitalCardArray[j][1]) {
 				case 1:
 					UserLabel1[j].setBorder(new LineBorder(Color.red, 5, true));
 					break;
@@ -176,8 +174,8 @@ public class MainView extends JPanel {
 			}
 
 			for (int k = 0; k < SELECT_DIGITAL_SIZE; k++) {
-				UserLabel2[k].setText(String.valueOf(tgrMain.User2DigitalCardArray[k][0]));
-				switch (tgrMain.User2DigitalCardArray[k][1]) {
+				UserLabel2[k].setText(String.valueOf(User2DigitalCardArray[k][0]));
+				switch (User2DigitalCardArray[k][1]) {
 				case 1:
 					UserLabel2[k].setBorder(new LineBorder(Color.red, 5, true));
 					break;
@@ -191,8 +189,8 @@ public class MainView extends JPanel {
 				UserLabel2[k].setVisible(true);
 			}
 		} else {
-			if (tgrMain.usingQuestionCardArray[updateSwitch] != OVER) {
-				QusetionLabel[updateSwitch].setText("問題" + String.valueOf(tgrMain.usingQuestionCardArray[updateSwitch]));
+			if (usingQuestionCardArray[updateSwitch] != OVER) {
+				QusetionLabel[updateSwitch].setText("問題" + String.valueOf(usingQuestionCardArray[updateSwitch]));
 				QusetionLabel[updateSwitch].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
 			} else {
 				QusetionLabel[updateSwitch].setText("");

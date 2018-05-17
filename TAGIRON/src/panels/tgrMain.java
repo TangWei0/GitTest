@@ -1,6 +1,6 @@
 package panels;
 
-import static constants.MathConstants.*;
+import static Declaration.MathConstants.*;
 
 import java.awt.AWTEvent;
 import java.awt.event.WindowEvent;
@@ -10,13 +10,6 @@ import javax.swing.JOptionPane;
 public class tgrMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
-	// 抽選数字カードを定義する
-	public static int[][] User1DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-	public static int[][] User2DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-
-	// 問題カードを定義する
-	public static int[] usingQuestionCardArray = new int[SELECT_QUESTION_SIZE];
 	
 	public static StartSubView startSubView = new StartSubView();
 	public static MainView mainView = new MainView();

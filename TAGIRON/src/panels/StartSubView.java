@@ -1,6 +1,6 @@
 package panels;
 
-import static constants.MathConstants.*;
+import static Declaration.MathConstants.*;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,12 +9,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-
 public class StartSubView extends JPanel {
 	private static final long serialVersionUID = 1L;
-
 	private JButton StartButton = new JButton("ŠJŽn");
-	
 
 	public StartSubView() {
 		this.setLayout(null);

@@ -1,11 +1,10 @@
 package process;
 
-import static constants.MathConstants.*;
+import static Declaration.MathConstants.*;
+import static Declaration.Variable.*;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import panels.tgrMain;
 
 public class tgrCardStructure {
 
@@ -50,10 +49,7 @@ public class tgrCardStructure {
 		}
 	}
 
-	public ArrayList<Integer> DigitalCardArray = new ArrayList<Integer>();
-	public ArrayList<Integer> QuestionCardArray = new ArrayList<Integer>();
-
-	Random rand = new Random();
+	private Random rand = new Random();
 
 	// STARTボタンを押した後、数字カードと問題カードを抽選する
 	public void tgrCardDefind() {
@@ -68,14 +64,14 @@ public class tgrCardStructure {
 
 	public void tgrSupplementQuestionCard(int index) {
 		int num = rand.nextInt(QuestionCardArray.size());
-		tgrMain.usingQuestionCardArray[index] = QuestionCardArray.get(num);
+		usingQuestionCardArray[index] = QuestionCardArray.get(num);
 		QuestionCardArray.remove(num);
 	}
 
 	private void tgrCardInitialization() {
-		tgrMain.User1DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-		tgrMain.User2DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-		tgrMain.usingQuestionCardArray = new int[SELECT_QUESTION_SIZE];
+		User1DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
+		User2DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
+		usingQuestionCardArray = new int[SELECT_QUESTION_SIZE];
 		DigitalCardArray = new ArrayList<Integer>();
 		QuestionCardArray = new ArrayList<Integer>();
 
@@ -107,8 +103,8 @@ public class tgrCardStructure {
 			DigitalCardArray.remove(num1);
 			DigitalCardArray.remove(num2);
 		}
-		tgrMain.User1DigitalCardArray = tgrDigitalCardDefind(User1Array);
-		tgrMain.User2DigitalCardArray = tgrDigitalCardDefind(User2Array);
+		User1DigitalCardArray = tgrDigitalCardDefind(User1Array);
+		User2DigitalCardArray = tgrDigitalCardDefind(User2Array);
 	}
 
 	private static int[][] tgrDigitalCardDefind(ArrayList<Integer> UserArray) {
@@ -159,7 +155,7 @@ public class tgrCardStructure {
 		int num;
 		for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 			num = rand.nextInt(QuestionCardArray.size());
-			tgrMain.usingQuestionCardArray[i] = QuestionCardArray.get(num);
+			usingQuestionCardArray[i] = QuestionCardArray.get(num);
 			QuestionCardArray.remove(num);
 		}
 	}
