@@ -44,9 +44,18 @@ public class MathConstants {
 	public static final int COMMON_BUTTON_DY = 10;
 
 	// 
-	public static final int ALLUPDATE = 128;
-	public static final int OVER = 128; //カード
+	public static final int ALLUPDATE = 6;
+	public static final int OVER = 128; //128 = 無カード
 
+	// 先手をきめる
+	//　0=決めていない, 1=User1番, 2=User2番
+	public static final int NO_DECISION = 0;
+	public static final int USER1_DECISION = 1;
+	public static final int USER2_DECISION = 2;
+	
+	public static final String ERROR_1 = "先手を決めてからゲームを始めましょう！";
+	public static final String ERROR_2 = "すべて問題カードを選択しました！";
+	
 	public static String[] QuestionNames = {
 			"<html>8または9はどこ？</html>",
 			"<html>1または2はどこ？</html>",

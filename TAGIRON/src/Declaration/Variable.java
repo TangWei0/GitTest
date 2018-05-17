@@ -15,8 +15,8 @@ public class Variable {
 	public static int[][] User2DigitalCardArray = new int[MathConstants.SELECT_DIGITAL_SIZE][MathConstants.DIGITAL_PARAMETERS];
 
 	// 問題カードを定義する
-	public static int[] usingQuestionCardArray = new int[MathConstants.SELECT_QUESTION_SIZE];
+	public static int[] UsingQuestionCardArray = new int[MathConstants.SELECT_QUESTION_SIZE];
 	
-	
+	public static int Number = MathConstants.NO_DECISION;
 	
 }
