@@ -104,7 +104,8 @@ public class MainView extends JPanel {
 								} else {
 									// 何もしない
 								}
-								return;
+								// ループから抜く
+								break;
 							} else {
 								// 何もしない
 							}
@@ -130,7 +131,8 @@ public class MainView extends JPanel {
 					} else {
 						QusetionLabel[i].setText("");
 					}
-					return;
+					// ループから抜く
+					break;
 				} else {
 					// 何もしない
 				}
@@ -148,7 +150,8 @@ public class MainView extends JPanel {
 					} else {
 						QusetionLabel[i].setText("");
 					}
-					return;
+					// ループから抜く
+					break;
 				}else {
 					// 何もしない
 				}
