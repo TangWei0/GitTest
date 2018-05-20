@@ -57,10 +57,11 @@ public class BetSubView extends JPanel {
 
 		expandTime = rand.nextInt(9001) + 1000;
 		input0 = String.valueOf((double) expandTime / 1000);
+		tgrCreatTitle();
 		ExpandLabel.setBounds(190, 50, 900, 400);
 		ExpandLabel.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
 		ExpandLabel.setVisible(true);
-		ExpandLabel.setText(tgrCreatTitle());
+		ExpandLabel.setText(title);
 		this.add(ExpandLabel);
 
 	}
@@ -69,9 +70,12 @@ public class BetSubView extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			tgrMain.betSubView.setVisible(false);
-			tgrMain.mainView.setVisible(true);
-			Number = USER1_DECISION;
+			if (Number != NO_DECISION) {
+				tgrMain.betSubView.setVisible(false);
+				tgrMain.mainView.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, ERROR_4);
+			}
 		}
 	}
 
@@ -114,40 +118,45 @@ public class BetSubView extends JPanel {
 				StartStopButton.setText("スタート");
 				break;
 			}
-			ExpandLabel.setText(tgrCreatTitle());
+			tgrCreatTitle();
+			ExpandLabel.setText(title);
 		}
 	}
 
-	private String tgrCreatTitle() {
+	private void tgrCreatTitle() {
 		title = "";
 		switch (clickCount) {
 		case 0:
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3] +
-					TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[9] + TitleNames[5] + TitleNames[1];
+			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
+					+ TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[9] + TitleNames[5] + TitleNames[1];
 			break;
 		case 1:
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3] +
-					TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[10] + TitleNames[5] + TitleNames[1];
+			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
+					+ TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[10] + TitleNames[5] + TitleNames[1];
 			break;
 		case 2:
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3] +
-					TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] +
-					TitleNames[2] + TitleNames[8] + TitleNames[4] + TitleNames[9] + TitleNames[5] + TitleNames[1];
+			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
+					+ TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] + TitleNames[2]
+					+ TitleNames[8] + TitleNames[4] + TitleNames[9] + TitleNames[5] + TitleNames[1];
 			break;
 		case 3:
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3] +
-					TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] +
-					TitleNames[2] + TitleNames[8] + TitleNames[4] + TitleNames[10] + TitleNames[5] + TitleNames[1];
+			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
+					+ TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] + TitleNames[2]
+					+ TitleNames[8] + TitleNames[4] + TitleNames[10] + TitleNames[5] + TitleNames[1];
 			break;
 		case 4:
-			String checkResult = user1Time < user2Time ? TitleNames[12] : TitleNames[13];
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3] +
-							TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] +
-							TitleNames[2] + TitleNames[8] + input2 + TitleNames[11] + TitleNames[3] +
-							TitleNames[2] + TitleNames[4] + checkResult + TitleNames[5] + TitleNames[3] +
-							TitleNames[2] + TitleNames[14] + TitleNames[1];
+			Number = user1Time < user2Time ? USER1_DECISION : USER2_DECISION;
+			String checkResult = "";
+			if (Number == USER1_DECISION) {
+				checkResult = TitleNames[12];
+			} else {
+				checkResult = TitleNames[13];
+			}
+			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
+					+ TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] + TitleNames[2]
+					+ TitleNames[8] + input2 + TitleNames[11] + TitleNames[3] + TitleNames[2] + TitleNames[4]
+					+ checkResult + TitleNames[5] + TitleNames[3] + TitleNames[2] + TitleNames[14] + TitleNames[1];
 			break;
 		}
-		return title;
 	}
 }

@@ -47,6 +47,18 @@ public class MainView extends JPanel {
 			UserLabel1[i].setBounds(USER1_DIGITAL_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), USER1_DIGITAL_CARD_DY,
 					CARD_WIDTH, CARD_HIGHT);
 			UserLabel1[i].setVisible(false);
+			UserLabel1[i].setText(String.valueOf(User1DigitalCardArray[i][0]));
+			switch (User1DigitalCardArray[i][1]) {
+			case 1:
+				UserLabel1[i].setBorder(new LineBorder(Color.red, 5, true));
+				break;
+			case 2:
+				UserLabel1[i].setBorder(new LineBorder(Color.blue, 5, true));
+				break;
+			case 3:
+				UserLabel1[i].setBorder(new LineBorder(Color.green, 5, true));
+				break;
+			}
 			this.add(UserLabel1[i]);
 
 			// User2カードを配置する
@@ -55,6 +67,18 @@ public class MainView extends JPanel {
 			UserLabel2[i].setBounds(USER2_DIGITAL_CARD_DX + i * (CARD_WIDTH + CARD_SPACING), USER2_DIGITAL_CARD_DY,
 					CARD_WIDTH, CARD_HIGHT);
 			UserLabel2[i].setVisible(false);
+			UserLabel2[i].setText(String.valueOf(User2DigitalCardArray[i][0]));
+			switch (User2DigitalCardArray[i][1]) {
+			case 1:
+				UserLabel2[i].setBorder(new LineBorder(Color.red, 5, true));
+				break;
+			case 2:
+				UserLabel2[i].setBorder(new LineBorder(Color.blue, 5, true));
+				break;
+			case 3:
+				UserLabel2[i].setBorder(new LineBorder(Color.green, 5, true));
+				break;
+			}
 			this.add(UserLabel2[i]);
 		}
 
@@ -152,7 +176,7 @@ public class MainView extends JPanel {
 					}
 					// ループから抜く
 					break;
-				}else {
+				} else {
 					// 何もしない
 				}
 			}
@@ -187,37 +211,7 @@ public class MainView extends JPanel {
 				QusetionLabel[i].setText("問題" + String.valueOf(UsingQuestionCardArray[i]));
 				QusetionLabel[i].setVisible(true);
 			}
-			for (int j = 0; j < SELECT_DIGITAL_SIZE; j++) {
-				UserLabel1[j].setText(String.valueOf(User1DigitalCardArray[j][0]));
-				switch (User1DigitalCardArray[j][1]) {
-				case 1:
-					UserLabel1[j].setBorder(new LineBorder(Color.red, 5, true));
-					break;
-				case 2:
-					UserLabel1[j].setBorder(new LineBorder(Color.blue, 5, true));
-					break;
-				case 3:
-					UserLabel1[j].setBorder(new LineBorder(Color.green, 5, true));
-					break;
-				}
-				UserLabel1[j].setVisible(true);
-			}
 
-			for (int k = 0; k < SELECT_DIGITAL_SIZE; k++) {
-				UserLabel2[k].setText(String.valueOf(User2DigitalCardArray[k][0]));
-				switch (User2DigitalCardArray[k][1]) {
-				case 1:
-					UserLabel2[k].setBorder(new LineBorder(Color.red, 5, true));
-					break;
-				case 2:
-					UserLabel2[k].setBorder(new LineBorder(Color.blue, 5, true));
-					break;
-				case 3:
-					UserLabel2[k].setBorder(new LineBorder(Color.green, 5, true));
-					break;
-				}
-				UserLabel2[k].setVisible(true);
-			}
 		} else {
 			if (UsingQuestionCardArray[updateSwitch] != OVER) {
 				QusetionLabel[updateSwitch].setText("問題" + String.valueOf(UsingQuestionCardArray[updateSwitch]));
@@ -225,6 +219,29 @@ public class MainView extends JPanel {
 			} else {
 				QusetionLabel[updateSwitch].setText("");
 			}
+		}
+	}
+
+	private void SreenChange() {
+		switch (Number) {
+		case NO_DECISION:
+			for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
+				UserLabel1[i].setVisible(false);
+				UserLabel2[i].setVisible(false);
+			}
+			break;
+		case USER1_DECISION:
+			for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
+				UserLabel1[i].setVisible(true);
+				UserLabel2[i].setVisible(false);
+			}
+			break;
+		case USER2_DECISION:
+			for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
+				UserLabel1[i].setVisible(false);
+				UserLabel2[i].setVisible(true);
+			}
+			break;
 		}
 	}
 }

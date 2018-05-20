@@ -56,8 +56,9 @@ public class MathConstants {
 
 	public static final String ERROR_1 = "先手を決めてからゲームを始めましょう！";
 	public static final String ERROR_2 = "すべて問題カードを選択しました！";
-	public static final String ERROR_3 = "時間が同じです、もう一度お願いします!";
-
+	public static final String ERROR_3 = "時間が同じなので、もう一度お願いします!";
+	public static final String ERROR_4 = "先手を決めていない為、画面遷移することができません。";
+	
 	public static final String[] TitleNames = {
 			"<html>",
 			"</html>",
