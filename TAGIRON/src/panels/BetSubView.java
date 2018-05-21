@@ -11,126 +11,128 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
+
 import java.util.Random;
 
-public class BetSubView extends JPanel {
+public class BetSubView extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	private JButton ReturnButton = new JButton("戻る");
-	private JButton StartStopButton = new JButton("スタート");
-	private JLabel ExpandLabel = new JLabel("", JLabel.CENTER);
-
+	private Timer timer = new Timer(1000, this);
 	private Random rand = new Random();
+
+	private JButton CommonButton = new JButton("スタート");
+	private JLabel ExpandLabel = new JLabel("", JLabel.CENTER);
 
 	private String input0 = "";
 	private String input1 = "";
 	private String input2 = "";
-
 	private String title = "";
+	private String checkResult = "";
 
+	private int sec = 0;
 	private int clickCount = 0;
-
-	private long startTime;
-	private long endTime;
 	private int expandTime;
 	private int user1Time;
 	private int user2Time;
+
+	private long startTime;
+	private long endTime;
 
 	public BetSubView() {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 
-		ReturnButton.setBounds(COMMON_BUTTON_DX, COMMON_BUTTON_DY, COMMON_BUTTON_WIDTH, COMMON_BUTTON_HIGHT);
-		ReturnButton.setForeground(Color.blue);
-		ReturnButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
-		ReturnButton.setVisible(true);
-		this.add(ReturnButton);
+		CommonButton.setBounds(CENTER_BUTTON_DX, CENTER_BUTTON_DY, CENTER_BUTTON_WIDTH, CENTER_BUTTON_HIGHT);
+		CommonButton.setForeground(Color.blue);
+		CommonButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
+		CommonButton.setVisible(true);
+		this.add(CommonButton);
 
-		ReturnButton.addActionListener(new returnButtonListener());
+		CommonButton.addActionListener(new commonButtonListener());
 
-		StartStopButton.setBounds(START_BUTTON_DX, START_BUTTON_DY, START_BUTTON_WIDTH, START_BUTTON_HIGHT);
-		StartStopButton.setForeground(Color.blue);
-		StartStopButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
-		StartStopButton.setVisible(true);
-		this.add(StartStopButton);
-
-		StartStopButton.addActionListener(new startStopButtonListener());
-
-		expandTime = rand.nextInt(9001) + 1000;
+		// 先手betInfo更新
+		expandTime = rand.nextInt(9000) + 1000;
 		input0 = String.valueOf((double) expandTime / 1000);
 		tgrCreatTitle();
-		ExpandLabel.setBounds(190, 50, 900, 400);
+
+		ExpandLabel.setBounds(BETINFO_LABEL_DX, BETINFO_LABEL_DY, BETINFO_LABEL_WIDTH, BETINFO_LABEL_HIGHT);
 		ExpandLabel.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
 		ExpandLabel.setVisible(true);
 		ExpandLabel.setText(title);
 		this.add(ExpandLabel);
-
 	}
 
-	private class returnButtonListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (Number != NO_DECISION) {
-				tgrMain.betSubView.setVisible(false);
-				tgrMain.mainView.setVisible(true);
-			} else {
-				JOptionPane.showMessageDialog(null, ERROR_4);
-			}
+	public void actionPerformed(ActionEvent e) {
+		if (sec >= TIMER_OVER / 1000 + 1) {
+			CommonButton.doClick();
+		} else {
+			sec++;
 		}
 	}
 
-	private class startStopButtonListener implements ActionListener {
+	private class commonButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (clickCount < 4) {
+			if (clickCount != CLICK_COUNT_MAX) {
 				clickCount++;
 			} else {
-				// 何もしない
+				if (Number != NO_DECISION) {
+					tgrMain.betSubView.setVisible(false);
+					tgrMain.mainView.setVisible(true);
+					tgrMain.mainView.SreenChange();
+				} else {
+					JOptionPane.showMessageDialog(null, ERROR_4);
+				}
 				return;
 			}
 
 			switch (clickCount) {
 			case 1:
 			case 3:
+				sec = 0;
+				timer.start();
 				startTime = System.currentTimeMillis();
-				StartStopButton.setText("ストップ");
+				CommonButton.setText("ストップ");
 				break;
 			case 2:
+				timer.stop();
 				endTime = System.currentTimeMillis();
 				user1Time = (int) (endTime - startTime);
 				input1 = String.valueOf((double) (user1Time) / 1000);
-				user1Time = user1Time < expandTime ? expandTime - user1Time : TIMEROVER;
-				StartStopButton.setText("スタート");
+				user1Time = user1Time < expandTime ? expandTime - user1Time : TIMER_OVER;
+				CommonButton.setText("スタート");
 				break;
 			case 4:
+				timer.stop();
+				sec = 1;
 				endTime = System.currentTimeMillis();
 				user2Time = (int) (endTime - startTime);
 				input2 = String.valueOf((double) (user2Time) / 1000);
-				user2Time = user2Time < expandTime ? expandTime - user2Time : TIMEROVER;
+				user2Time = user2Time < expandTime ? expandTime - user2Time : TIMER_OVER;
 				if (user1Time == user2Time) {
 					JOptionPane.showMessageDialog(null, ERROR_3);
+					// 先手Betがリトライする
 					clickCount = 0;
-					expandTime = rand.nextInt(9001) + 1000;
+					expandTime = rand.nextInt(9000) + 1000;
 					input0 = String.valueOf((double) expandTime / 1000);
 				}
-
-				StartStopButton.setText("スタート");
 				break;
 			}
+			// 先手betInfo更新
 			tgrCreatTitle();
 			ExpandLabel.setText(title);
 		}
 	}
 
 	private void tgrCreatTitle() {
-		title = "";
 		switch (clickCount) {
 		case 0:
 			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
 					+ TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[9] + TitleNames[5] + TitleNames[1];
 			break;
 		case 1:
+			//
 			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
 					+ TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[10] + TitleNames[5] + TitleNames[1];
 			break;
@@ -146,7 +148,6 @@ public class BetSubView extends JPanel {
 			break;
 		case 4:
 			Number = user1Time < user2Time ? USER1_DECISION : USER2_DECISION;
-			String checkResult = "";
 			if (Number == USER1_DECISION) {
 				checkResult = TitleNames[12];
 			} else {
@@ -156,6 +157,8 @@ public class BetSubView extends JPanel {
 					+ TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] + TitleNames[2]
 					+ TitleNames[8] + input2 + TitleNames[11] + TitleNames[3] + TitleNames[2] + TitleNames[4]
 					+ checkResult + TitleNames[5] + TitleNames[3] + TitleNames[2] + TitleNames[14] + TitleNames[1];
+			clickCount = CLICK_COUNT_MAX;
+			CommonButton.setText("Nextへ");
 			break;
 		}
 	}

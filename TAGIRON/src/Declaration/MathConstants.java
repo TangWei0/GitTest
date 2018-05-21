@@ -31,17 +31,29 @@ public class MathConstants {
 	public static final int USER2_DIGITAL_CARD_DX = USER1_DIGITAL_CARD_DX;
 	public static final int USER2_DIGITAL_CARD_DY = FRAME_HIGHT / 6 - CARD_HIGHT / 2;
 
-	// 開始ボタンパラメータ
-	public static final int START_BUTTON_WIDTH = 200;
-	public static final int START_BUTTON_HIGHT = 100;
-	public static final int START_BUTTON_DX = FRAME_WIDTH / 2 - START_BUTTON_WIDTH / 2;
-	public static final int START_BUTTON_DY = FRAME_HIGHT / 2 - START_BUTTON_HIGHT / 2;
+	// Centerボタンパラメータ
+	public static final int CENTER_BUTTON_WIDTH = 200;
+	public static final int CENTER_BUTTON_HIGHT = 100;
+	public static final int CENTER_BUTTON_DX = FRAME_WIDTH / 2 - CENTER_BUTTON_WIDTH / 2;
+	public static final int CENTER_BUTTON_DY = FRAME_HIGHT / 2 - CENTER_BUTTON_HIGHT / 2;
 
-	// 先手を決めるボタンと戻るボタンのパラメータ
-	public static final int COMMON_BUTTON_WIDTH = 150;
-	public static final int COMMON_BUTTON_HIGHT = 80;
-	public static final int COMMON_BUTTON_DX = 10;
-	public static final int COMMON_BUTTON_DY = 10;
+	// 右上ボタンのパラメータ
+	public static final int RIGHT_TOP_BUTTON_WIDTH = 150;
+	public static final int RIGHT_TOP_BUTTON_HIGHT = 80;
+	public static final int RIGHT_TOP_BUTTON_DX = 1100;
+	public static final int RIGHT_TOP_BUTTON_DY = 10;
+	
+	// 右下ボタンのパラメータ
+	public static final int RIGHT_BOTTOM_BUTTON_WIDTH = 150;
+	public static final int RIGHT_BOTTOM_BUTTON_HIGHT = 80;
+	public static final int RIGHT_BOTTOM_BUTTON_DX = 1100;
+	public static final int RIGHT_BOTTOM_BUTTON_DY = 850;
+	
+	// BetInfoラベルのパラメータ
+	public static final int BETINFO_LABEL_WIDTH = 900;
+	public static final int BETINFO_LABEL_HIGHT = 400;
+	public static final int BETINFO_LABEL_DX = 190;
+	public static final int BETINFO_LABEL_DY = 50;
 
 	//
 	public static final int ALLUPDATE = 6;
@@ -52,7 +64,8 @@ public class MathConstants {
 	public static final int NO_DECISION = 0;
 	public static final int USER1_DECISION = 1;
 	public static final int USER2_DECISION = 2;
-	public static final int TIMEROVER = 65536;
+	public static final int TIMER_OVER = 30000;
+	public static final int CLICK_COUNT_MAX = 128;
 
 	public static final String ERROR_1 = "先手を決めてからゲームを始めましょう！";
 	public static final String ERROR_2 = "すべて問題カードを選択しました！";
@@ -74,7 +87,7 @@ public class MathConstants {
 			"秒",
 			"User1先手",
 			"User2先手",
-			"画面を戻って、ゲームしましょう!"};
+			"次へボタンをクリックし、ゲームしましょう!"};
 
 	public static final String[] QuestionNames = {
 			TitleNames[0] + "8または9はどこ？" + TitleNames[1],
@@ -100,3 +113,4 @@ public class MathConstants {
 			TitleNames[0] + "大きいほうから3枚の合計数は？" + TitleNames[1] };
 
 }
+

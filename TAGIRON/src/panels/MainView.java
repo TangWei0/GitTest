@@ -24,8 +24,6 @@ public class MainView extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	// 画面コントロール
-	private JButton BetButton = new JButton("先手を決める");
-
 	private JLabel[] UserLabel1 = new JLabel[SELECT_DIGITAL_SIZE];
 	private JLabel[] UserLabel2 = new JLabel[SELECT_DIGITAL_SIZE];
 	private JLabel[] QusetionLabel = new JLabel[SELECT_QUESTION_SIZE];
@@ -95,14 +93,14 @@ public class MainView extends JPanel {
 		}
 
 		// 先手を決めるボタン
-		BetButton.setBounds(COMMON_BUTTON_DX, COMMON_BUTTON_DY, COMMON_BUTTON_WIDTH, COMMON_BUTTON_HIGHT);
-		BetButton.setForeground(Color.blue);
-		BetButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
-		BetButton.setVisible(true);
-		this.add(BetButton);
+		//BetButton.setBounds(COMMON_BUTTON_DX, COMMON_BUTTON_DY, COMMON_BUTTON_WIDTH, COMMON_BUTTON_HIGHT);
+		//BetButton.setForeground(Color.blue);
+		//BetButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
+		//this.add(BetButton);
 
-		BetButton.addActionListener(new BetButtonListener());
+		//BetButton.addActionListener(new BetButtonListener());
 
+		SreenChange();
 		SreenUpdate(ALLUPDATE);
 	}
 
@@ -222,7 +220,7 @@ public class MainView extends JPanel {
 		}
 	}
 
-	private void SreenChange() {
+	public void SreenChange() {
 		switch (Number) {
 		case NO_DECISION:
 			for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
@@ -245,3 +243,4 @@ public class MainView extends JPanel {
 		}
 	}
 }
+
