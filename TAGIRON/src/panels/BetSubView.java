@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import Process.tgrCardStructure;
+
 import java.util.Random;
 
 public class BetSubView extends JPanel implements ActionListener {
@@ -37,11 +39,17 @@ public class BetSubView extends JPanel implements ActionListener {
 
 	private long startTime;
 	private long endTime;
+	tgrCardStructure CardStructure = new tgrCardStructure();
 
-	public BetSubView() {
+	public BetSubView(String viewName) {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 
+		CardStructure.tgrCardDefind();
+		if (ErrorCode == 4 || ErrorCode == 5) {
+			JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+		}
+		
 		CommonButton.setBounds(CENTER_BUTTON_DX, CENTER_BUTTON_DY, CENTER_BUTTON_WIDTH, CENTER_BUTTON_HIGHT);
 		CommonButton.setForeground(Color.blue);
 		CommonButton.setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.ITALIC, 16));
@@ -79,10 +87,14 @@ public class BetSubView extends JPanel implements ActionListener {
 			} else {
 				if (Number != NO_DECISION) {
 					tgrMain.betSubView.setVisible(false);
-					tgrMain.mainView.setVisible(true);
-					tgrMain.mainView.SreenChange();
+					if (Number == USER1_DECISION) {
+						tgrMain.user1View.setVisible(true);
+					} else {
+						tgrMain.user2View.setVisible(true);
+					}
 				} else {
-					JOptionPane.showMessageDialog(null, ERROR_4);
+					ErrorCode = 3;
+					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
 				}
 				return;
 			}
@@ -111,7 +123,8 @@ public class BetSubView extends JPanel implements ActionListener {
 				input2 = String.valueOf((double) (user2Time) / 1000);
 				user2Time = user2Time < expandTime ? expandTime - user2Time : TIMER_OVER;
 				if (user1Time == user2Time) {
-					JOptionPane.showMessageDialog(null, ERROR_3);
+					ErrorCode = 2;
+					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
 					// êÊéËBetÇ™ÉäÉgÉâÉCÇ∑ÇÈ
 					clickCount = 0;
 					expandTime = rand.nextInt(9000) + 1000;

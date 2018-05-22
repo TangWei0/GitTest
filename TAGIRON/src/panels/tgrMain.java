@@ -10,23 +10,29 @@ import javax.swing.JOptionPane;
 public class tgrMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+
+	public static StartSubView startSubView = new StartSubView(PanelNames[0]);
+	public static BetSubView betSubView = new BetSubView(PanelNames[1]);
+	public static UserView user1View = new UserView(PanelNames[2]);
+	public static UserView user2View = new UserView(PanelNames[3]);
+
 	
-	public static StartSubView startSubView = new StartSubView();
-	public static MainView mainView = new MainView();
-	public static BetSubView betSubView = new BetSubView();
-	
-	
+
 	public static void main(String[] args) {
-	new tgrMain();
+		
+		new tgrMain();
 	}
 
 	public tgrMain() {
+
 		this.add(startSubView);
 		startSubView.setVisible(true);
-		this.add(mainView);
-		mainView.setVisible(false);
 		this.add(betSubView);
 		betSubView.setVisible(false);
+		this.add(user1View);
+		user1View.setVisible(false);
+		this.add(user2View);
+		user2View.setVisible(false);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 		this.setLocationRelativeTo(null);
 

@@ -13,7 +13,7 @@ public class StartSubView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton StartButton = new JButton("ŠJŽn");
 
-	public StartSubView() {
+	public StartSubView(String viewName) {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 

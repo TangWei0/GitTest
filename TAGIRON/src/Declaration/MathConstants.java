@@ -11,6 +11,7 @@ public class MathConstants {
 	public static final int FRAME_HIGHT = 960;
 
 	//
+	public static final int USER_COUNT = 2;
 	public static final int DIGITAL_PARAMETERS = 2;
 	public static final int DIGITAL_SIZE = 20;
 	public static final int HALF_DIGITAL_SIZE = DIGITAL_SIZE / 2;
@@ -42,13 +43,13 @@ public class MathConstants {
 	public static final int RIGHT_TOP_BUTTON_HIGHT = 80;
 	public static final int RIGHT_TOP_BUTTON_DX = 1100;
 	public static final int RIGHT_TOP_BUTTON_DY = 10;
-	
+
 	// 右下ボタンのパラメータ
 	public static final int RIGHT_BOTTOM_BUTTON_WIDTH = 150;
 	public static final int RIGHT_BOTTOM_BUTTON_HIGHT = 80;
 	public static final int RIGHT_BOTTOM_BUTTON_DX = 1100;
 	public static final int RIGHT_BOTTOM_BUTTON_DY = 850;
-	
+
 	// BetInfoラベルのパラメータ
 	public static final int BETINFO_LABEL_WIDTH = 900;
 	public static final int BETINFO_LABEL_HIGHT = 400;
@@ -67,11 +68,24 @@ public class MathConstants {
 	public static final int TIMER_OVER = 30000;
 	public static final int CLICK_COUNT_MAX = 128;
 
-	public static final String ERROR_1 = "先手を決めてからゲームを始めましょう！";
-	public static final String ERROR_2 = "すべて問題カードを選択しました！";
-	public static final String ERROR_3 = "時間が同じなので、もう一度お願いします!";
-	public static final String ERROR_4 = "先手を決めていない為、画面遷移することができません。";
-	
+	public static final String[] PanelNames = {
+			"startSubView", 
+			"betSubView", 
+			"user1View", 
+			"user2View"
+	};
+
+	public static final String[] Error = {
+			"エラーを発生しました。アプリを終了します。",
+			"すべて問題カードを選択しました！",
+			"時間が同じなので、もう一度お願いします!",
+			"先手を決めていない為、画面遷移することができません。",
+			"error4",
+			"error5",
+			"error6",
+			"error7"
+	};
+
 	public static final String[] TitleNames = {
 			"<html>",
 			"</html>",
@@ -87,7 +101,8 @@ public class MathConstants {
 			"秒",
 			"User1先手",
 			"User2先手",
-			"次へボタンをクリックし、ゲームしましょう!"};
+			"次へボタンをクリックし、ゲームしましょう!"
+			};
 
 	public static final String[] QuestionNames = {
 			TitleNames[0] + "8または9はどこ？" + TitleNames[1],
@@ -110,7 +125,7 @@ public class MathConstants {
 			TitleNames[0] + "6または7はどこ？" + TitleNames[1],
 			TitleNames[0] + "中央の3枚の合計数は？" + TitleNames[1],
 			TitleNames[0] + "5はどこ？" + TitleNames[1],
-			TitleNames[0] + "大きいほうから3枚の合計数は？" + TitleNames[1] };
+			TitleNames[0] + "大きいほうから3枚の合計数は？" + TitleNames[1]
+			};
 
 }
-

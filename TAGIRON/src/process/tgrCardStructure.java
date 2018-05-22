@@ -8,6 +8,11 @@ import java.util.Random;
 
 public class tgrCardStructure {
 
+	private static int[] num = new int[USER_COUNT];
+	private static ArrayList<ArrayList<Integer>> UserArray = new ArrayList<ArrayList<Integer>>();
+	private static ArrayList<Integer> TmpArray = new ArrayList<Integer>();
+	private static int selectValue, compareValue;
+
 	// ÉJÉâÅ[óÒãìéqñºêÈåæ
 	public enum ColorEnum {
 		Red(1, "Red"), Blue(2, "Blue"), Green(3, "Green");
@@ -69,8 +74,7 @@ public class tgrCardStructure {
 	}
 
 	private void tgrCardInitialization() {
-		User1DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-		User2DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
+		UserDigitalCardArray = new int[USER_COUNT][SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
 		UsingQuestionCardArray = new int[SELECT_QUESTION_SIZE];
 		DigitalCardArray = new ArrayList<Integer>();
 		QuestionCardArray = new ArrayList<Integer>();
@@ -85,69 +89,80 @@ public class tgrCardStructure {
 	}
 
 	private void tgrSelectDigitalCard() {
-		int num1, num2;
-		ArrayList<Integer> User1Array = new ArrayList<Integer>();
-		ArrayList<Integer> User2Array = new ArrayList<Integer>();
+		UserArray = new ArrayList<ArrayList<Integer>>();
 		for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
 			do {
-				num1 = rand.nextInt(DigitalCardArray.size());
-				num2 = rand.nextInt(DigitalCardArray.size());
-			} while (num1 == num2);
-			tgrSelectedDigitalCardSort(User1Array, DigitalCardArray.get(num1));
-			tgrSelectedDigitalCardSort(User2Array, DigitalCardArray.get(num2));
-			if (num1 < num2) {
-				int tmp = num2;
-				num2 = num1;
-				num1 = tmp;
-			}
-			DigitalCardArray.remove(num1);
-			DigitalCardArray.remove(num2);
-		}
-		User1DigitalCardArray = tgrDigitalCardDefind(User1Array);
-		User2DigitalCardArray = tgrDigitalCardDefind(User2Array);
-	}
-
-	private static int[][] tgrDigitalCardDefind(ArrayList<Integer> UserArray) {
-		int[][] TmpArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-		for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
-			TmpArray[i][0] = UserArray.get(i) % 10;
-
-			if (UserArray.get(i) % 10 == 5) {
-				TmpArray[i][1] = ColorEnum.valueOfByName("Green").getId();
+				num[0] = rand.nextInt(DigitalCardArray.size());
+				num[1] = rand.nextInt(DigitalCardArray.size());
+			} while (num[0] == num[1]);
+			tgrSelectedDigitalCardSort();
+			DigitalCardArray.remove(num[0]);
+			if (num[0] < num[1]) {
+				DigitalCardArray.remove(num[1] - 1);
 			} else {
-				if (UserArray.get(i) < HALF_DIGITAL_SIZE) {
-					TmpArray[i][1] = ColorEnum.valueOfByName("Red").getId();
-				} else {
-					TmpArray[i][1] = ColorEnum.valueOfByName("Blue").getId();
-				}
+				DigitalCardArray.remove(num[1]);
 			}
 		}
-		return TmpArray;
+		tgrDigitalCardDefind();
 	}
 
-	private static void tgrSelectedDigitalCardSort(ArrayList<Integer> UserArray, int num) {
-		if (UserArray.size() == 0) {
-			UserArray.add(num);
+	private static void tgrDigitalCardDefind() {
+		if (UserArray.get(0).size() != SELECT_DIGITAL_SIZE || UserArray.get(1).size() != SELECT_DIGITAL_SIZE) {
+			ErrorCode = 5;
 			return;
 		}
-		for (int i = 0; i < UserArray.size(); i++) {
-			if (num % 10 == UserArray.get(i) % 10) {
-				if (num < UserArray.get(i)) {
-					UserArray.add(i, num);
-					return;
+		for (int i = 0; i < USER_COUNT; i++) {
+			for (int j = 0; j < SELECT_DIGITAL_SIZE; j++) {
+				compareValue = UserArray.get(i).get(j);
+				UserDigitalCardArray[i][j][0] = compareValue % 10;
+				if (compareValue % 10 == 5) {
+					UserDigitalCardArray[i][j][1] = ColorEnum.valueOfByName("Green").getId();
 				} else {
-					UserArray.add(i + 1, num);
-					return;
+					if (compareValue < HALF_DIGITAL_SIZE) {
+						UserDigitalCardArray[i][j][1] = ColorEnum.valueOfByName("Red").getId();
+					} else {
+						UserDigitalCardArray[i][j][1] = ColorEnum.valueOfByName("Blue").getId();
+					}
 				}
 			}
-			if (num % 10 < UserArray.get(i) % 10) {
-				UserArray.add(i, num);
-				return;
+		}
+	}
+
+	private static void tgrSelectedDigitalCardSort() {
+		if (UserArray.size() == 0) {
+			for (int i = 0; i < USER_COUNT; i++) {
+				TmpArray = new ArrayList<Integer>();
+				TmpArray.add(DigitalCardArray.get(num[i]));
+				UserArray.add(TmpArray);
 			}
-			if (i == UserArray.size() - 1) {
-				UserArray.add(num);
-				return;
+			return;
+		} else if (UserArray.size() == 2) {
+			for (int i = 0; i < USER_COUNT; i++) {
+				selectValue = DigitalCardArray.get(num[i]);
+				for (int j = 0; j < UserArray.get(i).size(); j++) {
+					compareValue = UserArray.get(i).get(j);
+					if (selectValue % 10 == compareValue % 10) {
+						if (selectValue < compareValue) {
+							UserArray.get(i).add(j, selectValue);
+							break;
+						} else {
+							UserArray.get(i).add(j + 1, selectValue);
+							break;
+						}
+					}
+					if (selectValue % 10 < compareValue % 10) {
+						UserArray.get(i).add(j, selectValue);
+						break;
+					}
+					if (j == UserArray.get(i).size() - 1) {
+						UserArray.get(i).add(selectValue);
+						break;
+					}
+				}
 			}
+		} else {
+			ErrorCode = 4;
+			return;
 		}
 	}
 
