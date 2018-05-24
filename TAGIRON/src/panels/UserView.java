@@ -29,6 +29,7 @@ public class UserView extends JPanel {
 	private JLabel[] UserLabel = new JLabel[SELECT_DIGITAL_SIZE];
 	private JLabel[] QusetionLabel = new JLabel[SELECT_QUESTION_SIZE];
 	private JButton BetButton = new JButton("宣言");
+	private JLabel ExpandLabel = new JLabel("", JLabel.CENTER);
 
 	private int nullQusetionCount = 0;
 
@@ -36,6 +37,12 @@ public class UserView extends JPanel {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 		this.setName(viewName);
+		
+		ExpandLabel.setBounds(BETINFO_LABEL_DX, BETINFO_LABEL_DY, BETINFO_LABEL_WIDTH, BETINFO_LABEL_HIGHT);
+		ExpandLabel.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
+		ExpandLabel.setVisible(true);
+		ExpandLabel.setText(viewName);
+		this.add(ExpandLabel);
 
 		for (int j = 0; j < SELECT_DIGITAL_SIZE; j++) {
 			// User1カードを配置する
@@ -89,6 +96,7 @@ public class UserView extends JPanel {
 				tgrMain.user1View.setVisible(false);
 				if (BetButton.getText() == "宣言") {
 					tgrMain.betUser1View.setVisible(true);
+					BetButton.setText("相手の番へ");
 				} else if (BetButton.getText() == "相手の番へ") {
 					tgrMain.user2View.setVisible(true);
 					Number = USER2_DECISION;
@@ -102,6 +110,7 @@ public class UserView extends JPanel {
 				tgrMain.user2View.setVisible(false);
 				if (BetButton.getText() == "宣言") {
 					tgrMain.betUser2View.setVisible(true);
+					BetButton.setText("相手の番へ");
 				} else if (BetButton.getText() == "相手の番へ") {
 					tgrMain.user1View.setVisible(true);
 					Number = USER1_DECISION;
