@@ -3,6 +3,7 @@ package Panels;
 import static Declaration.MathConstants.*;
 
 import java.awt.AWTEvent;
+import java.awt.Color;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,15 +12,55 @@ public class tgrMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public static StartSubView startSubView = new StartSubView(PanelNames[0]);
-	public static BetSubView betSubView = new BetSubView(PanelNames[1]);
+	// ÉJÉâÅ[óÒãìéqñºêÈåæ
+	public enum ColorEnum {
+		Red(1, "Red"), Blue(2, "Blue"), Green(3, "Green");
+
+		private int id;
+		private String color;
+
+		public int getId() {
+			return id;
+		}
+
+		public String getColor() {
+			return color;
+		}
+
+		private ColorEnum(int id, String color) {
+			this.id = id;
+			this.color = color;
+		}
+
+		public static ColorEnum valueOf(int id) {
+			ColorEnum[] array = values();
+			for (ColorEnum num : array) {
+				if (id == num.getId()) {
+					return num;
+				}
+			}
+			return null;
+		}
+
+		public static ColorEnum valueOfByName(String color) {
+			ColorEnum[] array = values();
+			for (ColorEnum num : array) {
+				if (color.equals(num.getColor())) {
+					return num;
+				}
+			}
+			return null;
+		}
+	}
+	
+	public static StartView startSubView = new StartView(PanelNames[0]);
+	public static StartView betSubView = new StartView(PanelNames[1]);
 	public static UserView user1View = new UserView(PanelNames[2]);
 	public static UserView user2View = new UserView(PanelNames[3]);
+	public static BetView betUser1View = new BetView(PanelNames[4]);
+	public static BetView betUser2View = new BetView(PanelNames[5]);
 
-	
-
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {		
 		new tgrMain();
 	}
 
@@ -33,6 +74,10 @@ public class tgrMain extends JFrame {
 		user1View.setVisible(false);
 		this.add(user2View);
 		user2View.setVisible(false);
+		this.add(betUser1View);
+		betUser1View.setVisible(false);
+		this.add(betUser2View);
+		betUser2View.setVisible(false);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 		this.setLocationRelativeTo(null);
 
@@ -62,5 +107,21 @@ public class tgrMain extends JFrame {
 		if (!enable) {
 			super.processWindowEvent(e);
 		}
+	}
+	
+	public static Color tgrColorDisplay(int colorID) {
+		Color color = null;
+		switch (colorID) {
+		case 1:
+			color = Color.red;
+			break;
+		case 2:
+			color = Color.blue;
+			break;
+		case 3:
+			color = Color.green;
+			break;
+		}
+		return color;
 	}
 }

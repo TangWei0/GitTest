@@ -17,6 +17,6 @@ public class Variable {
 	public static int[] UsingQuestionCardArray = new int[MathConstants.SELECT_QUESTION_SIZE];
 	
 	public static int Number = MathConstants.NO_DECISION;
-	public static int ErrorCode = 0;
+	public static int ErrorCode = MathConstants.NONE_ERROR;
 
 }

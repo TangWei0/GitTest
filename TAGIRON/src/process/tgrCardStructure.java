@@ -6,53 +6,14 @@ import static Declaration.Variable.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Panels.tgrMain;
+
 public class tgrCardStructure {
 
 	private static int[] num = new int[USER_COUNT];
 	private static ArrayList<ArrayList<Integer>> UserArray = new ArrayList<ArrayList<Integer>>();
 	private static ArrayList<Integer> TmpArray = new ArrayList<Integer>();
 	private static int selectValue, compareValue;
-
-	// ÉJÉâÅ[óÒãìéqñºêÈåæ
-	public enum ColorEnum {
-		Red(1, "Red"), Blue(2, "Blue"), Green(3, "Green");
-
-		private int id;
-		private String color;
-
-		public int getId() {
-			return id;
-		}
-
-		public String getColor() {
-			return color;
-		}
-
-		private ColorEnum(int id, String color) {
-			this.id = id;
-			this.color = color;
-		}
-
-		public static ColorEnum valueOf(int id) {
-			ColorEnum[] array = values();
-			for (ColorEnum num : array) {
-				if (id == num.getId()) {
-					return num;
-				}
-			}
-			return null;
-		}
-
-		public static ColorEnum valueOfByName(String color) {
-			ColorEnum[] array = values();
-			for (ColorEnum num : array) {
-				if (color.equals(num.getColor())) {
-					return num;
-				}
-			}
-			return null;
-		}
-	}
 
 	private Random rand = new Random();
 
@@ -79,12 +40,14 @@ public class tgrCardStructure {
 		DigitalCardArray = new ArrayList<Integer>();
 		QuestionCardArray = new ArrayList<Integer>();
 
-		for (int i = 0; i < DIGITAL_SIZE; i++) {
-			DigitalCardArray.add(i);
+		for (int i = 0; i < DIGITAL_PARAMETERS; i++) {
+			for (int j = 0; j < HALF_DIGITAL_SIZE; j++) {
+				DigitalCardArray.add(DIGITAL_CARD[i][j]);
+			}
 		}
 
 		for (int i = 0; i < QUESTION_SIZE; i++) {
-			QuestionCardArray.add(i);
+			QuestionCardArray.add(QUESTION_CARD[i]);
 		}
 	}
 
@@ -108,7 +71,7 @@ public class tgrCardStructure {
 
 	private static void tgrDigitalCardDefind() {
 		if (UserArray.get(0).size() != SELECT_DIGITAL_SIZE || UserArray.get(1).size() != SELECT_DIGITAL_SIZE) {
-			ErrorCode = 5;
+			ErrorCode = CARD_PROGRAM_FAULT;
 			return;
 		}
 		for (int i = 0; i < USER_COUNT; i++) {
@@ -116,12 +79,12 @@ public class tgrCardStructure {
 				compareValue = UserArray.get(i).get(j);
 				UserDigitalCardArray[i][j][0] = compareValue % 10;
 				if (compareValue % 10 == 5) {
-					UserDigitalCardArray[i][j][1] = ColorEnum.valueOfByName("Green").getId();
+					UserDigitalCardArray[i][j][1] = tgrMain.ColorEnum.valueOfByName("Green").getId();
 				} else {
 					if (compareValue < HALF_DIGITAL_SIZE) {
-						UserDigitalCardArray[i][j][1] = ColorEnum.valueOfByName("Red").getId();
+						UserDigitalCardArray[i][j][1] = tgrMain.ColorEnum.valueOfByName("Red").getId();
 					} else {
-						UserDigitalCardArray[i][j][1] = ColorEnum.valueOfByName("Blue").getId();
+						UserDigitalCardArray[i][j][1] = tgrMain.ColorEnum.valueOfByName("Blue").getId();
 					}
 				}
 			}
@@ -161,7 +124,7 @@ public class tgrCardStructure {
 				}
 			}
 		} else {
-			ErrorCode = 4;
+			ErrorCode = CARD_PROGRAM_FAULT;
 			return;
 		}
 	}

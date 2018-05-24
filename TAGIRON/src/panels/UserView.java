@@ -28,7 +28,7 @@ public class UserView extends JPanel {
 	// 画面コントロール
 	private JLabel[] UserLabel = new JLabel[SELECT_DIGITAL_SIZE];
 	private JLabel[] QusetionLabel = new JLabel[SELECT_QUESTION_SIZE];
-	private JButton Button = new JButton("sss");
+	private JButton BetButton = new JButton("宣言");
 
 	private int nullQusetionCount = 0;
 
@@ -41,22 +41,23 @@ public class UserView extends JPanel {
 			// User1カードを配置する
 			UserLabel[j] = new JLabel("", JLabel.CENTER);
 			UserLabel[j].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
-			UserLabel[j].setBounds(USER1_DIGITAL_CARD_DX + j * (CARD_WIDTH + CARD_SPACING), USER1_DIGITAL_CARD_DY,
+			UserLabel[j].setBounds(USER_DIGITAL_CARD_DX + j * (CARD_WIDTH + CARD_SPACING), USER_DIGITAL_CARD_DY,
 							CARD_WIDTH, CARD_HIGHT);
 			UserLabel[j].setVisible(true);
 			if (this.getName() == PanelNames[2]) {
 				UserLabel[j].setText(String.valueOf(UserDigitalCardArray[0][j][0]));
-				UserLabel[j].setBorder(new LineBorder(tgrColorDisplay(UserDigitalCardArray[0][j][1]), 5, true));
-			} else if (this.getName() == PanelNames[3]){
+				UserLabel[j].setBorder(new LineBorder(tgrMain.tgrColorDisplay(UserDigitalCardArray[0][j][1]), 5, true));
+			} else if (this.getName() == PanelNames[3]) {
 				UserLabel[j].setText(String.valueOf(UserDigitalCardArray[1][j][0]));
-				UserLabel[j].setBorder(new LineBorder(tgrColorDisplay(UserDigitalCardArray[1][j][1]), 5, true));
+				UserLabel[j].setBorder(new LineBorder(tgrMain.tgrColorDisplay(UserDigitalCardArray[1][j][1]), 5, true));
 			} else {
-				ErrorCode = 7;
+				ErrorCode = SCREEN_TRANSITION_FAULT;
 				JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+				System.exit(0);
 			}
 			this.add(UserLabel[j]);
 		}
-		
+
 		for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 			QusetionLabel[i] = new JLabel("", JLabel.CENTER);
 			QusetionLabel[i].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
@@ -69,40 +70,52 @@ public class UserView extends JPanel {
 			QusetionLabel[i].addMouseListener(new MyMouseListener());
 		}
 
-		Button.setBounds(10, 10, 100, 50);
-		Button.setForeground(Color.blue);
-		Button.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
-		Button.setVisible(true);
-		this.add(Button);
+		BetButton.setBounds(RIGHT_BOTTOM_BUTTON_DX, RIGHT_BOTTOM_BUTTON_DY, RIGHT_BOTTOM_BUTTON_WIDTH, RIGHT_BOTTOM_BUTTON_HIGHT);
+		BetButton.setForeground(Color.blue);
+		BetButton.setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
+		BetButton.setVisible(true);
+		this.add(BetButton);
 
-		Button.addActionListener(new ButtonListener());
-		
+		BetButton.addActionListener(new betButtonListener());
+
 		SreenUpdate(ALLUPDATE);
 	}
 
-	private Color tgrColorDisplay(int colorID) {
-		Color color = null;
-		switch (colorID) {
-		case 1:
-			color = Color.red;
-			break;
-		case 2:
-			color = Color.blue;
-			break;
-		case 3:
-			color = Color.green;
-			break;
-		}
-		return color;
-	}
-
-	private class ButtonListener implements ActionListener {
+	private class betButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			tgrMain.betSubView.setVisible(true);
-			tgrMain.user2View.setVisible(false);
-			tgrMain.user1View.setVisible(false);
+			if (Number == USER1_DECISION) {
+				tgrMain.user1View.setVisible(false);
+				if (BetButton.getText() == "宣言") {
+					tgrMain.betUser1View.setVisible(true);
+				} else if (BetButton.getText() == "相手の番へ") {
+					tgrMain.user2View.setVisible(true);
+					Number = USER2_DECISION;
+					BetButton.setText("宣言");
+				} else {
+					ErrorCode = BETBUTTON_FAULT;
+					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+					System.exit(0);
+				}
+			} else if (Number == USER2_DECISION) {
+				tgrMain.user2View.setVisible(false);
+				if (BetButton.getText() == "宣言") {
+					tgrMain.betUser2View.setVisible(true);
+				} else if (BetButton.getText() == "相手の番へ") {
+					tgrMain.user1View.setVisible(true);
+					Number = USER1_DECISION;
+					BetButton.setText("宣言");
+				} else {
+					ErrorCode = BETBUTTON_FAULT;
+					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+					System.exit(0);
+				}
+			} else {
+				ErrorCode = NUMBER_FAULT;
+				JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+				System.exit(0);
+			}
 			return;
 		}
 	}
@@ -113,38 +126,57 @@ public class UserView extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			// TODO 自動生成されたメソッド・スタブ
 			if (Number != NO_DECISION) {
-				if (nullQusetionCount != SELECT_QUESTION_SIZE) {
-					for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
-						if (UsingQuestionCardArray[i] != OVER) {
-							if (e.getSource() == QusetionLabel[i]) {
-								if (QuestionCardArray.size() != 0) {
-									tgrMain.betSubView.CardStructure.tgrSupplementQuestionCard(i);
-								} else {
-									UsingQuestionCardArray[i] = OVER;
-									nullQusetionCount++;
-								}
-								SreenUpdate(i);
-								if (nullQusetionCount == SELECT_QUESTION_SIZE) {
-									ErrorCode = 1;
-									JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+				if (BetButton.getText() == "宣言") {
+					if (nullQusetionCount != SELECT_QUESTION_SIZE) {
+						for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
+							if (UsingQuestionCardArray[i] != OVER) {
+								if (e.getSource() == QusetionLabel[i]) {
+									if (QuestionCardArray.size() != 0) {
+										tgrMain.betSubView.CardStructure.tgrSupplementQuestionCard(i);
+									} else {
+										UsingQuestionCardArray[i] = OVER;
+										nullQusetionCount++;
+									}
+									SreenUpdate(i);
+									if (Number == USER1_DECISION) {
+										tgrMain.user2View.SreenUpdate(i);
+									} else if (Number == USER2_DECISION) {
+										tgrMain.user1View.SreenUpdate(i);
+									} else {
+										ErrorCode = NUMBER_FAULT;
+										JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+										System.exit(0);
+									}
+									BetButton.setText("相手の番へ");
+									if (nullQusetionCount == SELECT_QUESTION_SIZE) {
+										ErrorCode = ALL_QUESTION_SELECTED;
+										JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+									} else {
+										// 何もしない
+									}
+									// ループから抜く
+									break;
 								} else {
 									// 何もしない
 								}
-								// ループから抜く
-								break;
 							} else {
 								// 何もしない
 							}
-						} else {
-							// 何もしない
 						}
+					} else {
+						ErrorCode = ALL_QUESTION_SELECTED;
+						JOptionPane.showMessageDialog(null, Error[ErrorCode]);
 					}
-				} else {
-					ErrorCode = 1;
+				} else if (BetButton.getText() == "相手の番へ") {
+					ErrorCode = NEXT_DECISION;
 					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+				} else {
+					ErrorCode = BETBUTTON_FAULT;
+					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+					System.exit(0);
 				}
 			} else {
-				ErrorCode = 0;
+				ErrorCode = NUMBER_FAULT;
 				JOptionPane.showMessageDialog(null, Error[ErrorCode]);
 				System.exit(0);
 			}
@@ -201,20 +233,24 @@ public class UserView extends JPanel {
 
 	}
 
-	private void SreenUpdate(int updateSwitch) {
+	public void SreenUpdate(int updateSwitch) {
 		if (updateSwitch == ALLUPDATE) {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				QusetionLabel[i].setText("問題" + String.valueOf(UsingQuestionCardArray[i]));
 				QusetionLabel[i].setVisible(true);
 			}
 
-		} else {
+		} else if (updateSwitch >= 0 && updateSwitch < ALLUPDATE) {
 			if (UsingQuestionCardArray[updateSwitch] != OVER) {
 				QusetionLabel[updateSwitch].setText("問題" + String.valueOf(UsingQuestionCardArray[updateSwitch]));
 				QusetionLabel[updateSwitch].setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
 			} else {
 				QusetionLabel[updateSwitch].setText("");
 			}
+		} else {
+			ErrorCode = QUESTION_CLICK_FAULT;
+			JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+			System.exit(0);
 		}
 	}
 }
