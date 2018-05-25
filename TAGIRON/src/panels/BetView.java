@@ -98,33 +98,83 @@ public class BetView extends JPanel {
 		betCurrent = 0;
 	}
 
+	private boolean tgrBetCheck() {
+		boolean checkResult = true;
+		int value;
+		int color;
+
+		if (Number == USER1_DECISION) {
+			for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
+				value = userData[i] % 10;
+				if (value == 5) {
+					color = 3;
+				} else {
+					color = userData[i] / 10 + 1;
+				}
+				if (value != UserDigitalCardArray[1][i][0] || color != UserDigitalCardArray[1][i][1]) {
+					checkResult = false;
+					return checkResult;
+				}
+			}
+
+		} else if (Number == USER2_DECISION) {
+			for (int i = 0; i < SELECT_DIGITAL_SIZE; i++) {
+				value = userData[i] % 10;
+				if (value == 5) {
+					color = 3;
+				} else {
+					color = userData[i] / 10 + 1;
+				}
+				if (value != UserDigitalCardArray[0][i][0] || color != UserDigitalCardArray[0][i][1]) {
+					checkResult = false;
+					return checkResult;
+				}
+			}
+		} else {
+			ErrorCode = NUMBER_FAULT;
+			JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+			System.exit(0);
+		}
+
+		return checkResult;
+	}
+
 	private class confirmButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "宣言チェックが飛ばす、false⇒画面に戻る");
-			if (Number == USER1_DECISION) {
-				tgrMain.betUser1View.setVisible(false);
-				tgrMain.user1View.setVisible(true);
-			} else if (Number == USER2_DECISION) {
-				tgrMain.betUser2View.setVisible(false);
-				tgrMain.user2View.setVisible(true);
+			if (tgrBetCheck() == false) {
+				JOptionPane.showMessageDialog(null, "宣言失敗した。");
+				if (Number == USER1_DECISION) {
+					tgrMain.betUser1View.setVisible(false);
+					tgrMain.user1View.setVisible(true);
+				} else if (Number == USER2_DECISION) {
+					tgrMain.betUser2View.setVisible(false);
+					tgrMain.user2View.setVisible(true);
+				} else {
+					ErrorCode = NUMBER_FAULT;
+					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+					System.exit(0);
+				}
 			} else {
-				ErrorCode = NUMBER_FAULT;
-				JOptionPane.showMessageDialog(null, Error[ErrorCode]);
+				JOptionPane.showMessageDialog(null, "宣言成功した。");
 				System.exit(0);
 			}
 		}
 	}
 
 	private void tgrAssistBetDisplay() {
-		int displayStart, displayEnd, checkStartUpDN, checkEndUpDN;
-		if (betPrevious == NO_LOWER) {
-			displayStart = 0;
-			checkStartUpDN = -1;
+		int displayStart = 0, displayEnd = 0, checkStartUpDN = 0, checkEndUpDN = 0;
+		if (betPrevious != OVER_BET) {
+			if (betPrevious == NO_LOWER) {
+				displayStart = 0;
+				checkStartUpDN = -1;
+			} else {
+				displayStart = userData[betPrevious] % 10;
+				checkStartUpDN = userData[betPrevious] / 10;
+			}
 		} else {
-			displayStart = userData[betPrevious] % 10;
-			checkStartUpDN = userData[betPrevious] / 10;
+			// 何もしない
 		}
 		if (betNext == NO_LIMIT) {
 			displayEnd = 9;
@@ -138,7 +188,7 @@ public class BetView extends JPanel {
 			for (int j = 0; j < HALF_DIGITAL_SIZE; j++) {
 				if (betCurrent == NONE_BET) {
 					BetLabel[i][j].setText(String.valueOf(betData[i][j] % 10));
-				} else if (betCurrent == ALL_BET) {
+				} else if (betCurrent == ALL_BET || betPrevious == OVER_BET) {
 					BetLabel[i][j].setText("");
 				} else {
 					if (((j > displayStart) && (j < displayEnd)) || ((j == displayStart) && (i > checkStartUpDN))
@@ -269,7 +319,7 @@ public class BetView extends JPanel {
 					for (int i = 0; i < DIGITAL_PARAMETERS; i++) {
 						for (int j = 0; j < HALF_DIGITAL_SIZE; j++) {
 							if (e.getSource() == BetLabel[i][j]) {
-								if (betData[i][j] == OVER) {
+								if (BetLabel[i][j].getText() == "") {
 									return;
 								} else {
 									if (userData[betCurrent] == OVER) {
@@ -285,6 +335,37 @@ public class BetView extends JPanel {
 												if (userData[k + 1] == OVER) {
 													betCurrent = k + 1;
 													betPrevious = k;
+													if (userData[betPrevious] == 8) {
+														if (SELECT_DIGITAL_SIZE - betCurrent > 3) {
+															betPrevious = OVER_BET;
+															break;
+														} else {
+															// 何もしない
+														}
+													} else if (userData[betPrevious] == 18) {
+														if (SELECT_DIGITAL_SIZE - betCurrent > 2) {
+															betPrevious = OVER_BET;
+															break;
+														} else {
+															// 何もしない
+														}
+													} else if (userData[betPrevious] == 9) {
+														if (SELECT_DIGITAL_SIZE - betCurrent > 1) {
+															betPrevious = OVER_BET;
+															break;
+														} else {
+															// 何もしない
+														}
+													} else if (userData[betPrevious] == 19) {
+														if (SELECT_DIGITAL_SIZE - betCurrent > 0) {
+															betPrevious = OVER_BET;
+															break;
+														} else {
+															// 何もしない
+														}
+													} else {
+														// 何もしない
+													}
 													for (int l = betCurrent + 1; l < SELECT_DIGITAL_SIZE; l++) {
 														if (userData[l] != OVER) {
 															betNext = l;

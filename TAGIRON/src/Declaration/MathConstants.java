@@ -74,6 +74,7 @@ public class MathConstants {
 	public static final int NO_LIMIT = 6;
 	public static final int NONE_BET = 7;
 	public static final int ALL_BET = 8;
+	public static final int OVER_BET = 9;
 	
 	// エラーコード情報
 	public static final int NONE_ERROR = 0;
