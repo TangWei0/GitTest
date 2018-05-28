@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Process.tgrCardStructure;
+import Process.tgrTextEditor;
 
 public class StartView extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -24,22 +25,9 @@ public class StartView extends JPanel implements ActionListener {
 	private Timer timer = new Timer(1000, this);
 	private Random rand = new Random();
 
-	private String input0 = "";
-	private String input1 = "";
-	private String input2 = "";
-	private String title = "";
-	private String checkResult = "";
-
-	private int sec = 0;
-	private int clickCount = 0;
-	private int expandTime;
-	private int user1Time;
-	private int user2Time;
-
-	private long startTime;
-	private long endTime;
 	tgrCardStructure CardStructure = new tgrCardStructure();
-
+	tgrTextEditor TextEditor = new tgrTextEditor();
+	
 	public StartView(String viewName) {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
@@ -66,12 +54,12 @@ public class StartView extends JPanel implements ActionListener {
 			// 先手betInfo更新
 			expandTime = rand.nextInt(9000) + 1000;
 			input0 = String.valueOf((double) expandTime / 1000);
-			tgrCreatTitle();
+			TextEditor.tgrBetTitle();
 
 			ExpandLabel.setBounds(BETINFO_LABEL_DX, BETINFO_LABEL_DY, BETINFO_LABEL_WIDTH, BETINFO_LABEL_HIGHT);
 			ExpandLabel.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
 			ExpandLabel.setVisible(true);
-			ExpandLabel.setText(title);
+			ExpandLabel.setText(BetTitle);
 			this.add(ExpandLabel);
 		} else {
 			ErrorCode = SCREEN_TRANSITION_FAULT;
@@ -103,8 +91,8 @@ public class StartView extends JPanel implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (clickCount != CLICK_COUNT_MAX) {
-				clickCount++;
+			if (ClickCount != CLICK_COUNT_MAX) {
+				ClickCount++;
 			} else {
 				if (Number != NO_DECISION) {
 					tgrMain.betSubView.setVisible(false);
@@ -120,7 +108,7 @@ public class StartView extends JPanel implements ActionListener {
 				return;
 			}
 
-			switch (clickCount) {
+			switch (ClickCount) {
 			case 1:
 			case 3:
 				sec = 0;
@@ -136,7 +124,7 @@ public class StartView extends JPanel implements ActionListener {
 				user1Time = user1Time < expandTime ? expandTime - user1Time : TIMER_OVER;
 				CommonButton.setText("スタート");
 				break;
-			case 4:
+			case CLICK_COUNT_MAX:
 				timer.stop();
 				sec = 1;
 				endTime = System.currentTimeMillis();
@@ -147,53 +135,23 @@ public class StartView extends JPanel implements ActionListener {
 					ErrorCode = SAME_TIME;
 					JOptionPane.showMessageDialog(null, Error[ErrorCode]);
 					// 先手Betがリトライする
-					clickCount = 0;
+					ClickCount = 0;
 					expandTime = rand.nextInt(9000) + 1000;
 					input0 = String.valueOf((double) expandTime / 1000);
+				}else {
+					Number = user1Time < user2Time ? USER1_DECISION : USER2_DECISION;
+					if (Number == USER1_DECISION) {
+						checkResult = BetTitleNames[6];
+					} else {
+						checkResult = BetTitleNames[7];
+					}
+					CommonButton.setText("Nextへ");
 				}
 				break;
 			}
 			// 先手betInfo更新
-			tgrCreatTitle();
-			ExpandLabel.setText(title);
-		}
-	}
-
-	private void tgrCreatTitle() {
-		switch (clickCount) {
-		case 0:
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
-					+ TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[9] + TitleNames[5] + TitleNames[1];
-			break;
-		case 1:
-			//
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
-					+ TitleNames[2] + TitleNames[7] + TitleNames[4] + TitleNames[10] + TitleNames[5] + TitleNames[1];
-			break;
-		case 2:
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
-					+ TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] + TitleNames[2]
-					+ TitleNames[8] + TitleNames[4] + TitleNames[9] + TitleNames[5] + TitleNames[1];
-			break;
-		case 3:
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
-					+ TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] + TitleNames[2]
-					+ TitleNames[8] + TitleNames[4] + TitleNames[10] + TitleNames[5] + TitleNames[1];
-			break;
-		case 4:
-			Number = user1Time < user2Time ? USER1_DECISION : USER2_DECISION;
-			if (Number == USER1_DECISION) {
-				checkResult = TitleNames[12];
-			} else {
-				checkResult = TitleNames[13];
-			}
-			title = TitleNames[0] + TitleNames[2] + TitleNames[6] + input0 + TitleNames[11] + TitleNames[3]
-					+ TitleNames[2] + TitleNames[7] + input1 + TitleNames[11] + TitleNames[3] + TitleNames[2]
-					+ TitleNames[8] + input2 + TitleNames[11] + TitleNames[3] + TitleNames[2] + TitleNames[4]
-					+ checkResult + TitleNames[5] + TitleNames[3] + TitleNames[2] + TitleNames[14] + TitleNames[1];
-			clickCount = CLICK_COUNT_MAX;
-			CommonButton.setText("Nextへ");
-			break;
+			TextEditor.tgrBetTitle();
+			ExpandLabel.setText(BetTitle);
 		}
 	}
 }

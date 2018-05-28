@@ -4,20 +4,18 @@ import static Declaration.MathConstants.*;
 import static Declaration.Variable.*;
 
 import java.awt.Color;
-///import java.awt.Container;
 import java.awt.Font;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-//import javax.swing.JButton;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+
+import Process.tgrTextEditor;
 
 public class UserView extends JPanel {
 	/**
@@ -33,11 +31,13 @@ public class UserView extends JPanel {
 
 	private int nullQusetionCount = 0;
 
+	tgrTextEditor TextEditor = new tgrTextEditor();
+
 	public UserView(String viewName) {
 		this.setLayout(null);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 		this.setName(viewName);
-		
+
 		ExpandLabel.setBounds(BETINFO_LABEL_DX, BETINFO_LABEL_DY, BETINFO_LABEL_WIDTH, BETINFO_LABEL_HIGHT);
 		ExpandLabel.setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.BOLD, 32));
 		ExpandLabel.setVisible(true);
@@ -79,7 +79,7 @@ public class UserView extends JPanel {
 
 		BetButton.setBounds(RIGHT_BOTTOM_BUTTON_DX, RIGHT_BOTTOM_BUTTON_DY, RIGHT_BOTTOM_BUTTON_WIDTH, RIGHT_BOTTOM_BUTTON_HIGHT);
 		BetButton.setForeground(Color.blue);
-		BetButton.setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.ITALIC, 16));
+		BetButton.setFont(new Font("ÇlÇr QuestionÉSÉVÉbÉN", Font.ITALIC, 16));
 		BetButton.setVisible(true);
 		this.add(BetButton);
 
@@ -140,6 +140,7 @@ public class UserView extends JPanel {
 						for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 							if (UsingQuestionCardArray[i] != OVER) {
 								if (e.getSource() == QusetionLabel[i]) {
+									tgrSelectQuestion(i);
 									if (QuestionCardArray.size() != 0) {
 										tgrMain.betSubView.CardStructure.tgrSupplementQuestionCard(i);
 									} else {
@@ -196,8 +197,9 @@ public class UserView extends JPanel {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				if (e.getSource() == QusetionLabel[i]) {
 					if (UsingQuestionCardArray[i] != OVER) {
+						TextEditor.tgrQuestionTitle(UsingQuestionCardArray[i]);
 						QusetionLabel[i].setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.ITALIC, 16));
-						QusetionLabel[i].setText(QuestionNames[UsingQuestionCardArray[i]]);
+						QusetionLabel[i].setText(QuestionTitle);
 					} else {
 						QusetionLabel[i].setText("");
 					}
@@ -242,7 +244,55 @@ public class UserView extends JPanel {
 
 	}
 
-	public void SreenUpdate(int updateSwitch) {
+	private void tgrSelectQuestion(int updateSwitch) {
+		String selectvalues1[] = { "8", "9" };
+		String selectvalues2[] = { "1", "2" };
+		String selectvalues3[] = { "3", "4" };
+		String selectvalues4[] = { "6", "7" };
+		int select = 0;
+		switch (UsingQuestionCardArray[updateSwitch]) {
+		case 0:
+			select = JOptionPane.showOptionDialog(this, "ëIÇÒÇ≈Ç≠ÇæÇ≥Ç¢", QuestionNames[0], JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+					selectvalues1, selectvalues1[0]);
+			break;
+		case 1:
+			select = JOptionPane.showOptionDialog(this,
+					"ëIÇÒÇ≈Ç≠ÇæÇ≥Ç¢",
+					QuestionNames[1],
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					selectvalues2,
+					selectvalues2[0]
+					);
+			break;
+		case 9:
+			select = JOptionPane.showOptionDialog(this,
+					"ëIÇÒÇ≈Ç≠ÇæÇ≥Ç¢",
+					QuestionNames[9],
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					selectvalues3,
+					selectvalues3[0]
+					);
+			break;
+		case 17:
+			select = JOptionPane.showOptionDialog(this,
+					"ëIÇÒÇ≈Ç≠ÇæÇ≥Ç¢",
+					QuestionNames[17],
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE,
+					null,
+					selectvalues4,
+					selectvalues4[0]
+					);
+			break;
+		}
+		System.out.println(select);
+	}
+
+	private void SreenUpdate(int updateSwitch) {
 		if (updateSwitch == ALLUPDATE) {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				QusetionLabel[i].setText("ñ‚ëË" + String.valueOf(UsingQuestionCardArray[i]));

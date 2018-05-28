@@ -68,14 +68,14 @@ public class MathConstants {
 	public static final int USER2_DECISION = 2;
 
 	public static final int TIMER_OVER = 30000;
-	public static final int CLICK_COUNT_MAX = 128;
+	public static final int CLICK_COUNT_MAX = 4;
 
 	public static final int NO_LOWER = 5;
 	public static final int NO_LIMIT = 6;
 	public static final int NONE_BET = 7;
 	public static final int ALL_BET = 8;
 	public static final int OVER_BET = 9;
-	
+
 	// エラーコード情報
 	public static final int NONE_ERROR = 0;
 	public static final int NUMBER_FAULT = 1;
@@ -89,6 +89,7 @@ public class MathConstants {
 	public static final int BETBUTTON_FAULT = 9;
 	public static final int BET_COUNT_MAX = 10;
 	public static final int BET_PROGRAM_FAULT = 11;
+	public static final int CLICK_FAULT = 12;
 
 	public static final String[] PanelNames = {
 			"startSubView",
@@ -111,16 +112,20 @@ public class MathConstants {
 			"相手の番です。「相手の番へ」ボタンをクリックお願いします！",
 			"「宣言/相手の番へ」ボタンの問題を発生しました。アプリを終了します。",
 			"既に宣言しました。",
-			"宣言の問題を発生しました。アプリを終了します。"
+			"宣言の問題を発生しました。アプリを終了します。",
+			"クリックボタンの問題を発生しました。アプリを終了します。"
 	};
 
-	public static final String[] TitleNames = {
+	public static final String[] CommonTitleNames = {
 			"<html>",
 			"</html>",
 			"<center>",
 			"<br/>",
 			"<a style='color:red'>",
-			"</a>",
+			"</a>"
+	};
+
+	public static final String[] BetTitleNames = {
 			"目標：",
 			"User1：",
 			"User2：",
@@ -133,27 +138,27 @@ public class MathConstants {
 			};
 
 	public static final String[] QuestionNames = {
-			TitleNames[0] + "8または9はどこ？" + TitleNames[1],
-			TitleNames[0] + "1または2はどこ？" + TitleNames[1],
-			TitleNames[0] + "連番になっているタイルはどこ？" + TitleNames[1],
-			TitleNames[0] + "青の数字タイルは何枚ある？" + TitleNames[1],
-			TitleNames[0] + "偶数は何枚ある？" + TitleNames[1],
-			TitleNames[0] + "赤の数字タイルは何枚ある？" + TitleNames[1],
-			TitleNames[0] + "赤の数の合計数は？" + TitleNames[1],
-			TitleNames[0] + "青の数の合計数は？" + TitleNames[1],
-			TitleNames[0] + "[共通]5枚のタイルすべての合計数は？" + TitleNames[1],
-			TitleNames[0] + "3または4はどこ？" + TitleNames[1],
-			TitleNames[0] + "同じ数字タイルのペアは何組ある？" + TitleNames[1],
-			TitleNames[0] + "[共通]中央の数字タイルの5以上？4以下？" + TitleNames[1],
-			TitleNames[0] + "奇数は何枚ある？" + TitleNames[1],
-			TitleNames[0] + "0はどこ？" + TitleNames[1],
-			TitleNames[0] + "[共通]数字タイルの最大の数から最小の数を引いた数は？" + TitleNames[1],
-			TitleNames[0] + "連続してとなり合っている色はどこ？" + TitleNames[1],
-			TitleNames[0] + "小さいほうから3枚の合計数は？" + TitleNames[1],
-			TitleNames[0] + "6または7はどこ？" + TitleNames[1],
-			TitleNames[0] + "中央の3枚の合計数は？" + TitleNames[1],
-			TitleNames[0] + "5はどこ？" + TitleNames[1],
-			TitleNames[0] + "大きいほうから3枚の合計数は？" + TitleNames[1]
+			"8または9はどこ？",
+			"1または2はどこ？",
+			"連番になっているタイルはどこ？",
+			"青の数字タイルは何枚ある？",
+			"偶数は何枚ある？",
+			"赤の数字タイルは何枚ある？",
+			"赤の数の合計数は？",
+			"青の数の合計数は？",
+			"[共通]5枚のタイルすべての合計数は？",
+			"3または4はどこ？",
+			"同じ数字タイルのペアは何組ある？",
+			"[共通]中央の数字タイルの5以上？4以下？",
+			"奇数は何枚ある？",
+			"0はどこ？",
+			"[共通]数字タイルの最大の数から最小の数を引いた数は？",
+			"連続してとなり合っている色はどこ？",
+			"小さいほうから3枚の合計数は？",
+			"6または7はどこ？",
+			"中央の3枚の合計数は？",
+			"5はどこ？",
+			"大きいほうから3枚の合計数は？"
 			};
 
 }
