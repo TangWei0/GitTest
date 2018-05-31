@@ -1,8 +1,9 @@
-package panels;
+package Panels;
 
-import static constants.MathConstants.*;
+import static Declaration.MathConstants.*;
 
 import java.awt.AWTEvent;
+import java.awt.Color;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,29 +12,31 @@ public class tgrMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	
-	// 抽選数字カードを定義する
-	public static int[][] User1DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
-	public static int[][] User2DigitalCardArray = new int[SELECT_DIGITAL_SIZE][DIGITAL_PARAMETERS];
+	public static StartView startSubView = new StartView(PanelNames[0]);
+	public static StartView betSubView = new StartView(PanelNames[1]);
+	public static UserView user1View = new UserView(PanelNames[2]);
+	public static UserView user2View = new UserView(PanelNames[3]);
+	public static BetView betUser1View = new BetView(PanelNames[4]);
+	public static BetView betUser2View = new BetView(PanelNames[5]);
 
-	// 問題カードを定義する
-	public static int[] usingQuestionCardArray = new int[SELECT_QUESTION_SIZE];
-	
-	public static StartSubView startSubView = new StartSubView();
-	public static MainView mainView = new MainView();
-	public static BetSubView betSubView = new BetSubView();
-	
-	
-	public static void main(String[] args) {
-	new tgrMain();
+	public static void main(String[] args) {		
+		new tgrMain();
 	}
 
 	public tgrMain() {
+
 		this.add(startSubView);
 		startSubView.setVisible(true);
-		this.add(mainView);
-		mainView.setVisible(false);
 		this.add(betSubView);
 		betSubView.setVisible(false);
+		this.add(user1View);
+		user1View.setVisible(false);
+		this.add(user2View);
+		user2View.setVisible(false);
+		this.add(betUser1View);
+		betUser1View.setVisible(false);
+		this.add(betUser2View);
+		betUser2View.setVisible(false);
 		this.setSize(FRAME_WIDTH, FRAME_HIGHT);
 		this.setLocationRelativeTo(null);
 
@@ -63,5 +66,21 @@ public class tgrMain extends JFrame {
 		if (!enable) {
 			super.processWindowEvent(e);
 		}
+	}
+	
+	public static Color tgrColorDisplay(int colorID) {
+		Color color = null;
+		switch (colorID) {
+		case 1:
+			color = Color.red;
+			break;
+		case 2:
+			color = Color.blue;
+			break;
+		case 3:
+			color = Color.green;
+			break;
+		}
+		return color;
 	}
 }
