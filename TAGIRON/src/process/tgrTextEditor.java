@@ -34,23 +34,94 @@ public class tgrTextEditor {
 			break;
 		}
 	}
-	
+
 	// 問題カード表示Title
 	public void tgrQuestionTitle(int QusetionIndex) {
 		QuestionTitle = "";
-		QuestionTitle = CommonTitleNames[0] + QuestionNames[QusetionIndex] + CommonTitleNames[1];
+		QuestionTitle = CommonTitleNames[0] + QuestionNames[UsingQuestionCardArray[QusetionIndex]] + CommonTitleNames[1];
 	}
-	
-	
+
 	public void tgrUserTitle(int QusetionIndex) {
 		tgrQuestionTitle(QusetionIndex);
-		switch (QusetionIndex)
-		{
+		switch (UsingQuestionCardArray[QusetionIndex]) {
 		case 0:
-			
-
-
-
+			if (SelectQuestion == 0) {
+				tgrAnswerQuestion.WhereDigital(8);
+			} else {
+				tgrAnswerQuestion.WhereDigital(9);
+			}
+			break;
+		case 1:
+			if (SelectQuestion == 0) {
+				tgrAnswerQuestion.WhereDigital(1);
+			} else {
+				tgrAnswerQuestion.WhereDigital(2);
+			}
+			break;
+		case 2:
+			tgrAnswerQuestion.WhereConsistentDigital();
+			break;
+		case 3:	
+			tgrAnswerQuestion.HowManyColor(BLUE);
+			break;
+		case 4:	
+			tgrAnswerQuestion.HowManyOdd(EVEN);
+			break;
+		case 5:	
+			tgrAnswerQuestion.HowManyColor(RED);
+			break;
+		case 6:	
+			tgrAnswerQuestion.SumColor(RED);
+			break;
+		case 7:	
+			tgrAnswerQuestion.SumColor(BLUE);
+			break;
+		case 8:	
+			tgrAnswerQuestion.Sum5Digital();
+			break;
+		case 9:
+			if (SelectQuestion == 0) {
+				tgrAnswerQuestion.WhereDigital(3);
+			} else {
+				tgrAnswerQuestion.WhereDigital(4);
+			}
+			break;
+		case 10:
+			tgrAnswerQuestion.HowManyPar();
+			break;
+		case 11:	
+			tgrAnswerQuestion.CenterCompar();
+			break;	
+		case 12:	
+			tgrAnswerQuestion.HowManyOdd(ODD);
+			break;
+		case 13:
+			tgrAnswerQuestion.WhereDigital(0);
+			break;
+		case 14:	
+			tgrAnswerQuestion.MaxGap();
+			break;	
+		case 15:
+			tgrAnswerQuestion.WhereConsistentColor();
+			break;
+		case 16:
+			tgrAnswerQuestion.Sum3Digital(SMALL);
+			break;
+		case 17:
+			if (SelectQuestion == 0) {
+				tgrAnswerQuestion.WhereDigital(6);
+			} else {
+				tgrAnswerQuestion.WhereDigital(7);
+			}
+			break;
+		case 18:
+			tgrAnswerQuestion.Sum3Digital(CENTER);
+			break;
+		case 19:
+			tgrAnswerQuestion.WhereDigital(5);
+			break;
+		case 20:
+			tgrAnswerQuestion.Sum3Digital(BIG);
 			break;
 		}
 	}

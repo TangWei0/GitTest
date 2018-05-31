@@ -75,7 +75,21 @@ public class MathConstants {
 	public static final int NONE_BET = 7;
 	public static final int ALL_BET = 8;
 	public static final int OVER_BET = 9;
-
+	
+	//カラー情報
+	public static final int RED = 1;
+	public static final int BLUE = 2;
+	public static final int GREEN = 3;
+	
+	// 奇偶数
+	public static final int ODD = 1;
+	public static final int EVEN = 0;
+	
+	// 大小指定
+	public static final int SMALL = 0;
+	public static final int CENTER = 1;
+	public static final int BIG = 2;
+	
 	// エラーコード情報
 	public static final int NONE_ERROR = 0;
 	public static final int NUMBER_FAULT = 1;

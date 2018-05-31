@@ -29,8 +29,6 @@ public class UserView extends JPanel {
 	private JButton BetButton = new JButton("宣言");
 	private JLabel ExpandLabel = new JLabel("", JLabel.CENTER);
 
-	private int nullQusetionCount = 0;
-
 	tgrTextEditor TextEditor = new tgrTextEditor();
 
 	public UserView(String viewName) {
@@ -39,9 +37,13 @@ public class UserView extends JPanel {
 		this.setName(viewName);
 
 		ExpandLabel.setBounds(BETINFO_LABEL_DX, BETINFO_LABEL_DY, BETINFO_LABEL_WIDTH, BETINFO_LABEL_HIGHT);
-		ExpandLabel.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 32));
+		ExpandLabel.setFont(new Font("ＭＳ ゴシック", Font.BOLD, 16));
 		ExpandLabel.setVisible(true);
-		ExpandLabel.setText(viewName);
+		if (this.getName() == PanelNames[2]) {
+			ExpandLabel.setText(User1Title);
+		} else {
+			ExpandLabel.setText(User2Title);
+		}
 		this.add(ExpandLabel);
 
 		for (int j = 0; j < SELECT_DIGITAL_SIZE; j++) {
@@ -140,23 +142,19 @@ public class UserView extends JPanel {
 						for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 							if (UsingQuestionCardArray[i] != OVER) {
 								if (e.getSource() == QusetionLabel[i]) {
+									// 選択性問題カード
 									tgrSelectQuestion(i);
+									TextEditor.tgrUserTitle(i);
+									tgrMain.user1View.ExpandLabel.setText(User1Title);
+									tgrMain.user2View.ExpandLabel.setText(User2Title);
 									if (QuestionCardArray.size() != 0) {
 										tgrMain.betSubView.CardStructure.tgrSupplementQuestionCard(i);
 									} else {
 										UsingQuestionCardArray[i] = OVER;
 										nullQusetionCount++;
 									}
-									SreenUpdate(i);
-									if (Number == USER1_DECISION) {
-										tgrMain.user2View.SreenUpdate(i);
-									} else if (Number == USER2_DECISION) {
-										tgrMain.user1View.SreenUpdate(i);
-									} else {
-										ErrorCode = NUMBER_FAULT;
-										JOptionPane.showMessageDialog(null, Error[ErrorCode]);
-										System.exit(0);
-									}
+									tgrMain.user1View.SreenUpdate(i);
+									tgrMain.user2View.SreenUpdate(i);
 									BetButton.setText("相手の番へ");
 									if (nullQusetionCount == SELECT_QUESTION_SIZE) {
 										ErrorCode = ALL_QUESTION_SELECTED;
@@ -197,7 +195,7 @@ public class UserView extends JPanel {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				if (e.getSource() == QusetionLabel[i]) {
 					if (UsingQuestionCardArray[i] != OVER) {
-						TextEditor.tgrQuestionTitle(UsingQuestionCardArray[i]);
+						TextEditor.tgrQuestionTitle(i);
 						QusetionLabel[i].setFont(new Font("ＭＳ ゴシック", Font.ITALIC, 16));
 						QusetionLabel[i].setText(QuestionTitle);
 					} else {
@@ -249,47 +247,27 @@ public class UserView extends JPanel {
 		String selectvalues2[] = { "1", "2" };
 		String selectvalues3[] = { "3", "4" };
 		String selectvalues4[] = { "6", "7" };
-		int select = 0;
 		switch (UsingQuestionCardArray[updateSwitch]) {
 		case 0:
-			select = JOptionPane.showOptionDialog(this, "選んでください", QuestionNames[0], JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-					selectvalues1, selectvalues1[0]);
+			SelectQuestion = JOptionPane.showOptionDialog(this, "問題を選んでください", QuestionNames[0], JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, selectvalues1, selectvalues1[0]);
 			break;
 		case 1:
-			select = JOptionPane.showOptionDialog(this,
-					"選んでください",
-					QuestionNames[1],
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					selectvalues2,
-					selectvalues2[0]
-					);
+			SelectQuestion = JOptionPane.showOptionDialog(this, "問題を選んでください", QuestionNames[1], JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, selectvalues2, selectvalues2[0]);
 			break;
 		case 9:
-			select = JOptionPane.showOptionDialog(this,
-					"選んでください",
-					QuestionNames[9],
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					selectvalues3,
-					selectvalues3[0]
-					);
+			SelectQuestion = JOptionPane.showOptionDialog(this, "問題を選んでください", QuestionNames[9], JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, selectvalues3, selectvalues3[0]);
 			break;
 		case 17:
-			select = JOptionPane.showOptionDialog(this,
-					"選んでください",
-					QuestionNames[17],
-					JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE,
-					null,
-					selectvalues4,
-					selectvalues4[0]
-					);
+			SelectQuestion = JOptionPane.showOptionDialog(this, "問題を選んでください", QuestionNames[17], JOptionPane.YES_NO_OPTION,
+					JOptionPane.QUESTION_MESSAGE, null, selectvalues4, selectvalues4[0]);
+			break;
+		default:
+			// 選択性ではない問題カード
 			break;
 		}
-		System.out.println(select);
 	}
 
 	private void SreenUpdate(int updateSwitch) {

@@ -11,47 +11,6 @@ import javax.swing.JOptionPane;
 public class tgrMain extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-
-	// ÉJÉâÅ[óÒãìéqñºêÈåæ
-	public enum ColorEnum {
-		Red(1, "Red"), Blue(2, "Blue"), Green(3, "Green");
-
-		private int id;
-		private String color;
-
-		public int getId() {
-			return id;
-		}
-
-		public String getColor() {
-			return color;
-		}
-
-		private ColorEnum(int id, String color) {
-			this.id = id;
-			this.color = color;
-		}
-
-		public static ColorEnum valueOf(int id) {
-			ColorEnum[] array = values();
-			for (ColorEnum num : array) {
-				if (id == num.getId()) {
-					return num;
-				}
-			}
-			return null;
-		}
-
-		public static ColorEnum valueOfByName(String color) {
-			ColorEnum[] array = values();
-			for (ColorEnum num : array) {
-				if (color.equals(num.getColor())) {
-					return num;
-				}
-			}
-			return null;
-		}
-	}
 	
 	public static StartView startSubView = new StartView(PanelNames[0]);
 	public static StartView betSubView = new StartView(PanelNames[1]);

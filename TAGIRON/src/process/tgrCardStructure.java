@@ -6,8 +6,6 @@ import static Declaration.Variable.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Panels.tgrMain;
-
 public class tgrCardStructure {
 
 	private static int[] num = new int[USER_COUNT];
@@ -79,12 +77,12 @@ public class tgrCardStructure {
 				compareValue = UserArray.get(i).get(j);
 				UserDigitalCardArray[i][j][0] = compareValue % 10;
 				if (compareValue % 10 == 5) {
-					UserDigitalCardArray[i][j][1] = tgrMain.ColorEnum.valueOfByName("Green").getId();
+					UserDigitalCardArray[i][j][1] = GREEN;
 				} else {
 					if (compareValue < HALF_DIGITAL_SIZE) {
-						UserDigitalCardArray[i][j][1] = tgrMain.ColorEnum.valueOfByName("Red").getId();
+						UserDigitalCardArray[i][j][1] = RED;
 					} else {
-						UserDigitalCardArray[i][j][1] = tgrMain.ColorEnum.valueOfByName("Blue").getId();
+						UserDigitalCardArray[i][j][1] = BLUE;
 					}
 				}
 			}

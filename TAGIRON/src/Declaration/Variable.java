@@ -19,6 +19,8 @@ public class Variable {
 	public static int Number = MathConstants.NO_DECISION;
 	public static int ErrorCode = MathConstants.NONE_ERROR;
 
+	public static int SelectQuestion = 0;
+
 	public static int ClickCount = 0;
 	public static String input0 = "";
 	public static String input1 = "";
@@ -34,9 +36,13 @@ public class Variable {
 
 	public static long startTime;
 	public static long endTime;
+	
+	public static int nullQusetionCount = 0;
 
-	public static String User1Title = "";
-	public static String User2Title = "";
+	public static String User1Title = MathConstants.CommonTitleNames[0] + MathConstants.CommonTitleNames[2] + MathConstants.PanelNames[2]
+			+ MathConstants.CommonTitleNames[1];
+	public static String User2Title = MathConstants.CommonTitleNames[0] + MathConstants.CommonTitleNames[2] + MathConstants.PanelNames[3]
+			+ MathConstants.CommonTitleNames[1];
 
 	public static String QuestionTitle = "";
 	public static String BetTitle = "";

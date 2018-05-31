@@ -62,20 +62,20 @@ public class BetView extends JPanel {
 							BET_CARD_WIDTH, BET_CARD_HIGHT);
 					if (j == 5) {
 						BetLabel[i][j].setBorder(new LineBorder(
-								tgrMain.tgrColorDisplay(tgrMain.ColorEnum.valueOfByName("Green").getId()), 5, true));
+								tgrMain.tgrColorDisplay(GREEN), 5, true));
 					} else {
 						BetLabel[i][j].setBorder(new LineBorder(
-								tgrMain.tgrColorDisplay(tgrMain.ColorEnum.valueOfByName("Red").getId()), 5, true));
+								tgrMain.tgrColorDisplay(RED), 5, true));
 					}
 				} else {
 					BetLabel[i][j].setBounds(BET_CARD_DN_DX + j * (BET_CARD_WIDTH + CARD_SPACING), BET_CARD_DN_DY,
 							BET_CARD_WIDTH, BET_CARD_HIGHT);
 					if (j == 5) {
 						BetLabel[i][j].setBorder(new LineBorder(
-								tgrMain.tgrColorDisplay(tgrMain.ColorEnum.valueOfByName("Green").getId()), 5, true));
+								tgrMain.tgrColorDisplay(GREEN), 5, true));
 					} else {
 						BetLabel[i][j].setBorder(new LineBorder(
-								tgrMain.tgrColorDisplay(tgrMain.ColorEnum.valueOfByName("Blue").getId()), 5, true));
+								tgrMain.tgrColorDisplay(BLUE), 5, true));
 					}
 				}
 				BetLabel[i][j].setVisible(true);
@@ -157,8 +157,13 @@ public class BetView extends JPanel {
 					System.exit(0);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "êÈåæê¨å˜ÇµÇΩÅB");
+				if (Number == USER1_DECISION) {
+					JOptionPane.showMessageDialog(null, "User1Ç™êÈåæê¨å˜ÇµÇΩÅB");
+				} else {
+					JOptionPane.showMessageDialog(null, "User2Ç™êÈåæê¨å˜ÇµÇΩÅB");
+				}
 				System.exit(0);
+
 			}
 		}
 	}
@@ -241,15 +246,19 @@ public class BetView extends JPanel {
 									}
 								} else {
 									if (k == betNext) {
-										for (int l = betNext + 1; l < SELECT_DIGITAL_SIZE; l++) {
-											if (userData[l] != OVER) {
-												betNext = l;
-												break;
-											} else {
-												if (l == SELECT_DIGITAL_SIZE - 1) {
-													betNext = NO_LIMIT;
+										if (k == SELECT_DIGITAL_SIZE - 1) {
+											betNext = NO_LIMIT;
+										} else {
+											for (int l = betNext + 1; l < SELECT_DIGITAL_SIZE; l++) {
+												if (userData[l] != OVER) {
+													betNext = l;
+													break;
 												} else {
-													// âΩÇ‡ÇµÇ»Ç¢
+													if (l == SELECT_DIGITAL_SIZE - 1) {
+														betNext = NO_LIMIT;
+													} else {
+														// âΩÇ‡ÇµÇ»Ç¢
+													}
 												}
 											}
 										}
