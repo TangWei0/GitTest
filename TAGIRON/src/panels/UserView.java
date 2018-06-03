@@ -81,7 +81,7 @@ public class UserView extends JPanel {
 
 		BetButton.setBounds(RIGHT_BOTTOM_BUTTON_DX, RIGHT_BOTTOM_BUTTON_DY, RIGHT_BOTTOM_BUTTON_WIDTH, RIGHT_BOTTOM_BUTTON_HIGHT);
 		BetButton.setForeground(Color.blue);
-		BetButton.setFont(new Font("ÇlÇr QuestionÉSÉVÉbÉN", Font.ITALIC, 16));
+		BetButton.setFont(new Font("ÇlÇr QuestionÉSÉVÉbÉN", Font.ITALIC, 12));
 		BetButton.setVisible(true);
 		this.add(BetButton);
 
@@ -196,7 +196,7 @@ public class UserView extends JPanel {
 				if (e.getSource() == QusetionLabel[i]) {
 					if (UsingQuestionCardArray[i] != OVER) {
 						TextEditor.tgrQuestionTitle(i);
-						QusetionLabel[i].setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.ITALIC, 16));
+						QusetionLabel[i].setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.ITALIC, 12));
 						QusetionLabel[i].setText(QuestionTitle);
 					} else {
 						QusetionLabel[i].setText("");
@@ -215,7 +215,7 @@ public class UserView extends JPanel {
 			for (int i = 0; i < SELECT_QUESTION_SIZE; i++) {
 				if (e.getSource() == QusetionLabel[i]) {
 					if (UsingQuestionCardArray[i] != OVER) {
-						QusetionLabel[i].setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.BOLD, 16));
+						QusetionLabel[i].setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.BOLD, 12));
 						QusetionLabel[i].setText("ñ‚ëË" + String.valueOf(UsingQuestionCardArray[i]));
 					} else {
 						QusetionLabel[i].setText("");
@@ -280,7 +280,7 @@ public class UserView extends JPanel {
 		} else if (updateSwitch >= 0 && updateSwitch < ALLUPDATE) {
 			if (UsingQuestionCardArray[updateSwitch] != OVER) {
 				QusetionLabel[updateSwitch].setText("ñ‚ëË" + String.valueOf(UsingQuestionCardArray[updateSwitch]));
-				QusetionLabel[updateSwitch].setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.BOLD, 16));
+				QusetionLabel[updateSwitch].setFont(new Font("ÇlÇr ÉSÉVÉbÉN", Font.BOLD, 12));
 			} else {
 				QusetionLabel[updateSwitch].setText("");
 			}

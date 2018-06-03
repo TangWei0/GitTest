@@ -7,8 +7,8 @@ public class MathConstants {
 
 	// 定数を定義する
 	// フレームパラメータ
-	public static final int FRAME_WIDTH = 1280;
-	public static final int FRAME_HIGHT = 960;
+	public static final int FRAME_WIDTH = 800;
+	public static final int FRAME_HIGHT = 600;
 
 	//
 	public static final int[][] DIGITAL_CARD = { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 } };
@@ -22,9 +22,9 @@ public class MathConstants {
 	public static final int SELECT_QUESTION_SIZE = 6;
 
 	// カードパラメータ
-	public static final int CARD_WIDTH = 120;
-	public static final int CARD_HIGHT = 160;
-	public static final int CARD_SPACING = 40;
+	public static final int CARD_WIDTH = 80;
+	public static final int CARD_HIGHT = 120;
+	public static final int CARD_SPACING = 15;
 	public static final int QUSETION_CARD_DX = FRAME_WIDTH / 2 - (CARD_WIDTH + CARD_SPACING) * SELECT_QUESTION_SIZE / 2
 			+ CARD_SPACING / 2;
 	public static final int QUSETION_CARD_DY = FRAME_HIGHT / 2 - CARD_HIGHT / 2;
@@ -32,8 +32,8 @@ public class MathConstants {
 			- CARD_WIDTH / 2;
 	public static final int USER_DIGITAL_CARD_DY = FRAME_HIGHT - FRAME_HIGHT / 6 - CARD_HIGHT / 2;
 
-	public static final int BET_CARD_WIDTH = 80;
-	public static final int BET_CARD_HIGHT = 120;
+	public static final int BET_CARD_WIDTH = 60;
+	public static final int BET_CARD_HIGHT = 80;
 	public static final int BET_CARD_UP_DX = FRAME_WIDTH / 2 - (BET_CARD_WIDTH + CARD_SPACING) * HALF_DIGITAL_SIZE / 2
 			+ CARD_SPACING / 2;
 	public static final int BET_CARD_UP_DY = FRAME_HIGHT / 3 - FRAME_HIGHT / 9 - BET_CARD_HIGHT * 2 / 3;
@@ -47,16 +47,16 @@ public class MathConstants {
 	public static final int CENTER_BUTTON_DY = FRAME_HIGHT / 2 - CENTER_BUTTON_HIGHT / 2;
 
 	// 右下ボタンのパラメータ
-	public static final int RIGHT_BOTTOM_BUTTON_WIDTH = 150;
-	public static final int RIGHT_BOTTOM_BUTTON_HIGHT = 80;
-	public static final int RIGHT_BOTTOM_BUTTON_DX = 1100;
+	public static final int RIGHT_BOTTOM_BUTTON_WIDTH = 100;
+	public static final int RIGHT_BOTTOM_BUTTON_HIGHT = 50;
+	public static final int RIGHT_BOTTOM_BUTTON_DX = 680;
 	public static final int RIGHT_BOTTOM_BUTTON_DY = USER_DIGITAL_CARD_DY + CARD_HIGHT - RIGHT_BOTTOM_BUTTON_HIGHT;
 
 	// BetInfoラベルのパラメータ
-	public static final int BETINFO_LABEL_WIDTH = 900;
-	public static final int BETINFO_LABEL_HIGHT = 400;
-	public static final int BETINFO_LABEL_DX = 190;
-	public static final int BETINFO_LABEL_DY = 50;
+	public static final int BETINFO_LABEL_WIDTH = 750;
+	public static final int BETINFO_LABEL_HIGHT = 300;
+	public static final int BETINFO_LABEL_DX = 10;
+	public static final int BETINFO_LABEL_DY = 10;
 
 	//
 	public static final int ALLUPDATE = 6;
