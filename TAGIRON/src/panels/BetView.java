@@ -88,7 +88,7 @@ public class BetView extends JPanel {
 		ConfirmButton.setBounds(RIGHT_BOTTOM_BUTTON_DX, RIGHT_BOTTOM_BUTTON_DY, RIGHT_BOTTOM_BUTTON_WIDTH,
 				RIGHT_BOTTOM_BUTTON_HIGHT);
 		ConfirmButton.setForeground(Color.blue);
-		ConfirmButton.setFont(new Font("‚l‚r ƒSƒVƒbƒN", Font.ITALIC, 16));
+		ConfirmButton.setFont(new Font("‚l‚r ƒSƒVƒbƒN", Font.ITALIC, 12));
 		ConfirmButton.setVisible(false);
 		this.add(ConfirmButton);
 
@@ -366,7 +366,7 @@ public class BetView extends JPanel {
 															// ‰½‚à‚µ‚È‚¢
 														}
 													} else if (userData[betPrevious] == 19) {
-														if (SELECT_DIGITAL_SIZE - betCurrent > 0) {
+														if (SELECT_DIGITAL_SIZE - betCurrent >0) {
 															betPrevious = OVER_BET;
 															break;
 														} else {
