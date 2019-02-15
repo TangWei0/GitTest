@@ -9,109 +9,161 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class OrderFoodAccess {
-	public Connection	     connection	  = null;
+    private Connection connection = null;
+    private PreparedStatement statement = null;
+    public ResultSet resultSet = null;
 
-	public PreparedStatement	statement	= null;
+    public void getConnection () {
+        // Connect接続パラメータを設定する
+        String url = "jdbc:ucanaccess://DB//orderfood.accdb";
+        String user = "";
+        String pass = "";
 
-	public ResultSet	     resultSet	  = null;
+        // Connectステタースをチェックする
+        if ( !OrderFoodVariable.AccessConnectStatus ) { // Connect切断の場合
+            // Connect接続処理を行う
+            try {
+                // Connect接続する
+                connection = DriverManager.getConnection ( url, user, pass );
+                System.out.println ( "Access接続：" + new Date () );
 
-	// public ResultSet resultSet = null;
+                // Connectステタースを「true」に設定する
+                OrderFoodVariable.AccessConnectStatus = true;
 
-	public void getConnection () {
-		//
-		if ( !OrderFoodVariable.AccessConnectStatus ) {
-			try {
-				String url = "jdbc:ucanaccess://DB//orderfood.accdb";
-				String user = "";
-				String pass = "";
-				connection = DriverManager.getConnection ( url, user, pass );
-				OrderFoodVariable.AccessConnectStatus = true;
-				OrderFoodApp.TimerTask.start();
-				OrderFoodVariable.TimerStatus = true;
-			} catch ( Exception e ) {
-				throw new IllegalArgumentException ( e );
-			}
-		} else {
-			System.out.println ( "Access既にアクセスしました" );
-		}
-	}
+                // Access接続監視タイマーをスタートする
+                OrderFoodApp.TimerTask.AccessTimerStart ();
+            } catch ( Exception e ) {
+                // 異常情報を出力する
+                System.out.println ( e.getMessage () );
 
-	/**
-	 * @Function : Access Connect 終了処理
-	 * @Description : Access Connect終了を行う。
-	 * @Param : なし
-	 * @Return : なし
-	 * @Throws : 異常情報を出力し、アプリ終了する
-	 */
-	public void CloseAccessConnection () {
-		// Access Connect ステタースをチェックする
-		if ( OrderFoodVariable.AccessConnectStatus ) {
-			// Access Statement　ステタースをチェックする
-			if ( OrderFoodVariable.AccessStatementStatus ) {
-				// Access Statement 終了処理
-				CloseAccessStatement ();
-			} else {
-				// 何もしない
-			}
+                // アプリ終了する
+                System.out.println ( "アプリ終了します。" );
+                System.exit ( 0 );
+            }
+        } else { // Connect接続の場合
+            // メーセッジ出力する
+            System.out.println ( "Access既にアクセスしました" );
+        }
+    }
 
-			// connect中身をチェックする
-			if ( connection != null ) {
-				try {
-					// connectクローズする
-					connection.close ();
-					
-					OrderFoodApp.TimerTask.Timer.cancel ();
-					// connects解放する
-					// connection = null;
+    /**
+     * @Function : AccessConnect終了処理
+     * @Description : Connect解放する
+     *              Access接続監視タイマーをストップする
+     *              Connectステタースを「false」に設定する
+     * @Param : なし
+     * @Return : なし
+     * @Throws : SQLException異常情報を出力し、アプリ終了する
+     */
+    public void CloseAccessConnection () {
+        // Connectステタースをチェックする
+        if ( OrderFoodVariable.AccessConnectStatus ) { // Connect接続の場合
+            // Statementステタースをチェックする
+            if ( OrderFoodVariable.AccessStatementStatus ) { // Statement存在する場合
+                // Statementクリアする
+                ClearAccessStatement ();
+            } else {// Statement存在しない場合
+                // 何もしない
+            }
 
-					// Access Connect ステタースが「false」に設定する
-					OrderFoodVariable.AccessConnectStatus = false;
-				} catch ( SQLException e ) {
-					// 異常情報を出力する
-					e.printStackTrace ();
+            // Connect終了処理を行う
+            try {
+                // Connect解放する
+                connection.close ();
+                System.out.println ( "Access切断：" + new Date () );
 
-					// アプリ終了する
-					System.out.println ( "アプリ終了します。" );
-					System.exit ( 0 );
-				}
-			} else {
-				// 何もしない
-			}
-		} else {
-			// 何もしない
-		}
-	}
+                // Access接続監視タイマーをストップする
+                OrderFoodApp.TimerTask.AccessTimerStop ();
 
-	/**
-	 * @Function : Access Statement 終了処理
-	 * @Description : Access Connect終了を行う。
-	 * @Param : なし
-	 * @Return : なし
-	 * @Throws : 異常情報を出力し、アプリ終了する
-	 */
-	public void CloseAccessStatement () {
-		if ( statement != null ) {
-			try {
-				statement.close ();
-			} catch ( SQLException e ) {
-				e.printStackTrace ();
-			}
-		}
-	}
+                // Connectステタースが「false」に設定する
+                OrderFoodVariable.AccessConnectStatus = false;
+            } catch ( SQLException e ) {
+                // 異常情報を出力する
+                System.out.println ( e.getMessage () );
 
-	public void runSQL ( String sSQL ) {
-		if ( OrderFoodVariable.AccessConnectStatus ) {
-			try {// 执行数据库查询，返回结果
-				statement = connection.prepareStatement ( sSQL );
-				resultSet = statement.executeQuery ();
-			} catch ( SQLException e ) {
-				System.out.println ( e.getMessage () );
-			}
-		} else {
-			System.out.println ( "Accessにアクセスしていない" );
-		}
-	}
+                // アプリ終了する
+                System.out.println ( "アプリ終了します。" );
+                System.exit ( 0 );
+            }
+
+        } else { // Connect切断の場合
+            // 何もしない
+        }
+    }
+
+    /**
+     * コメント未修正
+     * 
+     * @Function : Access Statement 終了処理
+     * @Description : Access Connect終了を行う。
+     * @Param : なし
+     * @Return : なし
+     * @Throws : 異常情報を出力し、アプリ終了する
+     */
+    public void ClearAccessStatement () {
+        // Connectステタースをチェックする
+        if ( OrderFoodVariable.AccessConnectStatus ) { // Connect接続の場合
+            // Statementステタースをチェックする
+            if ( OrderFoodVariable.AccessStatementStatus ) { // Statement存在する場合
+                // Statementクリアする
+                try {
+                    // Statement解放する
+                    statement.close ();
+
+                    // Statementステタースを「false」に設定する
+                    OrderFoodVariable.AccessStatementStatus = false;
+                } catch ( SQLException e ) {
+                    // 異常情報を出力する
+                    System.out.println ( e.getMessage () );
+
+                    // アプリ終了する
+                    System.out.println ( "アプリ終了します。" );
+                    System.exit ( 0 );
+                }
+            } else { // Connect切断の場合
+                // 何もしない
+            }
+        } else { // Statement存在しない場合
+            // 何もしない
+        }
+    }
+
+    public void RunSQLCommand ( String sSQL ) {
+        // Connectステタースをチェックする
+        if ( !OrderFoodVariable.AccessConnectStatus ) { // Connect切断の場合
+            // Connect接続する
+            getConnection ();
+        } else {// Connect接続の場合
+            // 何もしない
+        }
+
+        // Statementステタースをチェックする
+        if ( OrderFoodVariable.AccessStatementStatus ) { // Statement存在する場合
+            // Statementクリアする
+            ClearAccessStatement ();
+        } else {// Statement存在しない場合
+            // 何もしない
+        }
+
+        // SQL命令を実行する
+        try {
+            // SQL命令実行する
+            statement = connection.prepareStatement ( sSQL );
+
+            // SQL命令実行の結果を変数に格納する
+            resultSet = statement.executeQuery ();
+        } catch ( SQLException e ) {
+            // 異常情報を出力する
+            System.out.println ( e.getMessage () );
+
+            // アプリ終了する
+            System.out.println ( "アプリ終了します。" );
+            System.exit ( 0 );
+        }
+
+    }
 
 }
