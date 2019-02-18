@@ -20,7 +20,9 @@ public class OrderFoodVariable {
 
     // Logパッケージ
     public static String CurrentLogFileName;
-
+    public static String OldLogFileName;
+    public static boolean DeleteLogFileStatus;
+    
     // 変数初期化
     public static void InitVariable () {
         InitScreenVariable ();
@@ -46,12 +48,14 @@ public class OrderFoodVariable {
     private static void InitTimerVariable () {
         TimerOut = 20;
         TimerStatus = false;
-        CurrentDate = System.currentTimeMillis ();
-        OldDate = CurrentDate - 30 * 24 * 60 * 60 * 1000;
+        CurrentDate = System.currentTimeMillis () / 1000;
+        OldDate = CurrentDate - 30 * 24 * 60 * 60 ;
     }
 
-    // Accessパッケージ初期化
+    // Logパッケージ初期化
     private static void InitLogVariable () {
         CurrentLogFileName = CurrentDate + ".log";
+        OldLogFileName = OldDate + ".log";
+        DeleteLogFileStatus = true;
     }
 }

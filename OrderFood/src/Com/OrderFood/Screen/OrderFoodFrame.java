@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 
 public class OrderFoodFrame extends JFrame {
+    public OrderFoodFrame() {
+    }
     /**
 	 * 
 	 */
@@ -26,19 +28,19 @@ public class OrderFoodFrame extends JFrame {
         OrderFoodApp.ofLogger.ofWriteLogger ( "CONFIG", OrderFoodVariable.FrameWidth + " "
                 + OrderFoodVariable.FrameHeight );
         JFrame frame = new JFrame ();
-        frame.setLayout ( null );
+        frame.getContentPane().setLayout ( null );
 
         JButton button1 = new JButton ( "開始" );
         button1.setBounds ( 157, 223, 91, 21 );
-        frame.add ( button1 );
+        frame.getContentPane().add ( button1 );
 
         JButton button2 = new JButton ( "終了" );
         button2.setBounds ( 307, 223, 91, 21 );
-        frame.add ( button2 );
+        frame.getContentPane().add ( button2 );
 
         JButton button3 = new JButton ( "リセット" );
         button3.setBounds ( 477, 223, 91, 21 );
-        frame.add ( button3 );
+        frame.getContentPane().add ( button3 );
 
         frame.setSize ( OrderFoodVariable.FrameWidth, OrderFoodVariable.FrameHeight );
         frame.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE );
@@ -67,7 +69,6 @@ public class OrderFoodFrame extends JFrame {
         OrderFoodApp.Access.resultSet = null;
 
         OrderFoodApp.Access.ClearAccessStatement ();
-        // Access.CloseConnection();
         System.out.println ( OrderFoodVariable.AccessConnectStatus );
 
         System.out.println ( AccountList.size () );
@@ -80,18 +81,6 @@ public class OrderFoodFrame extends JFrame {
                 System.out.println ( item.getPassword () );
             }
         } );
-        //
-        // ScheduledExecutorService.init();
-        // button1.addActionListener(new Button1Listener());
-        // button2.addActionListener(new Button2Listener());
-        // button3.addActionListener(new Button3Listener());
-        /*
-         * button2.addActionListener(new ActionListener() { public void
-         * actionPerformed(ActionEvent event) { ScheduledExecutorService.stop();
-         * } }); button3.addActionListener(new ActionListener() { public void
-         * actionPerformed(ActionEvent event) { ScheduledExecutorService.stop();
-         * ScheduledExecutorService.start(); } });
-         */
     }
 
 }

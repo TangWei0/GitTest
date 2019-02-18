@@ -1,6 +1,7 @@
 
 package Com.OrderFood.Listener;
 
+import Com.OrderFood.Data.OrderFoodStaticVariable;
 import Com.OrderFood.Data.OrderFoodVariable;
 import Com.OrderFood.Screen.OrderFoodApp;
 
@@ -14,11 +15,16 @@ public class OrderFoodWindowListener implements WindowListener {
 
     public void windowClosing ( WindowEvent e ) {
         /* 処理したい内容をここに記述する */
+        boolean Ret;
         if ( OrderFoodVariable.AccessConnectStatus ) {
             OrderFoodApp.Access.CloseAccessConnection ();
         }
-        
-        System.out.println ( "アプリ終了します" );
+        Ret = OrderFoodApp.ofLogger.CheckLogger ( OrderFoodStaticVariable.OldLogCheck );
+        if ( Ret ) {
+            OrderFoodApp.ofLogger.ofWriteLogger ( "INFO", "アプリが終了します。" );
+        } else {
+            OrderFoodApp.ofLogger.ofWriteLogger ( "WARNING", "アプリが終了します。" );
+        }
     }
 
     public void windowClosed ( WindowEvent e ) {

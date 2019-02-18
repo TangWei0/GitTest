@@ -2,6 +2,7 @@
 package Com.OrderFood.Access;
 
 import Com.OrderFood.Data.OrderFoodVariable;
+import Com.OrderFood.Data.OrderFoodStaticVariable;
 import Com.OrderFood.Screen.OrderFoodApp;
 
 import java.sql.Connection;
@@ -17,17 +18,15 @@ public class OrderFoodAccess {
     public ResultSet resultSet = null;
 
     public void getConnection () {
-        // Connect接続パラメータを設定する
-        String url = "jdbc:ucanaccess://DB//orderfood.accdb";
-        String user = "";
-        String pass = "";
-
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+        
         // Connectステタースをチェックする
         if ( !OrderFoodVariable.AccessConnectStatus ) { // Connect切断の場合
             // Connect接続処理を行う
             try {
                 // Connect接続する
-                connection = DriverManager.getConnection ( url, user, pass );
+                connection = DriverManager.getConnection ( OrderFoodStaticVariable.url, OrderFoodStaticVariable.user,
+                        OrderFoodStaticVariable.pass );
                 System.out.println ( "Access接続：" + new Date () );
 
                 // Connectステタースを「true」に設定する

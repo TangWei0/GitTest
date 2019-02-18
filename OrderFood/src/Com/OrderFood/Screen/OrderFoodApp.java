@@ -26,25 +26,33 @@ public class OrderFoodApp {
      * Launch the application.
      */
     public static void main ( String[] args ) {
-        ofLogger.CheckLogger ();
-        try {
-            // ofLogger.ofCheckLogger();
-            serverSocket = new ServerSocket ( LOCK_PORT );
-            // 多重起動ではなかった
-            EventQueue.invokeLater ( new Runnable () {
-                public void run () {
-                    try {
-                        OrderFoodVariable.InitVariable ();
-                        ofLogger.CreatLogger ();
-                        ofFrame.ofLoginFrame ();
-                    } catch ( Exception e ) {
-                        e.printStackTrace ();
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+
+        // Logger事前チェック処理を行う
+        Ret = ofLogger.CheckLoggerPath ();
+        if ( Ret ) {
+            try {
+                serverSocket = new ServerSocket ( LOCK_PORT );
+                // 多重起動ではなかった
+                EventQueue.invokeLater ( new Runnable () {
+                    public void run () {
+                        try {
+                            OrderFoodVariable.InitVariable ();
+                            ofLogger.CreatLogger ();
+                            ofFrame.ofLoginFrame ();
+                        } catch ( Exception e ) {
+                            e.printStackTrace ();
+                        }
                     }
-                }
-            } );
-        } catch ( IOException e ) {
-            // 多重起動だった
-            JOptionPane.showMessageDialog ( null, "多重起動" );
+                } );
+            } catch ( IOException e ) {
+                // 多重起動だった
+                JOptionPane.showMessageDialog ( null, "多重起動" );
+            }
+        } else {
+            // アプリ終了する
+            System.out.println ( "アプリ終了します。" );
+            System.exit ( 0 );
         }
     }
 }
