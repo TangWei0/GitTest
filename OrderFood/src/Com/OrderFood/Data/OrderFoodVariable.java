@@ -2,33 +2,45 @@
 package Com.OrderFood.Data;
 
 import java.awt.GraphicsEnvironment;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class OrderFoodVariable {
-    // Screenパッケージ
+    // Screen Class
     public static int FrameWidth;
     public static int FrameHeight;
 
-    // Accessパッケージ
+    // Access Class
     public static boolean AccessConnectStatus;
     public static boolean AccessStatementStatus;
+    public static Connection connection;
+    public static PreparedStatement statement;
+    public static ResultSet resultSet;
 
-    // Timerパッケージ
+    // Timer Class
     public static int TimerOut;
     public static boolean TimerStatus;
     public static long CurrentDate;
     public static long OldDate;
 
-    // Logパッケージ
+    // Log Class
     public static String CurrentLogFileName;
     public static String OldLogFileName;
     public static boolean DeleteLogFileStatus;
-    
+
+    // Data Class
+    public static ArrayList< OrderFoodAccount > AccountList;
+    public static OrderFoodAccount Account;
+
     // 変数初期化
     public static void InitVariable () {
         InitScreenVariable ();
         InitAccessVariable ();
         InitTimerVariable ();
         InitLogVariable ();
+        InitDataVariable ();
     }
 
     // Screenパッケージ初期化
@@ -42,14 +54,16 @@ public class OrderFoodVariable {
     private static void InitAccessVariable () {
         AccessConnectStatus = false;
         AccessStatementStatus = false;
+        connection = null;
+        statement = null;
+        resultSet = null;
     }
 
     // Timerパッケージ初期化
     private static void InitTimerVariable () {
-        TimerOut = 20;
         TimerStatus = false;
         CurrentDate = System.currentTimeMillis () / 1000;
-        OldDate = CurrentDate - 30 * 24 * 60 * 60 ;
+        OldDate = CurrentDate - 30 * 24 * 60 * 60;
     }
 
     // Logパッケージ初期化
@@ -57,5 +71,11 @@ public class OrderFoodVariable {
         CurrentLogFileName = CurrentDate + ".log";
         OldLogFileName = OldDate + ".log";
         DeleteLogFileStatus = true;
+    }
+
+    // Dataパッケージ初期化
+    private static void InitDataVariable () {
+        AccountList = new ArrayList< OrderFoodAccount > ();
+        Account = new OrderFoodAccount ();
     }
 }

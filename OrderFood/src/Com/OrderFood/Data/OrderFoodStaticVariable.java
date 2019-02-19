@@ -18,4 +18,7 @@ public class OrderFoodStaticVariable {
     public static String url = "jdbc:ucanaccess://DB//orderfood.accdb";
     public static String user = "";
     public static String pass = "";
+
+    // Timer Class　変数
+    public static int TimerOut = 10 * 60 * 1000;
 }

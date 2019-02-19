@@ -4,7 +4,8 @@ package Com.OrderFood.Listener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import Com.OrderFood.Data.OrderFoodVariable;
+import Com.OrderFood.Access.*;
+import Com.OrderFood.Data.OrderFoodStaticVariable;
 import Com.OrderFood.Screen.OrderFoodApp;
 
 public class OrderFoodMouseListener implements MouseListener {
@@ -15,11 +16,14 @@ public class OrderFoodMouseListener implements MouseListener {
 
     public void mousePressed ( MouseEvent e ) {
         // TODO Auto-generated method stub
-        if ( OrderFoodVariable.AccessConnectStatus ) {
-            OrderFoodApp.TimerTask.AccessTimerReset ();
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+
+        Ret = OrderFoodAccess.TimerTask.AccessTimerReset ();
+        if ( Ret ) {
+            OrderFoodApp.Log.WriteLogger ( "INFO", "Mouse押す処理が正常終了します。" );
         } else {
-            // 何もしない
-        }     
+            OrderFoodApp.Log.WriteLogger ( "WARNING", "Mouse押す処理が異常終了します。" );
+        }
     }
 
     public void mouseReleased ( MouseEvent e ) {

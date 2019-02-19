@@ -18,7 +18,7 @@ import Com.OrderFood.Data.OrderFoodStaticVariable;
 
 public class OrderFoodLogger {
     // Loggerクラスのインスタンスを生成
-    static Logger ofLogger = Logger.getLogger ( OrderFoodLogger.class.getName () );
+    static Logger Log = Logger.getLogger ( OrderFoodLogger.class.getName () );
 
     public boolean CheckLoggerPath () {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
@@ -106,33 +106,38 @@ public class OrderFoodLogger {
     public boolean CreatLogger () {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
-        Ret = CheckLogger ( OrderFoodStaticVariable.LogCheck );
+        Ret = CheckLoggerPath ();
         if ( Ret ) {
-            try {
-                Handler handler = new FileHandler ( OrderFoodStaticVariable.LogPath
-                        + OrderFoodVariable.CurrentLogFileName );
-                handler.setEncoding ( "UTF-8" );
-                ofLogger.addHandler ( handler );
+            Ret = CheckLogger ( OrderFoodStaticVariable.LogCheck );
+            if ( Ret ) {
+                try {
+                    Handler handler = new FileHandler ( OrderFoodStaticVariable.LogPath
+                            + OrderFoodVariable.CurrentLogFileName );
+                    handler.setEncoding ( "UTF-8" );
+                    Log.addHandler ( handler );
 
-                // フォーマッターを作成してハンドラーに登録
-                Formatter formatter = new SimpleFormatter ();
-                handler.setFormatter ( formatter );
+                    // フォーマッターを作成してハンドラーに登録
+                    Formatter formatter = new SimpleFormatter ();
+                    handler.setFormatter ( formatter );
 
-                // ログレベルの設定
-                ofLogger.setLevel ( Level.ALL );
+                    // ログレベルの設定
+                    Log.setLevel ( Level.ALL );
 
-            } catch ( IllegalArgumentException e ) {
-                Ret = OrderFoodStaticVariable.LOG_JOB_NG;
-                // デバッグ用メッセージ提示する
-                System.out.println ( new Date () + "CreatLogger関数で例外のスローが発生しました。" );
-            } catch ( SecurityException e ) {
-                Ret = OrderFoodStaticVariable.LOG_JOB_NG;
-                // デバッグ用メッセージ提示する
-                System.out.println ( new Date () + "CreatLogger関数でセキュリティ異常が発生しました。" );
-            } catch ( IOException e ) {
-                Ret = OrderFoodStaticVariable.LOG_JOB_NG;
-                // デバッグ用メッセージ提示する
-                System.out.println ( new Date () + "CreatLogger関数で異常が発生しました。" );
+                } catch ( IllegalArgumentException e ) {
+                    Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+                    // デバッグ用メッセージ提示する
+                    System.out.println ( new Date () + "CreatLogger関数で例外のスローが発生しました。" );
+                } catch ( SecurityException e ) {
+                    Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+                    // デバッグ用メッセージ提示する
+                    System.out.println ( new Date () + "CreatLogger関数でセキュリティ異常が発生しました。" );
+                } catch ( IOException e ) {
+                    Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+                    // デバッグ用メッセージ提示する
+                    System.out.println ( new Date () + "CreatLogger関数で異常が発生しました。" );
+                }
+            } else {
+                // 何もしない
             }
         } else {
             // 何もしない
@@ -166,10 +171,10 @@ public class OrderFoodLogger {
                 file = new File ( FileName );
                 // deleteメソッドを使用してファイルを削除する
                 file.delete ();
-                ofWriteLogger ( "INFO", fileName + "削除しました。" );
+                WriteLogger ( "INFO", fileName + "削除しました。" );
             } catch ( Exception e ) {
                 Ret = OrderFoodStaticVariable.LOG_JOB_NG;
-                ofWriteLogger ( "WARNING", "DeleteLogFile関数で異常が発生しました。" );
+                WriteLogger ( "WARNING", "DeleteLogFile関数で異常が発生しました。" );
             }
         } else {
             OrderFoodVariable.DeleteLogFileStatus = false;
@@ -178,28 +183,28 @@ public class OrderFoodLogger {
         return Ret;
     }
 
-    public void ofWriteLogger ( String ofLogType, String ofLogMessage ) {
+    public void WriteLogger ( String ofLogType, String ofLogMessage ) {
         switch ( ofLogType ) {
             case "FINEST" :
-                ofLogger.finest ( ofLogMessage );
+                Log.finest ( ofLogMessage );
                 break;
             case "FINER" :
-                ofLogger.finer ( ofLogMessage );
+                Log.finer ( ofLogMessage );
                 break;
             case "FINE" :
-                ofLogger.fine ( ofLogMessage );
+                Log.fine ( ofLogMessage );
                 break;
             case "CONFIG" :
-                ofLogger.config ( ofLogMessage );
+                Log.config ( ofLogMessage );
                 break;
             case "INFO" :
-                ofLogger.info ( ofLogMessage );
+                Log.info ( ofLogMessage );
                 break;
             case "WARNING" :
-                ofLogger.warning ( ofLogMessage );
+                Log.warning ( ofLogMessage );
                 break;
             case "SEVERE" :
-                ofLogger.severe ( ofLogMessage );
+                Log.severe ( ofLogMessage );
                 break;
             default :
                 break;

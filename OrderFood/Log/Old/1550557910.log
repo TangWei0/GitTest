@@ -1,0 +1,24 @@
+2 19, 2019 3:31:50 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+構成: 1366 728
+2 19, 2019 3:31:55 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Connect接続処理が成功です。
+2 19, 2019 3:31:55 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Timerがスタートしました。
+2 19, 2019 3:32:15 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Connect終了処理が成功です。
+2 19, 2019 3:32:15 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Timerがストップしました。
+2 19, 2019 3:32:15 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: タイムアウト処理が成功です。
+2 19, 2019 3:32:27 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Access未接続です
+2 19, 2019 3:32:27 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Mouse押す処理が正常終了します。
+2 19, 2019 3:32:31 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Access未接続です
+2 19, 2019 3:32:31 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Mouse押す処理が正常終了します。
+2 19, 2019 3:32:33 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Access未接続です
+2 19, 2019 3:32:33 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Mouse押す処理が正常終了します。
