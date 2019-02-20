@@ -19,6 +19,10 @@ public class OrderFoodStaticVariable {
     public static String user = "";
     public static String pass = "";
 
+    public static String[] tabel = { "account", "user", "department" };
+    public static String[] account_col = { "account_id", "account_password" };
+    
     // Timer Class　変数
     public static int TimerOut = 10 * 60 * 1000;
+
 }

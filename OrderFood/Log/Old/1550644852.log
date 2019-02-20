@@ -1,0 +1,26 @@
+2 20, 2019 3:40:52 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+構成: 1366 728
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Connect接続処理が成功です。
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Timerがスタートしました。
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Size:6
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: 10101+12345678
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: 10102+12345678
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: 10201+123456
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: 10202+123456
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: 10301+123456
+2 20, 2019 3:40:58 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: 10302+123456
+2 20, 2019 3:41:16 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Connect終了処理が成功です。
+2 20, 2019 3:41:16 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Timerがストップしました。
+2 20, 2019 3:41:16 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: アプリが正常終了します。

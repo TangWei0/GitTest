@@ -47,40 +47,20 @@ public class OrderFoodFrame extends JFrame {
         frame.addMouseListener ( new OrderFoodMouseListener () );
         frame.addWindowListener ( new OrderFoodWindowListener () );
 
-        String sSQL = "SELECT * FROM account";
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
         //ArrayList< OrderFoodAccount > AccountList = new ArrayList< OrderFoodAccount >();
         //OrderFoodAccount Account = new OrderFoodAccount ();
-        Ret = OrderFoodApp.Access.RunSQLCommand ( sSQL );
+        Ret = OrderFoodApp.Access.View ();
         if ( Ret ) {
-            if ( OrderFoodVariable.resultSet != null ) {
-                while ( OrderFoodVariable.resultSet.next () ) {
-                    OrderFoodVariable.Account = new OrderFoodAccount ();
-                    OrderFoodVariable.Account.setID ( OrderFoodVariable.resultSet.getString ( "account_id" ) );
-                    OrderFoodVariable.Account.setPassword ( OrderFoodVariable.resultSet.getString ( "account_password" ) );
-                    OrderFoodVariable.AccountList.add ( OrderFoodVariable.Account );
-                }
-
-                OrderFoodVariable.resultSet = null;
-
-                Ret = OrderFoodApp.Access.ClearAccessStatement ();
-                if ( Ret ) {
-                    // 何もしない
-                } else {
-                    OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginFrameにて異常発生したのでアプリが終了します。" );
-                    // アプリを終了する
-                    System.exit ( 0 );
-                }
-            } else {
-                OrderFoodApp.Log.WriteLogger ( "INFO", "データが存在しない。" );
-            }
+            
         } else {
             OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginFrameにて異常発生したのでアプリが終了します。" );
             // アプリを終了する
             System.exit ( 0 );
         }
-        OrderFoodApp.Log.WriteLogger ( "INFO", "Size:" + OrderFoodVariable.AccountList.size () );
+        //OrderFoodApp.Log.WriteLogger ( "INFO", "Size:" + OrderFoodVariable.AccountList.size () );
 
+        /*
         OrderFoodVariable.AccountList.forEach ( item -> OrderFoodApp.Log.WriteLogger ( "INFO", item.getID () + "+"
                 + item.getPassword () ) );
 
@@ -89,5 +69,7 @@ public class OrderFoodFrame extends JFrame {
                 OrderFoodApp.Log.WriteLogger ( "INFO", item.getPassword () );
             }
         } );
+        */
+        OrderFoodAccount.Dump();
     }
 }

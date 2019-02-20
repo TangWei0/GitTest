@@ -1,0 +1,10 @@
+2 20, 2019 11:57:48 午前 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+構成: 1366 728
+2 20, 2019 11:57:48 午前 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Connect接続処理が成功です。
+2 20, 2019 11:57:48 午前 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Timerがスタートしました。
+2 20, 2019 11:57:49 午前 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+重大: SQL命令実行が失敗です。
+2 20, 2019 11:57:49 午前 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+警告: LoginFrameにて異常発生したのでアプリが終了します。

@@ -1,18 +1,25 @@
 
 package Com.OrderFood.Access;
 
+import Com.OrderFood.Data.OrderFoodAccount;
 import Com.OrderFood.Data.OrderFoodVariable;
 import Com.OrderFood.Data.OrderFoodStaticVariable;
 import Com.OrderFood.Screen.OrderFoodApp;
 import Com.OrderFood.Timer.OrderFoodTimerTask;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class OrderFoodAccess {
     public static OrderFoodTimerTask TimerTask = new OrderFoodTimerTask ();
 
-    public boolean getConnection () {
+    static Connection connection;
+    static PreparedStatement statement;
+    static String SQLCommand;
+
+    private boolean getConnection () {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
         // Connectステタースをチェックする
@@ -20,7 +27,7 @@ public class OrderFoodAccess {
             // Connect接続処理を行う
             try {
                 // Connect接続する
-                OrderFoodVariable.connection = DriverManager.getConnection ( OrderFoodStaticVariable.url, OrderFoodStaticVariable.user,
+                connection = DriverManager.getConnection ( OrderFoodStaticVariable.url, OrderFoodStaticVariable.user,
                         OrderFoodStaticVariable.pass );
                 OrderFoodApp.Log.WriteLogger ( "INFO", "Connect接続処理が成功です。" );
             } catch ( Exception e ) {
@@ -62,7 +69,7 @@ public class OrderFoodAccess {
             // Connect終了処理を行う
             try {
                 // Connect解放する
-                OrderFoodVariable.connection.close ();
+                connection.close ();
                 OrderFoodApp.Log.WriteLogger ( "INFO", "Connect終了処理が成功です。" );
             } catch ( SQLException e ) {
                 Ret = OrderFoodStaticVariable.LOG_JOB_NG;
@@ -102,7 +109,7 @@ public class OrderFoodAccess {
                 // Statementクリアする
                 try {
                     // Statement解放する
-                    OrderFoodVariable.statement.close ();
+                    statement.close ();
                     OrderFoodApp.Log.WriteLogger ( "INFO", "Statementクリアしました。" );
 
                     // Statementステタースを「false」に設定する
@@ -121,7 +128,20 @@ public class OrderFoodAccess {
         return Ret;
     }
 
-    public boolean RunSQLCommand ( String sSQL ) {
+    public boolean View () {
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+
+        SQLCommand = "SELECT * FROM account";
+        Ret = RunSQLCommand ();
+        if ( Ret ) {
+
+        } else {
+            // 何もしない
+        }
+        return Ret;
+    }
+
+    private boolean RunSQLCommand () {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
         // Connect接続処理を行う
@@ -135,10 +155,15 @@ public class OrderFoodAccess {
                 // SQL命令実行処理を行う
                 try {
                     // SQL命令実行する
-                    OrderFoodVariable.statement = OrderFoodVariable.connection.prepareStatement ( sSQL );
+                    statement = connection.prepareStatement ( SQLCommand );
 
                     // SQL命令実行の結果を変数に格納する
-                    OrderFoodVariable.resultSet = OrderFoodVariable.statement.executeQuery ();
+                    OrderFoodVariable.resultSet = statement.executeQuery ();
+                    if ( OrderFoodVariable.resultSet != null ) {
+                        OrderFoodAccount.setValue();
+                    } else {
+                        OrderFoodApp.Log.WriteLogger ( "INFO", "データが存在しない" );
+                    }
                 } catch ( SQLException e ) {
                     Ret = OrderFoodStaticVariable.LOG_JOB_NG;// 異常情報を出力する
                     OrderFoodApp.Log.WriteLogger ( "SEVERE", "SQL命令実行が失敗です。" );

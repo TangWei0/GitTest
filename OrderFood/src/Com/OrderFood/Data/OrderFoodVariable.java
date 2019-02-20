@@ -2,8 +2,6 @@
 package Com.OrderFood.Data;
 
 import java.awt.GraphicsEnvironment;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -15,8 +13,6 @@ public class OrderFoodVariable {
     // Access Class
     public static boolean AccessConnectStatus;
     public static boolean AccessStatementStatus;
-    public static Connection connection;
-    public static PreparedStatement statement;
     public static ResultSet resultSet;
 
     // Timer Class
@@ -31,8 +27,7 @@ public class OrderFoodVariable {
     public static boolean DeleteLogFileStatus;
 
     // Data Class
-    public static ArrayList< OrderFoodAccount > AccountList;
-    public static OrderFoodAccount Account;
+    public static ArrayList< OrderFoodAccount > AccountList = new ArrayList< OrderFoodAccount > ();
 
     // 変数初期化
     public static void InitVariable () {
@@ -54,9 +49,6 @@ public class OrderFoodVariable {
     private static void InitAccessVariable () {
         AccessConnectStatus = false;
         AccessStatementStatus = false;
-        connection = null;
-        statement = null;
-        resultSet = null;
     }
 
     // Timerパッケージ初期化
@@ -75,7 +67,6 @@ public class OrderFoodVariable {
 
     // Dataパッケージ初期化
     private static void InitDataVariable () {
-        AccountList = new ArrayList< OrderFoodAccount > ();
-        Account = new OrderFoodAccount ();
+
     }
 }
