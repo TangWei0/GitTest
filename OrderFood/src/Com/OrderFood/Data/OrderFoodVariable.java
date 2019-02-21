@@ -4,6 +4,7 @@ package Com.OrderFood.Data;
 import java.awt.GraphicsEnvironment;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OrderFoodVariable {
     // Screen Class
@@ -27,7 +28,9 @@ public class OrderFoodVariable {
     public static boolean DeleteLogFileStatus;
 
     // Data Class
+    public static HashMap< String, String[] > Tabel = new HashMap< String, String[] > ();
     public static ArrayList< OrderFoodAccount > AccountList = new ArrayList< OrderFoodAccount > ();
+    public static ArrayList< OrderFoodDepartment > DepartmentList = new ArrayList< OrderFoodDepartment > ();
 
     // 変数初期化
     public static void InitVariable () {
@@ -67,6 +70,13 @@ public class OrderFoodVariable {
 
     // Dataパッケージ初期化
     private static void InitDataVariable () {
+        ArrayList< String[] > TabelColList = new ArrayList< String[] > ();
+        TabelColList.add ( OrderFoodStaticVariable.account_col );
+        TabelColList.add ( OrderFoodStaticVariable.user_col );
+        TabelColList.add ( OrderFoodStaticVariable.department_col );
 
+        for ( int i = 0; i < OrderFoodStaticVariable.tabel.length; i++ ) {
+            Tabel.put ( OrderFoodStaticVariable.tabel[i], TabelColList.get ( i ) );
+        }
     }
 }

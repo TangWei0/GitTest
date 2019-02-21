@@ -2,56 +2,58 @@
 package Com.OrderFood.Data;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class OrderFoodAccount {
-    String ID;
-    String Password;
+    String id;
+    String password;
 
     static OrderFoodAccount Account = new OrderFoodAccount ();
 
-    public static void setValue () throws SQLException {
-        while ( OrderFoodVariable.resultSet.next () ) {
-            Account = new OrderFoodAccount ();
-            for ( int i = 0; i < OrderFoodStaticVariable.account_col.length; i++ ) {
-                switch ( OrderFoodStaticVariable.account_col[i] ) {
-                    case "account_id" :
-                        Account.setID ( OrderFoodVariable.resultSet.getString ( OrderFoodStaticVariable.account_col[i] ) );
-                        break;
-                    case "account_password" :
-                        Account.setPassword ( OrderFoodVariable.resultSet
-                                .getString ( OrderFoodStaticVariable.account_col[i] ) );
-                        break;
-                    default :
-                        break;
-                }
-            }
-            OrderFoodVariable.AccountList.add ( Account );
-        }
+    public static boolean setValue ( String[] col ) {
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
+        try {
+            while ( OrderFoodVariable.resultSet.next () ) {
+                Account = new OrderFoodAccount ();
+                if ( col.length == 2 ) {
+                    Account.setID ( OrderFoodVariable.resultSet.getString ( col[0] ) );
+                    Account.setPassword ( OrderFoodVariable.resultSet.getString ( col[1] ) );
+                } else {
+                    OrderFoodVariable.AccountList = new ArrayList< OrderFoodAccount > ();
+                    Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+                    return Ret;
+                }
+                OrderFoodVariable.AccountList.add ( Account );
+            }
+        } catch ( SQLException e ) {
+            Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+        }
+        return Ret;
     }
 
     public static void Dump () {
         for ( int i = 0; i < OrderFoodVariable.AccountList.size (); i++ ) {
-            System.out.println ( OrderFoodVariable.AccountList.get ( i ).ID );
-            System.out.println ( OrderFoodVariable.AccountList.get ( i ).Password );
+            System.out.println ( OrderFoodVariable.AccountList.get ( i ).id );
+            System.out.println ( OrderFoodVariable.AccountList.get ( i ).password );
 
         }
     }
 
     public void setID ( String ID ) {
-        this.ID = ID;
+        this.id = ID;
     }
 
-    public void setPassword ( String Password ) {
-        this.Password = Password;
+    public void setPassword ( String password ) {
+        this.password = password;
     }
 
     public String getID () {
-        return ID;
+        return id;
     }
 
     public String getPassword () {
-        return Password;
+        return password;
     }
 
 }

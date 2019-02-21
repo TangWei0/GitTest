@@ -2,6 +2,7 @@
 package Com.OrderFood.Access;
 
 import Com.OrderFood.Data.OrderFoodAccount;
+import Com.OrderFood.Data.OrderFoodDepartment;
 import Com.OrderFood.Data.OrderFoodVariable;
 import Com.OrderFood.Data.OrderFoodStaticVariable;
 import Com.OrderFood.Screen.OrderFoodApp;
@@ -128,13 +129,24 @@ public class OrderFoodAccess {
         return Ret;
     }
 
-    public boolean View () {
+    public boolean View ( String tabel ) throws SQLException {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
-        SQLCommand = "SELECT * FROM account";
+        SQLCommand = "SELECT * FROM " + tabel;
         Ret = RunSQLCommand ();
         if ( Ret ) {
-
+            if ( OrderFoodVariable.resultSet != null ) {
+                String[] col = OrderFoodVariable.Tabel.get ( tabel );
+                if ( tabel.equals ( "account" ) ) {
+                    OrderFoodAccount.setValue ( col );
+                } else if ( tabel.equals ( "department" ) ) {
+                    OrderFoodDepartment.setValue ( col );
+                } else {
+                    // 何もしない
+                }
+            } else {
+                OrderFoodApp.Log.WriteLogger ( "INFO", "データが存在しない" );
+            }
         } else {
             // 何もしない
         }
@@ -159,11 +171,7 @@ public class OrderFoodAccess {
 
                     // SQL命令実行の結果を変数に格納する
                     OrderFoodVariable.resultSet = statement.executeQuery ();
-                    if ( OrderFoodVariable.resultSet != null ) {
-                        OrderFoodAccount.setValue();
-                    } else {
-                        OrderFoodApp.Log.WriteLogger ( "INFO", "データが存在しない" );
-                    }
+
                 } catch ( SQLException e ) {
                     Ret = OrderFoodStaticVariable.LOG_JOB_NG;// 異常情報を出力する
                     OrderFoodApp.Log.WriteLogger ( "SEVERE", "SQL命令実行が失敗です。" );

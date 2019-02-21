@@ -48,17 +48,20 @@ public class OrderFoodFrame extends JFrame {
         frame.addWindowListener ( new OrderFoodWindowListener () );
 
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
-        //ArrayList< OrderFoodAccount > AccountList = new ArrayList< OrderFoodAccount >();
-        //OrderFoodAccount Account = new OrderFoodAccount ();
-        Ret = OrderFoodApp.Access.View ();
+        // ArrayList< OrderFoodAccount > AccountList = new ArrayList<
+        // OrderFoodAccount >();
+        // OrderFoodAccount Account = new OrderFoodAccount ();
+        Ret = OrderFoodApp.Access.View ( OrderFoodStaticVariable.tabel[0] );
         if ( Ret ) {
-            
+            Ret = OrderFoodApp.Access.View ( OrderFoodStaticVariable.tabel[2] );
         } else {
             OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginFrameにて異常発生したのでアプリが終了します。" );
             // アプリを終了する
             System.exit ( 0 );
         }
-        //OrderFoodApp.Log.WriteLogger ( "INFO", "Size:" + OrderFoodVariable.AccountList.size () );
+
+        // OrderFoodApp.Log.WriteLogger ( "INFO", "Size:" +
+        // OrderFoodVariable.AccountList.size () );
 
         /*
         OrderFoodVariable.AccountList.forEach ( item -> OrderFoodApp.Log.WriteLogger ( "INFO", item.getID () + "+"
@@ -70,6 +73,7 @@ public class OrderFoodFrame extends JFrame {
             }
         } );
         */
-        OrderFoodAccount.Dump();
+        OrderFoodAccount.Dump ();
+        OrderFoodDepartment.Dump ();
     }
 }
