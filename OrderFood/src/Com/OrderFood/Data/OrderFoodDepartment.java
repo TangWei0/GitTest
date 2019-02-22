@@ -2,7 +2,8 @@
 package Com.OrderFood.Data;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+
+import Com.OrderFood.Screen.OrderFoodApp;
 
 public class OrderFoodDepartment {
     int id;
@@ -10,25 +11,26 @@ public class OrderFoodDepartment {
 
     static OrderFoodDepartment Department = new OrderFoodDepartment ();
 
-    public static boolean setValue ( String[] col ){
+    public static boolean setValue ( String[] col ) {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
-        try {
-            while ( OrderFoodVariable.resultSet.next () ) {
-                Department = new OrderFoodDepartment ();
-                if ( col.length == 2 ) {
+        if ( col.length == 2 ) {
+            try {
+                while ( OrderFoodVariable.resultSet.next () ) {
+                    Department = new OrderFoodDepartment ();
                     Department.setID ( OrderFoodVariable.resultSet.getInt ( col[0] ) );
                     Department.setName ( OrderFoodVariable.resultSet.getString ( col[1] ) );
-                } else {
-                    OrderFoodVariable.DepartmentList = new ArrayList< OrderFoodDepartment > ();
-                    Ret = OrderFoodStaticVariable.LOG_JOB_NG;
-                    return Ret;
+                    OrderFoodVariable.DepartmentList.add ( Department );
                 }
-                OrderFoodVariable.DepartmentList.add ( Department );
+            } catch ( SQLException e ) {
+                Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+                OrderFoodApp.Log.WriteLogger ( "SEVERE", "SQL実行結果が異常です。" );
             }
-        } catch ( SQLException e ) {
+        } else {
             Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+            OrderFoodApp.Log.WriteLogger ( "SEVERE", "引数のサイズが異常です。" );
         }
+
         return Ret;
     }
 

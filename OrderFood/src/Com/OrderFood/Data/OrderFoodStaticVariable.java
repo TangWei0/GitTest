@@ -28,6 +28,6 @@ public class OrderFoodStaticVariable {
     public static String[] user_col = { "user_id", "user_name", "user_joined", "dapartment_id" };
     public static String[] department_col = { "department_id", "department_name" };
     // Timer Class　変数
-    public static int TimerOut = 10 * 60 * 1000;
+    public static int TimerOut = 1 * 60 * 1000;
 
 }

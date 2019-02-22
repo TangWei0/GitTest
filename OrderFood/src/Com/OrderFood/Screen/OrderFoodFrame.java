@@ -47,18 +47,9 @@ public class OrderFoodFrame extends JFrame {
         frame.addMouseListener ( new OrderFoodMouseListener () );
         frame.addWindowListener ( new OrderFoodWindowListener () );
 
-        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
         // ArrayList< OrderFoodAccount > AccountList = new ArrayList<
         // OrderFoodAccount >();
         // OrderFoodAccount Account = new OrderFoodAccount ();
-        Ret = OrderFoodApp.Access.View ( OrderFoodStaticVariable.tabel[0] );
-        if ( Ret ) {
-            Ret = OrderFoodApp.Access.View ( OrderFoodStaticVariable.tabel[2] );
-        } else {
-            OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginFrameにて異常発生したのでアプリが終了します。" );
-            // アプリを終了する
-            System.exit ( 0 );
-        }
 
         // OrderFoodApp.Log.WriteLogger ( "INFO", "Size:" +
         // OrderFoodVariable.AccountList.size () );
@@ -67,13 +58,37 @@ public class OrderFoodFrame extends JFrame {
         OrderFoodVariable.AccountList.forEach ( item -> OrderFoodApp.Log.WriteLogger ( "INFO", item.getID () + "+"
                 + item.getPassword () ) );
 
+        */
         OrderFoodVariable.AccountList.forEach ( item -> {
-            if ( "10001".equals ( item.getID () ) ) {
-                OrderFoodApp.Log.WriteLogger ( "INFO", item.getPassword () );
+            if ( ( "10201".equals ( item.getID () ) ) && ( "123456".equals ( item.getPassword () ) ) ) {
+                OrderFoodApp.Log.WriteLogger ( "INFO", "ログイン成功" );
+                OrderFoodVariable.AccountListIndex = OrderFoodVariable.AccountList.indexOf ( item );
+            } else {
+                OrderFoodApp.Log.WriteLogger ( "INFO", "ログイン失敗" );
             }
         } );
-        */
-        OrderFoodAccount.Dump ();
-        OrderFoodDepartment.Dump ();
+
+        OrderFoodVariable.UserList.forEach ( item -> {
+            if ( ( OrderFoodVariable.AccountList.get ( OrderFoodVariable.AccountListIndex ).getID ().equals ( item
+                    .getID () ) ) ) {
+                OrderFoodVariable.UserListIndex = OrderFoodVariable.UserList.indexOf ( item );
+            } else {
+                //
+            }
+        } );
+
+        OrderFoodVariable.DepartmentList.forEach ( item -> {
+            if ( ( OrderFoodVariable.UserList.get ( OrderFoodVariable.UserListIndex ).getDepartmentID () == item
+                    .getID () ) ) {
+                OrderFoodVariable.DepartmentListIndex = OrderFoodVariable.DepartmentList.indexOf ( item );
+            } else {
+                //
+            }
+        } );
+
+        System.out.println ( OrderFoodVariable.AccountListIndex );
+        System.out.println ( OrderFoodVariable.UserListIndex );
+        System.out.println ( OrderFoodVariable.DepartmentListIndex );
+
     }
 }

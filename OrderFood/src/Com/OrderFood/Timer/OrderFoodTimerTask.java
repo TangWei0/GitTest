@@ -25,51 +25,38 @@ public class OrderFoodTimerTask extends TimerTask {
         }
     }
 
-    public boolean AccessTimerStart () {
-        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
-
+    public void AccessTimerStart () {
         if ( !OrderFoodVariable.TimerStatus ) {
             Timer = new Timer ();
             Timer.schedule ( new OrderFoodTimerTask (), OrderFoodStaticVariable.TimerOut );
             OrderFoodApp.Log.WriteLogger ( "INFO", "Timerがスタートしました。" );
             OrderFoodVariable.TimerStatus = true;
         } else {
-            OrderFoodApp.Log.WriteLogger ( "SEVERE", "Timerスタートが失敗です。" );
-            Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+            OrderFoodApp.Log.WriteLogger ( "INFO", "Timerが既にスタートしました。" );
         }
-
-        return Ret;
     }
 
     public boolean AccessTimerReset () {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
         if ( OrderFoodVariable.AccessConnectStatus ) {
-            Ret = AccessTimerStop ();
-            if ( Ret ) {
-                Ret = AccessTimerStart ();
-            } else {
-                // 何もしない
-            }
+            AccessTimerStop ();
+            AccessTimerStart ();
         } else {
+            Ret = OrderFoodStaticVariable.LOG_JOB_NG;
             OrderFoodApp.Log.WriteLogger ( "INFO", "Access未接続です" );
         }
 
         return Ret;
     }
 
-    public boolean AccessTimerStop () {
-        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
-
+    public void AccessTimerStop () {
         if ( OrderFoodVariable.TimerStatus ) {
             Timer.cancel ();
             OrderFoodApp.Log.WriteLogger ( "INFO", "Timerがストップしました。" );
             OrderFoodVariable.TimerStatus = false;
         } else {
-            OrderFoodApp.Log.WriteLogger ( "SEVERE", "Timerストップが失敗です。" );
-            Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+            OrderFoodApp.Log.WriteLogger ( "INFO", "Timerが既にストップしました。" );
         }
-
-        return Ret;
     }
 }

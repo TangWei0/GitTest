@@ -31,6 +31,10 @@ public class OrderFoodVariable {
     public static HashMap< String, String[] > Tabel = new HashMap< String, String[] > ();
     public static ArrayList< OrderFoodAccount > AccountList = new ArrayList< OrderFoodAccount > ();
     public static ArrayList< OrderFoodDepartment > DepartmentList = new ArrayList< OrderFoodDepartment > ();
+    public static ArrayList< OrderFoodUser > UserList = new ArrayList< OrderFoodUser > ();
+    public static int AccountListIndex;
+    public static int UserListIndex;
+    public static int DepartmentListIndex;
 
     // 変数初期化
     public static void InitVariable () {

@@ -3,6 +3,7 @@ package Com.OrderFood.Access;
 
 import Com.OrderFood.Data.OrderFoodAccount;
 import Com.OrderFood.Data.OrderFoodDepartment;
+import Com.OrderFood.Data.OrderFoodUser;
 import Com.OrderFood.Data.OrderFoodVariable;
 import Com.OrderFood.Data.OrderFoodStaticVariable;
 import Com.OrderFood.Screen.OrderFoodApp;
@@ -40,7 +41,7 @@ public class OrderFoodAccess {
                     OrderFoodVariable.AccessConnectStatus = true;
 
                     // Access接続監視タイマーをスタートする
-                    Ret = TimerTask.AccessTimerStart ();
+                    TimerTask.AccessTimerStart ();
                 } else {
                     // 何もしない
                 }
@@ -81,7 +82,7 @@ public class OrderFoodAccess {
                     OrderFoodVariable.AccessConnectStatus = false;
 
                     // Access接続監視タイマーをストップする
-                    Ret = TimerTask.AccessTimerStop ();
+                    TimerTask.AccessTimerStop ();
                 } else {
                     // 何もしない
                 }
@@ -129,26 +130,34 @@ public class OrderFoodAccess {
         return Ret;
     }
 
-    public boolean View ( String tabel ) throws SQLException {
+    public boolean View () throws SQLException {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
-        SQLCommand = "SELECT * FROM " + tabel;
-        Ret = RunSQLCommand ();
-        if ( Ret ) {
-            if ( OrderFoodVariable.resultSet != null ) {
-                String[] col = OrderFoodVariable.Tabel.get ( tabel );
-                if ( tabel.equals ( "account" ) ) {
-                    OrderFoodAccount.setValue ( col );
-                } else if ( tabel.equals ( "department" ) ) {
-                    OrderFoodDepartment.setValue ( col );
+        for ( int i = 0; i < OrderFoodStaticVariable.tabel.length; i++ ) {
+            SQLCommand = "SELECT * FROM " + OrderFoodStaticVariable.tabel[i];
+            Ret = RunSQLCommand ();
+            if ( Ret ) {
+                if ( OrderFoodVariable.resultSet != null ) {
+                    String[] col = OrderFoodVariable.Tabel.get ( OrderFoodStaticVariable.tabel[i] );
+                    switch ( i ) {
+                        case 0 :
+                            OrderFoodAccount.setValue ( col );
+                            break;
+                        case 1 :
+                            OrderFoodUser.setValue ( col );
+                            break;
+                        case 2 :
+                            OrderFoodDepartment.setValue ( col );
+                            break;
+                        default :
+                            break;
+                    }
                 } else {
-                    // 何もしない
+                    OrderFoodApp.Log.WriteLogger ( "INFO", "データが存在しない" );
                 }
             } else {
-                OrderFoodApp.Log.WriteLogger ( "INFO", "データが存在しない" );
+                return Ret;
             }
-        } else {
-            // 何もしない
         }
         return Ret;
     }

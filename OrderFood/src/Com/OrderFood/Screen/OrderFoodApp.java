@@ -35,6 +35,10 @@ public class OrderFoodApp {
                     Ret = Log.CreatLogger ();
                     if ( Ret ) {
                         try {
+                            Ret = OrderFoodApp.Access.View ();
+                            OrderFoodAccount.Dump ();
+                            OrderFoodUser.Dump ();
+                            OrderFoodDepartment.Dump ();
                             Frame.LoginFrame ();
                         } catch ( SQLException e ) {
                             Log.WriteLogger ( "SERVER", "画面起動が異常発生したので、アプリを終了します。" );
