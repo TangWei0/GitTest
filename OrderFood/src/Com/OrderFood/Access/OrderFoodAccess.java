@@ -1,9 +1,6 @@
 
 package Com.OrderFood.Access;
 
-import Com.OrderFood.Data.OrderFoodAccount;
-import Com.OrderFood.Data.OrderFoodDepartment;
-import Com.OrderFood.Data.OrderFoodUser;
 import Com.OrderFood.Data.OrderFoodVariable;
 import Com.OrderFood.Data.OrderFoodStaticVariable;
 import Com.OrderFood.Screen.OrderFoodApp;
@@ -12,16 +9,21 @@ import Com.OrderFood.Timer.OrderFoodTimerTask;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class OrderFoodAccess {
     public static OrderFoodTimerTask TimerTask = new OrderFoodTimerTask ();
 
     static Connection connection;
     static PreparedStatement statement;
-    static String SQLCommand;
+    static ResultSet resultSet;
+    static ResultSetMetaData resultSetMetaData;
+    static String command;
 
-    private boolean getConnection () {
+    private boolean GetConnection () {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
 
         // Connectステタースをチェックする
@@ -130,43 +132,13 @@ public class OrderFoodAccess {
         return Ret;
     }
 
-    public boolean View () throws SQLException {
+    private boolean RunSQLCommand ( int SQLType ) {
         boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
-
-        for ( int i = 0; i < OrderFoodStaticVariable.tabel.length; i++ ) {
-            SQLCommand = "SELECT * FROM " + OrderFoodStaticVariable.tabel[i];
-            Ret = RunSQLCommand ();
-            if ( Ret ) {
-                if ( OrderFoodVariable.resultSet != null ) {
-                    String[] col = OrderFoodVariable.Tabel.get ( OrderFoodStaticVariable.tabel[i] );
-                    switch ( i ) {
-                        case 0 :
-                            OrderFoodAccount.setValue ( col );
-                            break;
-                        case 1 :
-                            OrderFoodUser.setValue ( col );
-                            break;
-                        case 2 :
-                            OrderFoodDepartment.setValue ( col );
-                            break;
-                        default :
-                            break;
-                    }
-                } else {
-                    OrderFoodApp.Log.WriteLogger ( "INFO", "データが存在しない" );
-                }
-            } else {
-                return Ret;
-            }
-        }
-        return Ret;
-    }
-
-    private boolean RunSQLCommand () {
-        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+        int i;
+        String[] item;
 
         // Connect接続処理を行う
-        Ret = getConnection ();
+        Ret = GetConnection ();
 
         if ( Ret ) {// Connect接続処理成功の場合
             // Statementクリア処理を行う
@@ -176,11 +148,46 @@ public class OrderFoodAccess {
                 // SQL命令実行処理を行う
                 try {
                     // SQL命令実行する
-                    statement = connection.prepareStatement ( SQLCommand );
-
-                    // SQL命令実行の結果を変数に格納する
-                    OrderFoodVariable.resultSet = statement.executeQuery ();
-
+                    statement = connection.prepareStatement ( command );
+                    if ( OrderFoodVariable.ParameterData.isEmpty () ) {
+                        // 何もしない
+                    } else {
+                        for ( i = 0; i < OrderFoodVariable.ParameterData.size (); i++ ) {
+                            item = OrderFoodVariable.ParameterData.get ( i );
+                            if ( item[1].equals ( "string" ) ) {
+                                statement.setString ( i + 1, item[0] );
+                            } else if ( item[1].equals ( "int" ) ) {
+                                statement.setInt ( i + 1, Integer.parseInt ( item[0] ) );
+                            } else if ( item[1].equals ( "boolean" ) ) {
+                                statement.setBoolean ( i + 1, Boolean.valueOf ( item[0] ) );
+                            } else {
+                                OrderFoodApp.Log.WriteLogger ( "SEVERE", "SQL命令パラメータが設定異常です。" );
+                                Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+                                return Ret;
+                            }
+                        }
+                    }
+                    if ( SQLType == OrderFoodStaticVariable.SQLTYPE_UPDATE ) {
+                        // SQL更新命令実行する
+                        statement.executeUpdate ();
+                    } else {
+                        // SQL検索命令実行の結果を変数に格納する
+                        resultSet = statement.executeQuery ();
+                        if ( resultSet != null ) {
+                            // 何もしない
+                        } else {
+                            Ret = OrderFoodStaticVariable.LOG_JOB_NG;
+                            OrderFoodApp.Log.WriteLogger ( "SEVERE", "SQL命令実行結果取得が失敗です。" );
+                        }
+                        while ( resultSet.next () ) {
+                            HashMap< String, String > Map = new HashMap< String, String > ();
+                            resultSetMetaData = resultSet.getMetaData ();
+                            for ( i = 1; i <= resultSetMetaData.getColumnCount (); i++ ) {
+                                Map.put ( resultSetMetaData.getColumnName ( i ), resultSet.getString ( i ) );
+                            }
+                            OrderFoodVariable.ResultData.add ( Map );
+                        }
+                    }
                 } catch ( SQLException e ) {
                     Ret = OrderFoodStaticVariable.LOG_JOB_NG;// 異常情報を出力する
                     OrderFoodApp.Log.WriteLogger ( "SEVERE", "SQL命令実行が失敗です。" );
@@ -195,4 +202,68 @@ public class OrderFoodAccess {
         return Ret;
     }
 
+    public boolean Update () {
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+        command = null;
+
+        command = "UPDATE "
+                + OrderFoodVariable.ParameterTabel
+                + " SET "
+                + OrderFoodVariable.ParameterSet;
+
+        if ( OrderFoodVariable.ParameterWhere == null ) {
+            // 何もしない
+        } else {
+            command += " WHERE "
+                    + OrderFoodVariable.ParameterWhere;
+        }
+        
+        OrderFoodApp.Log.WriteLogger ( "INFO", "SQL命令実行：開始" );
+        Ret = RunSQLCommand ( OrderFoodStaticVariable.SQLTYPE_UPDATE );
+        if ( Ret ) {
+            OrderFoodApp.Log.WriteLogger ( "INFO", "SQL命令実行：成功" );
+        } else {
+            OrderFoodApp.Log.WriteLogger ( "WARNING", "SQL命令実行：失敗" );
+        }
+        return Ret;
+    }
+
+    public boolean Search () {
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+        command = null;
+
+        command = "SELECT "
+                + OrderFoodVariable.ParameterSelect
+                + " FROM "
+                + OrderFoodVariable.ParameterTabel;
+        if ( OrderFoodVariable.ParameterInner == null ) {
+            // 何もしない
+        } else {
+            command += " INNER JOIN "
+                    + OrderFoodVariable.ParameterInner;
+        }
+
+        if ( OrderFoodVariable.ParameterOn == null ) {
+            // 何もしない
+        } else {
+            command += " ON "
+                    + OrderFoodVariable.ParameterOn;
+        }
+
+        if ( OrderFoodVariable.ParameterWhere == null ) {
+            // 何もしない
+        } else {
+            command += " WHERE "
+                    + OrderFoodVariable.ParameterWhere;
+        }
+        
+        OrderFoodApp.Log.WriteLogger ( "INFO", "SQL命令実行：開始" );
+        Ret = RunSQLCommand ( OrderFoodStaticVariable.SQLTYPE_SEARCH );
+        if ( Ret ) {
+            OrderFoodApp.Log.WriteLogger ( "INFO", "SQL命令実行：成功" );
+        } else {
+            OrderFoodApp.Log.WriteLogger ( "WARNING", "SQL命令実行：失敗" );
+        }
+        return Ret;
+    }
 }

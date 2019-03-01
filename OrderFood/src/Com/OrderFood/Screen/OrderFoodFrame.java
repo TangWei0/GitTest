@@ -4,18 +4,32 @@ package Com.OrderFood.Screen;
 import Com.OrderFood.Listener.*;
 import Com.OrderFood.Data.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 public class OrderFoodFrame extends JFrame {
-    public OrderFoodFrame () {
-    }
     /**
 	 * 
 	 */
     private static final long serialVersionUID = 1L;
+    JFrame LoginFrame = new JFrame ();
+    JPanel Pan = new JPanel ();
+    JLabel Title_lbl = new JLabel ( "ログイン処理", JLabel.CENTER );
+    JLabel ID_lbl = new JLabel ( "ID：", JLabel.RIGHT );
+    JLabel Password_lbl = new JLabel ( "パスワード：", JLabel.RIGHT );
+    JTextField ID_fld = new JTextField ();
+    JPasswordField Password_fld = new JPasswordField ();
+    JButton Login_btn = new JButton ( "ログイン" );
+    JButton Reset_btn = new JButton ( "リセット" );
 
     /**
      * Create the frame.
@@ -23,72 +37,188 @@ public class OrderFoodFrame extends JFrame {
      * @return
      * @throws SQLException
      */
-    public void LoginFrame () throws SQLException {
-        OrderFoodApp.Log.WriteLogger ( "CONFIG", OrderFoodVariable.FrameWidth + " " + OrderFoodVariable.FrameHeight );
-        JFrame frame = new JFrame ();
-        frame.getContentPane ().setLayout ( null );
+    public void LoginFrame () {
 
-        JButton button1 = new JButton ( "開始" );
-        button1.setBounds ( 157, 223, 91, 21 );
-        frame.getContentPane ().add ( button1 );
-
-        JButton button2 = new JButton ( "終了" );
-        button2.setBounds ( 307, 223, 91, 21 );
-        frame.getContentPane ().add ( button2 );
-
-        JButton button3 = new JButton ( "リセット" );
-        button3.setBounds ( 477, 223, 91, 21 );
-        frame.getContentPane ().add ( button3 );
-
-        frame.setSize ( OrderFoodVariable.FrameWidth, OrderFoodVariable.FrameHeight );
-        frame.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE );
-        frame.setVisible ( true );
-        frame.setResizable ( false );
-        frame.addMouseListener ( new OrderFoodMouseListener () );
-        frame.addWindowListener ( new OrderFoodWindowListener () );
-
-        // ArrayList< OrderFoodAccount > AccountList = new ArrayList<
-        // OrderFoodAccount >();
-        // OrderFoodAccount Account = new OrderFoodAccount ();
-
-        // OrderFoodApp.Log.WriteLogger ( "INFO", "Size:" +
-        // OrderFoodVariable.AccountList.size () );
-
-        /*
-        OrderFoodVariable.AccountList.forEach ( item -> OrderFoodApp.Log.WriteLogger ( "INFO", item.getID () + "+"
-                + item.getPassword () ) );
-
-        */
-        OrderFoodVariable.AccountList.forEach ( item -> {
-            if ( ( "10201".equals ( item.getID () ) ) && ( "123456".equals ( item.getPassword () ) ) ) {
-                OrderFoodApp.Log.WriteLogger ( "INFO", "ログイン成功" );
-                OrderFoodVariable.AccountListIndex = OrderFoodVariable.AccountList.indexOf ( item );
-            } else {
-                OrderFoodApp.Log.WriteLogger ( "INFO", "ログイン失敗" );
-            }
-        } );
-
-        OrderFoodVariable.UserList.forEach ( item -> {
-            if ( ( OrderFoodVariable.AccountList.get ( OrderFoodVariable.AccountListIndex ).getID ().equals ( item
-                    .getID () ) ) ) {
-                OrderFoodVariable.UserListIndex = OrderFoodVariable.UserList.indexOf ( item );
-            } else {
-                //
-            }
-        } );
-
-        OrderFoodVariable.DepartmentList.forEach ( item -> {
-            if ( ( OrderFoodVariable.UserList.get ( OrderFoodVariable.UserListIndex ).getDepartmentID () == item
-                    .getID () ) ) {
-                OrderFoodVariable.DepartmentListIndex = OrderFoodVariable.DepartmentList.indexOf ( item );
-            } else {
-                //
-            }
-        } );
-
-        System.out.println ( OrderFoodVariable.AccountListIndex );
-        System.out.println ( OrderFoodVariable.UserListIndex );
-        System.out.println ( OrderFoodVariable.DepartmentListIndex );
-
+        FrameInit ();
+        LoginFrame.addMouseListener ( new OrderFoodMouseListener () );
+        LoginFrame.addWindowListener ( new OrderFoodWindowListener () );
+        Login_btn.addActionListener ( new ButtonActionListener () );
+        Reset_btn.addActionListener ( new ButtonActionListener () );
     }
+
+    private void FrameInit () {
+        int dx;
+        int dy;
+        LoginFrame.getContentPane ().setLayout ( null );
+        LoginFrame.setSize ( OrderFoodVariable.FrameWidth, OrderFoodVariable.FrameHeight );
+        LoginFrame.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE );
+        LoginFrame.setVisible ( true );
+        LoginFrame.setResizable ( false );
+
+        dx = OrderFoodVariable.UnitWidth * 7;
+        dy = OrderFoodVariable.UnitHeight;
+        Title_lbl.setBounds ( dx, dy, OrderFoodVariable.UnitWidth * 6, OrderFoodVariable.UnitHeight );
+
+        dy = OrderFoodVariable.UnitHeight * 3;
+        ID_lbl.setBounds ( dx, dy, OrderFoodVariable.UnitWidth * 2, OrderFoodVariable.UnitHeight );
+
+        dx = OrderFoodVariable.UnitWidth * 9;
+        ID_fld.setBounds ( dx, dy, OrderFoodVariable.UnitWidth * 4, OrderFoodVariable.UnitHeight );
+
+        dx = OrderFoodVariable.UnitWidth * 7;
+        dy = OrderFoodVariable.UnitHeight * 5;
+        Password_lbl.setBounds ( dx, dy, OrderFoodVariable.UnitWidth * 2, OrderFoodVariable.UnitHeight );
+
+        dx = OrderFoodVariable.UnitWidth * 9;
+        Password_fld.setBounds ( dx, dy, OrderFoodVariable.UnitWidth * 4, OrderFoodVariable.UnitHeight );
+
+        dx = OrderFoodVariable.UnitWidth * 7;
+        dy = OrderFoodVariable.UnitHeight * 7;
+        Login_btn.setBounds ( dx, dy, OrderFoodVariable.UnitWidth * 2, OrderFoodVariable.UnitHeight );
+
+        dx = OrderFoodVariable.UnitWidth * 11;
+        Reset_btn.setBounds ( dx, dy, OrderFoodVariable.UnitWidth * 2, OrderFoodVariable.UnitHeight );
+
+        LoginFrame.getContentPane ().add ( Title_lbl );
+        LoginFrame.getContentPane ().add ( ID_lbl );
+        LoginFrame.getContentPane ().add ( ID_fld );
+        LoginFrame.getContentPane ().add ( Password_lbl );
+        LoginFrame.getContentPane ().add ( Password_fld );
+        LoginFrame.getContentPane ().add ( Login_btn );
+        LoginFrame.getContentPane ().add ( Reset_btn );
+    }
+
+    private boolean Login () {
+        boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+
+        OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得：開始" );
+        Ret = OrderFoodStatus.GetDBLoginStatus ();
+        if ( Ret ) {
+            OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得：OK" );
+
+            OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果数チェック：開始" );
+            if ( OrderFoodVariable.Status.getLoginStatusSize ()  == 1 ) {
+                OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果数チェック：OK" );
+
+                OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果チェック：開始" );
+                if ( OrderFoodVariable.Status.getLoginStatus ( 0 ) ) {
+                    OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginStatus取得結果チェック：NG" );
+
+                    JOptionPane.showMessageDialog ( null, "既にログインしました。" );
+                    Reset_btn.doClick ();
+                } else {
+                    OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果チェック：OK" );
+                }
+            } else {
+                OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginStatus取得結果数チェック：NG" );
+
+                JOptionPane.showMessageDialog ( null, "入力IDが間違っています。" );
+                Reset_btn.doClick ();
+            }
+        } else {
+            OrderFoodApp.Log.WriteLogger ( "SERVER", "LoginStatus取得：NG" );
+            return Ret;
+        }
+
+        OrderFoodApp.Log.WriteLogger ( "INFO", "パスワード取得：開始" );
+        Ret = OrderFoodAccount.GetPassword ();
+        if ( Ret ) {
+            OrderFoodApp.Log.WriteLogger ( "INFO", "パスワード取得：OK" );
+
+            OrderFoodApp.Log.WriteLogger ( "INFO", "パスワード取得結果数チェック：開始" );
+            if ( OrderFoodVariable.Account.getPasswordSize () == 1 ) {
+                OrderFoodApp.Log.WriteLogger ( "INFO", "パスワード取得結果数チェック：OK" );
+
+                OrderFoodApp.Log.WriteLogger ( "INFO", "パスワード取得結果チェック：開始" );
+                if ( OrderFoodVariable.Account.getPassword ( 0 ).equals ( OrderFoodVariable.Password ) ) {
+                    OrderFoodApp.Log.WriteLogger ( "INFO", "パスワード取得結果チェック：OK" );
+
+                } else {
+                    OrderFoodApp.Log.WriteLogger ( "WARNING", "パスワード取得結果チェック：NG" );
+
+                    JOptionPane.showMessageDialog ( null, "入力IDが間違っています。" );
+                    Reset_btn.doClick ();
+                }
+            } else {
+                OrderFoodApp.Log.WriteLogger ( "WARNING", "パスワード取得結果数チェック：NG" );
+
+                JOptionPane.showMessageDialog ( null, "入力IDが間違っています。" );
+                Reset_btn.doClick ();
+            }
+        } else {
+            OrderFoodApp.Log.WriteLogger ( "SERVER", "パスワード取得：NG" );
+            return Ret;
+        }
+
+        Ret = OrderFoodStatus.SetDBLoginStatus ( true );
+        if ( Ret ) {
+            OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得：OK" );
+
+            OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果数チェック：開始" );
+            if ( OrderFoodVariable.Status.getLoginStatusSize () == 1 ) {
+                OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果数チェック：OK" );
+
+                OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果チェック：開始" );
+                if ( OrderFoodVariable.Status.getLoginStatus ( 0 ) ) {
+                    OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginStatus取得結果チェック：NG" );
+
+                    JOptionPane.showMessageDialog ( null, "既にログインしました。" );
+                    Reset_btn.doClick ();
+                } else {
+                    OrderFoodApp.Log.WriteLogger ( "INFO", "LoginStatus取得結果チェック：OK" );
+                }
+            } else {
+                OrderFoodApp.Log.WriteLogger ( "WARNING", "LoginStatus取得結果数チェック：NG" );
+
+                JOptionPane.showMessageDialog ( null, "入力IDが間違っています。" );
+                Reset_btn.doClick ();
+            }
+        } else {
+            OrderFoodApp.Log.WriteLogger ( "SERVER", "LoginStatus取得：NG" );
+            return Ret;
+        }
+
+        return Ret;
+    }
+
+    private class ButtonActionListener implements ActionListener {
+        public void actionPerformed ( ActionEvent e ) {
+            if ( e.getSource () == Login_btn ) {
+                boolean Ret = OrderFoodStaticVariable.LOG_JOB_OK;
+
+                if ( ID_fld.getText ().length () == 0 ) {
+                    JOptionPane.showMessageDialog ( null, "IDが未入力です。" );
+                    Reset_btn.doClick ();
+                    return;
+                } else {
+                    if ( Password_fld.getPassword ().length == 0 ) {
+                        JOptionPane.showMessageDialog ( null, "パスワードが未入力です。" );
+                        Reset_btn.doClick ();
+                        return;
+                    } else {
+                        // 何もしない。
+                    }
+                }
+
+                OrderFoodVariable.ID = ID_fld.getText ();
+                OrderFoodVariable.Password = String.valueOf ( Password_fld.getPassword () );
+
+                Ret = Login ();
+                if ( Ret ) {
+//                    Ret = UpdateStatus ();
+//                    Ret = OrderFoodApp.DownloadSubStatus ();
+                } else {
+                    OrderFoodApp.Log.WriteLogger ( "SEVERE", "異常が発生しましたので、アプリを終了します。" );
+                    System.exit ( 0 );
+                }
+            } else if ( e.getSource () == Reset_btn ) {
+                ID_fld.setText ( "" );
+                Password_fld.setText ( "" );
+            } else {
+                OrderFoodApp.Log.WriteLogger ( "SEVERE", "ボタンが異常発生しましたので、アプリを終了します。" );
+                System.exit ( 0 );
+            }
+        }
+    }
+
 }

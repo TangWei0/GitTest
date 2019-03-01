@@ -8,7 +8,6 @@ import Com.OrderFood.Log.*;
 import java.awt.EventQueue;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -34,15 +33,10 @@ public class OrderFoodApp {
                     OrderFoodVariable.InitVariable ();
                     Ret = Log.CreatLogger ();
                     if ( Ret ) {
-                        try {
-                            Ret = OrderFoodApp.Access.View ();
-                            OrderFoodAccount.Dump ();
-                            OrderFoodUser.Dump ();
-                            OrderFoodDepartment.Dump ();
+                        if ( Ret ) {
                             Frame.LoginFrame ();
-                        } catch ( SQLException e ) {
-                            Log.WriteLogger ( "SERVER", "画面起動が異常発生したので、アプリを終了します。" );
-                            // アプリ終了する
+                        } else {
+                            Log.WriteLogger ( "SEVERE", "異常が発生しましたので、アプリを終了します。" );
                             System.exit ( 0 );
                         }
                     } else {
@@ -59,5 +53,4 @@ public class OrderFoodApp {
         }
 
     }
-
 }

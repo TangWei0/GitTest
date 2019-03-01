@@ -2,6 +2,7 @@
 package Com.OrderFood.Listener;
 
 import Com.OrderFood.Data.OrderFoodStaticVariable;
+import Com.OrderFood.Data.OrderFoodStatus;
 import Com.OrderFood.Screen.OrderFoodApp;
 
 import java.awt.event.WindowEvent;
@@ -17,10 +18,13 @@ public class OrderFoodWindowListener implements WindowListener {
         boolean Ret1 = OrderFoodStaticVariable.LOG_JOB_OK;
         boolean Ret2 = OrderFoodStaticVariable.LOG_JOB_OK;
 
+        OrderFoodStatus.SetDBLoginStatus ( false );
+
         Ret1 = OrderFoodApp.Access.CloseAccessConnection ();
         Ret2 = OrderFoodApp.Log.CheckLogger ( OrderFoodStaticVariable.OldLogCheck );
 
-        if ( Ret1 && Ret2 ) {
+        if ( Ret1
+                && Ret2 ) {
             OrderFoodApp.Log.WriteLogger ( "INFO", "アプリが正常終了します。" );
         } else {
             OrderFoodApp.Log.WriteLogger ( "WARNING", "アプリが異常終了します。" );
