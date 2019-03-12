@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+.btn {
+	width: 15%;
+	height: 50px;
+	/* 文字サイズを1.3に指定 */
+	font-size: 1.5m;
+	/* 文字の太さをboldに指定 */
+	font-weight: bold;
+	/* 縦方向に10px、横方向に30pxの余白を指定 */
+	/*padding: 10px px;*/
+    
+    /* ボタンの影の指定
+     * 影の横幅を2px
+     * 縦長を2px
+     * ぼかしを3px
+     * 広がりを1px
+     * 色を#666（グレー）に指定 */
+	box-shadow: 2px 2px 3px 1px #666;
+    -moz-box-shadow: 2px 2px 3px 1px #666;
+    -webkit-box-shadow: 2px 2px 3px 1px #666;
+    
+	/* テキストの影の指定
+     * 影の横幅を1px
+     * 縦長を1px
+     * ぼかしを2px
+     * 色を#000（黒）に指定 */
+	text-shadow: 1px 1px 2px #000;
+	position: relative;
+	display: inline-block;
+	text-decoration: none;
+	color: #00a6ff;
+	background: #ECECEC;
+	transition: .4s;
+	/* 角丸の指定 */
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.btn:hover {
+	background: #00bcd4;
+	color: white;
+}
+
+.btn:active {
+	-ms-transform: translateY(3px);
+	-webkit-transform: translateY(3px);
+	transform: translateY(3px);
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+	border-bottom: none;
+}
+
+.btn:disabled {
+    background-image: none;
+    background-color: #ccc;
+    border-color: #ccc;
+}
+div.button {
+	text-align: center;
+}
+
+div.title {
+	text-align: center;
+	background: #fdd5fc;
+	color: #000000;
+	WIDTH: 100%;	
+}
