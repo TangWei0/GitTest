@@ -5,31 +5,37 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JLabel;
+
+import Com.OrderFood.Data.Enum.*;
+
 public class Variable {
     // Screen Class
     public static int FrameWidth;
     public static int FrameHeight;
     public static int UnitWidth;
     public static int UnitHeight;
+    public static JLabel statusBar = new JLabel ( "" );
 
     // Access Class
+    public static NetworkStateResult NetworkStateResult;
+    public static DBStateResult DBStateResult;
+    public static ThreadResult ThreadResult = Enum.ThreadResult.RUNNING;
     public static boolean AccessConnectStatus;
     public static boolean AccessStatementStatus;
 
     public static String Command;
-    public static int SQLType;
-    public static ArrayList< String[] > ParameterData;
+    public static SQLType SQLType;
+    public static JobResult JobResult;
+    public static ArrayList< ParameterDataType > ParameterDataType;
+    public static ArrayList< String > ParameterData;
     public static ArrayList< HashMap< String, String > > ResultData;
 
     // Timer Class
     public static int TimerOut;
-    public static boolean TimerStatus;
+    public static AccessTimerResult AccessTimerResult;
     public static long CurrentDate;
     public static long OldDate;
-
-    // Log Class
-    public static String CurrentLogFileName;
-    public static String OldLogFileName;
 
     // Data Class
     public static Account Account = new Account ();
@@ -45,8 +51,6 @@ public class Variable {
         InitScreenVariable ();
         InitAccessVariable ();
         InitTimerVariable ();
-        InitLogVariable ();
-        InitDataVariable ();
     }
 
     // Screenパッケージ初期化
@@ -60,34 +64,24 @@ public class Variable {
 
     // Accessパッケージ初期化
     private static void InitAccessVariable () {
+        NetworkStateResult = Enum.NetworkStateResult.DISCONNECTED;
+        DBStateResult = Enum.DBStateResult.DISCONNECTED;
         AccessConnectStatus = false;
         AccessStatementStatus = false;
     }
 
     // Timerパッケージ初期化
     private static void InitTimerVariable () {
-        TimerStatus = false;
-        CurrentDate = System.currentTimeMillis () / 1000;
-        OldDate = CurrentDate
-                - ( 30 * 24 * 60 * 60 );
-    }
-
-    // Logパッケージ初期化
-    private static void InitLogVariable () {
-        CurrentLogFileName = CurrentDate
-                + ".log";
-        OldLogFileName = OldDate
-                + ".log";
-    }
-
-    // Dataパッケージ初期化
-    private static void InitDataVariable () {
-
+        AccessTimerResult = Enum.AccessTimerResult.STOPED;
+        CurrentDate = System.currentTimeMillis ();
+        OldDate = CurrentDate - ( 30 * 24 * 60 * 60 * 1000L );
+        TimerOut = Enum.TimerOut;
     }
 
     public static void DataClear () {
         Command = null;
-        ParameterData = new ArrayList< String[] > ();
+        ParameterDataType = new ArrayList< ParameterDataType > ();
+        ParameterData = new ArrayList< String > ();
         ResultData = new ArrayList< HashMap< String, String > > ();
     }
 }

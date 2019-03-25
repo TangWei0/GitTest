@@ -1,8 +1,6 @@
 
 package Com.OrderFood.Listener;
 
-import Com.OrderFood.Data.StaticVariable;
-import Com.OrderFood.Data.Status;
 import Com.OrderFood.Screen.App;
 
 import java.awt.event.WindowEvent;
@@ -17,7 +15,7 @@ public class AddWindowListener implements WindowListener {
 
     public void windowClosing ( WindowEvent e ) {
         /* 処理したい内容をここに記述する */
-        boolean Ret = StaticVariable.LOG_JOB_OK;
+        boolean Ret = true;
 
         //Ret = Status.setDBLoginStatus ( false );
         if ( Ret ) {

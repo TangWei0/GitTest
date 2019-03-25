@@ -3,6 +3,7 @@ package Test;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class TimeTask {
 	static Calendar calendarRef;
@@ -33,7 +34,7 @@ public class TimeTask {
 		init();
 		System.out.println("Timer開始:" + new Date());
 		timer = new Timer();
-		timer.schedule(task, runDate);
+		//timer.schedule(task, 20000);
 	}
 
 	public static void stop() {

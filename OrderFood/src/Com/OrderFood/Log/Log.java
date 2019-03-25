@@ -3,7 +3,6 @@ package Com.OrderFood.Log;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
@@ -11,8 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import javax.swing.JOptionPane;
+
 import Com.OrderFood.Data.Variable;
-import Com.OrderFood.Data.StaticVariable;
+import Com.OrderFood.Data.Enum;
+import Com.OrderFood.Data.Enum.JobResult;
+import Com.OrderFood.Screen.App;
 
 public class Log {
     // Loggerクラスのインスタンスを生成
@@ -21,8 +24,8 @@ public class Log {
     static String LogPath = new File ( "" ).getAbsolutePath () + "\\Log\\";
     static String OldLogPath = LogPath + "Old\\";
 
-    public boolean CreatLogger () {
-        boolean Ret = StaticVariable.LOG_JOB_OK;
+    public void CreatLogger () {
+        JobResult JobResult = Enum.JobResult.SUCCESS;
 
         File[] FileList = new File ( LogPath ).listFiles ();
         for ( int i = 0; i < FileList.length; i++ ) {
@@ -33,7 +36,7 @@ public class Log {
         }
 
         try {
-            Handler handler = new FileHandler ( LogPath + Variable.CurrentLogFileName );
+            Handler handler = new FileHandler ( LogPath + Variable.CurrentDate + ".log" );
             handler.setEncoding ( "UTF-8" );
             Log.addHandler ( handler );
 
@@ -43,29 +46,31 @@ public class Log {
 
             // ログレベルの設定
             Log.setLevel ( Level.ALL );
-
+            JobResult = Enum.JobResult.SUCCESS;
         } catch ( IllegalArgumentException e ) {
-            Ret = StaticVariable.LOG_JOB_NG;
-            // デバッグ用メッセージ提示する
-            System.out.println ( new Date () + "CreatLogger関数で例外のスローが発生しました。" );
+            JobResult = Enum.JobResult.ABNORMAL_ILLEGAL_ARGUMENT;
         } catch ( SecurityException e ) {
-            Ret = StaticVariable.LOG_JOB_NG;
-            // デバッグ用メッセージ提示する
-            System.out.println ( new Date () + "CreatLogger関数でセキュリティ異常が発生しました。" );
+            JobResult = Enum.JobResult.ABNORMAL_SECURITY;
         } catch ( IOException e ) {
-            Ret = StaticVariable.LOG_JOB_NG;
-            // デバッグ用メッセージ提示する
-            System.out.println ( new Date () + "CreatLogger関数で異常が発生しました。" );
+            JobResult = Enum.JobResult.ABNORMAL_IO;
         }
-        return Ret;
+
+        if ( JobResult.equals ( Enum.JobResult.SUCCESS ) ) {
+            // 何もしない
+        } else {
+            App.Log.WriteLogger ( "SEVERE", App.Log.getFileMethod () + JobResult.name ().toString () );
+            JOptionPane.showMessageDialog ( null, "異常発生したので、アプリを終了する" );
+            System.exit ( 0 );
+        }
     }
 
     public void DeleteLogger () {
         File[] FileList = new File ( OldLogPath ).listFiles ();
         for ( int i = 0; i < FileList.length; i++ ) {
             if ( FileList[i].isFile () ) {
-                String fileName = FileList[i].getName ();
-                if ( fileName.compareTo ( Variable.OldLogFileName ) < 0 ) {
+                String[] fileName = FileList[i].getName ().split ( "\\." );
+                long compar = Long.valueOf ( fileName[0] );
+                if ( compar < Variable.OldDate ) {
                     FileList[i].delete ();
                 } else {
                     break;
@@ -108,5 +113,11 @@ public class Log {
                 .append ( traceElement.getLineNumber () ).append ( " | " ).append ( traceElement.getMethodName () )
                 .append ( "] " );
         return toStringBuffer.toString ();
+    }
+    
+    public void ErrorMessage(String Message){
+        App.Log.WriteLogger ( "SEVERE", Message );
+        JOptionPane.showMessageDialog ( null, "異常発生したので、アプリを終了する" );
+        System.exit ( 0 );
     }
 }

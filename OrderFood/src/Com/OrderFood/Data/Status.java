@@ -1,24 +1,26 @@
 
 package Com.OrderFood.Data;
 
+import Com.OrderFood.Timer.TimeChange;
+
 public class Status {
     private boolean LoginStatus;
-    private boolean ExitStatus;
+    private long ConnectTime;
 
-    public void setLoginStatus (boolean setValue) {
-        this.LoginStatus = setValue;
+    public void setLoginStatus ( String setValue ) {
+        this.LoginStatus = Boolean.valueOf ( setValue );
     }
 
-    public void setExitStatus (boolean setValue) {
-        this.ExitStatus = setValue;
+    public void setConnectTime ( String setValue ) {
+        this.ConnectTime = TimeChange.getToLong ( setValue );
     }
 
     public boolean getLoginStatus () {
         return this.LoginStatus;
     }
 
-    public boolean getExitStatus () {
-        return this.ExitStatus;
+    public long getConnectTime () {
+        return this.ConnectTime;
     }
-    
+
 }

@@ -14,7 +14,8 @@ public class AddMouseListener implements MouseListener {
 
     public void mousePressed ( MouseEvent e ) {
         // TODO Auto-generated method stub
-        App.Timer.AccessTimerReset ();
+        App.AccessTimerTask.mySuspend ();
+        App.AccessTimerTask.myResume ();
     }
 
     public void mouseReleased ( MouseEvent e ) {
