@@ -1,0 +1,12 @@
+2 20, 2019 6:00:37 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+構成: 1366 728
+2 20, 2019 6:00:46 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Connect接続処理が成功です。
+2 20, 2019 6:00:46 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Timerがスタートしました。
+2 20, 2019 6:05:22 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Connect終了処理が成功です。
+2 20, 2019 6:05:22 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: Timerがストップしました。
+2 20, 2019 6:05:23 午後 Com.OrderFood.Log.OrderFoodLogger WriteLogger
+情報: アプリが正常終了します。

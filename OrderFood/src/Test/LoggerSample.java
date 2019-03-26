@@ -17,7 +17,7 @@ public class LoggerSample {
         long date = System.currentTimeMillis();
         System.out.println(CURRENT_PATH);
         try {
-        	Handler handler = new FileHandler(CURRENT_PATH +"\\Log\\" + date +".log");
+            Handler handler = new FileHandler(CURRENT_PATH +"\\Log\\" + date +".log");
             logger.addHandler(handler);
 
             // フォーマッターを作成してハンドラーに登録
