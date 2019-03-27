@@ -1,11 +1,4 @@
-
 package Com.OrderFood.Timer;
-
-import Com.OrderFood.Data.Enum;
-import Com.OrderFood.Data.Variable;
-import Com.OrderFood.Data.Enum.ThreadResult;
-import Com.OrderFood.Data.Enum.JobResult;
-import Com.OrderFood.Screen.App;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -13,38 +6,53 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
+import Com.OrderFood.Data.Enum;
+import Com.OrderFood.Data.Enum.JobResult;
+import Com.OrderFood.Data.Enum.ThreadResult;
+import Com.OrderFood.Data.Variable;
+import Com.OrderFood.Screen.App;
+
 public class NetworkState extends Thread {
 	ThreadResult ThreadResult = Enum.ThreadResult.RUNNING;
-	int sleepTime = Enum.MinTime;
-	int count = 0;
+	int SleepTime = Enum.MinTime;
+	int TimeCount = 0;
+	int Count = 0;
 
 	public void run() {
 		JobResult JobResult = Enum.JobResult.SUCCESS;
 
-		System.out.println("Run開始");
-
 		while (ThreadResult.equals(Enum.ThreadResult.RUNNING)) {
-			count = 0;
-			System.out.println("テスト");
+			TimeCount = 0;
 			try {
 				InetAddress inet = InetAddress.getLocalHost();
 				if (inet.getHostAddress().toString().equals(Enum.host_ip)) {
 					Variable.NetworkStateResult = Enum.NetworkStateResult.DISCONNECTED;
-					Variable.statusBar.setText("ネットワーク未接続");
+					Variable.StatusBar.setText("ネットワーク未接続");
+					Variable.StatusBarPanel.setVisible(Enum.TRUE);
+					Count = 0;
 					setRetryTime();
 				} else {
 					inet = InetAddress.getByName(Enum.DB_ip);
 					if (inet.isReachable(1000)) {
 						Variable.NetworkStateResult = Enum.NetworkStateResult.DISCOVERED;
-						Variable.statusBar.setText("DB接続可能");
+						Variable.StatusBar.setText("DB接続可能" + Count);
+						if (Count < 5) {
+							Variable.StatusBarPanel.setVisible(Enum.TRUE);
+						} else {
+							Variable.StatusBarPanel.setVisible(Enum.FALSE);
+						}
+						Count++;
 						ResetRetryTime();
 					} else {
 						Variable.NetworkStateResult = Enum.NetworkStateResult.UNDISCOVERED;
-						Variable.statusBar.setText("DB接続不可");
+						Variable.StatusBar.setText("DB接続不可");
+						Variable.StatusBarPanel.setVisible(Enum.TRUE);
+						Count = 0;
 						setRetryTime();
 					}
 				}
-				App.Log.WriteLogger("INFO", App.Log.getFileMethod() + Variable.NetworkStateResult.name().toString());
+				App.Log.WriteLogger("INFO", App.Log.getFileMethod()
+						+ Variable.NetworkStateResult.name().toString());
 				sleep();
 				System.out.println("Sleep終了");
 			} catch (UnknownHostException e1) {
@@ -56,7 +64,8 @@ public class NetworkState extends Thread {
 			if (JobResult.equals(Enum.JobResult.SUCCESS)) {
 				// 何もしない
 			} else {
-				App.Log.WriteLogger("SEVERE", App.Log.getFileMethod() + JobResult.name().toString());
+				App.Log.WriteLogger("SEVERE", App.Log.getFileMethod()
+						+ JobResult.name().toString());
 				JOptionPane.showMessageDialog(null, "異常発生したので、アプリを終了する");
 				System.exit(0);
 			}
@@ -64,30 +73,33 @@ public class NetworkState extends Thread {
 	}
 
 	private void setRetryTime() {
-		sleepTime = sleepTime * 2;
-		if (sleepTime > Enum.MaxTime) {
-			sleepTime = Enum.MaxTime;
+		SleepTime = SleepTime * 2;
+		if (SleepTime > Enum.MaxTime) {
+			SleepTime = Enum.MaxTime;
 		} else {
 			// 何もしない
 		}
-		System.out.println(sleepTime);
+		System.out.println(SleepTime);
 	}
 
 	private void ResetRetryTime() {
-		sleepTime = Enum.MinTime;
+		SleepTime = Enum.MinTime;
 	}
 
 	private void sleep() {
 		JobResult JobResult = Enum.JobResult.SUCCESS;
 
-		while (count < sleepTime) {
+		while (TimeCount < SleepTime) {
 			try {
 				Thread.sleep(1000);
-				if (Variable.NetworkStateResult.equals(Enum.NetworkStateResult.DISCOVERED)) {
-					count = 0;
+				if (Variable.NetworkStateResult
+						.equals(Enum.NetworkStateResult.DISCOVERED)) {
+					TimeCount = SleepTime;
 				} else {
-					count++;
-					Variable.statusBar.setText(String.valueOf(sleepTime - count) + "秒後：ネットワークチェック処理リトライする");
+					TimeCount++;
+					Variable.StatusBar.setText(String.valueOf(SleepTime
+							- TimeCount)
+							+ "秒後：ネットワークチェック処理リトライする");
 				}
 			} catch (InterruptedException e) {
 				JobResult = Enum.JobResult.ABNORMAL_INTERRUPTED;

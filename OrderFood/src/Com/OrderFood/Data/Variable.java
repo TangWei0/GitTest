@@ -6,8 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import Com.OrderFood.Data.Enum.*;
+import Com.OrderFood.Data.Enum.AccessTimerResult;
+import Com.OrderFood.Data.Enum.DBStateResult;
+import Com.OrderFood.Data.Enum.JobResult;
+import Com.OrderFood.Data.Enum.NetworkStateResult;
+import Com.OrderFood.Data.Enum.ParameterDataType;
+import Com.OrderFood.Data.Enum.SQLType;
+import Com.OrderFood.Data.Enum.ThreadResult;
 
 public class Variable {
     // Screen Class
@@ -15,7 +22,8 @@ public class Variable {
     public static int FrameHeight;
     public static int UnitWidth;
     public static int UnitHeight;
-    public static JLabel statusBar = new JLabel ( "" );
+    public static JLabel StatusBar = new JLabel ( "" );
+    public static JPanel StatusBarPanel = new JPanel();
 
     // Access Class
     public static NetworkStateResult NetworkStateResult;
