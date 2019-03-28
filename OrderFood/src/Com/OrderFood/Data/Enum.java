@@ -37,8 +37,8 @@ public class Enum {
 	public static final boolean FALSE = false;
 
 	// Access Class 変数
-//	public static final String DB_ip = "10.25.109.31";
-	public static final String DB_ip = "192.168.3.2";
+	public static final String DB_ip = "10.25.109.31";
+//	public static final String DB_ip = "192.168.3.2";
 	public static final String host_ip = "127.0.0.1";
 	public static final String url = "jdbc:ucanaccess://DB//orderfood.accdb";
 	public static final String user = "";
