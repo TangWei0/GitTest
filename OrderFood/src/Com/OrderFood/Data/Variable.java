@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,9 +23,10 @@ public class Variable {
     public static int FrameHeight;
     public static int UnitWidth;
     public static int UnitHeight;
-    public static JLabel StatusBar = new JLabel ( "" );
     public static JPanel StatusBarPanel = new JPanel();
-
+    public static JLabel StatusBarLabel = new JLabel ( "" );
+    public static JButton StatusBarButton = new JButton ( "リトライ" );
+    
     // Access Class
     public static NetworkStateResult NetworkStateResult;
     public static DBStateResult DBStateResult;

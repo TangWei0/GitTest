@@ -3,10 +3,9 @@ package Com.OrderFood.Screen;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,11 +18,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 import Com.OrderFood.Access.Access;
 import Com.OrderFood.Access.LoginDao;
 import Com.OrderFood.Data.Enum;
 import Com.OrderFood.Data.Variable;
+import Com.OrderFood.Listener.StatusButtonActionListener;
 
 public class LoginFrame extends JFrame {
     /**
@@ -50,157 +52,128 @@ public class LoginFrame extends JFrame {
     LoginFrame ( String title ) {
         setVisible ( true );
         setTitle ( title );
-        setSize ( 582, 460 );
+        setSize ( Variable.FrameWidth, Variable.FrameHeight );
         setResizable ( false );
         setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE );
-        Insets insets = this.getInsets ();
 
-        JPanel p1 = new JPanel ();
-        // p1.setBackground ( Color.BLUE );
+        FrameInit ();
 
-        Variable.StatusBarPanel.setBackground ( Color.ORANGE );
-        int weight = Variable.FrameWidth - insets.left - insets.right;
-        int height = Variable.FrameHeight - insets.top - insets.bottom;
-        Variable.StatusBar.setSize ( weight, height / 20 );
-        Variable.StatusBarPanel.add ( Variable.StatusBar );
-        Variable.StatusBarPanel.setVisible ( Enum.FALSE );
-
-        Container contentPane = getContentPane ();
-        contentPane.add ( p1, BorderLayout.CENTER );
-        contentPane.add ( Variable.StatusBarPanel, BorderLayout.SOUTH );
-        GridBagConstraints gbc = new GridBagConstraints ();
-        gbc.fill = GridBagConstraints.BOTH;
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 3;
-
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 2;
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 1;
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 1;
-
-        gbc.gridx = 1;
-        gbc.gridy = 3;
-        gbc.gridwidth = 1;
-        GridBagLayout gbl_p1 = new GridBagLayout();
-        gbl_p1.columnWidths = new int[]{153, 58, 17, 0, 6, 53, 6, 67, 63, 0, 0};
-        gbl_p1.rowHeights = new int[]{0, 0, 49, 21, 0, 0, 0};
-        gbl_p1.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        gbl_p1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-        p1.setLayout(gbl_p1);
-        
-                GridBagConstraints gbc_Title_lbl = new GridBagConstraints();
-                gbc_Title_lbl.fill = GridBagConstraints.BOTH;
-                gbc_Title_lbl.gridwidth = 18;
-                gbc_Title_lbl.insets = new Insets(0, 0, 5, 0);
-                gbc_Title_lbl.gridx = 0;
-                gbc_Title_lbl.gridy = 2;
-                p1.add ( Title_lbl, gbc_Title_lbl );
-        GridBagConstraints gbc_ID_lbl = new GridBagConstraints();
-        gbc_ID_lbl.insets = new Insets(0, 0, 5, 5);
-        gbc_ID_lbl.gridx = 1;
-        gbc_ID_lbl.gridy = 3;
-        p1.add ( ID_lbl, gbc_ID_lbl );
-        GridBagConstraints gbc_ID_fld = new GridBagConstraints();
-        gbc_ID_fld.fill = GridBagConstraints.HORIZONTAL;
-        gbc_ID_fld.gridwidth = 5;
-        gbc_ID_fld.insets = new Insets(0, 0, 5, 5);
-        gbc_ID_fld.gridx = 3;
-        gbc_ID_fld.gridy = 3;
-        p1.add ( ID_fld, gbc_ID_fld );
-        GridBagConstraints gbc_Password_lbl = new GridBagConstraints();
-        gbc_Password_lbl.insets = new Insets(0, 0, 5, 5);
-        gbc_Password_lbl.gridx = 1;
-        gbc_Password_lbl.gridy = 4;
-        p1.add ( Password_lbl, gbc_Password_lbl );
-        GridBagConstraints gbc_Password_fld = new GridBagConstraints();
-        gbc_Password_fld.fill = GridBagConstraints.HORIZONTAL;
-        gbc_Password_fld.gridwidth = 5;
-        gbc_Password_fld.insets = new Insets(0, 0, 5, 5);
-        gbc_Password_fld.gridx = 3;
-        gbc_Password_fld.gridy = 4;
-        p1.add ( Password_fld, gbc_Password_fld );
-        GridBagConstraints gbc_Login_btn = new GridBagConstraints();
-        gbc_Login_btn.gridwidth = 2;
-        gbc_Login_btn.insets = new Insets(0, 0, 0, 5);
-        gbc_Login_btn.gridx = 1;
-        gbc_Login_btn.gridy = 5;
-        p1.add ( Login_btn, gbc_Login_btn );
-        GridBagConstraints gbc_Reset_btn = new GridBagConstraints();
-        gbc_Reset_btn.gridwidth = 2;
-        gbc_Reset_btn.insets = new Insets(0, 0, 0, 5);
-        gbc_Reset_btn.gridx = 4;
-        gbc_Reset_btn.gridy = 5;
-        p1.add ( Reset_btn, gbc_Reset_btn );
     }
 
-    /*
-     * FrameInit ();
-     *
-     * // BorderLayout = new BorderLayout ( 10, 5 ); Container contentPane =
-     * getContentPane (); JPanel p2 = new JPanel (); p2.setBackground (
-     * Color.ORANGE ); p2.add ( statusBar ); contentPane.add ( p2,
-     * BorderLayout.SOUTH ); // LoginFrame.addMouseListener ( new
-     * AddMouseListener () ); // LoginFrame.addWindowListener ( new
-     * AddWindowListener () ); // Login_btn.addActionListener ( new
-     * ButtonActionListener () ); // Reset_btn.addActionListener ( new
-     * ButtonActionListener () ); }
-     *
-     * private void FrameInit () {
-     *
-     * int dx; int dy;
-     *
-     * LoginFrame.getContentPane ().setLayout ( new BorderLayout ( 10, 5 ) );
-     * LoginFrame.setSize ( Variable.FrameWidth, Variable.FrameHeight );
-     * LoginFrame.setDefaultCloseOperation ( JFrame.EXIT_ON_CLOSE );
-     * LoginFrame.setVisible ( true ); LoginFrame.setResizable ( false );
-     *
-     * /* dx = Variable.UnitWidth * 7; dy = Variable.UnitHeight;
-     * Title_lbl.setBounds ( dx, dy, Variable.UnitWidth * 6, Variable.UnitHeight
-     * );
-     *
-     * dy = Variable.UnitHeight * 3; ID_lbl.setBounds ( dx, dy,
-     * Variable.UnitWidth * 2, Variable.UnitHeight );
-     *
-     * dx = Variable.UnitWidth * 9; ID_fld.setBounds ( dx, dy,
-     * Variable.UnitWidth * 4, Variable.UnitHeight );
-     *
-     * dx = Variable.UnitWidth * 7; dy = Variable.UnitHeight * 5;
-     * Password_lbl.setBounds ( dx, dy, Variable.UnitWidth * 2,
-     * Variable.UnitHeight );
-     *
-     * dx = Variable.UnitWidth * 9; Password_fld.setBounds ( dx, dy,
-     * Variable.UnitWidth * 4, Variable.UnitHeight );
-     *
-     * dx = Variable.UnitWidth * 7; dy = Variable.UnitHeight * 7;
-     * Login_btn.setBounds ( dx, dy, Variable.UnitWidth * 2, Variable.UnitHeight
-     * );
-     *
-     * dx = Variable.UnitWidth * 11; Reset_btn.setBounds ( dx, dy,
-     * Variable.UnitWidth * 2, Variable.UnitHeight );
-     *
-     * LoginFrame.getContentPane ().add ( Title_lbl ); LoginFrame.getContentPane
-     * ().add ( ID_lbl ); LoginFrame.getContentPane ().add ( ID_fld );
-     * LoginFrame.getContentPane ().add ( Password_lbl );
-     * LoginFrame.getContentPane ().add ( Password_fld );
-     * LoginFrame.getContentPane ().add ( Login_btn ); LoginFrame.getContentPane
-     * ().add ( Reset_btn ); LoginFrame.getContentPane ().add ( statusBar );
-     */
+    /* BorderLayout = new BorderLayout ( 10, 5 ); Container contentPane =
+    getContentPane (); JPanel p2 = new JPanel (); p2.setBackground (
+    Color.ORANGE ); p2.add ( statusBar ); contentPane.add ( p2,
+    BorderLayout.SOUTH ); // LoginFrame.addMouseListener ( new
+    AddMouseListener () ); // LoginFrame.addWindowListener ( new
+    AddWindowListener () ); // Login_btn.addActionListener ( new
+    ButtonActionListener () ); // Reset_btn.addActionListener ( new
+    ButtonActionListener () ); }
+    */
+    private void FrameInit () {
+        JPanel p1 = new JPanel ();
+        GridBagLayout gblayout = new GridBagLayout ();
+        p1.setLayout ( gblayout );
+
+        JLabel l1 = new JLabel ( "label1" );
+        l1.setHorizontalAlignment ( JLabel.HORIZONTAL );
+        l1.setVerticalAlignment ( JLabel.BOTTOM );
+
+        JLabel l2 = new JLabel ( "label2", SwingConstants.CENTER );
+        JLabel l3 = new JLabel ( "label3", SwingConstants.CENTER );
+        JLabel l4 = new JLabel ( "label4", SwingConstants.CENTER );
+
+        l1.setBorder ( new LineBorder ( Color.BLACK, 2 ) );
+        l2.setBorder ( new LineBorder ( Color.BLACK, 2 ) );
+        l3.setBorder ( new LineBorder ( Color.BLACK, 2 ) );
+        l4.setBorder ( new LineBorder ( Color.BLACK, 2 ) );
+
+        GridBagConstraints gbc = new GridBagConstraints ();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.insets = new Insets ( 1, 1, 1, 1 );
+        gbc.weightx = 1.0;
+        gbc.weighty = 5.0;
+        gblayout.setConstraints ( l1, gbc );
+        p1.add ( l1 );
+
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.insets = new Insets ( 1, 1, 1, 1 );
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        gblayout.setConstraints ( l2, gbc );
+        p1.add ( l2 );
+
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.insets = new Insets ( 1, 1, 1, 1 );
+        gbc.weightx = 1.5;
+        gbc.weighty = 1.0;
+        gblayout.setConstraints ( l3, gbc );
+        p1.add ( l3 );
+
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        gbc.insets = new Insets ( 1, 1, 1, 1 );
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gblayout.setConstraints ( l4, gbc );
+        p1.add ( l4 );
+
+        JButton button3 = new JButton ( "Button3" );
+        JButton button4 = new JButton ( "Button4" );
+
+        JPanel p2 = new JPanel ();
+        p2.setLayout ( new FlowLayout ( FlowLayout.LEFT ) );
+        p2.add ( button3 );
+        p2.add ( button4 );
+
+        Variable.StatusBarPanel.setBackground ( Color.ORANGE );
+        Variable.StatusBarPanel.setVisible ( Enum.FALSE );
+        gblayout = new GridBagLayout ();
+        Variable.StatusBarPanel.setLayout ( gblayout );
+
+        gbc = new GridBagConstraints ();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.insets = new Insets ( 5, 5, 5, 5 );
+        gbc.weightx = 10.0;
+        gbc.weighty = 1.0;
+        gblayout.setConstraints ( Variable.StatusBarLabel, gbc );
+        Variable.StatusBarPanel.add ( Variable.StatusBarLabel );
+
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        gbc.insets = new Insets ( 5, 5, 5, 5 );
+        gbc.weightx = 0.5;
+        gbc.weighty = 1.0;
+        gblayout.setConstraints ( Variable.StatusBarButton, gbc );
+        Variable.StatusBarPanel.add ( Variable.StatusBarButton );
+
+        getContentPane ().add ( p1, BorderLayout.CENTER );
+        getContentPane ().add ( p2, BorderLayout.PAGE_START );
+        getContentPane ().add ( Variable.StatusBarPanel, BorderLayout.PAGE_END );
+
+//        Variable.StatusBarButton.addActionListener ( new StatusButtonActionListener () );
+    }
 
     private boolean Login () {
         boolean Ret = true;

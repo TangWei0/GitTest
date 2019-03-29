@@ -26,6 +26,7 @@ public class Access {
         if ( Variable.NetworkStateResult.equals ( Enum.NetworkStateResult.DISCOVERED ) ) {
             try {
                 connection = DriverManager.getConnection ( Enum.url, Enum.user, Enum.pass );
+                connection.setAutoCommit ( false );
                 Variable.DBStateResult = Enum.DBStateResult.CONNECTING;
 
                 // DB操作時間の監視Thread起動する
@@ -156,6 +157,13 @@ public class Access {
                 App.Log.WriteLogger ( "SEVERE", App.Log.getFileMethod () + " SQL命令実行：FALSE" );
 
                 Ret = false;
+                
+                try {
+                    connection.rollback ();
+                } catch ( SQLException e1 ) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             } finally {
                 try {
                     if ( resultSet != null ) {
