@@ -1,0 +1,8 @@
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\bin\Debug\netstandard2.0\ClassLibrary.deps.json
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\bin\Debug\netstandard2.0\ClassLibrary.dll
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\bin\Debug\netstandard2.0\ClassLibrary.pdb
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\obj\Debug\netstandard2.0\ClassLibrary.csprojAssemblyReference.cache
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\obj\Debug\netstandard2.0\ClassLibrary.AssemblyInfoInputs.cache
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\obj\Debug\netstandard2.0\ClassLibrary.AssemblyInfo.cs
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\obj\Debug\netstandard2.0\ClassLibrary.dll
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ClassLibrary\obj\Debug\netstandard2.0\ClassLibrary.pdb
