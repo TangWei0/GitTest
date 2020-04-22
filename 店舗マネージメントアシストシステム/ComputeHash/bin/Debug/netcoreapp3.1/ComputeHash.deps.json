@@ -8,24 +8,24 @@
     ".NETCoreApp,Version=v3.1": {
       "ComputeHash/1.0.0": {
         "dependencies": {
-          "ClassLibrary": "1.0.0.0",
-          "HashTool": "1.0.0.0"
+          "Constant": "0.0.0.0",
+          "Time": "1.0.0.0"
         },
         "runtime": {
           "ComputeHash.dll": {}
         }
       },
-      "ClassLibrary/1.0.0.0": {
+      "Constant/0.0.0.0": {
         "runtime": {
-          "ClassLibrary.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+          "Constant.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
           }
         }
       },
-      "HashTool/1.0.0.0": {
+      "Time/1.0.0.0": {
         "runtime": {
-          "HashTool.dll": {
+          "Time.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -39,12 +39,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "ClassLibrary/1.0.0.0": {
+    "Constant/0.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
-    "HashTool/1.0.0.0": {
+    "Time/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

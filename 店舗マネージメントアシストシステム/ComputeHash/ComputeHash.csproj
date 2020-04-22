@@ -6,11 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="ClassLibrary">
-      <HintPath>..\ClassLibrary\bin\Debug\netstandard2.0\ClassLibrary.dll</HintPath>
+    <Reference Include="Constant">
+      <HintPath>..\CommonLib\Constant\obj\ManagerAssist\Constant.dll</HintPath>
     </Reference>
-    <Reference Include="HashTool">
-      <HintPath>..\HashTool\bin\Debug\netstandard2.0\HashTool.dll</HintPath>
+    <Reference Include="Time">
+      <HintPath>..\CommonLib\Time\obj\DS1\Time.dll</HintPath>
     </Reference>
   </ItemGroup>
 
