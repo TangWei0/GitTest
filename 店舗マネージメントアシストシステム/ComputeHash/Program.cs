@@ -1,55 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Security.Cryptography;
 using CommonLib.Constant.ManagerAssist;
 
 namespace ComputeHash
 {
     class Program
     {
-        private static void PPP ( )
-        {
-            MD5CryptoServiceProvider MD5CSP = new MD5CryptoServiceProvider( );
-            byte[] byte_hash;
-            byte[] byte_value = null;
-            int[] t1 = new int[5];
-            int len = t1.Length;
-
-            try
-            {
-                /* ハッシュ配列に出力 */
-                //byte_hash = MD5CSP.ComputeHash(byte_value);
-
-                t1[len] = 5;
-                len++;
-            }
-            catch(Exception e)
-            {
-                /* 異常終了 */
-                throw new ProException(e.Message, e);
-            }
-        }
-
-        public class ProException :Exception
-        {
-            public ProException (string message, Exception inner) : base(message, inner)
-            {
-            }
-        }
-
         public static void Main (string[] args)
         {
-            try
-            {
-                PPP( );
-            }
-            catch(ProException e)
-            {
-                Console.WriteLine(e.InnerException);
-                Console.WriteLine(e.StackTrace);
-            }
-            //Console.WriteLine(Constant.test);
-            //Console.WriteLine(E_FUNCTION_RESULT.ABORT);
+            Console.WriteLine(Constant.test);
+            Console.WriteLine(E_FUNCTION_RESULT.ABORT);
 
             //Console.WriteLine(E_FUNCTION_RESULT.ABORT);
             //Time Time = new Time( );

@@ -9,6 +9,9 @@
     <Reference Include="Constant">
       <HintPath>..\CommonLib\Constant\obj\ManagerAssist\Constant.dll</HintPath>
     </Reference>
+    <Reference Include="Time">
+      <HintPath>..\CommonLib\Time\obj\DS1\Time.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

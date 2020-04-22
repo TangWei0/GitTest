@@ -11,6 +11,7 @@ C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシスト�
 C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ComputeHash\obj\Debug\netcoreapp3.1\ComputeHash.csprojAssemblyReference.cache
 C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ComputeHash\obj\Debug\netcoreapp3.1\ComputeHash.csproj.CopyComplete
 C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ComputeHash\bin\Debug\netcoreapp3.1\Constant.dll
+C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ComputeHash\bin\Debug\netcoreapp3.1\Time.dll
 C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ComputeHash\obj\Debug\netcoreapp3.1\ComputeHash.csproj.CoreCompileInputs.cache
 C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ComputeHash\obj\Debug\netcoreapp3.1\ComputeHash.genruntimeconfig.cache
 C:\Users\toui8\Documents\GitHub\GitTest\店舗マネージメントアシストシステム\ComputeHash\bin\Debug\netcoreapp3.1\Constant.pdb
