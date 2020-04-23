@@ -56,7 +56,7 @@ namespace LibBaseSequence
         }
 
         protected abstract void PreProcessCore ( );
-        
+
         /// <summary>
         /// 本体処理
         /// </summary>

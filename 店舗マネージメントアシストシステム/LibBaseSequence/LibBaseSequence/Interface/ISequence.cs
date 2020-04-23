@@ -16,7 +16,7 @@
         /// 事前プロセス
         /// </summary>
         void PreProcess ( );
-        
+
         /// <summary>
         /// 本体処理
         /// </summary>
@@ -26,7 +26,5 @@
         /// 事後処理
         /// </summary>
         void PostProcess ( );
-
-
     }
 }

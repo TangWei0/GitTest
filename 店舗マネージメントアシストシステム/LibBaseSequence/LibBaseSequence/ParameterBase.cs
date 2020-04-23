@@ -7,7 +7,9 @@ namespace LibBaseSequence
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ParameterBase ( ) { }
+        public ParameterBase ( )
+        {
+        }
 
         public void SetParam ( )
         {
