@@ -4,8 +4,13 @@ using LibBaseSequence.Interface;
 
 namespace LibBaseSequence
 {
-    public abstract class SequenceBase :ISequence
+    public abstract class SequenceBase<TParameter, TResult> :ISequence
+        where TParameter : ParameterBase, new()
+        where TResult : ResultBase, new()
     {
+        public TParameter Parameter { get; set; } = new TParameter( );
+        public TResult Result { get; set; } = new TResult( );
+
         /// <summary>
         /// 残りの行動数
         /// </summary>
@@ -33,16 +38,22 @@ namespace LibBaseSequence
             {
                 try
                 {
+                    // 事前プロセス
                     PreProcess( );
+
+                    // 本体処理
                     Exec( );
+
+                    // 事後プロセス
                     PostProcess( );
                 }
                 catch(ProcessException ex)
                 {
-                    retry = ErrorSequence(ex);
+                    // 例外処理
+                    ex.View( );
 
-                    // 異常終了
-                    return;
+                    // エラーシーケンスを実行
+                    retry = ErrorSequence();
                 }
             } while(retry == Constant.MAS_Yes);
         }
@@ -50,50 +61,50 @@ namespace LibBaseSequence
         /// <summary>
         /// 事前プロセス
         /// </summary>
-        public void PreProcess ( )
-        {
-            PreProcessCore( );
-        }
-
-        protected abstract void PreProcessCore ( );
+        public abstract void PreProcess ( );
 
         /// <summary>
         /// 本体処理
         /// </summary>
-        public void Exec ( )
-        {
-            ExecCore( );
-        }
-
-        protected abstract void ExecCore ( );
+        public abstract void Exec ( );
 
         /// <summary>
         /// 事後プロセス
         /// </summary>
-        public void PostProcess ( )
-        {
-            PostProcessCore( );
-        }
+        public abstract void PostProcess ( );
 
-        protected abstract void PostProcessCore ( );
-
-        public bool ErrorSequence (ProcessException ex)
+        /// <summary>
+        /// エラーシーケンス
+        /// </summary>
+        /// <returns>リトライするかを返却</returns>
+        public bool ErrorSequence ( )
         {
-            Console.WriteLine(ex.Message);
-            Console.WriteLine(ex.StackTrace);
+            bool retry = Constant.MAS_No;
 
             if(retryEnable && (remainAction > 0))
             {
+                // リトライ かつ 残り行動数あり
                 remainAction--;
-                return Constant.MAS_Yes;
+
+                // 各ライブラリのエラーシーケンスを実行
+                // 基本的に各ライブラリを初期化する(事前プロセス実行前状態に戻る)
+                ErrorSequenceCore( );
+
+                // リトライ
+                retry = Constant.MAS_Yes;
             }
             else
             {
-                ErrorSequenceCore( );
-                return Constant.MAS_No;
+                // リトライしない場合、ステータスがFailedに設定
+                Result.SetStatus(E_FUNCTION_STATUS.FAILED);
             }
+
+            return retry;
         }
 
-        protected abstract bool ErrorSequenceCore ( );
+        /// <summary>
+        /// 各ライブラリのエラーシーケンスを実行
+        /// </summary>
+        protected abstract void ErrorSequenceCore ( );
     }
 }

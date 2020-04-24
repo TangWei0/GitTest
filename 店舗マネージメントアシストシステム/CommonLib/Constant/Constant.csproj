@@ -69,7 +69,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'ManagerAssist|AnyCPU'">
     <Compile Include="ManagerAssist\Constant.cs" />
-    <Compile Include="ManagerAssist\Enum\E_FUNCTION_RESULT.cs" />
+    <Compile Include="ManagerAssist\Enum\E_FUNCTION_STATUS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,7 +10,7 @@
         /// <summary>
         /// エラーシーケンス
         /// </summary>
-        bool ErrorSequence (ProcessException ex);
+        bool ErrorSequence ( );
 
         /// <summary>
         /// 事前プロセス

@@ -5,14 +5,14 @@ namespace LibBaseSequence
 {
     public abstract class ResultBase :IResult
     {
-        private E_FUNCTION_RESULT result;
-        public E_FUNCTION_RESULT GetResult ( )
+        protected E_FUNCTION_STATUS status;
+        public E_FUNCTION_STATUS GetStatus ( )
         {
-            return result;
+            return status;
         }
-        public void SetResult (E_FUNCTION_RESULT rel)
+        public void SetStatus (E_FUNCTION_STATUS _status)
         {
-            result = rel;
+            status = _status;
         }
 
         /// <summary>
@@ -20,11 +20,11 @@ namespace LibBaseSequence
         /// </summary>
         public ResultBase ( )
         {
+            status = E_FUNCTION_STATUS.INIT;
         }
 
         public void Init ( )
         {
-            result = E_FUNCTION_RESULT.ABORT;
             InitCore( );
         }
 
