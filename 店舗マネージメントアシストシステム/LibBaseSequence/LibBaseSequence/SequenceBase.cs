@@ -1,10 +1,11 @@
-﻿using System;
-using CommonLib.Constant.ManagerAssist;
-using LibBaseSequence.Interface;
+﻿using LibBaseSequence.Interface;
+
+using static CommonLib.Constant.ManagerAssist.Common;
+using static CommonLib.Constant.ManagerAssist.E_FUNCTION_STATUS;
 
 namespace LibBaseSequence
 {
-    public abstract class SequenceBase<TParameter, TResult> :ISequence
+    public abstract class SequenceBase<TParameter,TResult> : ISequence
         where TParameter : ParameterBase, new()
         where TResult : ResultBase, new()
     {
@@ -26,26 +27,25 @@ namespace LibBaseSequence
         /// </summary>
         public SequenceBase (int retryMax = 0)
         {
-            retryEnable = retryMax == 0 ? Constant.MAS_No : Constant.MAS_Yes;
+            retryEnable = retryMax == 0 ? MAS_No : MAS_Yes;
             remainAction = retryMax;
         }
 
-        public void NormalSequence ( )
+        /// <summary>
+        /// ライブラリ処理
+        /// </summary>
+        public void Exec ( )
         {
-            bool retry = Constant.MAS_No;
+            bool rel = MAS_No;
+            bool retry = MAS_No;
 
             do
             {
                 try
                 {
-                    // 事前プロセス
-                    PreProcess( );
-
-                    // 本体処理
-                    Exec( );
-
-                    // 事後プロセス
-                    PostProcess( );
+                    // ノーマルシーケンスを実行
+                    NormalSequence( );
+                    rel = MAS_Yes;
                 }
                 catch(ProcessException ex)
                 {
@@ -53,9 +53,60 @@ namespace LibBaseSequence
                     ex.View( );
 
                     // エラーシーケンスを実行
-                    retry = ErrorSequence();
+                    retry = ErrorSequence( );
                 }
-            } while(retry == Constant.MAS_Yes);
+            } while(retry == MAS_Yes);
+
+            if(rel)
+            {
+                // ライブラリ実行結果を設定
+                Result.SetStatus(SUCCESS);
+            }
+        }
+
+        /// <summary>
+        /// ノーマルシーケンス
+        /// </summary>
+        public void NormalSequence ( )
+        {
+            // 事前プロセス
+            PreProcess( );
+
+            // 本体プロセス
+            BodyProcess( );
+
+            // 事後プロセス
+            PostProcess( );
+        }
+
+        /// <summary>
+        /// エラーシーケンス
+        /// リトライ場合、リトライプロセスを実行
+        /// リトライしない場合、ステータスがFailedに設定
+        /// </summary>
+        /// <returns>リトライするかを返却</returns>
+        public bool ErrorSequence ( )
+        {
+            bool retry = MAS_No;
+
+            if(retryEnable && (remainAction > 0))
+            {
+                // リトライ かつ 残り行動数あり
+                remainAction--;
+
+                // リトライプロセスを実行
+                RetryProcess( );
+
+                // リトライ
+                retry = MAS_Yes;
+            }
+            else
+            {
+                // リトライしない場合、ステータスがFailedに設定
+                Result.SetStatus(FAILED);
+            }
+
+            return retry;
         }
 
         /// <summary>
@@ -66,7 +117,7 @@ namespace LibBaseSequence
         /// <summary>
         /// 本体処理
         /// </summary>
-        public abstract void Exec ( );
+        public abstract void BodyProcess ( );
 
         /// <summary>
         /// 事後プロセス
@@ -74,37 +125,8 @@ namespace LibBaseSequence
         public abstract void PostProcess ( );
 
         /// <summary>
-        /// エラーシーケンス
+        /// リトライプロセス(ノーマルシーケンス実行前の状態戻る)
         /// </summary>
-        /// <returns>リトライするかを返却</returns>
-        public bool ErrorSequence ( )
-        {
-            bool retry = Constant.MAS_No;
-
-            if(retryEnable && (remainAction > 0))
-            {
-                // リトライ かつ 残り行動数あり
-                remainAction--;
-
-                // 各ライブラリのエラーシーケンスを実行
-                // 基本的に各ライブラリを初期化する(事前プロセス実行前状態に戻る)
-                ErrorSequenceCore( );
-
-                // リトライ
-                retry = Constant.MAS_Yes;
-            }
-            else
-            {
-                // リトライしない場合、ステータスがFailedに設定
-                Result.SetStatus(E_FUNCTION_STATUS.FAILED);
-            }
-
-            return retry;
-        }
-
-        /// <summary>
-        /// 各ライブラリのエラーシーケンスを実行
-        /// </summary>
-        protected abstract void ErrorSequenceCore ( );
+        public abstract void RetryProcess ( );
     }
 }

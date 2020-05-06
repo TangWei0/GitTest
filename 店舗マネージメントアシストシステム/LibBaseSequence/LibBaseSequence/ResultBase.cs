@@ -3,7 +3,7 @@ using LibBaseSequence.Interface;
 
 namespace LibBaseSequence
 {
-    public abstract class ResultBase :IResult
+    public abstract class ResultBase : IResult
     {
         protected E_FUNCTION_STATUS status;
         public E_FUNCTION_STATUS GetStatus ( )
@@ -23,11 +23,6 @@ namespace LibBaseSequence
             status = E_FUNCTION_STATUS.INIT;
         }
 
-        public void Init ( )
-        {
-            InitCore( );
-        }
-
-        protected abstract void InitCore ( );
+        public abstract void Init ( );
     }
 }
