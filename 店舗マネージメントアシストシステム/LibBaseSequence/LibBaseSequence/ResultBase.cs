@@ -5,21 +5,24 @@ namespace LibBaseSequence
 {
     public abstract class ResultBase : IResult
     {
-        private E_FUNCTION_RESULT result;
-        public E_FUNCTION_RESULT GetResult ( ) { return result; }
-        public void SetResult (E_FUNCTION_RESULT rel) { result = rel; }
+        protected E_FUNCTION_STATUS status;
+        public E_FUNCTION_STATUS GetStatus ( )
+        {
+            return status;
+        }
+        public void SetStatus (E_FUNCTION_STATUS _status)
+        {
+            status = _status;
+        }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ResultBase ( ) { }
-
-        public void Init ( ) 
-        { 
-            result = E_FUNCTION_RESULT.ABORT;
-            InitCore( );
+        public ResultBase ( )
+        {
+            status = E_FUNCTION_STATUS.INIT;
         }
 
-        protected abstract void InitCore ( );
+        public abstract void Init ( );
     }
 }

@@ -3,6 +3,11 @@
     internal interface ISequence
     {
         /// <summary>
+        /// ライブラリ処理
+        /// </summary>
+        void Exec ( );
+
+        /// <summary>
         /// 通常シーケンス
         /// </summary>
         void NormalSequence ( );
@@ -10,23 +15,26 @@
         /// <summary>
         /// エラーシーケンス
         /// </summary>
-        bool ErrorSequence (ProcessException ex);
+        bool ErrorSequence ( );
 
         /// <summary>
         /// 事前プロセス
         /// </summary>
         void PreProcess ( );
-        
-        /// <summary>
-        /// 本体処理
-        /// </summary>
-        void Exec ( );
 
         /// <summary>
-        /// 事後処理
+        /// 本体プロセス
+        /// </summary>
+        void BodyProcess ( );
+
+        /// <summary>
+        /// 事後プロセス
         /// </summary>
         void PostProcess ( );
 
-
+        /// <summary>
+        /// リトライプロセス
+        /// </summary>
+        void RetryProcess ( );
     }
 }
