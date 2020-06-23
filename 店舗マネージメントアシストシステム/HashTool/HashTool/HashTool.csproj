@@ -42,6 +42,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,7 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Condition.cs" />
+    <Compile Include="Condition\AnalysisCondition.cs" />
+    <Compile Include="Condition\Conditions.cs" />
+    <Compile Include="Condition\ConditionBase.cs" />
+    <Compile Include="Condition\ConditionFactory.cs" />
+    <Compile Include="Condition\CreatCondition.cs" />
     <Compile Include="Constant\Constant.cs" />
     <Compile Include="Constant\Enum\E_HASH_ORDER.cs" />
     <Compile Include="Constant\Enum\E_HASH_SENSITIVE.cs" />

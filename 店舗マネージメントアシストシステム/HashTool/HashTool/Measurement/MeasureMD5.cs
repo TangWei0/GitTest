@@ -8,16 +8,7 @@ namespace HashTool.Measurement
     {
         private MD5CryptoServiceProvider MD5CSP;
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="parameter"></param>
-        public MeasureMD5 (Parameter parameter) : base(parameter) { }
-
-        /// <summary>
-        /// MD5CryptoServiceProviderインスタンス
-        /// </summary>
-        protected override void Instance ( )
+        public MeasureMD5 ( )
         {
             try
             {

@@ -1,14 +1,11 @@
 ﻿using LibBaseSequence;
 using HashTool.Measurement;
+using HashTool.Condition;
 
 namespace HashTool
 {
     public sealed class Sequence : SequenceBase<Parameter, Result>
     {
-        private readonly string word;
-        private readonly int condition;
-
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -16,8 +13,8 @@ namespace HashTool
         /// <param name="condition"></param>
         public Sequence (string _word, int _condition = 0) : base()
         {
-            word = _word;
-            condition = _condition;
+            Parameter.Word = _word;
+            Conditions.Condition = _condition;
         }
 
         /// <summary>
@@ -26,7 +23,6 @@ namespace HashTool
         public override void PreProcess ( )
         {
             // パラメータ設定
-            Parameter = new Parameter(word, condition);
             Parameter.SetParam( );
 
             // 結果初期化
@@ -39,16 +35,18 @@ namespace HashTool
         public override void BodyProcess ( )
         {
             // HashTool本体処理
-            var measure = MeasurementFactory.Get(Parameter);
+            var measure = MeasurementFactory.Get( );
             measure.Exec( );
-            Result.SetHashValue(measure.GetHashValue( ));
+            Result.HashValue = measure.HashValue;
         }
 
         /// <summary>
         /// 事後プロセス
-        /// HashToolは、事後プロセスしないようにする
         /// </summary>
-        public override void PostProcess ( ) { }
+        public override void PostProcess ( ) 
+        { 
+            Result.Condition = Conditions.Condition;
+        }
 
         /// <summary>
         /// リトライプロセス

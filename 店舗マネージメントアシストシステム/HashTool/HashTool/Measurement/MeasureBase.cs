@@ -1,32 +1,20 @@
 ﻿using System;
 using System.Text;
 using LibBaseSequence;
+using HashTool.Condition;
 
 namespace HashTool.Measurement
 {
     public abstract class MeasureBase
     {
         private const int HEXADECIMAL = 16;
-        private readonly Parameter Parameter;
 
-        private string hash_value;
-        public string GetHashValue ( ) { return hash_value; }
-
-        public MeasureBase (Parameter parameter)
-        {
-            Parameter = parameter;
-            Instance( );
-        }
-
-        /// <summary>
-        /// インスタンス
-        /// </summary>
-        protected abstract void Instance ( );
+        public string HashValue { get; set; }
 
         public void Exec ( )
         {
             // Hash次数を取得
-            var order_num = (byte)Parameter.GetCondition( ).GetOrder( );
+            var order_num = (byte)Conditions.Order;
             if(order_num == 0)
             {
                 throw new ProcessException(
@@ -34,7 +22,7 @@ namespace HashTool.Measurement
             }
 
             // ハッシュしたい文字列を取得
-            var word = Parameter.GetWord( );
+            var word = Parameter.Word;
             for(var order_loop = 0;order_loop < order_num;order_loop++)
             {
                 /* ハッシュ値を計算 */
@@ -42,15 +30,15 @@ namespace HashTool.Measurement
             }
 
             // 開始Indexを取得
-            var startIndex = Parameter.GetCondition( ).GetStartIndex( );
+            var startIndex = Conditions.StartIndex;
             
             // 終了Indexを取得
-            var endIndex = Parameter.GetCondition( ).GetEndIndex( );
+            var endIndex = Conditions.EndIndex;
             
             try
             {
                 /* Hash配列指定範囲を出力 */
-                hash_value = word.Substring(startIndex, endIndex - startIndex + 1);
+                HashValue = word.Substring(startIndex, endIndex - startIndex + 1);
             }
             catch(Exception ex)
             {
@@ -68,16 +56,16 @@ namespace HashTool.Measurement
 
             /* Hash配列に出力 */
             var byte_hash = GetHashValue(byte_value);
-            if(Parameter.GetCondition( ).GetByteMaxCount( ) != byte_hash.Length)
+            if(Conditions.ByteMaxCount != byte_hash.Length)
             {
                 throw new ProcessException(
                     string.Format("HashToolの実行異常　Hash配列サイズ異常 length = 0x{0}, ByteMaxCount = 0x{1}",
                         byte_hash.Length.ToString("X2"),
-                        Parameter.GetCondition( ).GetByteMaxCount( ).ToString("X2")));
+                        Conditions.ByteMaxCount.ToString("X2")));
             }
 
             word = ByteArrayToHexString(byte_hash);
-            if(Parameter.GetCondition( ).GetSensitive( ) == Constant.E_HASH_SENSITIVE.UPPER) 
+            if(Conditions.Sensitive == Constant.E_HASH_SENSITIVE.UPPER) 
             { 
                 word = word.ToUpper( ); 
             }

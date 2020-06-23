@@ -4,20 +4,11 @@ using System.Security.Cryptography;
 
 namespace HashTool.Measurement
 {
-    public class MeasureSHA512 :MeasureBase
+    public class MeasureSHA512 : MeasureBase
     {
         private SHA512CryptoServiceProvider SHA512CSP;
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="parameter"></param>
-        public MeasureSHA512 (Parameter parameter) : base(parameter) { }
-
-        /// <summary>
-        /// MD5CryptoServiceProviderインスタンス
-        /// </summary>
-        protected override void Instance ( )
+        public MeasureSHA512 ( )
         {
             SHA512CSP = new SHA512CryptoServiceProvider( );
         }

@@ -8,16 +8,7 @@ namespace HashTool.Measurement
     {
         private SHA1CryptoServiceProvider SHA1CSP;
 
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        /// <param name="parameter"></param>
-        public MeasureSHA1 (Parameter parameter) : base(parameter) { }
-
-        /// <summary>
-        /// MD5CryptoServiceProviderインスタンス
-        /// </summary>
-        protected override void Instance ( )
+        public MeasureSHA1 ( )
         {
             SHA1CSP = new SHA1CryptoServiceProvider( );
         }

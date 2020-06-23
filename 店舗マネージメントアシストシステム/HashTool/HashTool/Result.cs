@@ -2,14 +2,17 @@
 
 namespace HashTool
 {
-    public sealed class Result : ResultBase
+    public sealed class Result :ResultBase
     {
         /// <summary>
         /// Hash値
         /// </summary>
-        private string hashValue = "";
-        public string GetHashValue ( ) { return hashValue; }
-        public void SetHashValue (string value) { hashValue = value; }
+        public string HashValue { get; set; }
+
+        /// <summary>
+        /// Hash条件
+        /// </summary>
+        public int Condition { get; set; }
 
         /// <summary>
         /// Result初期化
@@ -17,7 +20,8 @@ namespace HashTool
         public override void Init ( )
         {
             // 前回処理結果を初期化
-            hashValue = "";
+            HashValue = "";
+            Condition = 0;
         }
     }
 }
