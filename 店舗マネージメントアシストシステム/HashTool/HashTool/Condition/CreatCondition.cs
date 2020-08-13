@@ -41,7 +41,7 @@ namespace HashTool.Condition
         /// <summary>
         /// 大小文字をランダム生成
         /// </summary>
-        private void CreatSensitive ( )
+        internal void CreatSensitive ( )
         {
             bool rel = false;
             E_HASH_SENSITIVE sensitive = E_HASH_SENSITIVE.LOWER;
@@ -58,17 +58,13 @@ namespace HashTool.Condition
                 rel = true;
                 Conditions.Sensitive = sensitive;
             } while(false);
-
-            if(!rel)
-            {
-                throw new ProcessException(String.Format("HashToolのSensitive生成異常"));
-            }
+            if(!rel) throw new ProcessException(string.Format("HashToolのSensitive生成異常"));
         }
 
         /// <summary>
         /// Hash次数をランダム生成
         /// </summary>
-        private void CreatOrder ( )
+        internal void CreatOrder ( )
         {
             bool rel = false;
             E_HASH_ORDER order = E_HASH_ORDER.SINGLE;
@@ -86,16 +82,13 @@ namespace HashTool.Condition
                 Conditions.Order = order;
             } while(false);
 
-            if(!rel)
-            {
-                throw new ProcessException(String.Format("HashToolのOrder生成異常"));
-            }
+            if(!rel) throw new ProcessException(String.Format("HashToolのOrder生成異常"));
         }
 
         /// <summary>
         /// Hashタイプをランダム生成
         /// </summary>
-        private void CreatType ( )
+        internal void CreatType ( )
         {
             bool rel = false;
             E_HASH_TYPE type = E_HASH_TYPE.MD5;
@@ -113,16 +106,13 @@ namespace HashTool.Condition
                 Conditions.Type = type;
             } while(false);
 
-            if(!rel)
-            {
-                throw new ProcessException(String.Format("HashToolのType生成異常"));
-            }
+            if(!rel) throw new ProcessException(String.Format("HashToolのType生成異常"));
         }
 
         /// <summary>
         /// Hash開始Indexをランダム生成
         /// </summary>
-        private void CreatStartIndex ( )
+        internal void CreatStartIndex ( )
         {
             bool rel = false;
 
@@ -143,16 +133,13 @@ namespace HashTool.Condition
                 rel = true;
             } while(false);
 
-            if(!rel)
-            {
-                throw new ProcessException(String.Format("HashToolのStartIndex生成異常"));
-            }
+            if(!rel) throw new ProcessException(string.Format("HashToolのStartIndex生成異常"));
         }
 
         /// <summary>
         /// Hash終了Indexをランダム生成
         /// </summary>
-        private void CreatEndIndex ( )
+        internal void CreatEndIndex ( )
         {
             bool rel = false;
 

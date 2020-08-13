@@ -6,19 +6,14 @@ namespace HashTool.Measurement
 {
     public class MeasureSHA384 : MeasureBase
     {
-        private SHA384CryptoServiceProvider SHA384CSP;
-
-        public MeasureSHA384 ( )
-        {
-            SHA384CSP = new SHA384CryptoServiceProvider( );
-        }
+        private readonly SHA384CryptoServiceProvider SHA384CSP = new SHA384CryptoServiceProvider( );
 
         /// <summary>
         /// Hash配列に出力
         /// </summary>
         /// <param name="byte_value"></param>
         /// <returns></returns>
-        protected override byte[] GetHashValue (byte[] byte_value)
+        internal override byte[] GetHashValue (byte[] byte_value)
         {
             try
             {

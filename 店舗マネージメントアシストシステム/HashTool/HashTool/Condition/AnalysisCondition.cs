@@ -38,7 +38,7 @@ namespace HashTool.Condition
         /// 大小文字を設定
         /// </summary>
         /// <param name="value"></param>
-        private void SetSensitive (byte value)
+        internal void SetSensitive (byte value)
         {
             bool rel = false;
             E_HASH_SENSITIVE sensitive = E_HASH_SENSITIVE.LOWER;
@@ -58,9 +58,8 @@ namespace HashTool.Condition
 
             if(!rel)
             {
-                throw new ProcessException(
-                    String.Format("HashToolのCondition条件異常　Enumに変換失敗 {0} = 0x{1}",
-                        "condition", Conditions.Condition.ToString("X8")));
+                throw new ProcessException($"HashToolのCondition条件異常 Enumに変換失敗, " +
+                                           $"sensitive = 0x{string.Format("{0,0:X8}",value)}");
             }
         }
 
@@ -68,7 +67,7 @@ namespace HashTool.Condition
         /// Hash次数を設定
         /// </summary>
         /// <param name="value"></param>
-        private void SetOrder (byte value)
+        internal void SetOrder (byte value)
         {
             bool rel = false;
             E_HASH_ORDER order = E_HASH_ORDER.SINGLE;
@@ -88,9 +87,8 @@ namespace HashTool.Condition
 
             if(!rel)
             {
-                throw new ProcessException(
-                    String.Format("HashToolのCondition条件異常 Enumに変換失敗 {0} = 0x{1}",
-                        "condition", Conditions.Condition.ToString("X8")));
+                throw new ProcessException($"HashToolのCondition条件異常 Enumに変換失敗, " +
+                                           $"order = 0x{string.Format("{0,0:X8}",value)}");
             }
         }
 
@@ -98,7 +96,7 @@ namespace HashTool.Condition
         /// Hashタイプを設定
         /// </summary>
         /// <param name="value"></param>
-        private void SetType (byte value)
+        internal void SetType (byte value)
         {
             bool rel = false;
             E_HASH_TYPE type = E_HASH_TYPE.MD5;
@@ -118,9 +116,8 @@ namespace HashTool.Condition
 
             if(!rel)
             {
-                throw new ProcessException(
-                    String.Format("HashToolのCondition条件異常 Enumに変換失敗 {0} = 0x{1}",
-                        "condition", Conditions.Condition.ToString("X8")));
+                throw new ProcessException($"HashToolのCondition条件異常 Enumに変換失敗, " +
+                                           $"type = 0x{string.Format("{0,0:X8}",value)}");
             }
         }
 
@@ -128,7 +125,7 @@ namespace HashTool.Condition
         /// 出力最大Bytesを設定
         /// </summary>
         /// <param name="value"></param>
-        private void SetByteMaxCount (byte value)
+        internal void SetByteMaxCount (byte value)
         {
             bool rel = false;
 
@@ -138,19 +135,16 @@ namespace HashTool.Condition
                 var maxNum = GetTypeMaxBytes( );
 
                 // MaxBytesとCondition条件と不一致
-                if(!(maxNum == value))
-                    break;
+                if(maxNum != value) break;
 
                 Conditions.ByteMaxCount = value;
-
                 rel = true;
             } while(false);
 
             if(!rel)
             {
-                throw new ProcessException(
-                    String.Format("HashToolのCondition条件異常 出力最大Bytes {0} = 0x{1}",
-                        "condition", Conditions.Condition.ToString("X8")));
+                throw new ProcessException($"HashToolのCondition条件異常 出力最大Bytes, " +
+                                           $"maxNum = 0x{string.Format("{0,0:X8}",value)}");
             }
         }
 
@@ -158,13 +152,13 @@ namespace HashTool.Condition
         /// Hash開始Indexを設定
         /// </summary>
         /// <param name="value"></param>
-        private void SetStartIndex (byte value)
+        internal void SetStartIndex (byte value)
         {
             bool rel = false;
 
             do
             {
-                if((value < 0) || (value >= Conditions.ByteMaxCount))
+                if(value >= Conditions.ByteMaxCount)
                 {
                     Console.WriteLine("HashToolの開始Index異常 {0}", value.ToString("X2"));
                     break;
@@ -177,9 +171,8 @@ namespace HashTool.Condition
 
             if(!rel)
             {
-                throw new ProcessException(
-                    String.Format("HashToolのCondition条件異常 開始Index異常 {0} = 0x{1}",
-                        "condition", Conditions.Condition.ToString("X8")));
+                throw new ProcessException($"HashToolのCondition条件異常 開始Index異常, " +
+                                           $"startIndex = 0x{string.Format("{0,0:X8}",value)}");
             }
         }
 
@@ -187,7 +180,7 @@ namespace HashTool.Condition
         /// Hash終了Indexを設定
         /// </summary>
         /// <param name="value"></param>
-        private void SetEndIndex (byte value)
+        internal void SetEndIndex (byte value)
         {
             bool rel = false;
 
@@ -207,9 +200,8 @@ namespace HashTool.Condition
 
             if(!rel)
             {
-                throw new ProcessException(
-                    String.Format("HashToolのCondition条件異常 終了Index異常 {0} = 0x{1}",
-                        "condition", Conditions.Condition.ToString("X8")));
+                throw new ProcessException($"HashToolのCondition条件異常 終了Index異常, " +
+                                           $"endIndex = 0x{string.Format("{0,0:X8}",value)}");
             }
         }
     }

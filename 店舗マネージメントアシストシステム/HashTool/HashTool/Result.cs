@@ -2,17 +2,17 @@
 
 namespace HashTool
 {
-    public sealed class Result :ResultBase
+    public sealed class Result : ResultBase
     {
         /// <summary>
         /// Hash値
         /// </summary>
-        public string HashValue { get; set; }
+        public static string HashValue { get; set; }
 
         /// <summary>
         /// Hash条件
         /// </summary>
-        public int Condition { get; set; }
+        public static int Condition { get; set; }
 
         /// <summary>
         /// Result初期化

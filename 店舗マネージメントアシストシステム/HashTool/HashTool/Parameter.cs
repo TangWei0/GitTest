@@ -3,7 +3,7 @@ using HashTool.Condition;
 
 namespace HashTool
 {
-    public class Parameter : ParameterBase
+    public sealed class Parameter : ParameterBase
     {
         public static string Word { get; set; }        
 

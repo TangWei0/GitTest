@@ -6,19 +6,14 @@ namespace HashTool.Measurement
 {
     public class MeasureSHA1 : MeasureBase
     {
-        private SHA1CryptoServiceProvider SHA1CSP;
-
-        public MeasureSHA1 ( )
-        {
-            SHA1CSP = new SHA1CryptoServiceProvider( );
-        }
+        private readonly SHA1CryptoServiceProvider SHA1CSP = new SHA1CryptoServiceProvider( );
 
         /// <summary>
         /// Hash配列に出力
         /// </summary>
         /// <param name="byte_value"></param>
         /// <returns></returns>
-        protected override byte[] GetHashValue (byte[] byte_value)
+        internal override byte[] GetHashValue (byte[] byte_value)
         {
             try
             {

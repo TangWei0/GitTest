@@ -49,7 +49,7 @@ namespace HashTool.Measurement
             }
         }
 
-        private void CalcHashValue (ref string word)
+        internal void CalcHashValue (ref string word)
         {
             /* 出力したい文字列をByte型に変換 */
             var byte_value = ChangeWordToByte(word);
@@ -75,7 +75,7 @@ namespace HashTool.Measurement
         /// 出力したい文字列をByte型に変換
         /// </summary>
         /// <param name="byte_value"></param>
-        private byte[] ChangeWordToByte (string word)
+        internal byte[] ChangeWordToByte (string word)
         {
             try
             {
@@ -89,14 +89,14 @@ namespace HashTool.Measurement
             }
         }
 
-        protected abstract byte[] GetHashValue (byte[] byte_value);
+        internal abstract byte[] GetHashValue (byte[] byte_value);
 
         /// <summary>
         /// ハッシュ配列を16進数へ変換する
         /// </summary>
         /// <param name="byte_hash"></param>
         /// <returns></returns>
-        private string ByteArrayToHexString (byte[] byte_hash)
+        internal string ByteArrayToHexString (byte[] byte_hash)
         {
             string hash_value = "";
 
@@ -109,8 +109,7 @@ namespace HashTool.Measurement
                 catch(Exception ex)
                 {
                     throw new ProcessException(
-                        String.Format("HashToolの実行異常　ハッシュ配列を16進数へ変換する"),
-                        ex.InnerException);
+                        string.Format("HashToolの実行異常　ハッシュ配列を16進数へ変換する"), ex.InnerException);
                 }
             }
 

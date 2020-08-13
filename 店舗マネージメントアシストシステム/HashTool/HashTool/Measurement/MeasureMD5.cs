@@ -6,7 +6,7 @@ namespace HashTool.Measurement
 {
     public class MeasureMD5 : MeasureBase
     {
-        private MD5CryptoServiceProvider MD5CSP;
+        internal readonly MD5CryptoServiceProvider MD5CSP;
 
         public MeasureMD5 ( )
         {
@@ -17,7 +17,7 @@ namespace HashTool.Measurement
             catch(Exception ex)
             {
                 throw new ProcessException(
-                    String.Format("HashToolの実行異常　MD5CryptoServiceProviderインスタンス失敗"),
+                    string.Format("HashToolの実行異常　MD5CryptoServiceProviderインスタンス失敗"),
                     ex.InnerException);
             }
         }
@@ -27,7 +27,7 @@ namespace HashTool.Measurement
         /// </summary>
         /// <param name="byte_value"></param>
         /// <returns></returns>
-        protected override byte[] GetHashValue (byte[] byte_value)
+        internal override byte[] GetHashValue (byte[] byte_value)
         {
             try
             {
@@ -39,8 +39,7 @@ namespace HashTool.Measurement
             catch(Exception ex)
             {
                 throw new ProcessException(
-                    String.Format("HashToolの実行異常　MD5ハッシュ配列出力失敗"),
-                    ex.InnerException);
+                    string.Format("HashToolの実行異常　MD5ハッシュ配列出力失敗"), ex.InnerException);
             }
         }
     }
