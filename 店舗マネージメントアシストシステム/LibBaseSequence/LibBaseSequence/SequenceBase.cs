@@ -1,7 +1,7 @@
 ﻿using LibBaseSequence.Interface;
-
-using static CommonLib.Constant.ManagerAssist.Common;
-using static CommonLib.Constant.ManagerAssist.E_FUNCTION_STATUS;
+using CommonLib.Common;
+//using static CommonLib.Common.Common;
+//using static CommonLib.Common.E_FUNCTION_STATUS;
 
 namespace LibBaseSequence
 {
@@ -27,7 +27,7 @@ namespace LibBaseSequence
         /// </summary>
         public SequenceBase (int retryMax = 0)
         {
-            retryEnable = retryMax == 0 ? MAS_No : MAS_Yes;
+            retryEnable = retryMax == 0 ? Common.MAS_No : Common.MAS_Yes;
             remainAction = retryMax;
         }
 
@@ -36,8 +36,8 @@ namespace LibBaseSequence
         /// </summary>
         public void Exec ( )
         {
-            bool rel = MAS_No;
-            bool retry = MAS_No;
+            bool rel = Common.MAS_No;
+            bool retry = Common.MAS_No;
 
             do
             {
@@ -45,7 +45,7 @@ namespace LibBaseSequence
                 {
                     // ノーマルシーケンスを実行
                     NormalSequence( );
-                    rel = MAS_Yes;
+                    rel = Common.MAS_Yes;
                 }
                 catch(ProcessException ex)
                 {
@@ -55,12 +55,12 @@ namespace LibBaseSequence
                     // エラーシーケンスを実行
                     retry = ErrorSequence( );
                 }
-            } while(retry == MAS_Yes);
+            } while(retry == Common.MAS_Yes);
 
             if(rel)
             {
                 // ライブラリ実行結果を設定
-                Result.SetStatus(SUCCESS);
+                Result.SetStatus(E_FUNCTION_STATUS.SUCCESS);
             }
         }
 
@@ -87,7 +87,7 @@ namespace LibBaseSequence
         /// <returns>リトライするかを返却</returns>
         public bool ErrorSequence ( )
         {
-            bool retry = MAS_No;
+            bool retry = Common.MAS_No;
 
             if(retryEnable && (remainAction > 0))
             {
@@ -98,12 +98,12 @@ namespace LibBaseSequence
                 RetryProcess( );
 
                 // リトライ
-                retry = MAS_Yes;
+                retry = Common.MAS_Yes;
             }
             else
             {
                 // リトライしない場合、ステータスがFailedに設定
-                Result.SetStatus(FAILED);
+                Result.SetStatus(E_FUNCTION_STATUS.FAILED);
             }
 
             return retry;

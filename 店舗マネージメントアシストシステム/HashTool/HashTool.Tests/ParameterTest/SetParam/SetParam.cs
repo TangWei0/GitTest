@@ -1,12 +1,11 @@
 ﻿using HashTool.Condition;
 using HashTool.Constant;
 using HashTool.Tests.AnalysisConditionTest;
-using LibBaseSequence;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-using static CommonLib.Constant.ManagerAssist.Common;
+using static CommonLib.Common.Common;
 
 namespace HashTool.Tests.ParameterTest.SetParam
 {

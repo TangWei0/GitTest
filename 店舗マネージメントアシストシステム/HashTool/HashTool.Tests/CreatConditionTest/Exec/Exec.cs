@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-using static CommonLib.Constant.ManagerAssist.Common;
+using static CommonLib.Common.Common;
 
 namespace HashTool.Tests.CreatConditionTest.Exec
 {

@@ -1,4 +1,4 @@
-﻿using CommonLib.Constant.ManagerAssist;
+﻿using CommonLib.Common;
 using LibBaseSequence.Interface;
 
 namespace LibBaseSequence

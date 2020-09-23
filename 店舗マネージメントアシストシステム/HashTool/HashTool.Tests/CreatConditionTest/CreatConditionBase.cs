@@ -4,7 +4,7 @@ using HashTool.Condition;
 using LibBaseSequence;
 using HashTool.Tests.ConditionBaseTest;
 
-using static CommonLib.Constant.ManagerAssist.Common;
+using static CommonLib.Common.Common;
 
 namespace HashTool.Tests.CreatConditionTest
 {
