@@ -1,127 +1,125 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
+using static CommonLib.Common.Common;
 
 namespace Log
 {
     public class LogCtrl
     {
-        #region 変数
-        /// <summary> ログ </summary>
-        private static LogCtrl singleton = null;
-
         /// <summary>ログ出力バッファ</summary>
-        private static StringBuilder buffer = new StringBuilder();
+        private readonly StringBuilder Buffer = new StringBuilder();
         
         /// <summary>バッファサイズ</summary>
-        private static long bufferSize = Config.MaxFileSize / 3;
+        private readonly long BufferSize;
 
-        /// <summary>ファイルサイズ取得時に使用</summary>
-        private static FileInfo info;
-        #endregion
+        /// <summary>ファイルサイズ</summary>
+        private long FileSize;
 
-        #region プロパティ
-        // **********************
-        // ***** プロパティ *****
-        // **********************
+        private string AppName => Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName);
+
+        /// <summary>ログパス</summary>
+        private string FileFolder => Path.Combine(ConfigFactory.GetInstance().LogFilePath, AppName + "\\");
+
         /// <summary>ログファイル名</summary>
-        
-        private static string FileName
-        {
-            get { return Config.BaseFileName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log"; }
-        }
+        private string FileName => AppName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
 
         /// <summary>ログファイルパス</summary>
         /// <remarks>絶対パスを返す。</remarks>
-        private static string FullPath
-        {
-            get { return Path.Combine(Config.LogFilePath, FileName); }
-        }
-        #endregion
+        private string FullPath => Path.Combine(FileFolder, FileName);
 
-        #region コンストラクタ
-        // **************************
         // ***** コンストラクタ *****
-        // **************************
-        static LogCtrl()
+        public LogCtrl()
         {
-            if (!File.Exists(FullPath))
-            {
-                FileStream fs = File.Create(FullPath);
-                fs.Close();
-            }
-        }
-        #endregion
+            if (ConfigFactory.GetInstance().IsAppend)
+                BufferSize = ConfigFactory.GetInstance().MaxFileSize / 10;
+            else
+                BufferSize = ConfigFactory.GetInstance().MaxFileSize * 9 / 10 ;
 
-        #region Publicメソッド
-        // **************************
-        // ***** Publicメソッド *****
-        // **************************
+            FileSize = 0;
 
-        /// <summary>
-        /// インスタンスを生成する
-        /// </summary>
-        public static LogCtrl GetInstance()
-        {
-            if (singleton == null) 
-                singleton = new LogCtrl();
-            return singleton;
+            CreatFolder();
+
+            // 古いログファイルを削除する
+            DeleteOldLogFile();
         }
 
         /// <summary>
         /// アプリケーションのログにメッセージを書き込みます。
         /// </summary>
+        /// <param name="Category">メッセージの種類</param>
         /// <param name="message">出力するログメッセージ</param>
-        /// <remarks>メッセージの種類は既定でTraceEventType.Information</remarks>
-        public void WriteEntry(string message)
-        {
-            WriteEntry(message, TraceEventType.INFO);
-        }
-
-        /// <summary>
-        /// アプリケーションのログにメッセージを書き込みます。
-        /// </summary>
-        /// <param name="message">出力するログメッセージ</param>
-        /// <param name="severity">メッセージの種類</param>
         /// <remarks></remarks>
-        public void WriteEntry(string message, TraceEventType severity)
+        public void WriteEntry(string message, string category)
         {
-            // メッセージの種類
-            string StrSeverity = string.Empty;
-            switch(severity)
-            {
-                case TraceEventType.INFO:
-                    StrSeverity = "Info";
-                    break;
-                case TraceEventType.WARN:
-                    StrSeverity = "Warning";
-                    break;
-                case TraceEventType.ERROR:
-                    StrSeverity = "Error";
-                    break;
-                case TraceEventType.Critical:
-                    StrSeverity = "Critical";
-                    break;
-            }
-
             // 出力メッセージ作成
             StringBuilder outmessage = new StringBuilder();
-            outmessage.Append(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.ffff "));
-            outmessage.Append("[" + StrSeverity + "]");
+            outmessage.Append(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff "));
+            outmessage.Append("[" + category + "]");
             outmessage.Append("\t");
+
+            // メッセージ部分を揃えるため
+            if (TRACE_CAT_ERROR == category)
+                outmessage.Append("\t");
+
             outmessage.Append(message);
 
             // バッファに追加
-            buffer.AppendLine(outmessage.ToString());
+            Buffer.AppendLine(outmessage.ToString());
 
-            // ログ出力
-            if (buffer.Length > bufferSize || Config.IsAutoFlush == true)
-            {
+            // ログ出力かを判断し、True場合ログ出力する
+            if (IsCheckFlush())
                 Flush();
+        }
+
+        /// <summary>
+        /// フォルダを作成
+        /// </summary>
+        private void CreatFolder()
+        {
+            if (Directory.Exists(FileFolder)) return;
+
+            Directory.CreateDirectory(FileFolder);
+        }
+        /// <summary>
+        /// Flushするかをチェックする
+        /// </summary>
+        /// <returns></returns>
+        private bool IsCheckFlush()
+        {
+            bool IsFlush = false;
+
+            // ログファイルに追記する場合
+            if (ConfigFactory.GetInstance().IsAppend)
+            {
+                //　自動フラッシュまたログ出力バッファが設定値を超えた場合、
+                if ((Buffer.Length > BufferSize) || ConfigFactory.GetInstance().IsAutoFlush )
+                {
+                    //　ログファイルサイズを超えた場合、ログファイルをバックアップする
+                    if (!CheckFileSize())
+                        //　ログファイルをバックアップ
+                        BackupLogFile();
+
+                    IsFlush = true;
+                }
+            }         
+            else
+            {
+                // ログファイルを上書き場合
+                //　ログ出力バッファが設定値を超えた場合
+                if (Buffer.Length > BufferSize)
+                { 
+                    //　ログファイルをバックアップ
+                    BackupLogFile();
+
+                    IsFlush = true;
+                }
             }
+
+            return IsFlush;
         }
 
         /// <summary>
@@ -130,50 +128,66 @@ namespace Log
         /// <remarks>出力後バッファはクリアされる</remarks>
         public void Flush()
         {
-            // ファイルサイズの上限確認
-            CheckFileSize();
+            // Buffer長さ０以下場合、ログファイルを出力しない
+            if (0 >= Buffer.Length) return;
 
             // ログ出力
-            using (StreamWriter writer = new StreamWriter(FullPath, Config.IsAppend))
+            using (StreamWriter writer = new StreamWriter(FullPath, ConfigFactory.GetInstance().IsAppend))
             {
-                writer.Write(buffer.ToString());
+                writer.Write(Buffer.ToString());
+                FileSize += Buffer.Length;
             }
 
             // バッファクリア
-            buffer.Clear();
+            Buffer.Clear();
         }
-        #endregion
-
-        #region Privateメソッド
-        // ***************************
-        // ***** Privateメソッド *****
-        // ***************************
 
         /// <summary>
         /// ファイルサイズの上限確認
         /// 上限を超えた場合、ファイルをバックアップする
         /// </summary>
-        private static void CheckFileSize()
+        private bool CheckFileSize()
         {
-            // ファイルが存在しない場合、ファイルサイズをチェックしない
-            if (!File.Exists(FullPath)) return;
-
-            info = new FileInfo(FullPath);
-            long FileSize = info.Length + buffer.Length;
-            
             //　上限を超えないので、処理を終了する
-            if (FileSize <= Config.MaxFileSize) return;
+            if (ConfigFactory.GetInstance().MaxFileSize >= FileSize + Buffer.Length) 
+                return false;
 
+            return true;
+        }
+
+        /// <summary>
+        /// ログファイルをバックアップする
+        /// </summary>
+        private void BackupLogFile()
+        {
             string filename = FullPath + ".bk";
             int count = 1;
             while (File.Exists(filename + count.ToString()))
             {
                 count++;
             }
-            info.MoveTo(filename + count.ToString());
-            info = null;
+            File.Move(FullPath, filename);
+
+            // ログファイルバックアップしたので、ログファイルをクリアする
+            FileSize = 0;
         }
 
-        #endregion
+        /// <summary>
+        /// 古いログファイルを削除する
+        /// </summary>
+        private void DeleteOldLogFile()
+        {
+            DateTime retentionDate = DateTime.Today.AddDays(-ConfigFactory.GetInstance().Period);
+            string[] filePathList = Directory.GetFiles(FileFolder);
+            foreach (string filePath in filePathList)
+            {
+                string date = Regex.Replace(Path.GetFileNameWithoutExtension(filePath), @"[^0-9]+", "");
+                DateTime logCreatedDate = DateTime.ParseExact(date, "yyyyMMdd", null);
+                if (logCreatedDate < retentionDate)
+                {
+                    File.Delete(filePath);
+                }
+            }
+        }
     }
 }

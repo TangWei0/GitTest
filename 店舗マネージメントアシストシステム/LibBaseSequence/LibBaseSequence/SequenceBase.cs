@@ -27,7 +27,7 @@ namespace LibBaseSequence
         /// </summary>
         public SequenceBase (int retryMax = 0)
         {
-            retryEnable = retryMax == 0 ? Common.MAS_No : Common.MAS_Yes;
+            retryEnable = retryMax == 0 ? Common.SYS_NO : Common.SYS_YES;
             remainAction = retryMax;
         }
 
@@ -36,8 +36,8 @@ namespace LibBaseSequence
         /// </summary>
         public void Exec ( )
         {
-            bool rel = Common.MAS_No;
-            bool retry = Common.MAS_No;
+            bool rel = Common.SYS_NO;
+            bool retry = Common.SYS_NO;
 
             do
             {
@@ -45,7 +45,7 @@ namespace LibBaseSequence
                 {
                     // ノーマルシーケンスを実行
                     NormalSequence( );
-                    rel = Common.MAS_Yes;
+                    rel = Common.SYS_YES;
                 }
                 catch(ProcessException ex)
                 {
@@ -55,12 +55,12 @@ namespace LibBaseSequence
                     // エラーシーケンスを実行
                     retry = ErrorSequence( );
                 }
-            } while(retry == Common.MAS_Yes);
+            } while(retry == Common.SYS_YES);
 
             if(rel)
             {
                 // ライブラリ実行結果を設定
-                Result.SetStatus(E_FUNCTION_STATUS.SUCCESS);
+                Result.Status = E_FUNCTION_STATUS.SUCCESS;
             }
         }
 
@@ -87,7 +87,7 @@ namespace LibBaseSequence
         /// <returns>リトライするかを返却</returns>
         public bool ErrorSequence ( )
         {
-            bool retry = Common.MAS_No;
+            bool retry = Common.SYS_NO;
 
             if(retryEnable && (remainAction > 0))
             {
@@ -98,12 +98,12 @@ namespace LibBaseSequence
                 RetryProcess( );
 
                 // リトライ
-                retry = Common.MAS_Yes;
+                retry = Common.SYS_YES;
             }
             else
             {
                 // リトライしない場合、ステータスがFailedに設定
-                Result.SetStatus(E_FUNCTION_STATUS.FAILED);
+                Result.Status = E_FUNCTION_STATUS.FAILED;
             }
 
             return retry;

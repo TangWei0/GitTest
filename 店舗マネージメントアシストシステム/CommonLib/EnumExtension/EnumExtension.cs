@@ -28,62 +28,27 @@ namespace CommonLib.EnumExtension
         }
 
         /// <summary>
-        /// byte型をenumに変換する
+        /// valueをenumに変換する
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        public static bool ConvertToEnum<T> (byte value, ref T result)
-            where T : Enum
+        public static bool ConvertToEnum<T1, T2> (T1 value, ref T2 result)
+            where T1 : struct
+            where T2 : Enum
         {
             bool rel = false;  // 関数の戻り値
             do
             {
-                var enumType = typeof(T);
+                var enumType = typeof(T2);
                 try
                 {
                     // EnumTypeにvalue値を定義するかをチェック
                     if(!Enum.IsDefined(enumType, value)) break;
 
                     // EnumTypeに変換する
-                    result = (T)Enum.ToObject(enumType, value);
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    break;
-                }
-
-                // 正常終了
-                rel = true;
-            } while(false);
-
-            return rel;
-        }
-
-        /// <summary>
-        /// int型をenumに変換する
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        public static bool ConvertToEnum<T> (int value, ref T result)
-            where T : Enum
-        {
-            bool rel = false;  // 関数の戻り値
-            do
-            {
-                var enumType = typeof(T);
-                try
-                {
-                    // EnumTypeにvalue値を定義するかをチェック
-                    if(!Enum.IsDefined(enumType, value))
-                        break;
-
-                    // EnumTypeに変換する
-                    result = (T)Enum.ToObject(enumType, value);
+                    result = (T2)Enum.ToObject(enumType, value);
                 }
                 catch(Exception e)
                 {

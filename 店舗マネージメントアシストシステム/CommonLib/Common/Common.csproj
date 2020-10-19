@@ -66,12 +66,6 @@
     <Compile Include="Common\Common.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
-    <Compile Include="Test\Constant.cs" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'ManagerAssist|AnyCPU'">
-    <Compile Include="ManagerAssist\Constant.cs" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="ManagerAssist\Enum\" />
     <Folder Include="Test\Enum\" />
