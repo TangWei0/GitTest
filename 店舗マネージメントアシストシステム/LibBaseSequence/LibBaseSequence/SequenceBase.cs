@@ -1,7 +1,8 @@
 ﻿using LibBaseSequence.Interface;
 using CommonLib.Common;
-//using static CommonLib.Common.Common;
-//using static CommonLib.Common.E_FUNCTION_STATUS;
+using System.Diagnostics;
+
+using static CommonLib.Common.Common;
 
 namespace LibBaseSequence
 {
@@ -27,7 +28,7 @@ namespace LibBaseSequence
         /// </summary>
         public SequenceBase (int retryMax = 0)
         {
-            retryEnable = retryMax == 0 ? Common.SYS_NO : Common.SYS_YES;
+            retryEnable = retryMax != 0;
             remainAction = retryMax;
         }
 
@@ -36,8 +37,8 @@ namespace LibBaseSequence
         /// </summary>
         public void Exec ( )
         {
-            bool rel = Common.SYS_NO;
-            bool retry = Common.SYS_NO;
+            bool rel = SYS_NO;
+            bool retry = SYS_NO;
 
             do
             {
@@ -45,17 +46,17 @@ namespace LibBaseSequence
                 {
                     // ノーマルシーケンスを実行
                     NormalSequence( );
-                    rel = Common.SYS_YES;
+                    rel = SYS_YES;
                 }
                 catch(ProcessException ex)
                 {
                     // 例外処理
-                    ex.View( );
+                    Trace.WriteLine(ex, TRACE_CAT_ERROR);
 
                     // エラーシーケンスを実行
                     retry = ErrorSequence( );
                 }
-            } while(retry == Common.SYS_YES);
+            } while(retry == SYS_YES);
 
             if(rel)
             {
@@ -87,7 +88,7 @@ namespace LibBaseSequence
         /// <returns>リトライするかを返却</returns>
         public bool ErrorSequence ( )
         {
-            bool retry = Common.SYS_NO;
+            bool retry = SYS_NO;
 
             if(retryEnable && (remainAction > 0))
             {
@@ -98,7 +99,7 @@ namespace LibBaseSequence
                 RetryProcess( );
 
                 // リトライ
-                retry = Common.SYS_YES;
+                retry = SYS_YES;
             }
             else
             {

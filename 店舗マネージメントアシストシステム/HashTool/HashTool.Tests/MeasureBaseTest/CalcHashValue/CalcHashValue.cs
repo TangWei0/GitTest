@@ -1,7 +1,6 @@
 ﻿using HashTool.Condition;
 using HashTool.Constant;
 using HashTool.Measurement;
-using HashTool.Tests.AnalysisConditionTest.SetType;
 using LibBaseSequence;
 using System;
 using System.Collections.Generic;
@@ -14,36 +13,36 @@ namespace HashTool.Tests.MeasureBaseTest.CalcHashValue
         public static IEnumerable<object[]> SuccessTestData()
         {
             List<object[]> _testData = new List<object[]>();
-            var measure = new Measure();           
-            foreach(var val in measure.Hash1Time)
+            var measure = new Measure();
+            foreach (var val in measure.Hash1Time)
             {
                 var type = val.Key.Item1;
                 var sen = val.Key.Item2;
                 var param = val.Key.Item3;
                 string expected = val.Value;
-                _testData.Add(new object[] { 
+                _testData.Add(new object[] {
                     GetTestName(_testData.Count), param, type, TypeCount[type], sen, expected});
             }
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
+            List<object[]> _testData = new List<object[]>();
             var measure = new Measure();
-            var Sensitive = GetEnumSuccess(typeof(E_HASH_SENSITIVE)); 
+            var Sensitive = GetEnumSuccess(typeof(E_HASH_SENSITIVE));
             var Type = GetEnumSuccess(typeof(E_HASH_TYPE));
-            foreach(var sen in Sensitive)
+            foreach (var sen in Sensitive)
             {
-                foreach(E_HASH_TYPE type in Type)
+                foreach (E_HASH_TYPE type in Type)
                 {
                     var count = TypeCount[type];
                     var countFaileList = GetCountFaile(count);
-                    foreach(var countFaile in countFaileList)
+                    foreach (var countFaile in countFaileList)
                     {
                         foreach (var param in measure.ByteTest.Keys)
                         {
-                            _testData.Add(new object[] { GetTestName(_testData.Count), 
+                            _testData.Add(new object[] { GetTestName(_testData.Count),
                                 param, type, countFaile, sen, SetMessage(count, countFaile)});
                         }
                     }
@@ -65,8 +64,8 @@ namespace HashTool.Tests.MeasureBaseTest.CalcHashValue
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name, string param, 
-                                 E_HASH_TYPE type, byte count, 
+        public void SuccessTest(string name, string param,
+                                 E_HASH_TYPE type, byte count,
                                  E_HASH_SENSITIVE sen, string expected)
         {
             Console.WriteLine(name);
@@ -102,8 +101,8 @@ namespace HashTool.Tests.MeasureBaseTest.CalcHashValue
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, string param,
-                               E_HASH_TYPE type, byte count, 
+        public void FaileTest(string name, string param,
+                               E_HASH_TYPE type, byte count,
                                E_HASH_SENSITIVE sen, string errorMessage)
         {
             Console.WriteLine(name);
@@ -121,18 +120,18 @@ namespace HashTool.Tests.MeasureBaseTest.CalcHashValue
             var word = param;
 
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => 
+            var ex = Assert.Throws<ProcessException>(() =>
             {
                 if (type == E_HASH_TYPE.MD5)
-                    MD5.CalcHashValue(ref word); 
+                    MD5.CalcHashValue(ref word);
                 if (type == E_HASH_TYPE.SHA1)
-                    SHA1.CalcHashValue(ref word); 
+                    SHA1.CalcHashValue(ref word);
                 if (type == E_HASH_TYPE.SHA256)
-                    SHA256.CalcHashValue(ref word); 
+                    SHA256.CalcHashValue(ref word);
                 if (type == E_HASH_TYPE.SHA384)
-                    SHA384.CalcHashValue(ref word); 
+                    SHA384.CalcHashValue(ref word);
                 if (type == E_HASH_TYPE.SHA512)
-                    SHA512.CalcHashValue(ref word); 
+                    SHA512.CalcHashValue(ref word);
             });
             Assert.Equal(errorMessage, ex.Message);
         }

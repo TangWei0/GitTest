@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 using static HashTool.Constant.Constant;
 namespace HashTool.Tests
@@ -17,7 +16,7 @@ namespace HashTool.Tests
             { E_HASH_TYPE.SHA512, SHA512_BYTES }
         };
 
-        protected static string GetTestName (int count)
+        protected static string GetTestName(int count)
         {
             return $"TestCase_{string.Format("{0:D4}", count + 1)}";
         }
@@ -66,7 +65,7 @@ namespace HashTool.Tests
             byte min = (byte)(value - 1);
             byte max = (byte)(value + 1);
             byte midMin = GetMidNum(byte.MinValue, min);
-            byte midMax = GetMidNum(max, byte.MaxValue);            
+            byte midMax = GetMidNum(max, byte.MaxValue);
             return new List<byte> { byte.MinValue, midMin, min, max, midMax, byte.MaxValue };
         }
     }

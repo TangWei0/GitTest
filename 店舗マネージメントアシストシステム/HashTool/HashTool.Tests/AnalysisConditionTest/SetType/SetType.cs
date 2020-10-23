@@ -3,7 +3,6 @@ using HashTool.Constant;
 using LibBaseSequence;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace HashTool.Tests.AnalysisConditionTest.SetType
@@ -16,12 +15,12 @@ namespace HashTool.Tests.AnalysisConditionTest.SetType
             var Type = GetEnumSuccess(typeof(E_HASH_TYPE));
             for (var param = byte.MinValue; param <= byte.MaxValue; param++)
             {
-                foreach(E_HASH_TYPE expected in Type)
+                foreach (E_HASH_TYPE expected in Type)
                 {
                     if (param != (byte)expected) continue;
-                    E_HASH_TYPE init = 
+                    E_HASH_TYPE init =
                         expected == E_HASH_TYPE.MD5 ? E_HASH_TYPE.SHA512 : E_HASH_TYPE.MD5;
-                    _testData.Add( 
+                    _testData.Add(
                         new object[] { GetTestName(_testData.Count), param, init, expected });
                 }
                 if (param == byte.MaxValue) break;
@@ -37,7 +36,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetType
             for (var param = byte.MinValue; param <= byte.MaxValue; param++)
             {
                 if (Type.IndexOf(param) == -1) continue;
-                _testData.Add( new object[] { 
+                _testData.Add(new object[] {
                     GetTestName(_testData.Count), param, SetMessage("Enumに変換失敗,", "type", param)});
                 if (param == byte.MaxValue) break;
             }
@@ -50,8 +49,8 @@ namespace HashTool.Tests.AnalysisConditionTest.SetType
     {
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.SuccessTestData),MemberType = typeof(TestDataClass))]
-        public void SuccessTest(string name, byte param, E_HASH_TYPE init, E_HASH_TYPE expected )
+        [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
+        public void SuccessTest(string name, byte param, E_HASH_TYPE init, E_HASH_TYPE expected)
         {
             Console.WriteLine(name);
 
@@ -68,8 +67,8 @@ namespace HashTool.Tests.AnalysisConditionTest.SetType
 
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.FaileTestData),MemberType = typeof(TestDataClass))]
-        public void FaileTest(string name, byte param, string errorMessage )
+        [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
+        public void FaileTest(string name, byte param, string errorMessage)
         {
             Console.WriteLine(name);
 
@@ -77,7 +76,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetType
             var analysis = new AnalysisCondition();
 
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { analysis.SetType(param); });
+            var ex = Assert.Throws<ProcessException>(() => { analysis.SetType(param); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

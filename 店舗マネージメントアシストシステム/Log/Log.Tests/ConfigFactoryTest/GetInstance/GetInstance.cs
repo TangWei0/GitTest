@@ -53,13 +53,10 @@ namespace Log.Tests.ConfigFactoryTest.GetInstance
             ConfigFactory.GetInstance();
 
             // Assert
-            Assert.Equal(con.Category, ConfigFactory.config.Category);
-            Assert.Equal(con.IsAppend, ConfigFactory.config.IsAppend);
-            Assert.Equal(con.IsAutoFlush, ConfigFactory.config.IsAutoFlush);
-            Assert.Equal(con.LogFilePath, ConfigFactory.config.LogFilePath);
-            Assert.Equal(con.MaxFileSize, ConfigFactory.config.MaxFileSize);
-            Assert.Equal(con.OutputLevel, ConfigFactory.config.OutputLevel);
-            Assert.Equal(con.Period, ConfigFactory.config.Period);
+            Assert.Equal(con, ConfigFactory.config);
+
+            // 初期化
+            ConfigFactory.config = null;
         }
     }
 }

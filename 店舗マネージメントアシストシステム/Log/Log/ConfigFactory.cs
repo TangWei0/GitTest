@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Log
+﻿namespace Log
 {
     public static class ConfigFactory
     {
         /// <summary> ログ </summary>
-        private static Config config = null;
+        internal static Config config = null;
 
         /// <summary>
         /// インスタンスを生成する
@@ -18,6 +12,7 @@ namespace Log
         {
             if (config == null)
                 config = new Config();
+                config.ReadConfig();
             return config;
         }
     }

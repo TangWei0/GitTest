@@ -1,19 +1,16 @@
 ﻿using HashTool.Condition;
-using HashTool.Constant;
 using LibBaseSequence;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-using static HashTool.Constant.Constant;
-
 namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
 {
     public class TestDataClass : AnalysisConditionTestBase
     {
-        private static readonly Dictionary<Tuple<byte, byte>, List<byte>> Success = 
+        private static readonly Dictionary<Tuple<byte, byte>, List<byte>> Success =
             new Dictionary<Tuple<byte, byte>, List<byte>>();
-        private static readonly Dictionary<Tuple<byte, byte>, List<byte>> Fail = 
+        private static readonly Dictionary<Tuple<byte, byte>, List<byte>> Fail =
             new Dictionary<Tuple<byte, byte>, List<byte>>();
 
         public static IEnumerable<object[]> SuccessTestData()
@@ -26,7 +23,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
             {
                 List<byte> StartList = new List<byte>();
                 SetLeftTest(byte.MinValue, count, ref StartList);
-                foreach(var start in StartList)
+                foreach (var start in StartList)
                 {
                     List<byte> EndList = new List<byte>();
                     byte endMin = (byte)(start + count);
@@ -42,7 +39,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
                 {
                     if (data.Value.IndexOf(param) == -1) continue;
                     byte expected = param;
-                    _testData.Add( new object[] 
+                    _testData.Add(new object[]
                         { GetTestName(_testData.Count), param, data.Key.Item1, data.Key.Item2, expected });
                 }
                 if (param == byte.MaxValue) break;
@@ -50,7 +47,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
             List<object[]> _testData = new List<object[]>();
             Fail.Clear();
@@ -60,7 +57,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
             {
                 List<byte> StartList = new List<byte>();
                 SetLeftTest(byte.MinValue, count, ref StartList);
-                foreach(var start in StartList)
+                foreach (var start in StartList)
                 {
                     List<byte> EndList = new List<byte>();
                     byte endMin = (byte)(start + count);
@@ -72,14 +69,14 @@ namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
             }
             for (var param = byte.MinValue; param <= byte.MaxValue; param++)
             {
-                foreach(var data in Fail)
+                foreach (var data in Fail)
                 {
                     if (data.Value.IndexOf(param) == -1) continue;
-                    _testData.Add(new object[] { GetTestName(_testData.Count), 
-                        param, data.Key.Item1, data.Key.Item2, 
+                    _testData.Add(new object[] { GetTestName(_testData.Count),
+                        param, data.Key.Item1, data.Key.Item2,
                         SetMessage("終了Index異常,", "endIndex", param)});
                 }
-                if(param == byte.MaxValue) break;
+                if (param == byte.MaxValue) break;
             }
             return _testData;
         }
@@ -90,8 +87,8 @@ namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
     {
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.SuccessTestData),MemberType = typeof(TestDataClass))]
-        public void SuccessTest(string name, byte param, byte initMaxCount, byte initStartIndex, byte expected )
+        [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
+        public void SuccessTest(string name, byte param, byte initMaxCount, byte initStartIndex, byte expected)
         {
             Console.WriteLine(name);
 
@@ -110,17 +107,17 @@ namespace HashTool.Tests.AnalysisConditionTest.SetEndIndex
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, byte param, byte initStartIndex, byte initMaxCount, string errorMessage)
+        public void FaileTest(string name, byte param, byte initStartIndex, byte initMaxCount, string errorMessage)
         {
             Console.WriteLine(name);
 
             // Arrange
-            var analysis = new AnalysisCondition( );
+            var analysis = new AnalysisCondition();
             Conditions.ByteMaxCount = initMaxCount;
             Conditions.StartIndex = initStartIndex;
 
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { analysis.SetEndIndex(param); });
+            var ex = Assert.Throws<ProcessException>(() => { analysis.SetEndIndex(param); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

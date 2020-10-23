@@ -11,14 +11,14 @@ namespace HashTool.Tests.CreatConditionTest.CreatSensitive
         public static IEnumerable<object[]> SuccessTestData()
         {
             List<object[]> _testData = new List<object[]>();
-            for (var i = 0; i < 20; i++) _testData.Add( new object[] { GetTestName(_testData.Count) });
+            for (var i = 0; i < 20; i++) _testData.Add(new object[] { GetTestName(_testData.Count) });
             return _testData;
         }
 
         public static IEnumerable<object[]> FaileTestData()
         {
             List<object[]> _testData = new List<object[]>();
-            _testData.Add( new object[] { GetTestName(_testData.Count), SetMessage("Sensitive") });
+            _testData.Add(new object[] { GetTestName(_testData.Count), SetMessage("Sensitive") });
             return _testData;
         }
     }
@@ -29,12 +29,12 @@ namespace HashTool.Tests.CreatConditionTest.CreatSensitive
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name)
+        public void SuccessTest(string name)
         {
             Console.WriteLine(name);
             // Arrange
             var creat = new CreatCondition();
-            
+
             // Act
             creat.CreatSensitive();
 
@@ -44,14 +44,14 @@ namespace HashTool.Tests.CreatConditionTest.CreatSensitive
 
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.FaileTestData),MemberType = typeof(TestDataClass))]
-        public void FaileTest(string name, string errorMessage )
+        [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
+        public void FaileTest(string name, string errorMessage)
         {
             Console.WriteLine(name);
 
             // Arrange
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { CreatSensitiveStub(); });
+            var ex = Assert.Throws<ProcessException>(() => { CreatSensitiveStub(); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

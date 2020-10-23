@@ -1,6 +1,5 @@
 ﻿using HashTool.Constant;
 using HashTool.Measurement;
-using HashTool.Condition;
 using LibBaseSequence;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ namespace HashTool.Tests.MeasureBaseTest
 {
     public class Measure : MeasureBase
     {
-        internal override byte[] GetHashValue (byte[] byte_value)
+        internal override byte[] GetHashValue(byte[] byte_value)
         {
             return byte_value;
         }
@@ -22,65 +21,65 @@ namespace HashTool.Tests.MeasureBaseTest
             {"@#$%!", new byte[] { 0x40, 0x23, 0x24, 0x25, 0x21}}
         };
 
-        public Dictionary<Tuple<E_HASH_TYPE, E_HASH_SENSITIVE, string>, string> Hash1Time = 
+        public Dictionary<Tuple<E_HASH_TYPE, E_HASH_SENSITIVE, string>, string> Hash1Time =
             new Dictionary<Tuple<E_HASH_TYPE, E_HASH_SENSITIVE, string>, string> {
             { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, "123"), "202cb962ac59075b964b07152d234b70" },
-            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "123"), "202CB962AC59075B964B07152D234B70" }, 
+            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "123"), "202CB962AC59075B964B07152D234B70" },
             { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.LOWER, "123"), "40bd001563085fc35165329ea1ff5c5ecbdbbeef" },
-            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "123"), "40BD001563085FC35165329EA1FF5C5ECBDBBEEF" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "123"), "40BD001563085FC35165329EA1FF5C5ECBDBBEEF" },
             { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, "123"), "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3" },
-            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "123"), "A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "123"), "A665A45920422F9D417E4867EFDC4FB8A04A1F3FFF1FA07E998E86F7F7A27AE3" },
             { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.LOWER, "123"), "9a0a82f0c0cf31470d7affede3406cc9aa8410671520b727044eda15b4c25532a9b5cd8aaf9cec4919d76255b6bfb00f" },
-            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "123"), "9A0A82F0C0CF31470D7AFFEDE3406CC9AA8410671520B727044EDA15B4C25532A9B5CD8AAF9CEC4919D76255B6BFB00F" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "123"), "9A0A82F0C0CF31470D7AFFEDE3406CC9AA8410671520B727044EDA15B4C25532A9B5CD8AAF9CEC4919D76255B6BFB00F" },
             { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.LOWER, "123"), "3c9909afec25354d551dae21590bb26e38d53f2173b8d3dc3eee4c047e7ab1c1eb8b85103e3be7ba613b31bb5c9c36214dc9f14a42fd7a2fdb84856bca5c44c2" },
-            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "123"), "3C9909AFEC25354D551DAE21590BB26E38D53F2173B8D3DC3EEE4C047E7AB1C1EB8B85103E3BE7BA613B31BB5C9C36214DC9F14A42FD7A2FDB84856BCA5C44C2" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "123"), "3C9909AFEC25354D551DAE21590BB26E38D53F2173B8D3DC3EEE4C047E7AB1C1EB8B85103E3BE7BA613B31BB5C9C36214DC9F14A42FD7A2FDB84856BCA5C44C2" },
 
             { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, "abc"), "900150983cd24fb0d6963f7d28e17f72" },
-            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "abc"), "900150983CD24FB0D6963F7D28E17F72" }, 
+            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "abc"), "900150983CD24FB0D6963F7D28E17F72" },
             { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.LOWER, "abc"), "a9993e364706816aba3e25717850c26c9cd0d89d" },
-            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "abc"), "A9993E364706816ABA3E25717850C26C9CD0D89D" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "abc"), "A9993E364706816ABA3E25717850C26C9CD0D89D" },
             { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, "abc"), "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad" },
-            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "abc"), "BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "abc"), "BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD" },
             { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.LOWER, "abc"), "cb00753f45a35e8bb5a03d699ac65007272c32ab0eded1631a8b605a43ff5bed8086072ba1e7cc2358baeca134c825a7" },
-            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "abc"), "CB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "abc"), "CB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7" },
             { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.LOWER, "abc"), "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f" },
-            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "abc"), "DDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "abc"), "DDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F" },
 
             { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, "テスト"), "b0f1c5a480f416234a803b35d9932c57" },
-            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "テスト"), "B0F1C5A480F416234A803B35D9932C57" }, 
+            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "テスト"), "B0F1C5A480F416234A803B35D9932C57" },
             { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.LOWER, "テスト"), "63b560db8849e08797624b58335240e0d06282bd" },
-            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "テスト"), "63B560DB8849E08797624B58335240E0D06282BD" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "テスト"), "63B560DB8849E08797624B58335240E0D06282BD" },
             { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, "テスト"), "8a535a3f4dcd2c396db11b7c1e54221d04375c9f9be96bce47dc2fdb237e86c9" },
-            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "テスト"), "8A535A3F4DCD2C396DB11B7C1E54221D04375C9F9BE96BCE47DC2FDB237E86C9" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "テスト"), "8A535A3F4DCD2C396DB11B7C1E54221D04375C9F9BE96BCE47DC2FDB237E86C9" },
             { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.LOWER, "テスト"), "3502bb7d7f95ec11bff36f83defb88ad979ae68e996abac833e491a68caa499d5671e69a00479d7b40f0a0a206b1d17a" },
-            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "テスト"), "3502BB7D7F95EC11BFF36F83DEFB88AD979AE68E996ABAC833E491A68CAA499D5671E69A00479D7B40F0A0A206B1D17A" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "テスト"), "3502BB7D7F95EC11BFF36F83DEFB88AD979AE68E996ABAC833E491A68CAA499D5671E69A00479D7B40F0A0A206B1D17A" },
             { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.LOWER, "テスト"), "0b5d8c7fb5b942cb09b0390db6fd09ff77aa56270aae66ee139b890b163116610c915f1246c7204237e3224360a01ec1ad633918da919cbe2b24d5ba8c5b3ddc" },
-            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "テスト"), "0B5D8C7FB5B942CB09B0390DB6FD09FF77AA56270AAE66EE139B890B163116610C915F1246C7204237E3224360A01EC1AD633918DA919CBE2B24D5BA8C5B3DDC" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "テスト"), "0B5D8C7FB5B942CB09B0390DB6FD09FF77AA56270AAE66EE139B890B163116610C915F1246C7204237E3224360A01EC1AD633918DA919CBE2B24D5BA8C5B3DDC" },
 
             { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, " "), "7215ee9c7d9dc229d2921a40e899ec5f" },
-            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, " "), "7215EE9C7D9DC229D2921A40E899EC5F" }, 
+            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, " "), "7215EE9C7D9DC229D2921A40E899EC5F" },
             { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.LOWER, " "), "b858cb282617fb0956d960215c8e84d1ccf909c6" },
-            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, " "), "B858CB282617FB0956D960215C8E84D1CCF909C6" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, " "), "B858CB282617FB0956D960215C8E84D1CCF909C6" },
             { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, " "), "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068" },
-            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, " "), "36A9E7F1C95B82FFB99743E0C5C4CE95D83C9A430AAC59F84EF3CBFAB6145068" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, " "), "36A9E7F1C95B82FFB99743E0C5C4CE95D83C9A430AAC59F84EF3CBFAB6145068" },
             { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.LOWER, " "), "588016eb10045dd85834d67d187d6b97858f38c58c690320c4a64e0c2f92eebd9f1bd74de256e8268815905159449566" },
-            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, " "), "588016EB10045DD85834D67D187D6B97858F38C58C690320C4A64E0C2F92EEBD9F1BD74DE256E8268815905159449566" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, " "), "588016EB10045DD85834D67D187D6B97858F38C58C690320C4A64E0C2F92EEBD9F1BD74DE256E8268815905159449566" },
             { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.LOWER, " "), "f90ddd77e400dfe6a3fcf479b00b1ee29e7015c5bb8cd70f5f15b4886cc339275ff553fc8a053f8ddc7324f45168cffaf81f8c3ac93996f6536eef38e5e40768" },
-            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, " "), "F90DDD77E400DFE6A3FCF479B00B1EE29E7015C5BB8CD70F5F15B4886CC339275FF553FC8A053F8DDC7324F45168CFFAF81F8C3AC93996F6536EEF38E5E40768" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, " "), "F90DDD77E400DFE6A3FCF479B00B1EE29E7015C5BB8CD70F5F15B4886CC339275FF553FC8A053F8DDC7324F45168CFFAF81F8C3AC93996F6536EEF38E5E40768" },
 
             { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, "@#$%!"), "3e02647be972f4941debde0f576689d9" },
-            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "@#$%!"), "3E02647BE972F4941DEBDE0F576689D9" }, 
+            { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, "@#$%!"), "3E02647BE972F4941DEBDE0F576689D9" },
             { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.LOWER, "@#$%!"), "64e25e721b7a292d5ef6281ff022174472d1929a" },
-            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "@#$%!"), "64E25E721B7A292D5EF6281FF022174472D1929A" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, "@#$%!"), "64E25E721B7A292D5EF6281FF022174472D1929A" },
             { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, "@#$%!"), "125bc5a21cea28561a49ca606c1010999d121b6e98fd6a048e0d590a3aaeffbe" },
-            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "@#$%!"), "125BC5A21CEA28561A49CA606C1010999D121B6E98FD6A048E0D590A3AAEFFBE" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.UPPER, "@#$%!"), "125BC5A21CEA28561A49CA606C1010999D121B6E98FD6A048E0D590A3AAEFFBE" },
             { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.LOWER, "@#$%!"), "63a337c4e4e61b16a00ccd14377732db8cb414eb75ec44f6acff3e90163f8e5bd4b8a43604d68a93aa6f26cb3b05eb30" },
-            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "@#$%!"), "63A337C4E4E61B16A00CCD14377732DB8CB414EB75EC44F6ACFF3E90163F8E5BD4B8A43604D68A93AA6F26CB3B05EB30" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA384, E_HASH_SENSITIVE.UPPER, "@#$%!"), "63A337C4E4E61B16A00CCD14377732DB8CB414EB75EC44F6ACFF3E90163F8E5BD4B8A43604D68A93AA6F26CB3B05EB30" },
             { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.LOWER, "@#$%!"), "51a13801a98de7b2dbeebbad03ce87b6e788ed52447d4b07e21681a2595e41febc52614cd4a30644d086b630fe0380ba381f5070c179416a43b70377ab0fe4ae" },
-            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "@#$%!"), "51A13801A98DE7B2DBEEBBAD03CE87B6E788ED52447D4B07E21681A2595E41FEBC52614CD4A30644D086B630FE0380BA381F5070C179416A43B70377AB0FE4AE" }, 
+            { Tuple.Create(E_HASH_TYPE.SHA512, E_HASH_SENSITIVE.UPPER, "@#$%!"), "51A13801A98DE7B2DBEEBBAD03CE87B6E788ED52447D4B07E21681A2595E41FEBC52614CD4A30644D086B630FE0380BA381F5070C179416A43B70377AB0FE4AE" },
         };
-        
-        public Dictionary<Tuple<E_HASH_TYPE, E_HASH_SENSITIVE, E_HASH_ORDER, byte, byte, string>, string> Hash1_2Time = 
+
+        public Dictionary<Tuple<E_HASH_TYPE, E_HASH_SENSITIVE, E_HASH_ORDER, byte, byte, string>, string> Hash1_2Time =
             new Dictionary<Tuple<E_HASH_TYPE, E_HASH_SENSITIVE, E_HASH_ORDER, byte, byte, string>, string> {
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, "123"), "202cb962ac59075b"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, "123"), "964b07152d234b70"},
@@ -88,28 +87,28 @@ namespace HashTool.Tests.MeasureBaseTest
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, "123"), "d9b1d7db4cd6e709"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, "123"), "35368a1efb10e377"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "123"), "d9b1d7db4cd6e70935368a1efb10e377"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, "abc"), "900150983cd24fb0"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, "abc"), "d6963f7d28e17f72"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "abc"), "900150983cd24fb0d6963f7d28e17f72"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, "abc"), "ec0405c5aef93e77"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, "abc"), "1cd80e0db180b88b"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "abc"), "ec0405c5aef93e771cd80e0db180b88b"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, "テスト"), "b0f1c5a480f41623"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, "テスト"), "4a803b35d9932c57"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "テスト"), "b0f1c5a480f416234a803b35d9932c57"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, "テスト"), "78b03f6b2b178db8"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, "テスト"), "3f5df59d51d173d9"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "テスト"), "78b03f6b2b178db83f5df59d51d173d9"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, " "), "7215ee9c7d9dc229"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, " "), "d2921a40e899ec5f"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, " "), "7215ee9c7d9dc229d2921a40e899ec5f"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, " "), "a18c43c8b63fa680"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, " "), "0a53bb187b9ddd45"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, " "), "a18c43c8b63fa6800a53bb187b9ddd45"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, "@#$%!"), "3e02647be972f494"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, "@#$%!"), "1debde0f576689d9"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "@#$%!"), "3e02647be972f4941debde0f576689d9"},
@@ -123,28 +122,28 @@ namespace HashTool.Tests.MeasureBaseTest
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, "123"), "D9840773233FA6B1"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, "123"), "9FDE8CAF765402F5"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "123"), "D9840773233FA6B19FDE8CAF765402F5"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, "abc"), "900150983CD24FB0"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, "abc"), "D6963F7D28E17F72"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "abc"), "900150983CD24FB0D6963F7D28E17F72"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, "abc"), "1CEB3E00BFA610E1"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, "abc"), "C55453734A5C6B7E"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "abc"), "1CEB3E00BFA610E1C55453734A5C6B7E"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, "テスト"), "B0F1C5A480F41623"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, "テスト"), "4A803B35D9932C57"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "テスト"), "B0F1C5A480F416234A803B35D9932C57"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, "テスト"), "B8D42CE40803A975"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, "テスト"), "D4977F8C24B4F60D"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "テスト"), "B8D42CE40803A975D4977F8C24B4F60D"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, " "), "7215EE9C7D9DC229"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, " "), "D2921A40E899EC5F"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, " "), "7215EE9C7D9DC229D2921A40E899EC5F"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)15, " "), "3797511959E1ADDB"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)16, (byte)31, " "), "D4B4DD8B961F6DF0"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, " "), "3797511959E1ADDBD4B4DD8B961F6DF0"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)15, "@#$%!"), "3E02647BE972F494"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)16, (byte)31, "@#$%!"), "1DEBDE0F576689D9"},
                 { Tuple.Create(E_HASH_TYPE.MD5, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "@#$%!"), "3E02647BE972F4941DEBDE0F576689D9"},
@@ -193,28 +192,28 @@ namespace HashTool.Tests.MeasureBaseTest
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)19, "123"), "724E1DAD1C6684E539BB"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)20, (byte)39, "123"), "C839FF69D0E1E6C54621"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)39, "123"), "724E1DAD1C6684E539BBC839FF69D0E1E6C54621"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)19, "abc"), "A9993E364706816ABA3E"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)20, (byte)39, "abc"), "25717850C26C9CD0D89D"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)39, "abc"), "A9993E364706816ABA3E25717850C26C9CD0D89D"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)19, "abc"), "DC99ED0C65114FB7A4ED"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)20, (byte)39, "abc"), "EC7EC60659B4D76F995E"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)39, "abc"), "DC99ED0C65114FB7A4EDEC7EC60659B4D76F995E"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)19, "テスト"), "63B560DB8849E0879762"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)20, (byte)39, "テスト"), "4B58335240E0D06282BD"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)39, "テスト"), "63B560DB8849E08797624B58335240E0D06282BD"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)19, "テスト"), "F54EC323C447CEC1AE5D"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)20, (byte)39, "テスト"), "ACADE9CE31085B119D20"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)39, "テスト"), "F54EC323C447CEC1AE5DACADE9CE31085B119D20"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)19, " "), "B858CB282617FB0956D9"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)20, (byte)39, " "), "60215C8E84D1CCF909C6"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)39, " "), "B858CB282617FB0956D960215C8E84D1CCF909C6"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)19, " "), "B1264E5D13335C4785DC"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)20, (byte)39, " "), "E36C531CD428421D7C45"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)39, " "), "B1264E5D13335C4785DCE36C531CD428421D7C45"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)19, "@#$%!"), "64E25E721B7A292D5EF6"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)20, (byte)39, "@#$%!"), "281FF022174472D1929A"},
                 { Tuple.Create(E_HASH_TYPE.SHA1, E_HASH_SENSITIVE.UPPER, E_HASH_ORDER.SINGLE,(byte)0, (byte)39, "@#$%!"), "64E25E721B7A292D5EF6281FF022174472D1929A"},
@@ -228,28 +227,28 @@ namespace HashTool.Tests.MeasureBaseTest
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "123"), "173af653133d964edfc16cafe0aba33c"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)32, (byte)63, "123"), "8f500a07f3ba3f81943916910c257705"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)63, "123"), "173af653133d964edfc16cafe0aba33c8f500a07f3ba3f81943916910c257705"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "abc"), "ba7816bf8f01cfea414140de5dae2223"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)32, (byte)63, "abc"), "b00361a396177a9cb410ff61f20015ad"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)63, "abc"), "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "abc"), "dfe7a23fefeea519e9bbfdd1a6be94c4"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)32, (byte)63, "abc"), "b2e4529dd6b7cbea83f9959c2621b13c"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)63, "abc"), "dfe7a23fefeea519e9bbfdd1a6be94c4b2e4529dd6b7cbea83f9959c2621b13c"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "テスト"), "8a535a3f4dcd2c396db11b7c1e54221d"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)32, (byte)63, "テスト"), "04375c9f9be96bce47dc2fdb237e86c9"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)63, "テスト"), "8a535a3f4dcd2c396db11b7c1e54221d04375c9f9be96bce47dc2fdb237e86c9"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, "テスト"), "bf063e31721ac3712ec5af92291349e8"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)32, (byte)63, "テスト"), "b0a2cddb6d61aef45a4a17d6987427bb"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)63, "テスト"), "bf063e31721ac3712ec5af92291349e8b0a2cddb6d61aef45a4a17d6987427bb"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, " "), "36a9e7f1c95b82ffb99743e0c5c4ce95"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)32, (byte)63, " "), "d83c9a430aac59f84ef3cbfab6145068"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)63, " "), "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)31, " "), "dfaa90b9f1d0497f2836e7a73b6e3321"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)32, (byte)63, " "), "25ba378ff023382491970708da76b0d5"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.DOUBLE,(byte)0, (byte)63, " "), "dfaa90b9f1d0497f2836e7a73b6e332125ba378ff023382491970708da76b0d5"},
-                
+
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)31, "@#$%!"), "125bc5a21cea28561a49ca606c101099"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)32, (byte)63, "@#$%!"), "9d121b6e98fd6a048e0d590a3aaeffbe"},
                 { Tuple.Create(E_HASH_TYPE.SHA256, E_HASH_SENSITIVE.LOWER, E_HASH_ORDER.SINGLE,(byte)0, (byte)63, "@#$%!"), "125bc5a21cea28561a49ca606c1010999d121b6e98fd6a048e0d590a3aaeffbe"},
@@ -437,10 +436,10 @@ namespace HashTool.Tests.MeasureBaseTest
         {
             byte[][] test = new byte[16][];
             byte cnt = byte.MinValue;
-            for(var i = 0; i < 16; i++)
+            for (var i = 0; i < 16; i++)
             {
                 var tmp = new byte[16];
-                for(var j = 0; j < 16; j++)
+                for (var j = 0; j < 16; j++)
                 {
                     tmp[j] = cnt;
                     cnt++;
@@ -453,7 +452,7 @@ namespace HashTool.Tests.MeasureBaseTest
         public string GetByteString(byte[] Param)
         {
             string str = "";
-            foreach(var param in Param)
+            foreach (var param in Param)
             {
                 str += string.Format("{0:x2}", param);
             }
@@ -467,7 +466,7 @@ namespace HashTool.Tests.MeasureBaseTest
                 if (word == "") throw new EncoderFallbackException();
                 return Encoding.UTF8.GetBytes(word);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ProcessException(
                     string.Format("HashToolの実行異常　出力したい文字列をByteに変換失敗 word = {0}", word),
@@ -475,17 +474,17 @@ namespace HashTool.Tests.MeasureBaseTest
             }
         }
 
-        public string ByteArrayToHexStringStub (byte[] byte_hash, int toBase, int shift)
+        public string ByteArrayToHexStringStub(byte[] byte_hash, int toBase, int shift)
         {
             string hash_value = "";
 
-            foreach(byte b in byte_hash)
+            foreach (byte b in byte_hash)
             {
                 try
                 {
                     hash_value += Convert.ToString(b, toBase).PadLeft(shift, '0');
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw new ProcessException(
                         string.Format("HashToolの実行異常　ハッシュ配列を16進数へ変換する"), ex.InnerException);

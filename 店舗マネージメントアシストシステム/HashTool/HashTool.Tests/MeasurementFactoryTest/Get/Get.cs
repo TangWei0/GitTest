@@ -14,18 +14,18 @@ namespace HashTool.Tests.MeasurementFactoryTest.Get
         {
             List<object[]> _testData = new List<object[]>();
             var Type = GetEnumSuccess(typeof(E_HASH_TYPE));
-            foreach(var type in Type)
+            foreach (var type in Type)
             {
                 _testData.Add(new object[] { GetTestName(_testData.Count), type });
             }
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
+            List<object[]> _testData = new List<object[]>();
             var Type = GetEnumFaile(typeof(E_HASH_TYPE));
-            foreach(var type in Type)
+            foreach (var type in Type)
             {
                 _testData.Add(new object[] { GetTestName(_testData.Count), (E_HASH_TYPE)type, SetMessage((E_HASH_TYPE)type) });
             }
@@ -44,7 +44,7 @@ namespace HashTool.Tests.MeasurementFactoryTest.Get
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name, E_HASH_TYPE type)
+        public void SuccessTest(string name, E_HASH_TYPE type)
         {
             Console.WriteLine(name);
             // Arrange
@@ -69,14 +69,14 @@ namespace HashTool.Tests.MeasurementFactoryTest.Get
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, E_HASH_TYPE param, string errorMessage)
+        public void FaileTest(string name, E_HASH_TYPE param, string errorMessage)
         {
             Console.WriteLine(name);
             // Arrange
             Conditions.Type = param;
             // Arrange
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { MeasurementFactory.Get(); });
+            var ex = Assert.Throws<ProcessException>(() => { MeasurementFactory.Get(); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

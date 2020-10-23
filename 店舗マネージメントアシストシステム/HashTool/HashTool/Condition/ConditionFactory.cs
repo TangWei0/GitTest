@@ -1,15 +1,13 @@
-﻿using HashTool;
-
-namespace HashTool.Condition
+﻿namespace HashTool.Condition
 {
     public static class ConditionFactory
     {
-        public static ConditionBase Get ( )
+        public static ConditionBase Get()
         {
-            if(Conditions.Condition == 0)
-                return new CreatCondition( );
+            if (Conditions.Condition == 0)
+                return new CreatCondition();
             else
-                return new AnalysisCondition( );
+                return new AnalysisCondition();
         }
     }
 }

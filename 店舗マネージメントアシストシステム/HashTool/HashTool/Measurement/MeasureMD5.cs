@@ -1,6 +1,6 @@
-﻿using System;
+﻿using LibBaseSequence;
+using System;
 using System.Security.Cryptography;
-using LibBaseSequence;
 
 namespace HashTool.Measurement
 {
@@ -8,17 +8,16 @@ namespace HashTool.Measurement
     {
         internal readonly MD5CryptoServiceProvider MD5CSP;
 
-        public MeasureMD5 ( )
+        public MeasureMD5()
         {
             try
             {
-                MD5CSP = new MD5CryptoServiceProvider( );
+                MD5CSP = new MD5CryptoServiceProvider();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ProcessException(
-                    string.Format("HashToolの実行異常　MD5CryptoServiceProviderインスタンス失敗"),
-                    ex.InnerException);
+                    "HashToolの実行異常　MD5CryptoServiceProviderインスタンス失敗", ex.InnerException);
             }
         }
 
@@ -27,19 +26,19 @@ namespace HashTool.Measurement
         /// </summary>
         /// <param name="byte_value"></param>
         /// <returns></returns>
-        internal override byte[] GetHashValue (byte[] byte_value)
+        internal override byte[] GetHashValue(byte[] byte_value)
         {
             try
             {
-                MD5CSP.Initialize( );
+                MD5CSP.Initialize();
 
                 /* ハッシュ配列に出力 */
                 return MD5CSP.ComputeHash(byte_value);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ProcessException(
-                    string.Format("HashToolの実行異常　MD5ハッシュ配列出力失敗"), ex.InnerException);
+                    "HashToolの実行異常　MD5ハッシュ配列出力失敗", ex.InnerException);
             }
         }
     }

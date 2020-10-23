@@ -14,7 +14,7 @@ namespace Log
         private readonly StringBuilder Buffer = new StringBuilder();
         
         /// <summary>バッファサイズ</summary>
-        private readonly long BufferSize;
+        private long BufferSize;
 
         /// <summary>ファイルサイズ</summary>
         private long FileSize;
@@ -34,10 +34,17 @@ namespace Log
         // ***** コンストラクタ *****
         public LogCtrl()
         {
+        }
+
+        /// <summary>
+        /// LogCtrl初期化処理
+        /// </summary>
+        public void Init()
+        {
             if (ConfigFactory.GetInstance().IsAppend)
                 BufferSize = ConfigFactory.GetInstance().MaxFileSize / 10;
             else
-                BufferSize = ConfigFactory.GetInstance().MaxFileSize * 9 / 10 ;
+                BufferSize = ConfigFactory.GetInstance().MaxFileSize * 9 / 10;
 
             FileSize = 0;
 

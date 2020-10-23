@@ -11,18 +11,18 @@ namespace HashTool.Tests.MeasureBaseTest.ChangeWordToByte
         {
             List<object[]> _testData = new List<object[]>();
             var measure = new Measure();
-            foreach(var val in measure.ByteTest)
+            foreach (var val in measure.ByteTest)
             {
-                _testData.Add(new object[] { GetTestName(_testData.Count), val.Key, val.Value});
+                _testData.Add(new object[] { GetTestName(_testData.Count), val.Key, val.Value });
             }
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
-            _testData.Add(new object[] { GetTestName(_testData.Count), null, SetMessage(null)});
-            _testData.Add(new object[] { GetTestName(_testData.Count), "", SetMessage("")});
+            List<object[]> _testData = new List<object[]>();
+            _testData.Add(new object[] { GetTestName(_testData.Count), null, SetMessage(null) });
+            _testData.Add(new object[] { GetTestName(_testData.Count), "", SetMessage("") });
             return _testData;
         }
 
@@ -52,13 +52,13 @@ namespace HashTool.Tests.MeasureBaseTest.ChangeWordToByte
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, string word, string errorMessage)
+        public void FaileTest(string name, string word, string errorMessage)
         {
             Console.WriteLine(name);
 
             // Arrange
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { ChangeWordToByteStub(word); });
+            var ex = Assert.Throws<ProcessException>(() => { ChangeWordToByteStub(word); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

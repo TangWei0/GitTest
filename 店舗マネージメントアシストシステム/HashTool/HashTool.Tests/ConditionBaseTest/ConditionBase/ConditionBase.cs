@@ -13,18 +13,18 @@ namespace HashTool.Tests.ConditionBaseTest.ConditionBase
         {
             List<object[]> _testData = new List<object[]>();
             var Type = GetEnum<E_HASH_TYPE>();
-            foreach(var init in Type)
+            foreach (var init in Type)
             {
                 var expected = TypeCount[init];
-                _testData.Add(new object[]{ GetTestName(_testData.Count), init, expected});
+                _testData.Add(new object[] { GetTestName(_testData.Count), init, expected });
             }
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
-            _testData.Add(new object[]{ GetTestName(_testData.Count), SetMessage()});
+            List<object[]> _testData = new List<object[]>();
+            _testData.Add(new object[] { GetTestName(_testData.Count), SetMessage() });
             return _testData;
         }
     }
@@ -35,7 +35,7 @@ namespace HashTool.Tests.ConditionBaseTest.ConditionBase
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name, E_HASH_TYPE init, byte expected)
+        public void SuccessTest(string name, E_HASH_TYPE init, byte expected)
         {
             Console.WriteLine(name);
             // Arrange
@@ -49,13 +49,13 @@ namespace HashTool.Tests.ConditionBaseTest.ConditionBase
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, string errorMessage)
+        public void FaileTest(string name, string errorMessage)
         {
             Console.WriteLine(name);
 
             // Arrange
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { GetTypeMaxBytesStub(false); });
+            var ex = Assert.Throws<ProcessException>(() => { GetTypeMaxBytesStub(false); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

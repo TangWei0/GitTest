@@ -19,16 +19,16 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
             var Sensitive = GetEnumSuccess(typeof(E_HASH_SENSITIVE));
             var Order = GetEnumSuccess(typeof(E_HASH_ORDER));
             var Type = GetEnumSuccess(typeof(E_HASH_TYPE));
-            foreach(E_HASH_SENSITIVE sensitive in Sensitive)
+            foreach (E_HASH_SENSITIVE sensitive in Sensitive)
             {
-                foreach(E_HASH_ORDER order in Order)
+                foreach (E_HASH_ORDER order in Order)
                 {
-                    foreach(E_HASH_TYPE type in Type)
+                    foreach (E_HASH_TYPE type in Type)
                     {
                         var count = TypeCount[type];
                         var StartList = new List<byte>();
                         SetLeftTest(byte.MinValue, count, ref StartList);
-                        foreach(var start in StartList)
+                        foreach (var start in StartList)
                         {
                             List<byte> EndList = new List<byte>();
                             byte endMin = (byte)(start + count);
@@ -38,12 +38,12 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
                             {
                                 var key = Tuple.Create((byte)sensitive, (byte)order, (byte)type, count, start, end);
                                 int condition = SetCondition(key);
-                                foreach(var val in measure.ByteTest)
+                                foreach (var val in measure.ByteTest)
                                 {
-                                    _testData.Add( new object[] { GetTestName(_testData.Count), condition,  
+                                    _testData.Add(new object[] { GetTestName(_testData.Count), condition,
                                         sensitive, order, type, count, start, end, val.Key });
                                 }
-                                
+
                             }
                         }
                     }
@@ -61,12 +61,12 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
             List<int> condition = new List<int>();
             SetLeftTest(int.MinValue, 0, ref condition);
             SetRightTest(int.MaxValue, 0, ref condition);
-            var measure = new Measure();            
-            foreach(var init in condition)
+            var measure = new Measure();
+            foreach (var init in condition)
             {
-                foreach(var val in measure.ByteTest)
+                foreach (var val in measure.ByteTest)
                 {
-                    _testData.Add( new object[] { GetTestName(_testData.Count), init, val.Key});
+                    _testData.Add(new object[] { GetTestName(_testData.Count), init, val.Key });
                 }
             }
             return _testData;
@@ -80,7 +80,7 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
         // テストメソッド
         [Theory]
         [MemberData(nameof(AnalysisTestDataClass.TestData), MemberType = typeof(AnalysisTestDataClass))]
-        public void AnalysisTest (string name, int condition,
+        public void AnalysisTest(string name, int condition,
                                   E_HASH_SENSITIVE sensitive,
                                   E_HASH_ORDER order,
                                   E_HASH_TYPE type,
@@ -104,7 +104,7 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
             Assert.Equal(maxCount, Conditions.ByteMaxCount);
             Assert.Equal(startIndex, Conditions.StartIndex);
             Assert.Equal(endIndex, Conditions.EndIndex);
-            
+
             Assert.Equal(0, Result.Condition);
             Assert.Equal("", Result.HashValue);
         }

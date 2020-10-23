@@ -3,7 +3,6 @@ using HashTool.Constant;
 using LibBaseSequence;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace HashTool.Tests.AnalysisConditionTest.SetOrder
@@ -16,14 +15,14 @@ namespace HashTool.Tests.AnalysisConditionTest.SetOrder
             var Order = GetEnumSuccess(typeof(E_HASH_ORDER));
             for (var param = byte.MinValue; param <= byte.MaxValue; param++)
             {
-                foreach(E_HASH_ORDER expected in Order)
+                foreach (E_HASH_ORDER expected in Order)
                 {
                     if (param != (byte)expected) continue;
-                    E_HASH_ORDER init = 
-                        expected == E_HASH_ORDER.SINGLE ? 
+                    E_HASH_ORDER init =
+                        expected == E_HASH_ORDER.SINGLE ?
                             E_HASH_ORDER.DOUBLE : E_HASH_ORDER.SINGLE;
 
-                    _testData.Add( 
+                    _testData.Add(
                         new object[] { GetTestName(_testData.Count), param, init, expected });
                 }
                 if (param == byte.MaxValue) break;
@@ -38,7 +37,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetOrder
             for (var param = byte.MinValue; param <= byte.MaxValue; param++)
             {
                 if (Order.IndexOf(param) == -1) continue;
-                _testData.Add( new object[] { 
+                _testData.Add(new object[] {
                     GetTestName(_testData.Count), param, SetMessage("Enumに変換失敗,", "order", param)});
                 if (param == byte.MaxValue) break;
             }
@@ -51,8 +50,8 @@ namespace HashTool.Tests.AnalysisConditionTest.SetOrder
     {
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.SuccessTestData),MemberType = typeof(TestDataClass))]
-        public void SuccessTest(string name, byte param, E_HASH_ORDER init, E_HASH_ORDER expected )
+        [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
+        public void SuccessTest(string name, byte param, E_HASH_ORDER init, E_HASH_ORDER expected)
         {
             Console.WriteLine(name);
 
@@ -69,8 +68,8 @@ namespace HashTool.Tests.AnalysisConditionTest.SetOrder
 
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.FaileTestData),MemberType = typeof(TestDataClass))]
-        public void FaileTest(string name, byte param, string errorMessage )
+        [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
+        public void FaileTest(string name, byte param, string errorMessage)
         {
             Console.WriteLine(name);
 
@@ -78,7 +77,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetOrder
             var analysis = new AnalysisCondition();
 
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { analysis.SetOrder(param); });
+            var ex = Assert.Throws<ProcessException>(() => { analysis.SetOrder(param); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

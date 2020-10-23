@@ -13,24 +13,24 @@ namespace HashTool.Tests.CreatConditionTest.CreatEndIndex
         {
             List<object[]> _testData = new List<object[]>();
             var TypeList = GetEnum<E_HASH_TYPE>();
-            foreach(var type in TypeList)
+            foreach (var type in TypeList)
             {
                 var count = TypeCount[type];
                 List<byte> StartList = new List<byte>();
                 SetLeftTest(byte.MinValue, count, ref StartList);
-                foreach(var start in StartList)
+                foreach (var start in StartList)
                 {
-                    for (var i = 0; i < 20; i++) 
-                        _testData.Add( new object[] { GetTestName(_testData.Count), count, start});
+                    for (var i = 0; i < 20; i++)
+                        _testData.Add(new object[] { GetTestName(_testData.Count), count, start });
                 }
             }
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
-            _testData.Add( new object[] { GetTestName(_testData.Count), SetMessage("EndIndex")});
+            List<object[]> _testData = new List<object[]>();
+            _testData.Add(new object[] { GetTestName(_testData.Count), SetMessage("EndIndex") });
             return _testData;
         }
     }
@@ -41,7 +41,7 @@ namespace HashTool.Tests.CreatConditionTest.CreatEndIndex
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name, byte count, byte start)
+        public void SuccessTest(string name, byte count, byte start)
         {
             Console.WriteLine(name);
             // Arrange
@@ -54,21 +54,21 @@ namespace HashTool.Tests.CreatConditionTest.CreatEndIndex
             creat.CreatEndIndex();
 
             // Assert
-            Assert.True(IsContain(Conditions.EndIndex, 
-                                  (byte)(2 * Conditions.ByteMaxCount), 
+            Assert.True(IsContain(Conditions.EndIndex,
+                                  (byte)(2 * Conditions.ByteMaxCount),
                                   (byte)(Conditions.ByteMaxCount + Conditions.StartIndex)));
         }
 
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, string errorMessage)
+        public void FaileTest(string name, string errorMessage)
         {
             Console.WriteLine(name);
 
             // Arrange
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { CreatEndIndexStub(); });
+            var ex = Assert.Throws<ProcessException>(() => { CreatEndIndexStub(); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

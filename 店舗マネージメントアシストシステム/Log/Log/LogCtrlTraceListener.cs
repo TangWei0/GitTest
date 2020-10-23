@@ -48,8 +48,9 @@ namespace Log
         /// <param name="ex">例外オブジェクト</param>
         public override void WriteLine(object value, string category)
         {
-            Exception ex = value as Exception;
-            WriteLine(ex.Message + Environment.NewLine + ex.StackTrace, category);
+            if (!(value is Exception ex)) return;
+            StackTrace st = new StackTrace(true);
+            WriteLine(ex.Message + Environment.NewLine + st.ToString(), category);
         }
 
         /// <summary>

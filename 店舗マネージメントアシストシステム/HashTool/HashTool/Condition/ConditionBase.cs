@@ -1,31 +1,31 @@
-﻿using System;
-using CommonLib.EnumExtension;
-using HashTool.Constant;
+﻿using HashTool.Constant;
 using LibBaseSequence;
+using System.Diagnostics;
 
+using static CommonLib.Common.Common;
 using static HashTool.Constant.Constant;
 
 namespace HashTool.Condition
-{   
+{
     public class ConditionBase
     {
         /// <summary>
         /// Hash条件実行
         /// </summary>
-        public virtual void Exec ( ){ }
+        public virtual void Exec() { }
 
         /// <summary>
         /// HashTypeより出力最大Bytesを取得
         /// </summary>
         /// <returns></returns>
-        internal byte GetTypeMaxBytes ( )
+        internal byte GetTypeMaxBytes()
         {
             bool rel = false;
             byte maxBytes = 0;
 
             do
             {
-                switch(Conditions.Type)
+                switch (Conditions.Type)
                 {
                     case E_HASH_TYPE.MD5:
                         maxBytes = MD5_BYTES;
@@ -47,16 +47,16 @@ namespace HashTool.Condition
                 }
 
                 // 出力最大Byte数異常
-                if(maxBytes == 0)
+                if (maxBytes == 0)
                 {
-                    Console.WriteLine("HashToolの出力最大Byte数異常 MaxBytes = 0");
+                    Trace.WriteLine("HashToolの出力最大Byte数異常 MaxBytes = 0", TRACE_CAT_ERROR);
                     break;
                 }
                 // 正常終了
                 rel = true;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(string.Format("HashToolの出力最大Byte数異常 MaxBytes = 0"));
+            if (!rel) throw new ProcessException("HashToolの出力最大Byte数異常 MaxBytes = 0");
             return maxBytes;
         }
     }

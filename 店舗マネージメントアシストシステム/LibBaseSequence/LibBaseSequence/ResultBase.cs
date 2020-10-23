@@ -5,10 +5,7 @@ namespace LibBaseSequence
 {
     public abstract class ResultBase : IResult
     {
-        public E_FUNCTION_STATUS Status
-        {
-            get; set;
-        }
+        public E_FUNCTION_STATUS Status { get; set; }
 
         /// <summary>
         /// コンストラクタ

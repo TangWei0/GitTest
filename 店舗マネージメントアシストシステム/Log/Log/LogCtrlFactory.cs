@@ -3,7 +3,7 @@
     public static class LogCtrlFactory
     {
         /// <summary> ログ </summary>
-        private static LogCtrl logCtrl = null;
+        internal static LogCtrl logCtrl = null;
 
         /// <summary>
         /// インスタンスを生成する
@@ -12,6 +12,7 @@
         {
             if (logCtrl == null)
                 logCtrl = new LogCtrl();
+                logCtrl.Init();
             return logCtrl;
         }
     }

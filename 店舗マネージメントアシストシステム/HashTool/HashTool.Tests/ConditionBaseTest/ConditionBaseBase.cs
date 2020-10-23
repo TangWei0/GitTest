@@ -16,7 +16,7 @@ namespace HashTool.Tests.ConditionBaseTest
             do
             {
                 var type = flag ? (byte)Conditions.Type : byte.MaxValue;
-                switch(type)
+                switch (type)
                 {
                     case (byte)E_HASH_TYPE.MD5:
                         maxBytes = MD5_BYTES;
@@ -38,7 +38,7 @@ namespace HashTool.Tests.ConditionBaseTest
                 }
 
                 // 出力最大Byte数異常
-                if(maxBytes == 0)
+                if (maxBytes == 0)
                 {
                     Console.WriteLine("HashToolの出力最大Byte数異常 MaxBytes = 0");
                     break;
@@ -46,9 +46,9 @@ namespace HashTool.Tests.ConditionBaseTest
 
                 // 正常終了
                 rel = true;
-            } while(false);
+            } while (false);
 
-            if(!rel)
+            if (!rel)
             {
                 throw new ProcessException(
                     string.Format("HashToolの出力最大Byte数異常 MaxBytes = 0"));
@@ -65,7 +65,7 @@ namespace HashTool.Tests.ConditionBaseTest
         public static List<T> GetEnum<T>()
         {
             var list = new List<T>();
-            foreach(T val in Enum.GetValues(typeof(T))) list.Add(val);
+            foreach (T val in Enum.GetValues(typeof(T))) list.Add(val);
             return list;
         }
     }

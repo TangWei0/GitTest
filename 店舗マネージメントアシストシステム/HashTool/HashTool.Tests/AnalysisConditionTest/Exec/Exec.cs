@@ -15,16 +15,16 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             var Sensitive = GetEnumSuccess(typeof(E_HASH_SENSITIVE));
             var Order = GetEnumSuccess(typeof(E_HASH_ORDER));
             var Type = GetEnumSuccess(typeof(E_HASH_TYPE));
-            foreach(E_HASH_SENSITIVE sensitive in Sensitive)
+            foreach (E_HASH_SENSITIVE sensitive in Sensitive)
             {
-                foreach(E_HASH_ORDER order in Order)
+                foreach (E_HASH_ORDER order in Order)
                 {
-                    foreach(E_HASH_TYPE type in Type)
+                    foreach (E_HASH_TYPE type in Type)
                     {
                         var count = TypeCount[type];
                         var StartList = new List<byte>();
                         SetLeftTest(byte.MinValue, count, ref StartList);
-                        foreach(var start in StartList)
+                        foreach (var start in StartList)
                         {
                             List<byte> EndList = new List<byte>();
                             byte endMin = (byte)(start + count);
@@ -34,7 +34,7 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
                             {
                                 var key = Tuple.Create((byte)sensitive, (byte)order, (byte)type, count, start, end);
                                 int condition = SetCondition(key);
-                                _testData.Add( new object[] { GetTestName(_testData.Count), condition,  
+                                _testData.Add(new object[] { GetTestName(_testData.Count), condition,
                                     sensitive, order, type, count, start, end });
                             }
                         }
@@ -44,9 +44,9 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
+            List<object[]> _testData = new List<object[]>();
 
             var SensitiveSuccess = GetEnumSuccess(typeof(E_HASH_SENSITIVE));
             var OrderSuccess = GetEnumSuccess(typeof(E_HASH_ORDER));
@@ -58,22 +58,22 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             // bit30のみので、Sensitive異常にならないため、テストしないこと
 
             // Order異常
-            foreach(var sensitive in SensitiveSuccess)
+            foreach (var sensitive in SensitiveSuccess)
             {
-                foreach(var order in OrderFaile)
+                foreach (var order in OrderFaile)
                 {
-                    foreach(var type in TypeSuccess)
+                    foreach (var type in TypeSuccess)
                     {
                         var count = TypeCount[(E_HASH_TYPE)type];
-                        var StartList = new List<byte>( );
+                        var StartList = new List<byte>();
                         SetLeftTest(byte.MinValue, count, ref StartList);
-                        foreach(var start in StartList)
+                        foreach (var start in StartList)
                         {
-                            List<byte> EndList = new List<byte>( );
+                            List<byte> EndList = new List<byte>();
                             byte endMin = (byte)(start + count);
                             byte endMax = (byte)(2 * count);
                             SetLeftTest(endMin, endMax, ref EndList);
-                            foreach(var end in EndList)
+                            foreach (var end in EndList)
                             {
                                 var key = Tuple.Create((byte)sensitive, order, (byte)type, count, start, end);
                                 _testData.Add(new object[] { GetTestName(_testData.Count), SetCondition(key) });
@@ -84,26 +84,26 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             }
 
             // Type異常
-            foreach(var sensitive in SensitiveSuccess)
+            foreach (var sensitive in SensitiveSuccess)
             {
-                foreach(var order in OrderSuccess)
+                foreach (var order in OrderSuccess)
                 {
-                    foreach(var type in TypeFaile)
+                    foreach (var type in TypeFaile)
                     {
-                        var Count = new List<byte>( );
+                        var Count = new List<byte>();
                         SetLeftTest((byte)1, type, ref Count);
                         SetRightTest((byte)127, type, ref Count);
-                        foreach(var count in Count)
+                        foreach (var count in Count)
                         {
-                            var StartList = new List<byte>( );
+                            var StartList = new List<byte>();
                             SetLeftTest(byte.MinValue, count, ref StartList);
-                            foreach(var start in StartList)
+                            foreach (var start in StartList)
                             {
-                                List<byte> EndList = new List<byte>( );
+                                List<byte> EndList = new List<byte>();
                                 byte endMin = (byte)(start + count);
                                 byte endMax = (byte)(2 * count);
                                 SetLeftTest(endMin, endMax, ref EndList);
-                                foreach(var end in EndList)
+                                foreach (var end in EndList)
                                 {
                                     var key = Tuple.Create((byte)sensitive, (byte)order, type, count, start, end);
                                     _testData.Add(new object[] { GetTestName(_testData.Count), SetCondition(key) });
@@ -115,26 +115,26 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             }
 
             // Count異常
-            foreach(var sensitive in SensitiveSuccess)
+            foreach (var sensitive in SensitiveSuccess)
             {
-                foreach(var order in OrderSuccess)
+                foreach (var order in OrderSuccess)
                 {
-                    foreach(var type in TypeSuccess)
+                    foreach (var type in TypeSuccess)
                     {
-                        var Count = new List<byte>( );
+                        var Count = new List<byte>();
                         SetLeftTest((byte)1, (byte)type, ref Count);
                         SetRightTest((byte)127, (byte)type, ref Count);
-                        foreach(var count in Count)
+                        foreach (var count in Count)
                         {
-                            var StartList = new List<byte>( );
+                            var StartList = new List<byte>();
                             SetLeftTest(byte.MinValue, count, ref StartList);
-                            foreach(var start in StartList)
+                            foreach (var start in StartList)
                             {
-                                List<byte> EndList = new List<byte>( );
+                                List<byte> EndList = new List<byte>();
                                 byte endMin = (byte)(start + count);
                                 byte endMax = (byte)(2 * count);
                                 SetLeftTest(endMin, endMax, ref EndList);
-                                foreach(var end in EndList)
+                                foreach (var end in EndList)
                                 {
                                     var key = Tuple.Create((byte)sensitive, (byte)order, (byte)type, count, start, end);
                                     _testData.Add(new object[] { GetTestName(_testData.Count), SetCondition(key) });
@@ -146,16 +146,16 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             }
 
             // Start異常
-            foreach(var sensitive in SensitiveSuccess)
+            foreach (var sensitive in SensitiveSuccess)
             {
-                foreach(var order in OrderSuccess)
+                foreach (var order in OrderSuccess)
                 {
-                    foreach(var type in TypeSuccess)
+                    foreach (var type in TypeSuccess)
                     {
                         var count = TypeCount[(E_HASH_TYPE)type];
-                        var StartList = new List<byte>( );
+                        var StartList = new List<byte>();
                         SetRightTest((byte)127, (byte)(count - 1), ref StartList);
-                        foreach(var start in StartList)
+                        foreach (var start in StartList)
                         {
                             var end = (byte)(start + count);
                             var key = Tuple.Create((byte)sensitive, (byte)order, (byte)type, count, start, end);
@@ -166,23 +166,23 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             }
 
             // End異常
-            foreach(var sensitive in SensitiveSuccess)
+            foreach (var sensitive in SensitiveSuccess)
             {
-                foreach(var order in OrderSuccess)
+                foreach (var order in OrderSuccess)
                 {
-                    foreach(var type in TypeSuccess)
+                    foreach (var type in TypeSuccess)
                     {
                         var count = TypeCount[(E_HASH_TYPE)type];
-                        var StartList = new List<byte>( );
+                        var StartList = new List<byte>();
                         SetLeftTest(byte.MinValue, count, ref StartList);
-                        foreach(var start in StartList)
+                        foreach (var start in StartList)
                         {
-                            List<byte> EndList = new List<byte>( );
+                            List<byte> EndList = new List<byte>();
                             byte endMin = (byte)(start + count);
                             byte endMax = (byte)(2 * count - 1);
                             SetLeftTest(byte.MinValue, endMin, ref EndList);
                             SetRightTest(byte.MaxValue, endMax, ref EndList);
-                            foreach(var end in EndList)
+                            foreach (var end in EndList)
                             {
                                 var key = Tuple.Create((byte)sensitive, (byte)order, (byte)type, count, start, end);
                                 _testData.Add(new object[] { GetTestName(_testData.Count), SetCondition(key) });
@@ -201,7 +201,7 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name, int condition,
+        public void SuccessTest(string name, int condition,
                                 E_HASH_SENSITIVE sensitive,
                                 E_HASH_ORDER order,
                                 E_HASH_TYPE type,
@@ -210,11 +210,11 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
             Console.WriteLine(name);
 
             // Arrange
-            var analysis = new AnalysisCondition( );
+            var analysis = new AnalysisCondition();
             Conditions.Condition = condition;
 
             // Act
-            analysis.Exec( );
+            analysis.Exec();
 
             // Assert
             Assert.Equal(sensitive, Conditions.Sensitive);
@@ -228,16 +228,16 @@ namespace HashTool.Tests.AnalysisConditionTest.Exec
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, int param)
+        public void FaileTest(string name, int param)
         {
             Console.WriteLine(name);
 
             // Arrange
-            var analysis = new AnalysisCondition( );
+            var analysis = new AnalysisCondition();
             Conditions.Condition = param;
 
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { analysis.Exec( ); });
+            var ex = Assert.Throws<ProcessException>(() => { analysis.Exec(); });
         }
     }
 }

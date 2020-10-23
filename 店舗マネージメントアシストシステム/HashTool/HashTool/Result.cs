@@ -17,7 +17,7 @@ namespace HashTool
         /// <summary>
         /// Result初期化
         /// </summary>
-        public override void Init ( )
+        public override void Init()
         {
             // 前回処理結果を初期化
             HashValue = "";

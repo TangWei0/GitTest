@@ -14,8 +14,8 @@ namespace Log.Tests.ConfigTest.SetLogFilePath
         {
             List<object[]> _testData = new List<object[]>();
 
-            string[] Node = new string[2] { "LogFilePath", "FailePath" };
-            string[] NodeValue = new string[2] { @"C:\Test\", "Test" };
+            string[] Node = new string[2] { "LogFilePath", "FailPath" };
+            string[] NodeValue = new string[2] { @"C:\Test\", "*Test" };
             bool[] IsExists = new bool[2] { true, false };
             string expectedPath = "";
             bool expectedRel = false;
@@ -54,6 +54,8 @@ namespace Log.Tests.ConfigTest.SetLogFilePath
             return _testData;
         }
     }
+
+    [Collection("Our Test Collection #1")]
     public class SetLogFilePath
     {
         // テストメソッド
@@ -65,9 +67,6 @@ namespace Log.Tests.ConfigTest.SetLogFilePath
             Console.WriteLine(name);
             // Arrange
             string path = "Test.xml";
-            if (File.Exists(path))
-                File.Delete(path);
-
             XElement root = new XElement("Setting");
             root.SetElementValue(node, nodeValue);
             root.Save(path);
@@ -88,7 +87,8 @@ namespace Log.Tests.ConfigTest.SetLogFilePath
             Assert.Equal(expectedPath, config.LogFilePath);
 
             File.Delete(path);
-            Directory.Delete(nodeValue);
+            if (!exists)
+                Directory.Delete(nodeValue);
         }
     }
 }

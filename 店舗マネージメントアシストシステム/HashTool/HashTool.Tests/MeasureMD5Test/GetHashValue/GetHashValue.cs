@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
-using HashTool.Measurement;
-using System.Security.Cryptography;
+﻿using HashTool.Measurement;
 using LibBaseSequence;
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using Xunit;
 
 namespace HashTool.Tests.MeasureMD5Test.GetHashValue
 {
@@ -20,25 +20,25 @@ namespace HashTool.Tests.MeasureMD5Test.GetHashValue
         public static IEnumerable<object[]> SuccessTestData()
         {
             List<object[]> _testData = new List<object[]>();
-            foreach(var val in TestCase)
+            foreach (var val in TestCase)
             {
-                _testData.Add(new object[] { GetTestName(_testData.Count), val.Key, val.Value});
+                _testData.Add(new object[] { GetTestName(_testData.Count), val.Key, val.Value });
             }
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
-            _testData.Add(new object[] { GetTestName(_testData.Count), null, SetMessage()});
-            foreach(var val in TestCase)
+            List<object[]> _testData = new List<object[]>();
+            _testData.Add(new object[] { GetTestName(_testData.Count), null, SetMessage() });
+            foreach (var val in TestCase)
             {
-                _testData.Add(new object[] { GetTestName(_testData.Count), val.Key, SetMessage()});
+                _testData.Add(new object[] { GetTestName(_testData.Count), val.Key, SetMessage() });
             }
             return _testData;
         }
 
-        public static string SetMessage( )
+        public static string SetMessage()
         {
             return $"プロセス異常発生 - HashToolの実行異常　MD5ハッシュ配列出力失敗";
         }
@@ -50,12 +50,12 @@ namespace HashTool.Tests.MeasureMD5Test.GetHashValue
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name, byte[] param, byte[] expected )
+        public void SuccessTest(string name, byte[] param, byte[] expected)
         {
             Console.WriteLine(name);
 
             // Arrange
-            var MD5 = new MeasureMD5( );
+            var MD5 = new MeasureMD5();
             // Act
             var act = MD5.GetHashValue(param);
             // Assert
@@ -65,13 +65,13 @@ namespace HashTool.Tests.MeasureMD5Test.GetHashValue
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, byte[] param, string errorMessage)
+        public void FaileTest(string name, byte[] param, string errorMessage)
         {
             Console.WriteLine(name);
 
             // Arrange
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { GetHashValueStub(param); });
+            var ex = Assert.Throws<ProcessException>(() => { GetHashValueStub(param); });
             Assert.Equal(errorMessage, ex.Message);
         }
 
@@ -82,7 +82,7 @@ namespace HashTool.Tests.MeasureMD5Test.GetHashValue
                 if (byte_value != null) throw new ObjectDisposedException("");
                 return new MD5CryptoServiceProvider().ComputeHash(byte_value);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ProcessException(
                     string.Format("HashToolの実行異常　MD5ハッシュ配列出力失敗"), ex.InnerException);

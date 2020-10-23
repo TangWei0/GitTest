@@ -1,5 +1,4 @@
 ﻿using HashTool.Condition;
-using HashTool.Constant;
 using LibBaseSequence;
 using System;
 using System.Collections.Generic;
@@ -14,17 +13,17 @@ namespace HashTool.Tests.CreatConditionTest.Exec
         public static IEnumerable<object[]> SuccessTestData()
         {
             List<object[]> _testData = new List<object[]>();
-            for (var i = 0; i < 20; i++) 
-                _testData.Add( new object[] { GetTestName(_testData.Count) });
+            for (var i = 0; i < 20; i++)
+                _testData.Add(new object[] { GetTestName(_testData.Count) });
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
+            List<object[]> _testData = new List<object[]>();
             for (var step = 0; step < 6; step++)
             {
-                _testData.Add( new object[] { GetTestName(_testData.Count), step });
+                _testData.Add(new object[] { GetTestName(_testData.Count), step });
             }
             return _testData;
         }
@@ -36,7 +35,7 @@ namespace HashTool.Tests.CreatConditionTest.Exec
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name)
+        public void SuccessTest(string name)
         {
             Console.WriteLine(name);
 
@@ -70,13 +69,13 @@ namespace HashTool.Tests.CreatConditionTest.Exec
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, int step)
+        public void FaileTest(string name, int step)
         {
             Console.WriteLine(name);
 
             // Arrange
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { ExecStub(step); });
+            var ex = Assert.Throws<ProcessException>(() => { ExecStub(step); });
         }
     }
 }

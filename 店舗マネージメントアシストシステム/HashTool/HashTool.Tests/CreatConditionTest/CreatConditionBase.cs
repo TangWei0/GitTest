@@ -1,9 +1,8 @@
-﻿using HashTool.Constant;
-using System;
-using HashTool.Condition;
-using LibBaseSequence;
+﻿using HashTool.Condition;
+using HashTool.Constant;
 using HashTool.Tests.ConditionBaseTest;
-
+using LibBaseSequence;
+using System;
 using static CommonLib.Common.Common;
 
 namespace HashTool.Tests.CreatConditionTest
@@ -39,28 +38,28 @@ namespace HashTool.Tests.CreatConditionTest
 
             if (step == 1) CreatOrderStub();
             else creat.CreatOrder();
-            
+
             if (step == 2) CreatTypeStub();
             else creat.CreatType();
-            
+
             if (step == 3) Conditions.ByteMaxCount = GetTypeMaxBytesStub();
             else Conditions.ByteMaxCount = creat.GetTypeMaxBytes();
-            
+
             if (step == 4) CreatStartIndexStub();
             else creat.CreatStartIndex();
-            
+
             if (step == 5) CreatEndIndexStub();
-            else CreatEndIndexStub( );
+            else CreatEndIndexStub();
         }
 
-        public static void CreatSensitiveStub ()
+        public static void CreatSensitiveStub()
         {
             bool rel = false;
             E_HASH_SENSITIVE sensitive = E_HASH_SENSITIVE.LOWER;
 
             do
             {
-                if(!CreatEnum<E_HASH_SENSITIVE>())
+                if (!CreatEnum<E_HASH_SENSITIVE>())
                 {
                     Console.WriteLine("Sensitiveランダム生成失敗");
                     break;
@@ -69,19 +68,19 @@ namespace HashTool.Tests.CreatConditionTest
                 // 正常終了
                 rel = true;
                 Conditions.Sensitive = sensitive;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(string.Format("HashToolのSensitive生成異常"));            
+            if (!rel) throw new ProcessException(string.Format("HashToolのSensitive生成異常"));
         }
 
-        public static void CreatOrderStub ()
+        public static void CreatOrderStub()
         {
             bool rel = false;
             E_HASH_ORDER order = E_HASH_ORDER.SINGLE;
 
             do
             {
-                if(!CreatEnum<E_HASH_ORDER>())
+                if (!CreatEnum<E_HASH_ORDER>())
                 {
                     Console.WriteLine("Orderランダム生成失敗");
                     break;
@@ -90,19 +89,19 @@ namespace HashTool.Tests.CreatConditionTest
                 // 正常終了
                 rel = true;
                 Conditions.Order = order;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(string.Format("HashToolのOrder生成異常"));            
+            if (!rel) throw new ProcessException(string.Format("HashToolのOrder生成異常"));
         }
 
-        public static void CreatTypeStub ()
+        public static void CreatTypeStub()
         {
             bool rel = false;
             E_HASH_TYPE type = E_HASH_TYPE.MD5;
 
             do
             {
-                if(!CreatEnum<E_HASH_TYPE>())
+                if (!CreatEnum<E_HASH_TYPE>())
                 {
                     Console.WriteLine("Typeランダム生成失敗");
                     break;
@@ -111,15 +110,15 @@ namespace HashTool.Tests.CreatConditionTest
                 // 正常終了
                 rel = true;
                 Conditions.Type = type;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(string.Format("HashToolのType生成異常"));            
+            if (!rel) throw new ProcessException(string.Format("HashToolのType生成異常"));
         }
 
-        public static void CreatStartIndexStub ()
+        public static void CreatStartIndexStub()
         {
             bool rel = false;
-            int random = 0; 
+            int random = 0;
 
             do
             {
@@ -132,15 +131,15 @@ namespace HashTool.Tests.CreatConditionTest
 
                 // 正常終了
                 rel = true;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(string.Format("HashToolのStartIndex生成異常"));
+            if (!rel) throw new ProcessException(string.Format("HashToolのStartIndex生成異常"));
         }
 
         public static void CreatEndIndexStub()
         {
             bool rel = false;
-            int random = 0; 
+            int random = 0;
             do
             {
                 if (!CreatRandom())
@@ -151,9 +150,9 @@ namespace HashTool.Tests.CreatConditionTest
                 Conditions.EndIndex = (byte)(random & MASK_BIT_0_7);
                 // 正常終了
                 rel = true;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(string.Format("HashToolのEndIndex生成異常"));
+            if (!rel) throw new ProcessException(string.Format("HashToolのEndIndex生成異常"));
         }
 
         protected static string SetMessage(string reason)

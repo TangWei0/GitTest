@@ -7,18 +7,18 @@ namespace HashTool.Tests.ResultTest.Init
 {
     public class TestDataClass : TestBase
     {
-        public static IEnumerable<object[]> InitTestData ( )
+        public static IEnumerable<object[]> InitTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
+            List<object[]> _testData = new List<object[]>();
             List<int> condition = new List<int>();
             SetLeftTest(int.MinValue, 0, ref condition);
             SetRightTest(int.MaxValue, 0, ref condition);
-            var measure = new Measure();            
-            foreach(var init in condition)
+            var measure = new Measure();
+            foreach (var init in condition)
             {
-                foreach(var val in measure.ByteTest)
+                foreach (var val in measure.ByteTest)
                 {
-                    _testData.Add( new object[] { GetTestName(_testData.Count), init, val.Key});
+                    _testData.Add(new object[] { GetTestName(_testData.Count), init, val.Key });
                 }
             }
             return _testData;
@@ -31,7 +31,7 @@ namespace HashTool.Tests.ResultTest.Init
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.InitTestData), MemberType = typeof(TestDataClass))]
-        public void InitTest (string name, int init, string hash)
+        public void InitTest(string name, int init, string hash)
         {
             Console.WriteLine(name);
             // Arrange

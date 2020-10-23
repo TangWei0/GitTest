@@ -17,16 +17,16 @@ namespace HashTool.Tests.ParameterTest.SetParam
             var Sensitive = GetEnumSuccess(typeof(E_HASH_SENSITIVE));
             var Order = GetEnumSuccess(typeof(E_HASH_ORDER));
             var Type = GetEnumSuccess(typeof(E_HASH_TYPE));
-            foreach(E_HASH_SENSITIVE sensitive in Sensitive)
+            foreach (E_HASH_SENSITIVE sensitive in Sensitive)
             {
-                foreach(E_HASH_ORDER order in Order)
+                foreach (E_HASH_ORDER order in Order)
                 {
-                    foreach(E_HASH_TYPE type in Type)
+                    foreach (E_HASH_TYPE type in Type)
                     {
                         var count = TypeCount[type];
                         var StartList = new List<byte>();
                         SetLeftTest(byte.MinValue, count, ref StartList);
-                        foreach(var start in StartList)
+                        foreach (var start in StartList)
                         {
                             List<byte> EndList = new List<byte>();
                             byte endMin = (byte)(start + count);
@@ -36,7 +36,7 @@ namespace HashTool.Tests.ParameterTest.SetParam
                             {
                                 var key = Tuple.Create((byte)sensitive, (byte)order, (byte)type, count, start, end);
                                 int condition = SetCondition(key);
-                                _testData.Add( new object[] { GetTestName(_testData.Count), condition,  
+                                _testData.Add(new object[] { GetTestName(_testData.Count), condition,
                                     sensitive, order, type, count, start, end });
                             }
                         }
@@ -52,8 +52,8 @@ namespace HashTool.Tests.ParameterTest.SetParam
         public static IEnumerable<object[]> TestData()
         {
             List<object[]> _testData = new List<object[]>();
-            for (var i = 0; i < 20; i++) 
-                _testData.Add( new object[] { GetTestName(_testData.Count) });
+            for (var i = 0; i < 20; i++)
+                _testData.Add(new object[] { GetTestName(_testData.Count) });
             return _testData;
         }
     }
@@ -64,7 +64,7 @@ namespace HashTool.Tests.ParameterTest.SetParam
         // テストメソッド
         [Theory]
         [MemberData(nameof(AnalysisTestDataClass.TestData), MemberType = typeof(AnalysisTestDataClass))]
-        public void AnalysisTest (string name, int condition,
+        public void AnalysisTest(string name, int condition,
                                          E_HASH_SENSITIVE sensitive,
                                          E_HASH_ORDER order,
                                          E_HASH_TYPE type,

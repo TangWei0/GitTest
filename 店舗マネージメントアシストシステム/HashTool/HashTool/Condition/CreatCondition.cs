@@ -1,118 +1,118 @@
-﻿using System;
-using CommonLib.EnumExtension;
-using LibBaseSequence;
+﻿using CommonLib.EnumExtension;
 using HashTool.Constant;
-
+using LibBaseSequence;
+using System;
+using System.Diagnostics;
 using static CommonLib.Common.Common;
 
 namespace HashTool.Condition
 {
     public class CreatCondition : ConditionBase
     {
-        public override void Exec ( )
+        public override void Exec()
         {
             // 大小文字を生成
-            CreatSensitive( );
+            CreatSensitive();
 
             // Hash次数を生成
-            CreatOrder( );
+            CreatOrder();
 
             // Hashタイプを生成
-            CreatType( );
+            CreatType();
 
             // 出力最大Bytesを取得
-            Conditions.ByteMaxCount = GetTypeMaxBytes( );
+            Conditions.ByteMaxCount = GetTypeMaxBytes();
 
             // 開始Indexを生成
-            CreatStartIndex( );
+            CreatStartIndex();
 
             // 終了Indexを生成
-            CreatEndIndex( );
+            CreatEndIndex();
 
             // Hash条件生成
-            Conditions.Condition = ((byte)Conditions.Sensitive    << SHIFT_30) |
-                                   ((byte)Conditions.Order        << SHIFT_28) |
-                                   ((byte)Conditions.Type         << SHIFT_24) |
-                                   (      Conditions.ByteMaxCount << SHIFT_16) |
-                                   (      Conditions.StartIndex   << SHIFT_8 ) |
-                                   (      Conditions.EndIndex                );
+            Conditions.Condition = ((byte)Conditions.Sensitive << SHIFT_30) |
+                                   ((byte)Conditions.Order << SHIFT_28) |
+                                   ((byte)Conditions.Type << SHIFT_24) |
+                                   (Conditions.ByteMaxCount << SHIFT_16) |
+                                   (Conditions.StartIndex << SHIFT_8) |
+                                   (Conditions.EndIndex);
         }
 
         /// <summary>
         /// 大小文字をランダム生成
         /// </summary>
-        internal void CreatSensitive ( )
+        internal void CreatSensitive()
         {
             bool rel = false;
             E_HASH_SENSITIVE sensitive = E_HASH_SENSITIVE.LOWER;
 
             do
             {
-                if(!EnumExtension.GenerateToEnum(ref sensitive))
+                if (!EnumExtension.GenerateToEnum(ref sensitive))
                 {
-                    Console.WriteLine("Sensitiveランダム生成失敗");
+                    Trace.WriteLine("Sensitiveランダム生成失敗", TRACE_CAT_ERROR);
                     break;
                 }
 
                 // 正常終了
                 rel = true;
                 Conditions.Sensitive = sensitive;
-            } while(false);
-            if(!rel) throw new ProcessException(string.Format("HashToolのSensitive生成異常"));
+            } while (false);
+            if (!rel) throw new ProcessException("HashToolのSensitive生成異常");
         }
 
         /// <summary>
         /// Hash次数をランダム生成
         /// </summary>
-        internal void CreatOrder ( )
+        internal void CreatOrder()
         {
             bool rel = false;
             E_HASH_ORDER order = E_HASH_ORDER.SINGLE;
 
             do
             {
-                if(!EnumExtension.GenerateToEnum(ref order))
+                if (!EnumExtension.GenerateToEnum(ref order))
                 {
-                    Console.WriteLine("Orderランダム生成失敗");
+                    Trace.WriteLine("Orderランダム生成失敗", TRACE_CAT_ERROR);
                     break;
                 }
 
                 // 正常終了
                 rel = true;
                 Conditions.Order = order;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(String.Format("HashToolのOrder生成異常"));
+            if (!rel) throw new ProcessException("HashToolのOrder生成異常");
         }
 
         /// <summary>
         /// Hashタイプをランダム生成
         /// </summary>
-        internal void CreatType ( )
+        internal void CreatType()
         {
             bool rel = false;
             E_HASH_TYPE type = E_HASH_TYPE.MD5;
 
             do
             {
-                if(!EnumExtension.GenerateToEnum(ref type))
+                if (!EnumExtension.GenerateToEnum(ref type))
                 {
-                    Console.WriteLine("Typeランダム生成失敗");
+                    Trace.WriteLine("Typeランダム生成失敗", TRACE_CAT_ERROR);
                     break;
                 }
 
                 // 正常終了
                 rel = true;
                 Conditions.Type = type;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(String.Format("HashToolのType生成異常"));
+            if (!rel) throw new ProcessException("HashToolのType生成異常");
         }
 
         /// <summary>
         /// Hash開始Indexをランダム生成
         /// </summary>
-        internal void CreatStartIndex ( )
+        internal void CreatStartIndex()
         {
             bool rel = false;
 
@@ -120,26 +120,26 @@ namespace HashTool.Condition
             {
                 try
                 {
-                    int random = new Random( ).Next(Conditions.ByteMaxCount);
+                    int random = new Random().Next(Conditions.ByteMaxCount);
                     Conditions.StartIndex = (byte)(random & MASK_BIT_0_7);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
-                    Console.WriteLine("HashToolのStartIndex生成異常");
+                    Trace.WriteLine("HashToolのStartIndex生成異常", TRACE_CAT_ERROR);
                     break;
                 }
 
                 // 正常終了
                 rel = true;
-            } while(false);
+            } while (false);
 
-            if(!rel) throw new ProcessException(string.Format("HashToolのStartIndex生成異常"));
+            if (!rel) throw new ProcessException("HashToolのStartIndex生成異常");
         }
 
         /// <summary>
         /// Hash終了Indexをランダム生成
         /// </summary>
-        internal void CreatEndIndex ( )
+        internal void CreatEndIndex()
         {
             bool rel = false;
 
@@ -147,23 +147,23 @@ namespace HashTool.Condition
             {
                 try
                 {
-                    int random = new Random( ).Next(Conditions.StartIndex + Conditions.ByteMaxCount, 
+                    int random = new Random().Next(Conditions.StartIndex + Conditions.ByteMaxCount,
                                                     Conditions.ByteMaxCount * 2);
                     Conditions.EndIndex = (byte)(random & MASK_BIT_0_7);
                 }
-                catch(Exception)
+                catch (Exception)
                 {
-                    Console.WriteLine("HashToolのEndIndex生成異常");
+                    Trace.WriteLine("HashToolのEndIndex生成異常", TRACE_CAT_ERROR);
                     break;
                 }
 
                 // 正常終了
                 rel = true;
-            } while(false);
+            } while (false);
 
-            if(!rel)
+            if (!rel)
             {
-                throw new ProcessException(String.Format("HashToolのEndIndex生成異常"));
+                throw new ProcessException("HashToolのEndIndex生成異常");
             }
         }
     }

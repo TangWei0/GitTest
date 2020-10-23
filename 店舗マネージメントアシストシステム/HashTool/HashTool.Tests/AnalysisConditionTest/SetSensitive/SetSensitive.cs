@@ -3,7 +3,6 @@ using HashTool.Constant;
 using LibBaseSequence;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace HashTool.Tests.AnalysisConditionTest.SetSensitive
@@ -16,13 +15,13 @@ namespace HashTool.Tests.AnalysisConditionTest.SetSensitive
             var Sensitive = GetEnumSuccess(typeof(E_HASH_SENSITIVE));
             for (var param = byte.MinValue; param <= byte.MaxValue; param++)
             {
-                foreach(E_HASH_SENSITIVE expected in Sensitive)
+                foreach (E_HASH_SENSITIVE expected in Sensitive)
                 {
                     if (param != (byte)expected) continue;
-                    E_HASH_SENSITIVE init = 
-                        expected == E_HASH_SENSITIVE.LOWER ? 
+                    E_HASH_SENSITIVE init =
+                        expected == E_HASH_SENSITIVE.LOWER ?
                             E_HASH_SENSITIVE.UPPER : E_HASH_SENSITIVE.LOWER;
-                    _testData.Add( 
+                    _testData.Add(
                         new object[] { GetTestName(_testData.Count), param, init, expected });
                 }
                 if (param == byte.MaxValue) break;
@@ -37,7 +36,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetSensitive
             for (var param = byte.MinValue; param <= byte.MaxValue; param++)
             {
                 if (Sensitive.IndexOf(param) == -1) continue;
-                _testData.Add( new object[] { 
+                _testData.Add(new object[] {
                     GetTestName(_testData.Count), param, SetMessage("Enumに変換失敗,", "sensitive", param)});
                 if (param == byte.MaxValue) break;
             }
@@ -50,8 +49,8 @@ namespace HashTool.Tests.AnalysisConditionTest.SetSensitive
     {
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.SuccessTestData),MemberType = typeof(TestDataClass))]
-        public void SuccessTest(string name, byte param, E_HASH_SENSITIVE init, E_HASH_SENSITIVE expected )
+        [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
+        public void SuccessTest(string name, byte param, E_HASH_SENSITIVE init, E_HASH_SENSITIVE expected)
         {
             Console.WriteLine(name);
 
@@ -68,8 +67,8 @@ namespace HashTool.Tests.AnalysisConditionTest.SetSensitive
 
         // テストメソッド
         [Theory]
-        [MemberData(nameof(TestDataClass.FaileTestData),MemberType = typeof(TestDataClass))]
-        public void FaileTest(string name, byte param, string errorMessage )
+        [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
+        public void FaileTest(string name, byte param, string errorMessage)
         {
             Console.WriteLine(name);
 
@@ -77,7 +76,7 @@ namespace HashTool.Tests.AnalysisConditionTest.SetSensitive
             var analysis = new AnalysisCondition();
 
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { analysis.SetSensitive(param); });
+            var ex = Assert.Throws<ProcessException>(() => { analysis.SetSensitive(param); });
             Assert.Equal(errorMessage, ex.Message);
         }
     }

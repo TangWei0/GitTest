@@ -12,10 +12,10 @@ namespace Log
 {
     public class Config
     {
-        private XDocument xdoc = null;
+        internal XDocument xdoc = null;
 
-        private string XML_PATH  => Path.Combine(Directory.GetCurrentDirectory(),
-                                                 Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location) + ".xml");
+        internal string XML_PATH  => Path.Combine(Directory.GetCurrentDirectory(),
+                                                  Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location) + ".xml");
 
         // **********************
         // ***** プロパティ *****
@@ -51,13 +51,12 @@ namespace Log
         // **************************
         public Config()
         {
-            ReadConfig();
         }
 
         /// <summary>
         /// Config定義を読み込み
         /// </summary>
-        private void ReadConfig()
+        public void ReadConfig()
         {
             var XML_PATH = Path.Combine(Directory.GetCurrentDirectory(),
                                         Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location) + ".xml");
@@ -126,111 +125,121 @@ namespace Log
             xdoc.Save(XML_PATH);
         }
 
-        private bool SetLogFilePath()
+        internal bool SetLogFilePath()
         {
-            bool IsCorr = true;
+            bool IsCorr = false;
             
-            LogFilePath = xdoc.XPathSelectElement("//Setting/LogFilePath").Value;
-            try
-            {
-                if (!Directory.Exists(LogFilePath))
-                { 
-                    // 存在しない場合、作成する。
-                    DirectoryInfo di = Directory.CreateDirectory(LogFilePath);
+            do
+            { 
+                var node = xdoc.XPathSelectElement("//Setting/LogFilePath");
+                if (node == null) break;
+
+                LogFilePath = node.Value;
+                try
+                {
+                    if (!Directory.Exists(LogFilePath))
+                        // 存在しない場合、作成する。
+                        Directory.CreateDirectory(LogFilePath);
+                    IsCorr = true;
                 }
-            }
-            catch (Exception)
-            {
-                //　作成失敗場合
-                IsCorr = false;
-            }
+                catch (Exception) { //　作成失敗場合 
+                }
+            }while(false);
 
             if (!IsCorr) 
                 LogFilePath = DEFAULT_LOG_FILE_PATH;
             return IsCorr;
         }
 
-        private bool SetIsAppend()
+        internal bool SetIsAppend()
         {
-            bool IsCorr = true;
-
-            var value = xdoc.XPathSelectElement("//Setting/IsAppend").Value;
-            switch(value.ToUpper())
+            bool IsCorr = false;
+            do
             {
-                case "TRUE":
-                    IsAppend = true;
-                    break;
-                case "FALSE":
-                    IsAppend = false;
-                    break;
-                default:
-                    IsCorr = false;
-                    break;
-            }
+                var node = xdoc.XPathSelectElement("//Setting/IsAppend");
+                if (node == null) break;
+
+                switch (node.Value.ToUpper())
+                {
+                    case "TRUE":
+                        IsAppend = true;
+                        IsCorr = true;
+                        break;
+                    case "FALSE":
+                        IsAppend = false;
+                        IsCorr = true;
+                        break;
+                    default:
+                        break;
+                }
+            }while(false);
 
             if (!IsCorr)
                 IsAppend = DEFAULT_IS_APPEND;
             return IsCorr;
         }
 
-        private bool SetCategory()
+        internal bool SetCategory()
         {
-            bool IsCorr = true;
-            
-            Category = xdoc.XPathSelectElement("//Setting/Category").Value;
-            switch (Category)
+            bool IsCorr = false;
+            do
             {
-                case TRACE_CAT_DEBUG:
-                case TRACE_CAT_INFO:
-                case TRACE_CAT_WARN:
-                case TRACE_CAT_ERROR:
-                case TRACE_CAT_CRITI:
-                    break;
-                default:
-                    IsCorr = false;
-                    break;
-            }
+                var node = xdoc.XPathSelectElement("//Setting/Category");
+                if (node == null) break;
+
+                Category = node.Value;
+                switch (Category)
+                {
+                    case TRACE_CAT_DEBUG:
+                    case TRACE_CAT_INFO:
+                    case TRACE_CAT_WARN:
+                    case TRACE_CAT_ERROR:
+                    case TRACE_CAT_CRITI:
+                        IsCorr = true;
+                        break;
+                    default:
+                        break;
+                }
+            } while (false);
 
             if (!IsCorr)
                 Category = DEFAULT_CATEGORY;
             return IsCorr;
         }
 
-        private bool SetOutputLevel()
+        internal bool SetOutputLevel()
         {
-            bool IsCorr = true;
-
-            var value = xdoc.XPathSelectElement("//Setting/OutputLevel").Value;
+            bool IsCorr = false;
             var level = E_TRACE_EVENT_LEVEL.Debug;
-
-            try
+            do
             {
-                if (!ConvertToEnum(int.Parse(value), ref level))
-                    IsCorr = false;
-            }
-            catch (Exception)
-            {
-                IsCorr = false;
-            }
+                var node = xdoc.XPathSelectElement("//Setting/OutputLevel");
+                if (node == null) break;
+                try
+                {
+                    IsCorr = ConvertToEnum(int.Parse(node.Value), ref level); 
+                }
+                catch (Exception){ }
+            } while (false);
 
             OutputLevel = IsCorr ? level : DEFAULT_OUTPUT_LEVEL;
             return IsCorr;
         }
 
-        private bool SetMaxFileSize()
+        internal bool SetMaxFileSize()
         {
-            bool IsCorr = true;
-
-            var value = xdoc.XPathSelectElement("//Setting/MaxFileSize").Value;
-
-            try
+            bool IsCorr = false;
+            do
             {
-                MaxFileSize = long.Parse(value) * 1024;
-            }
-            catch (Exception)
-            {
-                IsCorr = false;
-            }
+                var node = xdoc.XPathSelectElement("//Setting/MaxFileSize");
+                if (node == null) break;
+                try
+                {
+                    MaxFileSize = long.Parse(node.Value) * 1024;
+                    IsCorr = true;
+                }
+                catch (Exception) { }
+            } while (false);
 
             if (!IsCorr)
                 MaxFileSize = DEFAULT_MAX_FILE_SIZE;
@@ -257,23 +266,28 @@ namespace Log
             return IsCorr;
         }
 
-        private bool SetIsAutoFlush()
+        internal bool SetIsAutoFlush()
         {
-            bool IsCorr = true;
-
-            var value = xdoc.XPathSelectElement("//Setting/IsAutoFlush").Value;
-            switch (value.ToUpper())
+            bool IsCorr = false;
+            do
             {
-                case "TRUE":
-                    IsAutoFlush = true;
-                    break;
-                case "FALSE":
-                    IsAutoFlush = false;
-                    break;
-                default:
-                    IsCorr = false;
-                    break;
-            }
+                var node = xdoc.XPathSelectElement("//Setting/IsAutoFlush");
+                if (node == null) break;
+
+                switch (node.Value.ToUpper())
+                {
+                    case "TRUE":
+                        IsAutoFlush = true;
+                        IsCorr = true;
+                        break;
+                    case "FALSE":
+                        IsAutoFlush = false;
+                        IsCorr = true;
+                        break;
+                    default:
+                        break;
+                }
+            } while (false);
 
             if (!IsCorr)
                 IsAutoFlush = DEFAULT_IS_AUTO_FLUSH;

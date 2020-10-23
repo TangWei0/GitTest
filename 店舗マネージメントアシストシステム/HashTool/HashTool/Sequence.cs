@@ -1,6 +1,6 @@
-﻿using LibBaseSequence;
+﻿using HashTool.Condition;
 using HashTool.Measurement;
-using HashTool.Condition;
+using LibBaseSequence;
 
 namespace HashTool
 {
@@ -11,7 +11,7 @@ namespace HashTool
         /// </summary>
         /// <param name="word"></param>
         /// <param name="condition"></param>
-        public Sequence (string _word, int _condition = 0) : base()
+        public Sequence(string _word, int _condition = 0) : base()
         {
             Parameter.Word = _word;
             Conditions.Condition = _condition;
@@ -20,31 +20,31 @@ namespace HashTool
         /// <summary>
         /// 事前プロセス
         /// </summary>
-        public override void PreProcess ( )
+        public override void PreProcess()
         {
             // パラメータ設定
-            Parameter.SetParam( );
+            Parameter.SetParam();
 
             // 結果初期化
-            Result.Init( );
+            Result.Init();
         }
 
         /// <summary>
         /// 本体処理
         /// </summary>
-        public override void BodyProcess ( )
+        public override void BodyProcess()
         {
             // HashTool本体処理
-            var measure = MeasurementFactory.Get( );
-            measure.Exec( );
+            var measure = MeasurementFactory.Get();
+            measure.Exec();
             Result.HashValue = measure.HashValue;
         }
 
         /// <summary>
         /// 事後プロセス
         /// </summary>
-        public override void PostProcess ( ) 
-        { 
+        public override void PostProcess()
+        {
             Result.Condition = Conditions.Condition;
         }
 
@@ -52,6 +52,6 @@ namespace HashTool
         /// リトライプロセス
         /// HashToolリトライしないようにする
         /// </summary>
-        public override void RetryProcess ( ) { }
+        public override void RetryProcess() { }
     }
 }

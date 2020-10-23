@@ -1,6 +1,5 @@
 ﻿using HashTool.Condition;
 using HashTool.Constant;
-using HashTool.Measurement;
 using HashTool.Tests.MeasureBaseTest;
 using LibBaseSequence;
 using System;
@@ -14,8 +13,8 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
         public static IEnumerable<object[]> SuccessTestData()
         {
             List<object[]> _testData = new List<object[]>();
-            var measure = new Measure();           
-            foreach(var val in measure.Hash1_2Time)
+            var measure = new Measure();
+            foreach (var val in measure.Hash1_2Time)
             {
                 var type = val.Key.Item1;
                 var sen = val.Key.Item2;
@@ -24,32 +23,32 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
                 var end = val.Key.Item5;
                 var word = val.Key.Item6;
                 string expected = val.Value;
-                _testData.Add(new object[] { 
+                _testData.Add(new object[] {
                     GetTestName(_testData.Count), word, type, sen, order, TypeCount[type], start, end, expected});
             }
             return _testData;
         }
 
-        public static IEnumerable<object[]> FaileTestData ( )
+        public static IEnumerable<object[]> FaileTestData()
         {
-            List<object[]> _testData = new List<object[]>( );
+            List<object[]> _testData = new List<object[]>();
             var Type = GetEnumSuccess(typeof(E_HASH_TYPE));
             var Order = GetEnumSuccess(typeof(E_HASH_ORDER));
             var val = "123";
             E_HASH_SENSITIVE sen = E_HASH_SENSITIVE.LOWER;
 
-            foreach(E_HASH_TYPE type in Type)
+            foreach (E_HASH_TYPE type in Type)
             {
                 var count = TypeCount[type];
                 _testData.Add(new object[] { GetTestName(_testData.Count),
                     val, type, sen, (byte)0, count, (byte)0, (byte)(2 * count - 1)});
-                foreach(E_HASH_ORDER order in Order)
+                foreach (E_HASH_ORDER order in Order)
                 {
-                    List<byte> StartList = new List<byte>( );
+                    List<byte> StartList = new List<byte>();
                     SetLeftTest(byte.MinValue, count, ref StartList);
-                    foreach(var start in StartList)
+                    foreach (var start in StartList)
                     {
-                        List<byte> EndList = new List<byte>( );
+                        List<byte> EndList = new List<byte>();
                         if (start > 1)
                         {
                             byte endMin = (byte)(start - 1);
@@ -57,7 +56,7 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
                         }
                         byte endMax = (byte)(2 * count - 1);
                         SetRightTest(byte.MaxValue, endMax, ref EndList);
-                        foreach(var end in EndList)
+                        foreach (var end in EndList)
                         {
                             _testData.Add(new object[] { GetTestName(_testData.Count),
                                     val, type, sen, order, count, start, end});
@@ -75,7 +74,7 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.SuccessTestData), MemberType = typeof(TestDataClass))]
-        public void SuccessTest (string name, string word,
+        public void SuccessTest(string name, string word,
                                  E_HASH_TYPE type, E_HASH_SENSITIVE sen, E_HASH_ORDER order,
                                  byte count, byte start, byte end, string expected)
         {
@@ -100,7 +99,7 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.FaileTestData), MemberType = typeof(TestDataClass))]
-        public void FaileTest (string name, string word,
+        public void FaileTest(string name, string word,
                                E_HASH_TYPE type, E_HASH_SENSITIVE sen, E_HASH_ORDER order,
                                byte count, byte start, byte end)
         {
@@ -116,7 +115,7 @@ namespace HashTool.Tests.SequenceTest.BodyProcess
             Conditions.EndIndex = end;
 
             // Act
-            var ex = Assert.Throws<ProcessException>(( ) => { seq.BodyProcess(); });
+            var ex = Assert.Throws<ProcessException>(() => { seq.BodyProcess(); });
         }
     }
 }
