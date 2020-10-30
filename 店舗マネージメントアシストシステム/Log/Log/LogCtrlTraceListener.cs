@@ -7,8 +7,13 @@ namespace Log
 {
     public class LogCtrlTraceListener : TraceListener
     {
+        private readonly Config Config = null;
+        private readonly LogCtrl LogCtrl = null;
+
         public LogCtrlTraceListener()
         {
+            Config = ConfigFactory.Get();
+            LogCtrl = LogCtrlFactory.Get();
         }
 
         public override void Write(string message)
@@ -27,19 +32,19 @@ namespace Log
 
         public override void WriteLine(string message)
         {
-            WriteLine(message, ConfigFactory.GetInstance().Category);
+            WriteLine(message, Config.Category);
         }
 
         public override void WriteLine(object value)
         {
-            WriteLine(value, ConfigFactory.GetInstance().Category);
+            WriteLine(value, Config.Category);
         }
 
         public override void WriteLine(string message, string category)
         {
             // 出力チェック
             if (CheckLevel(category))
-                LogCtrlFactory.GetInstance().WriteEntry(message, category);
+                LogCtrl.WriteEntry(message, category);
         }
 
         /// <summary>
@@ -96,12 +101,12 @@ namespace Log
             bool IsCheckLevel = false;
 
             //　出力レベルがOFF場合、何も出力しない
-            if (E_TRACE_EVENT_LEVEL.OFF == ConfigFactory.GetInstance().OutputLevel)
+            if (E_TRACE_EVENT_LEVEL.OFF == Config.OutputLevel)
                 return IsCheckLevel;
 
             //　イベントレベルをチェックする
             var level = CategoryToLevel(category);
-            if ((int)ConfigFactory.GetInstance().OutputLevel <= level)
+            if ((int)Config.OutputLevel <= level)
                 IsCheckLevel = true;
             
             return IsCheckLevel;
@@ -113,7 +118,7 @@ namespace Log
         public override void Close()
         {
             //　ログファイルに出力
-            LogCtrlFactory.GetInstance().Flush();
+            LogCtrl.Flush();
         }
     }
 }

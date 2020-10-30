@@ -3,17 +3,18 @@
     public static class LogCtrlFactory
     {
         /// <summary> ログ </summary>
-        internal static LogCtrl logCtrl = null;
+        private static LogCtrl LogCtrl { get; set; } = new LogCtrl();
 
-        /// <summary>
-        /// インスタンスを生成する
-        /// </summary>
-        public static LogCtrl GetInstance()
+        private static bool InitFlag = false;
+
+        public static LogCtrl Get()
         {
-            if (logCtrl == null)
-                logCtrl = new LogCtrl();
-                logCtrl.Init();
-            return logCtrl;
+            if (!InitFlag)
+            { 
+                LogCtrl.Init();
+                InitFlag = true;
+            }
+            return LogCtrl;
         }
     }
 }

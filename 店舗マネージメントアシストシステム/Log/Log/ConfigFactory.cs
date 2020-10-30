@@ -3,17 +3,18 @@
     public static class ConfigFactory
     {
         /// <summary> ログ </summary>
-        internal static Config config = null;
+        internal static Config Config { get; set; } = new Config();
 
-        /// <summary>
-        /// インスタンスを生成する
-        /// </summary>
-        public static Config GetInstance()
+        internal static bool InitFlag = false;
+
+        public static Config Get()
         {
-            if (config == null)
-                config = new Config();
-                config.ReadConfig();
-            return config;
+            if (!InitFlag)
+            { 
+                Config.Init();
+                InitFlag = true;
+            }
+            return Config;
         }
     }
 }

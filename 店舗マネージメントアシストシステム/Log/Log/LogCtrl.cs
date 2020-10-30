@@ -10,6 +10,8 @@ namespace Log
 {
     public class LogCtrl
     {
+        private readonly Config Config = null;
+        
         /// <summary>ログ出力バッファ</summary>
         private readonly StringBuilder Buffer = new StringBuilder();
         
@@ -22,7 +24,7 @@ namespace Log
         private string AppName => Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName);
 
         /// <summary>ログパス</summary>
-        private string FileFolder => Path.Combine(ConfigFactory.GetInstance().LogFilePath, AppName + "\\");
+        private string FileFolder => Path.Combine(Config.LogFilePath, AppName + "\\");
 
         /// <summary>ログファイル名</summary>
         private string FileName => AppName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
@@ -34,6 +36,7 @@ namespace Log
         // ***** コンストラクタ *****
         public LogCtrl()
         {
+            Config = ConfigFactory.Get();
         }
 
         /// <summary>
@@ -41,10 +44,10 @@ namespace Log
         /// </summary>
         public void Init()
         {
-            if (ConfigFactory.GetInstance().IsAppend)
-                BufferSize = ConfigFactory.GetInstance().MaxFileSize / 10;
+            if (Config.IsAppend)
+                BufferSize = Config.MaxFileSize / 10;
             else
-                BufferSize = ConfigFactory.GetInstance().MaxFileSize * 9 / 10;
+                BufferSize = Config.MaxFileSize * 9 / 10;
 
             FileSize = 0;
 
@@ -100,10 +103,10 @@ namespace Log
             bool IsFlush = false;
 
             // ログファイルに追記する場合
-            if (ConfigFactory.GetInstance().IsAppend)
+            if (Config.IsAppend)
             {
                 //　自動フラッシュまたログ出力バッファが設定値を超えた場合、
-                if ((Buffer.Length > BufferSize) || ConfigFactory.GetInstance().IsAutoFlush )
+                if ((Buffer.Length > BufferSize) || Config.IsAutoFlush )
                 {
                     //　ログファイルサイズを超えた場合、ログファイルをバックアップする
                     if (!CheckFileSize())
@@ -139,7 +142,7 @@ namespace Log
             if (0 >= Buffer.Length) return;
 
             // ログ出力
-            using (StreamWriter writer = new StreamWriter(FullPath, ConfigFactory.GetInstance().IsAppend))
+            using (StreamWriter writer = new StreamWriter(FullPath, Config.IsAppend))
             {
                 writer.Write(Buffer.ToString());
                 FileSize += Buffer.Length;
@@ -156,7 +159,7 @@ namespace Log
         private bool CheckFileSize()
         {
             //　上限を超えないので、処理を終了する
-            if (ConfigFactory.GetInstance().MaxFileSize >= FileSize + Buffer.Length) 
+            if (Config.MaxFileSize >= FileSize + Buffer.Length) 
                 return false;
 
             return true;
@@ -184,7 +187,7 @@ namespace Log
         /// </summary>
         private void DeleteOldLogFile()
         {
-            DateTime retentionDate = DateTime.Today.AddDays(-ConfigFactory.GetInstance().Period);
+            DateTime retentionDate = DateTime.Today.AddDays(-Config.Period);
             string[] filePathList = Directory.GetFiles(FileFolder);
             foreach (string filePath in filePathList)
             {

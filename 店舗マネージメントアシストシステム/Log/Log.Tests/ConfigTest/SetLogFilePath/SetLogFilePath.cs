@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml;
-using System.Xml.Linq;
 using Xunit;
+
 using static Log.Constant;
 
 namespace Log.Tests.ConfigTest.SetLogFilePath
@@ -13,81 +12,63 @@ namespace Log.Tests.ConfigTest.SetLogFilePath
         public static IEnumerable<object[]> TestData()
         {
             List<object[]> _testData = new List<object[]>();
-
-            string[] Node = new string[2] { "LogFilePath", "FailPath" };
-            string[] NodeValue = new string[2] { @"C:\Test\", "*Test" };
-            bool[] IsExists = new bool[2] { true, false };
-            string expectedPath = "";
-            bool expectedRel = false;
-
-            for (var i = 0; i < Node.Length; i++)
+            bool[] IsExists = new bool[] { true, false };
+            foreach (var testItem in NodeInfoTestCase[NODE_LOG_FILE_PATH])
             {
-                for (var j = 0; j < NodeValue.Length; j++)
+                foreach (var exists in IsExists)
                 {
-                    foreach (var exists in IsExists)
+                    var expectedPath = testItem.Expected;
+                    var nodeValue = testItem.NodeValue;
+                    DirectoryTestCase directoryTestCase;
+                    if ((string)expectedPath != DEFAULT_LOG_FILE_PATH)
                     {
-                        if ((i == 0) && (j == 0))
-                        {
-                            expectedPath = NodeValue[j];
-                            expectedRel = true;
-                        }
-
-                        if ((i == 0) && (j == 1))
-                        {
-                            if (!exists) continue;
-                            expectedPath = DEFAULT_LOG_FILE_PATH;
-                            expectedRel = false;
-                        }
-                        
-                        if (i == 1)
-                        {
-                            if ((j == 1) && !exists) continue;
-                            expectedPath = DEFAULT_LOG_FILE_PATH;
-                            expectedRel = false;
-                        }
-
-                        _testData.Add(new object[] { GetTestName(_testData.Count), 
-                            expectedPath, expectedRel, Node[i], NodeValue[j], exists});
+                        directoryTestCase = exists ? DirectoryTestCase.Exist : DirectoryTestCase.NoExist;
                     }
-                }                    
+                    else
+                    {
+                        if (!exists) continue;
+                        directoryTestCase = DirectoryTestCase.CanNotCreat;
+                    }
+
+                    _testData.Add(new object[] { GetTestName(_testData.Count),
+                        expectedPath, nodeValue, directoryTestCase});
+
+                }
             }
             return _testData;
         }
     }
 
     [Collection("Our Test Collection #1")]
-    public class SetLogFilePath
+    public class SetLogFilePath : ConfigBase
     {
+        public SetLogFilePath() : base("Test.xml") { }
+
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void SetLogFilePathTest(string name, string expectedPath, bool expectedRel, 
-                                       string node, string nodeValue, bool exists)
+        public void SetLogFilePathTest(string name, string expectedPath,
+                                       string nodeValue, DirectoryTestCase directoryTestCase)
         {
             Console.WriteLine(name);
             // Arrange
-            string path = "Test.xml";
-            XElement root = new XElement("Setting");
-            root.SetElementValue(node, nodeValue);
-            root.Save(path);
-
-            if (!exists)
+            if (DirectoryTestCase.NoExist == directoryTestCase)
                 Directory.CreateDirectory(nodeValue);
 
-            Config config = new Config
-            {
-                xdoc = XDocument.Load(path)
-            };
+            var nodeList = new Dictionary<string, string>() { { NODE_LOG_FILE_PATH, nodeValue } };
+            CreatTestXml(nodeList);            
+            var config = ReadTestXmlNode(NODE_LOG_FILE_PATH);
 
             // Act
-            var rel = config.SetLogFilePath();
+            config.SetLogFilePath();
 
             // Assert
-            Assert.Equal(expectedRel, rel);
             Assert.Equal(expectedPath, config.LogFilePath);
+            Assert.Equal(expectedPath, config.xmlnode.InnerText);
 
-            File.Delete(path);
-            if (!exists)
+            // 初期化
+            DelectTestXml();
+            if (DirectoryTestCase.CanNotCreat != directoryTestCase)
                 Directory.Delete(nodeValue);
         }
     }
