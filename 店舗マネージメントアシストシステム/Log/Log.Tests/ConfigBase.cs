@@ -7,27 +7,62 @@ namespace Log.Tests
 {
     public class ConfigBase
     {
+        protected string expectedLogFilePath = @"C:\Log\";
+        protected bool expectedIsAppend = false;
+        protected string expectedCategory = "Error";
+        protected E_TRACE_EVENT_LEVEL expectedOutputLevel = E_TRACE_EVENT_LEVEL.Critical;
+        protected long expectedMaxFileSize = 100 * KB_SIZE;
+        protected int expectedPeriod = 30;
+        protected bool expectedIsAutoFlush = true;
+
         private readonly string Path;
+
 
         public ConfigBase(string path)
         {
             Path = path;
         }
 
-        public Dictionary<string, string> DefalutNodeList = new Dictionary<string, string>()
+        public static Dictionary<string, string> DefalutNodeList { get; set; } = 
+            new Dictionary<string, string>()
         {
-            { NODE_LOG_FILE_PATH, DEFAULT_LOG_FILE_PATH },
-            { NODE_IS_APPEND, DEFAULT_IS_APPEND.ToString().ToUpper() },
-            { NODE_CATEGORY, DEFAULT_CATEGORY },
-            { NODE_OUTPUT_LEVEL, ((int)DEFAULT_OUTPUT_LEVEL).ToString() },
-            { NODE_MAX_FILE_SIZE, DEFAULT_MAX_FILE_SIZE.ToString() },
-            { NODE_PERIOD, DEFAULT_PERIOD.ToString() },
-            { NODE_IS_AUTO_FLUSH, DEFAULT_IS_AUTO_FLUSH.ToString().ToUpper() },
+            { NODE_LOG_FILE_PATH, @"C:\Log\" },
+            { NODE_IS_APPEND, "FALSE" },
+            { NODE_CATEGORY, "Error" },
+            { NODE_OUTPUT_LEVEL, "5" },
+            { NODE_MAX_FILE_SIZE, "100" },
+            { NODE_PERIOD, "30" },
+            { NODE_IS_AUTO_FLUSH, "TRUE" },
         };
+        
+        public void CreatTestXml()
+        {
+            DeleteTestXml();
+
+            var xmldoc = new XmlDocument();
+            var xmldecl = xmldoc.CreateXmlDeclaration("1.0", "utf-8", null);
+            xmldoc.AppendChild(xmldecl);
+            var xmlelem = xmldoc.CreateElement("Test");
+            xmldoc.AppendChild(xmlelem);
+            xmldoc.Save(Path);
+        }
+        
+        public void CreatTestRootXml()
+        {
+            DeleteTestXml();
+
+            var xmldoc = new XmlDocument();
+            var xmldecl = xmldoc.CreateXmlDeclaration("1.0", "utf-8", null);
+            xmldoc.AppendChild(xmldecl);
+            var xmlelem = xmldoc.CreateElement(ROOT_NAME);
+            xmldoc.AppendChild(xmlelem);
+
+            xmldoc.Save(Path);
+        }
 
         public void CreatTestXml(Dictionary<string, string> nodeList)
         {
-            DelectTestXml();
+            DeleteTestXml();
 
             var xmldoc = new XmlDocument();
             var xmldecl = xmldoc.CreateXmlDeclaration("1.0", "utf-8", null);
@@ -44,6 +79,16 @@ namespace Log.Tests
             }
             
             xmldoc.Save(Path);            
+        }
+
+        public Config ReadTestXmlTitle()
+        {
+            Config config = new Config
+            {
+                xmldoc = new XmlDocument()
+            };
+
+            return config;
         }
 
         public Config ReadTestXmlRoot()
@@ -71,7 +116,7 @@ namespace Log.Tests
             return config;
         }
 
-        public void DelectTestXml()
+        public void DeleteTestXml()
         {
             if (File.Exists(Path))
                 File.Delete(Path);

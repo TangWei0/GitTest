@@ -48,7 +48,7 @@ namespace Log.Tests.ConfigTest.SetPeriod
             Assert.Equal(expectedPeriod.ToString(), config.xmlnode.InnerText);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

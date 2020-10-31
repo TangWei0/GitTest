@@ -48,7 +48,7 @@ namespace Log.Tests.ConfigTest.SetCategory
             Assert.Equal(expectedCategory, config.xmlnode.InnerText);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

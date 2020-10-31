@@ -48,7 +48,7 @@ namespace Log.Tests.ConfigTest.SetOutputLevel
             Assert.Equal(((int)expectedOutputLevel).ToString(), config.xmlnode.InnerText);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

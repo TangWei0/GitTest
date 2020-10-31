@@ -47,7 +47,7 @@ namespace Log.Tests.ConfigTest.SetIsAppend
             Assert.Equal(expectedIsAppend.ToString().ToUpper(), config.xmlnode.InnerText);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

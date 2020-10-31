@@ -5,7 +5,7 @@ using Xunit;
 
 using static Log.Constant;
 
-namespace Log.Tests.ConfigTest.SetProperty
+namespace Log.Tests.ConfigTest.CreatNodeElement
 {
     public class TestDataClass : TestBase
     {
@@ -15,36 +15,31 @@ namespace Log.Tests.ConfigTest.SetProperty
             foreach (var testItem in NodeInfoTestCase)
             {
                 var node = testItem.Key;
-                foreach(var nodeValueItem in testItem.Value)
-                {
-                    var expected = nodeValueItem.Expected;
-                    var nodeValue = nodeValueItem.NodeValue;
-                    _testData.Add(new object[] { GetTestName(_testData.Count),
-                    expected, node, nodeValue });
-                }                
+                var num = NodeInfoTestCase[node].Count;
+                var expected = NodeInfoTestCase[node][num - 1].Expected;
+                _testData.Add(new object[] { GetTestName(_testData.Count), expected, node });
             }
             return _testData;
         }
     }
 
     [Collection("Our Test Collection #1")]
-    public class SetProperty : ConfigBase
+    public class CreatNodeElement : ConfigBase
     {
-        public SetProperty() : base("Test.xml") { }
+        public CreatNodeElement() : base("Test.xml") { }
 
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void SetPropertyTest(string name, object expected, string node, string nodeValue)
+        public void CreatNodeElementTest(string name, object expected, string node)
         {
             Console.WriteLine(name);
             // Arrange
-            var nodeList = new Dictionary<string, string>() { { node, nodeValue } };
-            CreatTestXml(nodeList);
+            CreatTestRootXml();
             var config = ReadTestXmlRoot();
 
             // Act
-            config.SetProperty(node);
+            config.CreatNodeElement(node);
 
             // Assert
             if (node == NODE_LOG_FILE_PATH)
@@ -63,7 +58,7 @@ namespace Log.Tests.ConfigTest.SetProperty
                 Assert.Equal((bool)expected, config.IsAutoFlush);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

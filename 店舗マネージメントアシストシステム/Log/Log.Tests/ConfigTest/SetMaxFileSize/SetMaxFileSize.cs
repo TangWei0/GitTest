@@ -44,10 +44,10 @@ namespace Log.Tests.ConfigTest.SetMaxFileSize
 
             // Assert
             Assert.Equal(expectedMaxFileSize, config.MaxFileSize);
-            Assert.Equal(expectedMaxFileSize.ToString(), config.xmlnode.InnerText);
+            Assert.Equal((expectedMaxFileSize / KB_SIZE).ToString(), config.xmlnode.InnerText);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

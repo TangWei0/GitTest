@@ -47,7 +47,7 @@ namespace Log.Tests.ConfigTest.SetIsAutoFlush
             Assert.Equal(expectedIsAutoFlush.ToString().ToUpper(), config.xmlnode.InnerText);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Log.Tests.ConfigTest.SetProperty
                 Assert.Equal((bool)expected, config.IsAutoFlush);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }

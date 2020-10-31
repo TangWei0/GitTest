@@ -6,6 +6,7 @@ using System;
 using static CommonLib.EnumExtension.EnumExtension;
 using static CommonLib.Common.Common;
 using static Log.Constant;
+using Log;
 
 namespace Log
 {
@@ -17,35 +18,34 @@ namespace Log
 
         internal string XML_PATH  => Path.Combine(Directory.GetCurrentDirectory(),
                                                   Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location) + ".xml");
-
         // **********************
         // ***** プロパティ *****
         // **********************
         /// <summary>ログファイルパス</summary>
         /// <remarks>絶対パスで設定する</remarks>
-        public string LogFilePath { get; set; } = DEFAULT_LOG_FILE_PATH;
+        public string LogFilePath { get; set; } = @"C:\Log\";
 
         /// <summary>追記可／不可</summary>
-        public bool IsAppend { get; set; } = DEFAULT_IS_APPEND;
+        public bool IsAppend { get; set; } = false;
 
         /// <summary>メッセージCategory</summary>
         /// <remarks>ログメッセージのCategory未設定場合、この値を使用する</remarks>
-        public string Category { get; set; } = DEFAULT_CATEGORY;
+        public string Category { get; set; } = "Error";
 
         /// <summary>出力レベル</summary>
-        public E_TRACE_EVENT_LEVEL OutputLevel { get; set; } = DEFAULT_OUTPUT_LEVEL;
+        public E_TRACE_EVENT_LEVEL OutputLevel { get; set; } = E_TRACE_EVENT_LEVEL.Critical;
 
         /// <summary>ログファイルサイズの上限</summary>
         /// <remarks>単位はバイト(B)</remarks>
-        public long MaxFileSize { get; set; } = DEFAULT_MAX_FILE_SIZE;
+        public long MaxFileSize { get; set; } = 100 * KB_SIZE;
 
         /// <summary>ログファイル保存日</summary>
         /// <remarks>単位は日</remarks>
-        public int Period { get; set;} = DEFAULT_PERIOD;
+        public int Period { get; set;} = 30;
 
         /// <summary>自動フラッシュ</summary>
         /// <remarks>明示的にFlashメソッドを呼び出さなくても自動的にフラッシュされるようにするにはtrueを設定します</remarks>
-        public bool IsAutoFlush { get; set; } = DEFAULT_IS_AUTO_FLUSH;
+        public bool IsAutoFlush { get; set; } = true;
 
         // **************************
         // ***** コンストラクタ *****
@@ -71,7 +71,13 @@ namespace Log
                 CheckRootAndNodeExist();
 
                 // プロパティを設定する
-                SetPropertyALL();
+                SetProperty(NODE_LOG_FILE_PATH);
+                SetProperty(NODE_IS_APPEND);
+                SetProperty(NODE_CATEGORY);
+                SetProperty(NODE_OUTPUT_LEVEL);
+                SetProperty(NODE_MAX_FILE_SIZE);
+                SetProperty(NODE_PERIOD);
+                SetProperty(NODE_IS_AUTO_FLUSH);
             }
 
             xmldoc.Save(XML_PATH);
@@ -80,7 +86,7 @@ namespace Log
         /// <summary>
         /// XMLファイルがなければ作成する。
         /// </summary>
-        private void CreatConfigXML()
+        internal void CreatConfigXML()
         {
             xmldoc = new XmlDocument();
             var xmldecl = xmldoc.CreateXmlDeclaration("1.0", "utf-8", null);
@@ -90,7 +96,7 @@ namespace Log
             xmldoc.Save(XML_PATH);
         }
 
-        private void CreatRootElement()
+        internal void CreatRootElement()
         {
             var xmlelem = xmldoc.CreateElement(ROOT_NAME);
             xmldoc.AppendChild(xmlelem);
@@ -105,13 +111,13 @@ namespace Log
             CreatNodeElement(NODE_IS_AUTO_FLUSH);
         }
 
-        private void CheckRootAndNodeExist()
+        internal void CheckRootAndNodeExist()
         {
             // Root存在しない場合、作成する。
             xmlroot = xmldoc.SelectSingleNode(ROOT_NAME);
             if (xmlroot == null)
             {     
-                CreatRootElement(); 
+                CreatConfigXML(); 
                 return;
             }
 
@@ -131,7 +137,7 @@ namespace Log
                 CreatNodeElement(NODE_IS_AUTO_FLUSH);
         }
 
-        private void CreatNodeElement(string NodeName)
+        internal void CreatNodeElement(string NodeName)
         {
             var subNode = xmldoc.CreateElement(NodeName);
             subNode.InnerText = NODE_INFO[NodeName].NodeValue;
@@ -148,17 +154,6 @@ namespace Log
         /// <summary>
         /// プロパティを設定する
         /// </summary>
-        private void SetPropertyALL()
-        {
-            SetProperty(NODE_LOG_FILE_PATH);
-            SetProperty(NODE_IS_APPEND);
-            SetProperty(NODE_CATEGORY);
-            SetProperty(NODE_OUTPUT_LEVEL);
-            SetProperty(NODE_MAX_FILE_SIZE);
-            SetProperty(NODE_PERIOD);
-            SetProperty(NODE_IS_AUTO_FLUSH);
-        }
-
         internal void SetProperty(string NodeName) 
         {
             xmlnode = xmlroot.SelectSingleNode(NodeName);
@@ -277,7 +272,7 @@ namespace Log
             catch (Exception) { }
 
             MaxFileSize = IsCorr ? bytes : DEFAULT_MAX_FILE_SIZE;
-            xmlnode.InnerText = MaxFileSize.ToString();
+            xmlnode.InnerText = (MaxFileSize / KB_SIZE).ToString();
         }
 
         internal void SetPeriod()

@@ -5,35 +5,45 @@ using Xunit;
 
 using static Log.Constant;
 
-namespace Log.Tests.ConfigTest.CreatConfigXML
+namespace Log.Tests.ConfigTest.CheckRootAndNodeExist
 {
+    public enum TEST_SWITCH
+    {
+        ROOT_NULL,
+        ALL_NODE_NULL,
+    }
+
     public class TestDataClass : TestBase
     {
         public static IEnumerable<object[]> TestData()
         {
             List<object[]> _testData = new List<object[]>();
-            _testData.Add(new object[] { GetTestName(_testData.Count) });
+            _testData.Add(new object[] { GetTestName(_testData.Count), TEST_SWITCH.ROOT_NULL });
+            _testData.Add(new object[] { GetTestName(_testData.Count), TEST_SWITCH.ALL_NODE_NULL });
             return _testData;
         }
     }
 
     [Collection("Our Test Collection #1")]
-    public class CreatConfigXML : ConfigBase
+    public class CheckRootAndNodeExist : ConfigBase
     {
-        public CreatConfigXML() : base("Log.xml") { }
+        public CheckRootAndNodeExist() : base("Log.xml") { }
 
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void CreatConfigXMLTest(string name)
+        public void CheckRootAndNodeExistTest(string name, TEST_SWITCH testSwitch)
         {
             Console.WriteLine(name);
             // Arrange
-            DeleteTestXml();
-            var config = new Config();
+            if (testSwitch == TEST_SWITCH.ROOT_NULL)
+                CreatTestXml(); 
+            else
+                CreatTestRootXml();
+            var config = ReadTestXmlTitle();
 
             // Act
-            config.CreatConfigXML();
+            config.CheckRootAndNodeExist();
 
             // Assert
             Assert.Equal(DEFAULT_LOG_FILE_PATH, config.LogFilePath);
@@ -46,6 +56,6 @@ namespace Log.Tests.ConfigTest.CreatConfigXML
 
             // 初期化
             DeleteTestXml();
-        }
+        }        
     }
 }

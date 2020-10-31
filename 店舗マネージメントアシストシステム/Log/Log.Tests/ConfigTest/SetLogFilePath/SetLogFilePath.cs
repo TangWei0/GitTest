@@ -67,7 +67,7 @@ namespace Log.Tests.ConfigTest.SetLogFilePath
             Assert.Equal(expectedPath, config.xmlnode.InnerText);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
             if (DirectoryTestCase.CanNotCreat != directoryTestCase)
                 Directory.Delete(nodeValue);
         }

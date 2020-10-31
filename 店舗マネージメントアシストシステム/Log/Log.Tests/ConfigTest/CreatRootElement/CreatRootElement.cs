@@ -29,7 +29,7 @@ namespace Log.Tests.ConfigTest.CreatRootElement
         {
             Console.WriteLine(name);
             // Arrange
-            CreatTestXml("Test");
+            CreatTestXml();
             var config = ReadTestXmlTitle();
 
             // Act
@@ -45,7 +45,7 @@ namespace Log.Tests.ConfigTest.CreatRootElement
             Assert.Equal(DEFAULT_IS_AUTO_FLUSH, config.IsAutoFlush);
 
             // 初期化
-            DelectTestXml();
+            DeleteTestXml();
         }
     }
 }
