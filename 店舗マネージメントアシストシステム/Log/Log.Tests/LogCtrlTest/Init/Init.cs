@@ -36,19 +36,23 @@ namespace Log.Tests.LogCtrlTest.Init
     public class Init
     {
         private TestInfo TestInfo = new TestInfo(0);
-
+        private static int count = 0;
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void InitDirectoryExistTest(string name, long expected, bool IsAppend)
+        public void InitDirectoryExistTest(string name, long expected, bool sw)
         {
             Console.WriteLine(name);
             // Arrange
-            ConfigFactory.Config = new Config();
             ConfigFactory.InitFlag = true;
-            ConfigFactory.Config.LogFilePath = @"C:\Log\Test";
-            ConfigFactory.Config.IsAppend = IsAppend;
+            ConfigFactory.Config = new Config
+            {
+                LogFilePath = @"C:\Log\Test" + (count % 10).ToString(),
+                IsAppend = sw,
+            };
+            count++;
 
+            Assert.Equal(sw, ConfigFactory.Config.IsAppend);
             var logCtrl = new LogCtrl();
             if (!Directory.Exists(logCtrl.FileFolder))
                 Directory.CreateDirectory(logCtrl.FileFolder);
@@ -61,9 +65,12 @@ namespace Log.Tests.LogCtrlTest.Init
             foreach (var item in TestInfo.FileName)
             { 
                 var path = Path.Combine(logCtrl.FileFolder, item.Key);
-                File.WriteAllLines(path, new string[0]);
+                using StreamWriter writer = new StreamWriter(path, false);
+                writer.WriteLine("Test");
+                writer.Dispose();
             }
 
+            logCtrl.Config.IsAppend = sw;
             // Act
             logCtrl.Init();
 
@@ -86,27 +93,31 @@ namespace Log.Tests.LogCtrlTest.Init
             ConfigFactory.Config = new Config();
             ConfigFactory.InitFlag = false;
 
-        }
-
-        // テストメソッド
-        [Theory]
-        [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void InitDirectoryNoExistTest(string name, long expected, bool IsAppend)
-        {
-            Console.WriteLine(name);
-            // Arrange
-            ConfigFactory.Config = new Config();
-            ConfigFactory.InitFlag = true;
-            ConfigFactory.Config.LogFilePath = @"C:\Log\Test";
-            ConfigFactory.Config.IsAppend = IsAppend;
-
-            var logCtrl = new LogCtrl();
             if (Directory.Exists(logCtrl.FileFolder))
             {
                 DirectoryInfo di = new DirectoryInfo(logCtrl.FileFolder);
                 di.Delete(true);
             }
+        }
 
+        // テストメソッド
+        [Theory]
+        [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
+        public void InitDirectoryNoExistTest(string name, long expected, bool sw)
+        {
+            Console.WriteLine(name);
+            // Arrange
+            ConfigFactory.InitFlag = true;
+            ConfigFactory.Config = new Config
+            {
+                LogFilePath = @"C:\Log\Test" + (count % 10).ToString(),
+                IsAppend = sw,
+            };
+            count++;
+
+            var logCtrl = new LogCtrl();
+            logCtrl.Config.IsAppend = sw;
+        
             // Act
             logCtrl.Init();
 
@@ -118,6 +129,12 @@ namespace Log.Tests.LogCtrlTest.Init
             // 初期化
             ConfigFactory.Config = new Config();
             ConfigFactory.InitFlag = false;
+
+            if (Directory.Exists(logCtrl.FileFolder))
+            {
+                DirectoryInfo di = new DirectoryInfo(logCtrl.FileFolder);
+                di.Delete(true);
+            }
         }
 
         private void CreatFileListName(int period)

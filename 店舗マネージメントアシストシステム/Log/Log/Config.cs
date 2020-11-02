@@ -6,7 +6,6 @@ using System;
 using static CommonLib.EnumExtension.EnumExtension;
 using static CommonLib.Common.Common;
 using static Log.Constant;
-using Log;
 
 namespace Log
 {

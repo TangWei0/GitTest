@@ -10,28 +10,30 @@ namespace Log
 {
     public class LogCtrl
     {
-        private readonly Config Config = null;
+        internal readonly Config Config;
         
         /// <summary>ログ出力バッファ</summary>
-        private readonly StringBuilder Buffer = new StringBuilder();
+        internal StringBuilder Buffer = new StringBuilder();
         
         /// <summary>バッファサイズ</summary>
-        private long BufferSize;
+        internal long BufferSize;
 
         /// <summary>ファイルサイズ</summary>
-        private long FileSize;
+        internal long FileSize;
 
-        private string AppName => Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName);
+        internal DateTime CurrentTime;
+
+        internal string AppName => Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName);
 
         /// <summary>ログパス</summary>
-        private string FileFolder => Path.Combine(Config.LogFilePath, AppName + "\\");
+        internal string FileFolder => Path.Combine(Config.LogFilePath, AppName + "\\");
 
         /// <summary>ログファイル名</summary>
-        private string FileName => AppName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
+        internal string FileName => AppName + "_" + DateTime.Now.ToString("yyyyMMdd") + ".log";
 
         /// <summary>ログファイルパス</summary>
         /// <remarks>絶対パスを返す。</remarks>
-        private string FullPath => Path.Combine(FileFolder, FileName);
+        internal string FullPath => Path.Combine(FileFolder, FileName);
 
         // ***** コンストラクタ *****
         public LogCtrl()
@@ -44,14 +46,14 @@ namespace Log
         /// </summary>
         public void Init()
         {
-            if (Config.IsAppend)
-                BufferSize = Config.MaxFileSize / 10;
-            else
-                BufferSize = Config.MaxFileSize * 9 / 10;
+            BufferSize = Config.MaxFileSize / 10;
+            if (!Config.IsAppend)
+                BufferSize *= 9 ;
 
             FileSize = 0;
 
-            CreatFolder();
+            if (!Directory.Exists(FileFolder))
+                Directory.CreateDirectory(FileFolder);
 
             // 古いログファイルを削除する
             DeleteOldLogFile();
@@ -67,7 +69,8 @@ namespace Log
         {
             // 出力メッセージ作成
             StringBuilder outmessage = new StringBuilder();
-            outmessage.Append(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff "));
+            CurrentTime = DateTime.Now;
+            outmessage.Append(CurrentTime.ToString("yyyy/MM/dd HH:mm:ss.fff "));
             outmessage.Append("[" + category + "]");
             outmessage.Append("\t");
 
@@ -86,19 +89,10 @@ namespace Log
         }
 
         /// <summary>
-        /// フォルダを作成
-        /// </summary>
-        private void CreatFolder()
-        {
-            if (Directory.Exists(FileFolder)) return;
-
-            Directory.CreateDirectory(FileFolder);
-        }
-        /// <summary>
         /// Flushするかをチェックする
         /// </summary>
         /// <returns></returns>
-        private bool IsCheckFlush()
+        internal bool IsCheckFlush()
         {
             bool IsFlush = false;
 
@@ -109,9 +103,9 @@ namespace Log
                 if ((Buffer.Length > BufferSize) || Config.IsAutoFlush )
                 {
                     //　ログファイルサイズを超えた場合、ログファイルをバックアップする
-                    if (!CheckFileSize())
+                    if (Config.MaxFileSize < FileSize + Buffer.Length)
                         //　ログファイルをバックアップ
-                        BackupLogFile();
+                         BackupLogFile();
 
                     IsFlush = true;
                 }
@@ -145,30 +139,22 @@ namespace Log
             using (StreamWriter writer = new StreamWriter(FullPath, Config.IsAppend))
             {
                 writer.Write(Buffer.ToString());
-                FileSize += Buffer.Length;
+                writer.Dispose();
             }
+
+            if (Config.IsAppend)
+                FileSize += Buffer.Length;
+            else
+                FileSize = Buffer.Length;
 
             // バッファクリア
             Buffer.Clear();
         }
 
         /// <summary>
-        /// ファイルサイズの上限確認
-        /// 上限を超えた場合、ファイルをバックアップする
-        /// </summary>
-        private bool CheckFileSize()
-        {
-            //　上限を超えないので、処理を終了する
-            if (Config.MaxFileSize >= FileSize + Buffer.Length) 
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
         /// ログファイルをバックアップする
         /// </summary>
-        private void BackupLogFile()
+        internal void BackupLogFile()
         {
             string filename = FullPath + ".bk";
             int count = 1;
@@ -176,7 +162,7 @@ namespace Log
             {
                 count++;
             }
-            File.Move(FullPath, filename);
+            File.Move(FullPath, filename + count.ToString());
 
             // ログファイルバックアップしたので、ログファイルをクリアする
             FileSize = 0;
@@ -185,16 +171,26 @@ namespace Log
         /// <summary>
         /// 古いログファイルを削除する
         /// </summary>
-        private void DeleteOldLogFile()
+        internal void DeleteOldLogFile()
         {
+            if (!Directory.Exists(FileFolder)) return; 
+
             DateTime retentionDate = DateTime.Today.AddDays(-Config.Period);
             string[] filePathList = Directory.GetFiles(FileFolder);
             foreach (string filePath in filePathList)
             {
-                string date = Regex.Replace(Path.GetFileNameWithoutExtension(filePath), @"[^0-9]+", "");
-                DateTime logCreatedDate = DateTime.ParseExact(date, "yyyyMMdd", null);
-                if (logCreatedDate < retentionDate)
+                try
+                { 
+                    string date = Regex.Replace(Path.GetFileNameWithoutExtension(filePath), @"[^0-9]+", "");
+                    DateTime logCreatedDate = DateTime.ParseExact(date, "yyyyMMdd", null);
+                    if (logCreatedDate < retentionDate)
+                    {
+                        File.Delete(filePath);
+                    }
+                }
+                catch(Exception)
                 {
+                    // ログファイル名がフォーマットに従わないので、削除する。
                     File.Delete(filePath);
                 }
             }

@@ -9,6 +9,12 @@ using static Log.Constant;
 
 namespace Log.Tests.LogCtrlTest.BackupLogFile
 {
+    public enum FileStatus
+    {
+        Exist,
+        NoExist,
+    }
+
     public struct TestInfo
     {
         public int Num;
@@ -28,13 +34,21 @@ namespace Log.Tests.LogCtrlTest.BackupLogFile
         public static IEnumerable<object[]> TestData()
         {
             List<object[]> _testData = new List<object[]>();
-            bool[] IsFileExist = new bool[4]; 
-            for (var sw = 0x00; sw < 0x10; sw++)
+
+            foreach (FileStatus File1 in Enum.GetValues(typeof(FileStatus)))
             {
-                for (var i = 0; i < 4; i++)
-                    IsFileExist[i] = ((sw >> i) & 1) == 1;
-                _testData.Add(new object[] { GetTestName(_testData.Count), IsFileExist });
-            }            
+                foreach (FileStatus File2 in Enum.GetValues(typeof(FileStatus)))
+                {
+                    foreach (FileStatus File3 in Enum.GetValues(typeof(FileStatus)))
+                    {
+                        foreach (FileStatus File4 in Enum.GetValues(typeof(FileStatus)))
+                        {
+                            _testData.Add(new object[] { GetTestName(_testData.Count), 
+                                File1, File2, File3, File4 });
+                        }
+                    }
+                }
+            }
             return _testData;
         }
     }
@@ -43,11 +57,11 @@ namespace Log.Tests.LogCtrlTest.BackupLogFile
     public class BackupLogFile
     {
         private TestInfo TestInfo = new TestInfo(0);
-
+        
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void BackupLogFileTest(string name, bool[] IsFileExist)
+        public void BackupLogFileTest(string name, FileStatus file1, FileStatus file2, FileStatus file3, FileStatus file4)
         {
             Console.WriteLine(name);
             // Arrange
@@ -61,12 +75,15 @@ namespace Log.Tests.LogCtrlTest.BackupLogFile
             string[] filePathList = Directory.GetFiles(logCtrl.FileFolder);
             foreach (string filePath in filePathList)
                 File.Delete(filePath);
+            bool[] IsFileExist = new bool[4];
+            IsFileExist[0] = file1 == FileStatus.Exist;
+            IsFileExist[1] = file2 == FileStatus.Exist;
+            IsFileExist[2] = file3 == FileStatus.Exist;
+            IsFileExist[3] = file4 == FileStatus.Exist;
 
             CreatFileListName(logCtrl.FullPath, IsFileExist);
             foreach (var item in TestInfo.FileName)
-            { 
                 File.WriteAllLines(item, new string[0]);
-            }
 
             // Act
             logCtrl.BackupLogFile();
@@ -113,6 +130,8 @@ namespace Log.Tests.LogCtrlTest.BackupLogFile
                     }
                 }
             }
+            if (!ExpectedFlag)
+                TestInfo.expectedFileName = FullPath + ".bk" + (5).ToString();
 
             TestInfo.Num = TestInfo.FileName.Count();
         }
