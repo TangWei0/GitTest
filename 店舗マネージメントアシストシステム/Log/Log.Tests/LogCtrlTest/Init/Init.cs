@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using Xunit;
 
@@ -8,26 +7,20 @@ using static Log.Constant;
 
 namespace Log.Tests.LogCtrlTest.Init
 {
-    public struct TestInfo
-    {
-        public int Num;
-        public Dictionary<string, bool> FileName;
-
-        public TestInfo(int num = 0)
-        {
-            Num = num;
-            FileName = new Dictionary<string, bool>();
-        }
-    }
-
     public class TestDataClass : TestBase
     {
+        public static long[] MaxSizeTestCase = new long[] { KB_SIZE, 10 * KB_SIZE, GB_SIZE };
         public static IEnumerable<object[]> TestData()
         {
             List<object[]> _testData = new List<object[]>();
 
-            _testData.Add(new object[] { GetTestName(_testData.Count), 10 * KB_SIZE, true });
-            _testData.Add(new object[] { GetTestName(_testData.Count), 90 * KB_SIZE, false });
+            foreach(var maxSize in MaxSizeTestCase)
+            {
+                var size = maxSize / 10;
+                _testData.Add(new object[] { GetTestName(_testData.Count), size, maxSize, true });
+                _testData.Add(new object[] { GetTestName(_testData.Count), size * 9, maxSize, false });
+            }
+
             return _testData;
         }
     }
@@ -35,132 +28,88 @@ namespace Log.Tests.LogCtrlTest.Init
     [Collection("Our Test Collection #1")]
     public class Init
     {
-        private TestInfo TestInfo = new TestInfo(0);
-        private static int count = 0;
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void InitDirectoryExistTest(string name, long expected, bool sw)
+        public void InitDirectoryExistTest(string name, long expected, long maxSize, bool sw)
         {
             Console.WriteLine(name);
             // Arrange
             ConfigFactory.InitFlag = true;
             ConfigFactory.Config = new Config
             {
-                LogFilePath = @"C:\Log\Test" + (count % 10).ToString(),
+                LogFilePath = @"C:\Log\Test",
                 IsAppend = sw,
+                MaxFileSize = maxSize,
             };
-            count++;
 
-            Assert.Equal(sw, ConfigFactory.Config.IsAppend);
-            var logCtrl = new LogCtrl();
+            var logCtrl = new LogCtrl_Stub();
             if (!Directory.Exists(logCtrl.FileFolder))
                 Directory.CreateDirectory(logCtrl.FileFolder);
 
-            string[] filePathList = Directory.GetFiles(logCtrl.FileFolder);
-            foreach (string filePath in filePathList)
-                File.Delete(filePath);
-
-            CreatFileListName(ConfigFactory.Config.Period);
-            foreach (var item in TestInfo.FileName)
-            { 
-                var path = Path.Combine(logCtrl.FileFolder, item.Key);
-                using StreamWriter writer = new StreamWriter(path, false);
-                writer.WriteLine("Test");
-                writer.Dispose();
-            }
-
-            logCtrl.Config.IsAppend = sw;
             // Act
             logCtrl.Init();
 
             // Assert
             Assert.Equal(expected, logCtrl.BufferSize);
             Assert.Equal(0, logCtrl.FileSize);
+            Assert.False(logCtrl.IsCreatDirectory);
+            Assert.True(logCtrl.IsDeleteOldLogFile);
 
-            var DeletedFilePath = Directory.GetFiles(logCtrl.FileFolder);
-            Assert.Equal(TestInfo.Num, DeletedFilePath.Length);
-
-            foreach (var item in TestInfo.FileName)
-            {
-                var path = Path.Combine(logCtrl.FileFolder, item.Key);
-                if (item.Value)
-                    Assert.True(File.Exists(path));
-                else
-                    Assert.False(File.Exists(path));
-            }
             // 初期化
             ConfigFactory.Config = new Config();
             ConfigFactory.InitFlag = false;
-
-            if (Directory.Exists(logCtrl.FileFolder))
-            {
-                DirectoryInfo di = new DirectoryInfo(logCtrl.FileFolder);
-                di.Delete(true);
-            }
         }
 
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.TestData), MemberType = typeof(TestDataClass))]
-        public void InitDirectoryNoExistTest(string name, long expected, bool sw)
+        public void InitDirectoryNoExistTest(string name, long expected, long maxSize, bool sw)
         {
             Console.WriteLine(name);
             // Arrange
             ConfigFactory.InitFlag = true;
             ConfigFactory.Config = new Config
             {
-                LogFilePath = @"C:\Log\Test" + (count % 10).ToString(),
+                LogFilePath = @"C:\Log\Test",
                 IsAppend = sw,
+                MaxFileSize = maxSize,
             };
-            count++;
 
-            var logCtrl = new LogCtrl();
-            logCtrl.Config.IsAppend = sw;
-        
+            var logCtrl = new LogCtrl_Stub();
+            if (Directory.Exists(logCtrl.FileFolder))
+                Directory.Delete(logCtrl.FileFolder, true);
+
             // Act
             logCtrl.Init();
 
             // Assert
             Assert.Equal(expected, logCtrl.BufferSize);
             Assert.Equal(0, logCtrl.FileSize);
-            Assert.True(Directory.Exists(logCtrl.FileFolder));
+            Assert.True(logCtrl.IsCreatDirectory);
+            Assert.False(logCtrl.IsDeleteOldLogFile);
 
             // 初期化
             ConfigFactory.Config = new Config();
             ConfigFactory.InitFlag = false;
-
-            if (Directory.Exists(logCtrl.FileFolder))
-            {
-                DirectoryInfo di = new DirectoryInfo(logCtrl.FileFolder);
-                di.Delete(true);
-            }
         }
 
-        private void CreatFileListName(int period)
+        public class LogCtrl_Stub : LogCtrl
         {
-            TestInfo = new TestInfo(0);
+            public bool IsDeleteOldLogFile { get; set; } = false;
+            public bool IsCreatDirectory { get; set;} = false;
 
-            DateTime CurrentTime = DateTime.Now;
-            TestInfo.FileName.Add("Test_" + CurrentTime.ToString("yyyyMMdd") + ".log", true);
-            TestInfo.FileName.Add("Test_" + CurrentTime.ToString("yyyyMMdd") + ".log.bk1", true);
-            TestInfo.FileName.Add("Test_" + CurrentTime.AddDays(-period).ToString("yyyyMMdd") + ".log", true);            
-            TestInfo.FileName.Add("Test_" + CurrentTime.AddDays(-period).ToString("yyyyMMdd") + ".log.bk1", true);
-            TestInfo.FileName.Add("Test_" + CurrentTime.AddDays(-(period + 1)).ToString("yyyyMMdd") + ".log", false);
-            TestInfo.FileName.Add("Test_" + CurrentTime.AddDays(-(period + 1)).ToString("yyyyMMdd") + ".log.bk1", false);
-
-            if (period != 1)
+            public override void Init()
             {
-                TestInfo.FileName.Add("Test_" + CurrentTime.AddDays(-1).ToString("yyyyMMdd") + ".log", true);
-                TestInfo.FileName.Add("Test_" + CurrentTime.AddDays(-1).ToString("yyyyMMdd") + ".log.bk1", true);
-            }
+                BufferSize = Config.MaxFileSize / 10;
+                if (!Config.IsAppend)
+                    BufferSize *= 9;
+                FileSize = 0;
 
-            TestInfo.FileName.Add("Test.log", false);
-            TestInfo.FileName.Add("Test_202011011.log", false);
-
-            foreach(var item in TestInfo.FileName)
-            {
-                if (item.Value) TestInfo.Num++;
+                if (!Directory.Exists(FileFolder))
+                    IsCreatDirectory = true;
+                else
+                    IsDeleteOldLogFile = true;
             }
         }
     }

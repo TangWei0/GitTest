@@ -3,9 +3,9 @@
     public static class LogCtrlFactory
     {
         /// <summary> ログ </summary>
-        private static LogCtrl LogCtrl { get; set; } = new LogCtrl();
+        internal static LogCtrl LogCtrl { get; set; } = new LogCtrl();
 
-        private static bool InitFlag = false;
+        internal static bool InitFlag = false;
 
         public static LogCtrl Get()
         {

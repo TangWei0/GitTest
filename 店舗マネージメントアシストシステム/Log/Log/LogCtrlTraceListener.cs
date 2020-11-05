@@ -45,6 +45,10 @@ namespace Log
             // 出力チェック
             if (CheckLevel(category))
                 LogCtrl.WriteEntry(message, category);
+
+            // ログ出力かを判断し、True場合ログ出力する
+            if (LogCtrl.IsCheckFlush())
+                LogCtrl.Flush();
         }
 
         /// <summary>

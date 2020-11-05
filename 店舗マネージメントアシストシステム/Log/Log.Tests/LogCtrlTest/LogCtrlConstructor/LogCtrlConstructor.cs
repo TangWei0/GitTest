@@ -62,8 +62,6 @@ namespace Log.Tests.LogCtrlTest.LogCtrlConstructor
             var logCtrl = new LogCtrl();
 
             // Assert
-            Assert.True(ConfigFactory.InitFlag);
-
             Assert.Equal(DEFAULT_LOG_FILE_PATH, logCtrl.Config.LogFilePath);
             Assert.Equal(DEFAULT_IS_APPEND, logCtrl.Config.IsAppend);
             Assert.Equal(DEFAULT_CATEGORY, logCtrl.Config.Category);

@@ -51,7 +51,6 @@ namespace Log.Tests.LogCtrlTest.Flush
     public class Flush
     {
         private TestInfo TestInfo = new TestInfo(0);
-        private static int count = 0;
         // テストメソッド
         [Theory]
         [MemberData(nameof(TestDataClass.BufferNullTestData), MemberType = typeof(TestDataClass))]
@@ -59,10 +58,12 @@ namespace Log.Tests.LogCtrlTest.Flush
         {
             Console.WriteLine(name);
             // Arrange
-            ConfigFactory.Config = new Config();
             ConfigFactory.InitFlag = true;
-            ConfigFactory.Config.LogFilePath = @"C:\Log\Test" + (count % 2).ToString();
-            count++;
+            ConfigFactory.Config = new Config
+            {
+                LogFilePath = @"C:\Log\Test"
+            };
+
             var logCtrl = new LogCtrl();
             if (!Directory.Exists(logCtrl.FileFolder))
                 Directory.CreateDirectory(logCtrl.FileFolder);
@@ -96,11 +97,12 @@ namespace Log.Tests.LogCtrlTest.Flush
         {
             Console.WriteLine(name);
             // Arrange
-            ConfigFactory.Config = new Config();
             ConfigFactory.InitFlag = true;
-            ConfigFactory.Config.LogFilePath = @"C:\Log\Test" + (count % 2).ToString();
-            count++;
-            ConfigFactory.Config.IsAppend = IsAppend;
+            ConfigFactory.Config = new Config
+            {
+                LogFilePath = @"C:\Log\Test",
+                IsAppend = IsAppend
+            };
 
             var logCtrl = new LogCtrl();
             if (!Directory.Exists(logCtrl.FileFolder))
@@ -114,15 +116,10 @@ namespace Log.Tests.LogCtrlTest.Flush
             logCtrl.FileSize = word.Length + 2;
             logCtrl.Buffer = new StringBuilder();
             
-            // 出力メッセージ作成
-            StringBuilder outmessage = new StringBuilder();
-            outmessage.Append(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff "));
-            outmessage.Append("\t");
-            outmessage.Append("Test");
             // バッファに追加
-            logCtrl.Buffer.AppendLine(outmessage.ToString());
+            logCtrl.Buffer.AppendLine("Test");
 
-            long expectedFileSize = outmessage.Length + 2; // AppendLine改行したので、2Byteを加算する
+            long expectedFileSize = 4 + 2; // AppendLine改行したので、2Byteを加算する
             if (IsAppend)
                 expectedFileSize += logCtrl.FileSize;
 

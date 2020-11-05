@@ -21,8 +21,6 @@ namespace Log
         /// <summary>ファイルサイズ</summary>
         internal long FileSize;
 
-        internal DateTime CurrentTime;
-
         internal string AppName => Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName);
 
         /// <summary>ログパス</summary>
@@ -44,19 +42,18 @@ namespace Log
         /// <summary>
         /// LogCtrl初期化処理
         /// </summary>
-        public void Init()
+        public virtual void Init()
         {
             BufferSize = Config.MaxFileSize / 10;
             if (!Config.IsAppend)
                 BufferSize *= 9 ;
-
             FileSize = 0;
 
             if (!Directory.Exists(FileFolder))
                 Directory.CreateDirectory(FileFolder);
-
-            // 古いログファイルを削除する
-            DeleteOldLogFile();
+            else
+                // 古いログファイルを削除する
+                DeleteOldLogFile();
         }
 
         /// <summary>
@@ -65,12 +62,11 @@ namespace Log
         /// <param name="Category">メッセージの種類</param>
         /// <param name="message">出力するログメッセージ</param>
         /// <remarks></remarks>
-        public void WriteEntry(string message, string category)
+        public virtual void WriteEntry(string message, string category)
         {
             // 出力メッセージ作成
             StringBuilder outmessage = new StringBuilder();
-            CurrentTime = DateTime.Now;
-            outmessage.Append(CurrentTime.ToString("yyyy/MM/dd HH:mm:ss.fff "));
+            outmessage.Append(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.fff "));
             outmessage.Append("[" + category + "]");
             outmessage.Append("\t");
 
@@ -82,17 +78,13 @@ namespace Log
 
             // バッファに追加
             Buffer.AppendLine(outmessage.ToString());
-
-            // ログ出力かを判断し、True場合ログ出力する
-            if (IsCheckFlush())
-                Flush();
         }
 
         /// <summary>
         /// Flushするかをチェックする
         /// </summary>
         /// <returns></returns>
-        internal bool IsCheckFlush()
+        public virtual bool IsCheckFlush()
         {
             bool IsFlush = false;
 
@@ -103,7 +95,7 @@ namespace Log
                 if ((Buffer.Length > BufferSize) || Config.IsAutoFlush )
                 {
                     //　ログファイルサイズを超えた場合、ログファイルをバックアップする
-                    if (Config.MaxFileSize < FileSize + Buffer.Length)
+                    if (Config.MaxFileSize <= FileSize + Buffer.Length)
                         //　ログファイルをバックアップ
                          BackupLogFile();
 
