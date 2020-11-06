@@ -7,8 +7,8 @@ namespace Log
 {
     public class LogCtrlTraceListener : TraceListener
     {
-        private readonly Config Config = null;
-        private readonly LogCtrl LogCtrl = null;
+        internal readonly Config Config = null;
+        internal readonly LogCtrl LogCtrl = null;
 
         public LogCtrlTraceListener()
         {
@@ -44,11 +44,13 @@ namespace Log
         {
             // 出力チェック
             if (CheckLevel(category))
+            { 
                 LogCtrl.WriteEntry(message, category);
 
-            // ログ出力かを判断し、True場合ログ出力する
-            if (LogCtrl.IsCheckFlush())
-                LogCtrl.Flush();
+                // ログ出力かを判断し、True場合ログ出力する
+                if (LogCtrl.IsCheckFlush())
+                    LogCtrl.Flush();
+            }
         }
 
         /// <summary>
@@ -67,7 +69,7 @@ namespace Log
         /// </summary>
         /// <param name="category"></param>
         /// <returns></returns>
-        private int CategoryToLevel(string category)
+        internal int CategoryToLevel(string category)
         {
             var level = (int)E_TRACE_EVENT_LEVEL.OFF;
             switch(category)
@@ -100,7 +102,7 @@ namespace Log
         /// <param name="category"></param>
         /// <returns>True　ログバッファに追加する</returns>
         /// <returns>False　ログバッファに追加しない</returns>
-        private bool CheckLevel(string category)
+        internal bool CheckLevel(string category)
         {
             bool IsCheckLevel = false;
 
